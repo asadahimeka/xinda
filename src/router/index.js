@@ -24,7 +24,7 @@ export default new Router({
         }
       ]
     },{
-      path:'Logon',
+      path:'/Logon',
       component:Logon,
     }
   ]

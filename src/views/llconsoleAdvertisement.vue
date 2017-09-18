@@ -45,6 +45,7 @@ export default {
                 // centeredSlides: true,
                 paginationClickable: true,
                 autoplay: 3000,
+                loop:true,
             },
             swiperSlides: [1, 2, 3, 4, 5],
             items: [

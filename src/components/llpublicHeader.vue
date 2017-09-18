@@ -5,7 +5,7 @@
                 <div class="headerleft">
                     <div class="wel">欢迎来到信达！</div>
                     <a href="/#/Logon" class="login">{{msg}}</a>
-                    <a href="" class="register">快速注册</a>
+                    <a href="/#/Register" class="register">快速注册</a>
                 </div>
                 <div class="headerright">
                     <div class="cart">

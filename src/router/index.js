@@ -5,6 +5,7 @@ import Navigation from '../views/llNavigation.vue'
 import ConsoleAdvertisement from '../views/llconsoleAdvertisement.vue'
 import JoinUs from '../views/llJoinUs.vue'
 import Logon from '../views/llLogon.vue'
+import Register from '../views/llRegister.vue'
 
 Vue.use(Router)
 
@@ -23,9 +24,12 @@ export default new Router({
           component: JoinUs
         }
       ]
-    },{
-      path:'/Logon',
-      component:Logon,
+    }, {
+      path: '/Logon',
+      component: Logon,
+    }, {
+      path: '/Register',
+      component: Register
     }
   ]
 })

@@ -18,5 +18,5 @@ export default new Vuex.Store({
     //显示集合
     getters: {
         getCartnum: state => state.cartnum,
-    }
+    },
 })

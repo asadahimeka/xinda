@@ -4,19 +4,19 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     //状态集合
-    state:{
-
+    state: {
+        cartnum: 0,
     },
     //突变集合
-    mutations:{
-
+    mutations: {
+        CARTMUTA: (state, num) => state.cartnum = num,
     },
     //方法集合
-    actions:{
-
+    actions: {
+        cartAction: ({ commit }, num) => commit('CARTMUTA', num),
     },
     //显示集合
-    getters:{
-
+    getters: {
+        getCartnum: state => state.cartnum,
     }
 })

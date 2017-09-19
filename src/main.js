@@ -4,20 +4,26 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-import store from './store/index'
-import axios from 'axios'
+import store from './store'
+import ElementUI from 'element-ui';
+import axios from 'axios';
+import qs from 'qs';
 
+// axios全局配置
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.interceptors.request.use((config) => {
+    config.data = qs.stringify(config.data);
+    return config;
+}, function (error) {
+    return Promise.reject(error);
+});
+axios.defaults.baseURL = 'http://115.182.107.203:8088/xinda/xinda-api';
 Vue.prototype.ajax = axios;
 
-Vue.use(VueAwesomeSwiper)
+Vue.use(VueAwesomeSwiper);
+Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
-
-// 全局配置
-// axios.defaults.baseURL = 'http://115.182.107.203:8088/xinda/';
-
-
 
 /* eslint-disable no-new */
 new Vue({

@@ -158,7 +158,7 @@ export default {
             return year + '-' + mouth + '-' + day + ' ' + hour + ':' + min + ':' + sec;
         },
         getOrder() {
-            this.$http.post(
+            this.ajax.post(
                 '/business-order/detail',
                 { businessNo: this.$route.query.bno },
             ).then(res => {
@@ -193,7 +193,7 @@ export default {
                     offset: 200,
                 });
             } else {
-                this.$http.post(
+                this.ajax.post(
                     '/pay/' + payNo,
                     { businessNo },
                 ).then(res => {

@@ -113,7 +113,7 @@ export default {
             return this.fmtPrice(item.totalPrice);
         },
         getCart() {
-            this.$http.post(
+            this.ajax.post(
                 '/cart/list'
             ).then(res => {
                 if (res.data.status == 1) {
@@ -138,7 +138,7 @@ export default {
         },
         submit() {
             for (let i = 0; i < this.cartlist.length; i++) {
-                this.$http.post(
+                this.ajax.post(
                     '/cart/set',
                     {
                         id: this.cartlist[i].productId,
@@ -148,7 +148,7 @@ export default {
                     if (res.data.status == -1) {
                         this.$message({ type: 'error', message: res.data.msg, duration: 1000 });
                     } else if (i == this.cartlist.length - 1) {
-                        this.$http.post(
+                        this.ajax.post(
                             '/cart/submit'
                         ).then(res => {
                             if (res.data.status == -1) {
@@ -184,7 +184,7 @@ export default {
                 type: 'warning',
                 lockScroll: false
             }).then(() => {
-                this.$http.post(
+                this.ajax.post(
                     '/cart/del',
                     { id: item.productId }
                 ).then(res => {
@@ -226,7 +226,7 @@ export default {
     },
     created() {
         this.getCart();
-        this.$http.post(
+        this.ajax.post(
             '/recommend/list'
         ).then(res => {
             if (res.data.status == 1) {

@@ -6,6 +6,7 @@ import ConsoleAdvertisement from '../views/llconsoleAdvertisement.vue'
 import JoinUs from '../views/llJoinUs.vue'
 import Logon from '../views/llLogon.vue'
 import Register from '../views/llRegister.vue'
+import ForPSD from '../views/llForgetPSD.vue'
 
 Vue.use(Router)
 
@@ -30,6 +31,9 @@ export default new Router({
     }, {
       path: '/Register',
       component: Register
+    }, {
+      path: '/ForPSD',
+      component: ForPSD
     }
   ]
 })

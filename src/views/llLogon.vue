@@ -23,7 +23,7 @@
                     <!-- 这里是验证码图片 -->
                 </div>
                 <div class="getPSD">
-                    <a href="">忘记密码？</a>
+                    <a href="/#/ForPSD">忘记密码？</a>
                 </div>
                 <button>立即登录</button>
             </div>
@@ -35,7 +35,7 @@
                     还没有帐号？
                 </div>
                 <div class="Toregister">
-                    <a href="" class="ToRegister">
+                    <a href="/#/Register" class="ToRegister">
                         立即注册>>
                     </a>
                 </div>

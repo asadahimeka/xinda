@@ -29,7 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/xinda-api/': {
-        target: "http://115.182.107.203:8088/xinda",
+        target: "http://115.182.107.203:8088/xinda/",
         changeOrigin: true,
       }
     },

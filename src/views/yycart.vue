@@ -251,6 +251,15 @@ export default {
 @gwidth: 1200px;
 @mcolor: #2693d4;
 @borclr: #b6b6b6;
+.mainA {
+    .allNavigation {
+        display: none;
+    }
+    &:hover .allNavigation {
+        display: block;
+        z-index: 10;
+    }
+}
 
 body {
     margin: 0;

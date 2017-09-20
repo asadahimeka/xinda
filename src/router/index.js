@@ -29,7 +29,30 @@ export default new Router({
         }, {
           path: 'JoinUs',
           component: JoinUs
+        }, {
+          path: '/shcart',
+          name: 'shcart',
+          component: Shcart
+        },
+        {
+          path: '/pay',
+          name: 'pay',
+          component: Pay
+        },
+        {
+          path: '/siharauseikou',
+          name: 'paysuccess',
+          component: PaySuccess
+        },
+        {
+          path: '/siharausippai',
+          name: 'payfail',
+          component: PayFail
         }
+
+
+
+
       ]
     }, {
       path: '/Logon',
@@ -41,25 +64,6 @@ export default new Router({
       path: '/ForPSD',
       component: ForPSD
     },
-    {
-      path: '/shcart',
-      name: 'shcart',
-      component: Shcart
-    },
-    {
-      path: '/pay',
-      name: 'pay',
-      component: Pay
-    },
-    {
-      path: '/siharauseikou',
-      name: 'paysuccess',
-      component: PaySuccess
-    },
-    {
-      path: '/siharausippai',
-      name: 'payfail',
-      component: PayFail
-    },
+
   ]
 })

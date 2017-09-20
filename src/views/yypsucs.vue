@@ -24,8 +24,19 @@ export default {
         return { bno: '' }
     },
     created() {
-        window.scrollTo(0, 0);
-        this.bno = this.$route.query.bno;
+        this.ajax.post(
+            '/xinda-api/sso/login-info'
+        ).then(res => {
+            if (res.data.status == 0) {
+                this.$message({ type: "warning", message: '请先登录！', duration: 2000 });
+                this.$router.push('/Logon');
+            } else {
+                window.scrollTo(0, 0);
+                this.bno = this.$route.query.bno;
+            }
+        }).catch(res => {
+            console.log('Axios: ', res);
+        });
     }
 }
 </script>

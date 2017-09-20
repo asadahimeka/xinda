@@ -8,7 +8,9 @@
             <div class="smile"></div>
             <div class="dtl">
                 <h1>支付失败&nbsp;!</h1>
-                <h2>支付未成功：让我们再试一次吧！<a :href="'#/pay?bno='+bno">返回支付页</a></h2>
+                <h2>支付未成功：让我们再试一次吧！
+                    <a :href="'#/pay?bno='+bno">返回支付页</a>
+                </h2>
                 <p>如有问题，请联系客服：
                     <b>010-83421842</b>
                 </p>
@@ -19,13 +21,24 @@
 
 <script>
 export default {
-    name: 'paysucs',
+    name: 'payfail',
     data() {
         return { bno: '' }
     },
     created() {
-        window.scrollTo(0, 0);
-        this.bno = this.$route.query.bno;
+        this.ajax.post(
+            '/xinda-api/sso/login-info'
+        ).then(res => {
+            if (res.data.status == 0) {
+                this.$message({ type: "warning", message: '请先登录！', duration: 2000 });
+                this.$router.push('/Logon');
+            } else {
+                window.scrollTo(0, 0);
+                this.bno = this.$route.query.bno;
+            }
+        }).catch(res => {
+            console.log('Axios: ', res);
+        });
     }
 }
 </script>
@@ -75,7 +88,7 @@ body {
                 font-weight: 500;
             }
         }
-        a{
+        a {
             display: inline-block;
             width: 123px;
             height: 35px;

@@ -16,14 +16,14 @@
                 <td>操作</td>
             </tr>
             <template v-for="item in cartlist">
-                <tr class="shopname" :key="item.id">
+                <tr class="shopname" :key="item.serviceId">
                     <!-- TODO -->
                     <td :title="item.providerName" @click="toDetail('/',item.providerId)">店铺：{{item.providerName}}</td>
                 </tr>
-                <tr class="cartitem" :key="item.id">
+                <tr class="cartitem" :key="item.serviceId">
                     <!-- TODO toDetail, img:src -->
                     <td class="shoplogo" @click="toDetail('/',item.providerId)"><img :src="pichost+item.providerImg" alt="shop img not found"></td>
-                    <td class="srvname" @click="toDetail('/',item.productId)">{{item.serviceName}}</td>
+                    <td class="srvname" @click="toDetail('/',item.serviceId)">{{item.serviceName}}</td>
                     <td>￥{{fmtPrice(item.unitPrice)+item.unit}}</td>
                     <td>
                         <button class="min" @click="item.buyNum=clkMin(item.buyNum)">-</button>
@@ -37,8 +37,11 @@
                 </tr>
             </template>
         </table>
-        <el-alert v-if="!cartlist.length" title="Shopping cart is empty." type="info" :closable="false" show-icon></el-alert>
-        <div v-if="!cartlist.length" class="loading"></div>
+        <div v-if="!cartlist.length" class="loading emp">
+            <img src="../assets/cart.jpg" alt=""><br>
+            <span>购物车空空如也，去首页逛逛吧！</span><br>
+            <button><a href="#/">去首页</a></button>
+        </div>
         <el-alert v-if="gfail01" title="Get data failed." type="error" show-icon></el-alert>
 
         <div v-if="cartlist.length" class="btm">
@@ -47,7 +50,7 @@
             </div>
             <div class="fr">
                 <!-- TODO -->
-                <a href="#/" class="balance">继续购物</a>
+                <a href="javascript:;" class="balance" @click="conti">继续购物</a>
                 <a href="javascript:;" class="balance" @click="submit">去结算</a>
             </div>
         </div>
@@ -61,6 +64,7 @@
             <!-- TODO -->
             <div v-for="item in srvlist" class="srv-card" @click="toDetail('/',item.id)" v-bind:key="item.id">
                 <h2 :title="item.serviceName">{{item.serviceName}}</h2>
+                <!-- TODO -->
                 <i></i>
                 <p :title="item.serviceInfo" class="srv-gmy">{{item.serviceInfo}}</p>
                 <p>销量：{{item.buyNum}}</p>
@@ -114,7 +118,7 @@ export default {
         },
         getCart() {
             this.ajax.post(
-                '/cart/list'
+                '/xinda-api/cart/list'
             ).then(res => {
                 if (res.data.status == 1) {
                     this.cartlist = res.data.data;
@@ -136,12 +140,32 @@ export default {
             }
             return this.fmtPrice(total);
         },
+        conti() {
+            for (let i = 0; i < this.cartlist.length; i++) {
+                this.ajax.post(
+                    '/xinda-api/cart/set',
+                    {
+                        id: this.cartlist[i].serviceId,
+                        num: this.cartlist[i].buyNum,
+                    }
+                ).then(res => {
+                    if (res.data.status == -1) {
+                        this.$message({ type: 'error', message: res.data.msg, duration: 1000 });
+                    } else if (i == this.cartlist.length - 1) {
+                        //TODO
+                        this.$router.push('/');
+                    }
+                }).catch(res => {
+                    console.log('Axios: ', res);
+                });
+            }
+        },
         submit() {
             for (let i = 0; i < this.cartlist.length; i++) {
                 this.ajax.post(
-                    '/cart/set',
+                    '/xinda-api/cart/set',
                     {
-                        id: this.cartlist[i].productId,
+                        id: this.cartlist[i].serviceId,
                         num: this.cartlist[i].buyNum,
                     }
                 ).then(res => {
@@ -149,11 +173,11 @@ export default {
                         this.$message({ type: 'error', message: res.data.msg, duration: 1000 });
                     } else if (i == this.cartlist.length - 1) {
                         this.ajax.post(
-                            '/cart/submit'
+                            '/xinda-api/cart/submit'
                         ).then(res => {
                             if (res.data.status == -1) {
                                 // TODO
-                                this.open('提示', res.data.msg, "跳转至登录界面", '/');
+                                this.open('提示', res.data.msg, "跳转至登录界面", '/Logon');
                             } else if (res.data.status == 1) {
                                 //TODO
                                 this.$router.push({ path: '/pay', query: { bno: res.data.data } })
@@ -185,8 +209,8 @@ export default {
                 lockScroll: false
             }).then(() => {
                 this.ajax.post(
-                    '/cart/del',
-                    { id: item.productId }
+                    '/xinda-api/cart/del',
+                    { id: item.serviceId }
                 ).then(res => {
                     if (res.data.status == 1) {
                         let i = this.cartlist.indexOf(item);
@@ -227,7 +251,7 @@ export default {
     created() {
         this.getCart();
         this.ajax.post(
-            '/recommend/list'
+            '/xinda-api/recommend/list'
         ).then(res => {
             if (res.data.status == 1) {
                 this.srvlist = res.data.data.hq;
@@ -368,7 +392,7 @@ body {
         float: right;
         .srv-card {
             float: left;
-            width: 235px; // height: 150px;
+            width: 235px;
             padding: 15px;
             margin: 35px 16px 100px;
             border: 1px solid @borclr;
@@ -430,6 +454,37 @@ body {
         top: 0;
         left: 46%;
     }
+    img{
+        width: 560px;
+        height: 250px;
+        margin: 0 auto;
+    }
+    span{
+        text-align: center;
+        font-size: 18px;
+        color: @mcolor;
+    }
+    button{
+        width: 200px;
+        height: 50px;
+        line-height: 50px;
+        margin: 40px auto;
+        font-size: 18px;
+        background: @mcolor;
+        border: 0;
+        border-radius: 5px;
+        a{
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+}
+
+.emp{
+    height: 400px;
+    margin-top: 0;
+    margin-bottom: 40px;
+    background: #f8f8f8;
 }
 
 .el-alert {

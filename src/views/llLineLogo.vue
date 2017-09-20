@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="allCity">
-                <div v-for="item in items" @click="endCity">{{item.name}}</div>
+                <div v-for="item in items" @click="endCity" :key="item.id">{{item.name}}</div>
             </div>
         </div>
     </div>

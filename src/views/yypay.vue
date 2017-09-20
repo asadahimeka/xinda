@@ -11,7 +11,7 @@
             <div class="odr-tit">
                 <div class="tit-item1">订单编号：
                     <!-- TODO -->
-                    <a href="#/" class="money-color" target="_blank">{{order.businessNo}}</a>
+                    <a class="money-color">{{order.businessNo}}</a>
                 </div>
                 <div class="tit-item2">创建时间：{{fmtTime(order.createTime)}}</div>
                 <div class="tit-item3">
@@ -159,7 +159,7 @@ export default {
         },
         getOrder() {
             this.ajax.post(
-                '/business-order/detail',
+                '/xinda-api/business-order/detail',
                 { businessNo: this.$route.query.bno },
             ).then(res => {
                 if (res.data.status == 1) {
@@ -173,7 +173,7 @@ export default {
                         duration: 2000,
                     });
                     //TODO
-                    this.$router.push('/');
+                    this.$router.push('/Logon');
                 }
             }).catch(res => {
                 this.loading = false;
@@ -194,7 +194,7 @@ export default {
                 });
             } else {
                 this.ajax.post(
-                    '/pay/' + payNo,
+                    '/xinda-api/pay/' + payNo,
                     { businessNo },
                 ).then(res => {
                     if (res.data.status == 1) {
@@ -223,12 +223,6 @@ export default {
             this.$router.afterEach((to, from, next) => {
                 window.scrollTo(0, 0);
             });
-        },
-        addAct(i) {
-            this.isAct[i] = true;
-        },
-        rmAct(i) {
-            this.isAct[i] = false;
         },
     },
     created() {

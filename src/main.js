@@ -17,7 +17,6 @@ axios.interceptors.request.use((config) => {
 }, function (error) {
     return Promise.reject(error);
 });
-axios.defaults.baseURL = 'http://115.182.107.203:8088/xinda/xinda-api';
 Vue.prototype.ajax = axios;
 
 Vue.use(VueAwesomeSwiper);

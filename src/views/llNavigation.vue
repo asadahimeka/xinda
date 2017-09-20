@@ -283,7 +283,7 @@ export default {
                         position: absolute;
                         left: 200px;
                         top: 0;
-                        background-color: rgba(255, 255, 255, .51);
+                        background-color: rgba(0, 0, 0, .51);
                         flex-direction: column;
                         padding: 16px;
                         box-sizing: border-box;
@@ -311,7 +311,7 @@ export default {
                         position: absolute;
                         left: 200px;
                         top: 0;
-                        background-color: rgba(255, 255, 255, .51);
+                        background-color: rgba(0, 0, 0, .51);
                         flex-direction: column;
                         padding: 16px;
                         box-sizing: border-box;
@@ -349,7 +349,7 @@ export default {
                         position: absolute;
                         left: 200px;
                         top: 0;
-                        background-color: rgba(255, 255, 255, .51);
+                        background-color: rgba(0, 0, 0, .51);
                         flex-direction: column;
                         padding: 16px;
                         box-sizing: border-box;
@@ -388,7 +388,7 @@ export default {
                         position: absolute;
                         left: 200px;
                         top: 0;
-                        background-color: rgba(255, 255, 255, .51);
+                        background-color: rgba(0, 0, 0, .51);
                         flex-direction: column;
                         padding: 16px;
                         box-sizing: border-box;

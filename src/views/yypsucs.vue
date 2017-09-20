@@ -48,6 +48,16 @@ export default {
 @borclr: #b6b6b6;
 @bgclr: #f7f7f7;
 
+.mainA {
+    .allNavigation {
+        display: none;
+    }
+    &:hover .allNavigation {
+        display: block;
+        z-index: 10;
+    }
+}
+
 body {
     margin: 0;
 }

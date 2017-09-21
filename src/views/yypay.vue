@@ -173,7 +173,7 @@ export default {
                         duration: 2000,
                     });
                     //TODO
-                    this.$router.push('/Logon');
+                    // this.$router.push('/Logon');
                 }
             }).catch(res => {
                 this.loading = false;
@@ -206,9 +206,15 @@ export default {
                         }
                     } else {
                         this.$message({ type: 'error', message: res.data.msg, duration: 1000 });
+                        // var win = window.open('', '');
+                        // var html = `<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/></head><body><b>sbbbbbbbbbbbbbbb</b></body></html>`;
+                        // win.document.open("text/html", "replace");
+                        // win.document.writeln(html);
+                        // win.document.close();
+                        // window.open('#/paybrg','_blank');
                     }
                 }).catch(res => {
-                    console.log('Axios: ', res);
+                    console.log('Axios: ', res);                    
                 });
             }
         },
@@ -231,8 +237,7 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" scoped>
+<style lang="less">
 @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 
 @gwidth: 1200px;
@@ -246,7 +251,7 @@ export default {
     }
     &:hover .allNavigation {
         display: block;
-        z-index: 10;
+        z-index: 10002;
     }
 }
 

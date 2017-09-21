@@ -4,10 +4,10 @@
 
         </div>
         <div class="headerframe">
-            <div class="header unLog" v-if="!getPhoneNum">
+            <div class="header unLog" v-if="!getUserName">
                 <div class="headerleft">
                     <div class="wel">欢迎来到信达！</div>
-                    <a href="/#/Logon" class="login">{{msg}}</a>
+                    <a href="/#/Logon" class="login">登录</a>
                     <a href="/#/Register" class="register">快速注册</a>
                 </div>
                 <div class="headerright">
@@ -17,16 +17,16 @@
                         <!-- 点击下面的a标签进入购物车 -->
                         <!-- <i class="iconcart icon-cart"></i> -->
                         <p>购物车
-                            <a href="/#/shcart">0</a>件</p>
+                            <a href="/#/shcart">{{getCartnum}}</a>件</p>
                     </div>
                     <a href="">服务商入口</a>
                 </div>
             </div>
-            <div class="header enLog" v-if="getPhoneNum">
+            <div class="header enLog" v-if="getUserName">
                 <div class="headerleft">
                     <a href="javascript:void(0);">
                         <!-- 这里是已经登录的用户手机号 -->
-                        {{getPhoneNum}}
+                        {{getUserName}}
                     </a>
                     <p>欢迎来到信达!</p>
                     <a href="javascript:void(0);" @click="exit">
@@ -56,11 +56,8 @@
 import { mapGetters } from 'vuex';
 export default {
     created() {
-        console.log(12312321);
         this.ajax.post('/xinda-api/sso/login-info').then((user) => {
-            console.log('user', user);
             if (user.data.data) {
-                console.log(5555);
                 this.getPhoneNum = user.data.data.name;
             }
         }).catch((error) => {
@@ -69,14 +66,13 @@ export default {
     },
     data() {
         return {
-            msg: '登录',
-            getPhoneNum: getUserName || '',
+            // msg: '登录',
+            // getPhoneNum: getUserName,
         }
     },
     methods: {
         exit: function() {
             this.ajax.post('/xinda-api/sso/ logout').then((out) => {
-                console.log(out);
                 window.location.reload();
             }).catch((error) => {
                 console.log(error);
@@ -84,7 +80,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getUserName']),
+        ...mapGetters(['getUserName', 'getCartnum']),
     }
 }
 </script>

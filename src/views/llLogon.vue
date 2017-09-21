@@ -57,7 +57,11 @@ import MD5 from 'js-md5';
 import { mapActions } from 'vuex';
 export default {
     created() {
-
+        onkeydown = (e) => {
+            if (e.keyCode == 13) {
+                this.logonNow();
+            }
+        }
     },
     data() {
         return {
@@ -72,7 +76,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['phoneAction']),
+        ...mapActions(['userAction']),
         F5: function() {//刷新验证码
             this.src = '/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
         },
@@ -106,10 +110,9 @@ export default {
                     setTimeout(() => {
                         this.successMsg = '';
                         this.successRe = false;
-                        
+
+                        this.userAction(this.phone);
                         // 登录成功，返回首页
-                        // sessionStorage.setItem('userPhone',this.phone);
-                        // console.log(sessionStorage.getItem('userPhone'));
                         this.$router.push('/');
                         // location.href  = '/';
                     }, 2000);

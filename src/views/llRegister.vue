@@ -20,7 +20,7 @@
         </div>
         <div class="mainBody">
             <div class="registerLeft">
-                <input type="number" placeholder="请输入手机号码" v-model="phone" @focus="noError">
+                <input type="number" placeholder="请输入手机号码" v-model="phone" @focus="noError" autofocus>
                 <input type="text" placeholder="请输入图片验证码" v-model="imgCode" @focus="noError">
                 <div class="verCode">
                     <!-- 这里是验证码图片 -->
@@ -74,6 +74,11 @@ import MD5 from 'js-md5';
 export default {
     created() {
         this.getProvinceData();
+        onkeydown = (e) => {
+            if (e.keyCode == 13) {
+                this.registeNow();
+            }
+        }
     },
     data() {
         return {

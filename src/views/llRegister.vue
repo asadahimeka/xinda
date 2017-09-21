@@ -31,21 +31,21 @@
                 <div class="area">
                     <select name="" id="province" @change="ChaProvinceEl" v-model="provinceVal">
                         <option value="all" selected>省</option>
-                        <option v-for="province in ProvinceAll" :value="province.item_code">{{province.item_name}}</option>
+                        <option v-for="(province,i) in ProvinceAll" :value="province.item_code" :key="i">{{province.item_name}}</option>
                     </select>
                     <select name="" id="city" @change="ChaCityEl" v-model="cityVal">
                         <option value="all" selected>市</option>
-                        <option v-for="city in CityAll" :value="city.item_code">{{city.item_name}}</option>
+                        <option v-for="(city,i) in CityAll" :value="city.item_code" :key="i">{{city.item_name}}</option>
                     </select>
                     <select name="" id="district" v-model="districtVal">
                         <option value="all" selected>区</option>
-                        <option v-for="district in DistrictAll" :value="district.item_code">{{district.item_name}}</option>
+                        <option v-for="(district,i) in DistrictAll" :value="district.item_code" :key="i">{{district.item_name}}</option>
                     </select>
                 </div>
                 <input type="password" placeholder="请设置密码" v-model="PSD" @focus="noError">
                 <div class="error">
                     <!-- 这里显示错误信息 -->
-                    <!-- 错误信息已经放到饿了么ui中 -->
+                    <!-- 错误信息已经放到Element ui中 -->
                 </div>
                 <button class="registerNow" @click="registeNow">立即注册</button>
                 <div class="agreement">

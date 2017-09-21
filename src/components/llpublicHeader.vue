@@ -66,8 +66,7 @@ export default {
     },
     data() {
         return {
-            // msg: '登录',
-            // getPhoneNum: getUserName,
+            
         }
     },
     methods: {

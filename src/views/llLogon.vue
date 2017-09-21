@@ -16,7 +16,7 @@
         </div>
         <div class="mainBody">
             <div class="inLogon">
-                <input type="number" placeholder="请输入手机号" v-model="phone" @focus="thisFocus">
+                <input type="number" placeholder="请输入手机号" v-model="phone" @focus="thisFocus" autofocus>
                 <input type="password" placeholder="请输入密码" v-model="password" @focus="thisFocus">
                 <input type="text" placeholder="请输入验证码" v-model="imgtest" @focus="thisFocus">
                 <div class="verCode" style="background-color:black">

@@ -16,16 +16,17 @@
         </div>
         <div class="mainBody">
             <div class="inLogon">
-                <input type="number" placeholder="请输入手机号">
-                <input type="password" placeholder="请输入密码">
-                <input type="text" placeholder="请输入验证码">
+                <input type="number" placeholder="请输入手机号" v-model="phone" @focus="thisFocus">
+                <input type="password" placeholder="请输入密码" v-model="password" @focus="thisFocus">
+                <input type="text" placeholder="请输入验证码" v-model="imgtest" @focus="thisFocus">
                 <div class="verCode" style="background-color:black">
                     <!-- 这里是验证码图片 -->
+                    <img :src="src" alt="" @click="F5">
                 </div>
                 <div class="getPSD">
-                    <a href="/#/ForPSD">忘记密码？</a>
+                    <a href="/ForPSD">忘记密码？</a>
                 </div>
-                <button>立即登录</button>
+                <button @click="logonNow">立即登录</button>
             </div>
             <div class="getset">
                 <!-- 又仅仅是一条分隔线 -->
@@ -35,7 +36,7 @@
                     还没有帐号？
                 </div>
                 <div class="Toregister">
-                    <a href="/#/Register" class="ToRegister">
+                    <a href="/Register" class="ToRegister">
                         立即注册>>
                     </a>
                 </div>
@@ -43,12 +44,88 @@
                     <img src="../../static/images/getRight.png">
                 </div>
             </div>
+            <el-alert :title="successMsg" type="success" show-icon :closable="false" class="success" v-if="successRe">
+            </el-alert>
+            <el-alert :title="failMsg" type="error" show-icon :closable="false" class="fail" v-if="failRe">
+            </el-alert>
         </div>
     </div>
 </template>
 
 <script>
+import MD5 from 'js-md5';
+import { mapActions } from 'vuex';
 export default {
+    created() {
+        onkeydown = (e) => {
+            if (e.keyCode == 13) {
+                this.logonNow();
+            }
+        }
+    },
+    data() {
+        return {
+            phone: '',
+            password: '',
+            imgtest: '',
+            successMsg: '1',
+            failMsg: '2',
+            successRe: false,
+            failRe: false,
+            src: '/xinda-api/ajaxAuthcode',
+        }
+    },
+    methods: {
+        ...mapActions(['userAction']),
+        F5: function() {//刷新验证码
+            this.src = '/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
+        },
+        thisFocus: function() {
+            this.failMsg = '';
+            this.successMsg = '';
+            this.successRe = false;
+            this.failRe = false;
+        },
+        logonNow: function() {
+            // 手机号码验证
+            var testPhone = /^[1][3,4,5,7,8][0-9]{9}$/;
+            if (!testPhone.test(this.phone)) {
+                this.failMsg = '手机号输入错误！';
+                this.failRe = true;
+                this.F5();
+                return false;
+            };
+            var logPar = {
+                loginId: this.phone,
+                password: MD5(this.password),
+                imgCode: this.imgtest,
+            }
+            // console.log(logPar);
+            this.ajax.post('/xinda-api/sso/login', logPar, {}).then((reData) => {
+                console.log(reData);
+                if (reData.data.status == 1) {
+                    this.successMsg = reData.data.msg;
+                    this.successRe = true;
+
+                    setTimeout(() => {
+                        this.successMsg = '';
+                        this.successRe = false;
+
+                        this.userAction(this.phone);
+                        // 登录成功，返回首页
+                        this.$router.push('/');
+                        // location.href  = '/';
+                    }, 2000);
+                } else {
+                    this.failMsg = reData.data.msg;
+                    this.failRe = true;
+                    this.F5();
+                }
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
+    },
 
 }
 </script>
@@ -102,6 +179,7 @@ export default {
         background-color: #fff;
         display: flex;
         align-items: center;
+        position: relative;
         .inLogon {
             width: 599px;
             height: 100%;
@@ -155,6 +233,10 @@ export default {
                 height: 36px;
                 margin-top: 24px;
                 margin-right: 15px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
             }
             .getPSD {
                 width: 283px;
@@ -188,7 +270,7 @@ export default {
             flex-wrap: wrap;
             justify-content: center;
             align-content: flex-start;
-            .question{
+            .question {
                 width: 100%;
                 display: flex;
                 justify-content: center;
@@ -197,7 +279,7 @@ export default {
                 color: black;
                 margin-top: 43px;
             }
-            .Toregister{
+            .Toregister {
                 width: 100%;
                 display: flex;
                 justify-content: center;
@@ -205,9 +287,18 @@ export default {
                 line-height: 18px;
                 margin-top: 23px;
             }
-            .getRight{
+            .getRight {
                 margin-top: 20px;
             }
+        }
+        .success,
+        .fail {
+            position: absolute;
+            width: 300px;
+            height: 30px;
+            left: 50%;
+            top: 10px;
+            margin-left: -150px;
         }
     }
 }

@@ -9,6 +9,7 @@ import ElementUI from 'element-ui';
 import axios from 'axios';
 import qs from 'qs';
 
+
 // axios全局配置
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.interceptors.request.use((config) => {

@@ -5,11 +5,17 @@
         </div>
         <div class="btn">
             <button>
-                <a href="#/">返回首页</a>
+                <a href="/">返回首页</a>
             </button>
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    name: 'nfd'
+}
+</script>
 
 <style lang="less" >
 .publicheader,

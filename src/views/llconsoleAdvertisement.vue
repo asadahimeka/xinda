@@ -45,7 +45,7 @@ export default {
                 // centeredSlides: true,
                 paginationClickable: true,
                 autoplay: 3000,
-                loop:true,
+                loop: true,
             },
             swiperSlides: [1, 2, 3, 4, 5],
             items: [
@@ -89,7 +89,8 @@ export default {
     width: 100%;
     height: 401px;
 }
-.allNavigation{
+
+.allNavigation {
     z-index: 2;
 }
 </style>

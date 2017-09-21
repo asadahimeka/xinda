@@ -20,13 +20,13 @@
         </div>
         <div class="mainBody">
             <div class="registerLeft">
-                <input type="number" placeholder="请输入手机号码" v-model="phone" @focus="noError" autofocus>
-                <input type="text" placeholder="请输入图片验证码" v-model="imgCode" @focus="noError">
+                <input type="number" placeholder="请输入手机号码" v-model="phone" @focus="noError" @blur="phoneBlur" autofocus>
+                <input type="text" placeholder="请输入图片验证码" v-model="imgCode" @focus="noErr">
                 <div class="verCode">
                     <!-- 这里是验证码图片 -->
                     <img :src="src" alt="" @click="F5">
                 </div>
-                <input type="text" class="VerCode" placeholder="请输入短信验证码" v-model="messageTest" @focus="noError">
+                <input type="text" class="VerCode" placeholder="请输入短信验证码" v-model="messageTest" @focus="noErr">
                 <button class="clickGet" @click="getMessage">{{getMessageBtn}}</button>
                 <div class="area">
                     <select name="" id="province" @change="ChaProvinceEl" v-model="provinceVal">
@@ -42,7 +42,7 @@
                         <option v-for="(district,i) in DistrictAll" :value="district.item_code" :key="i">{{district.item_name}}</option>
                     </select>
                 </div>
-                <input type="password" placeholder="请设置密码" v-model="PSD" @focus="noError">
+                <input type="password" placeholder="请设置密码" v-model="PSD" @focus="noErr">
                 <div class="error">
                     <!-- 这里显示错误信息 -->
                     <!-- 错误信息已经放到Element ui中 -->
@@ -59,7 +59,7 @@
             <div class="registerRight">
                 <p>已有帐号？</p>
                 <p>
-                    <a href="/Logon">立即登录>></a>
+                    <a href="#/Logon">立即登录>></a>
                 </p>
                 <div class="getRight">
                     <img src="../../static/images/getRight.png" alt="">
@@ -102,11 +102,11 @@ export default {
         }
     },
     methods: {
-        noError: function() {
+        noError() {
             this.errormsg = '';
             this.errorShow = false;
         },
-        getMessage: function(e) {
+        getMessage(e) {
             //点击获取短信验证码
             if (this.testPhone()) {
                 var message = {
@@ -142,30 +142,66 @@ export default {
                 })
             };
         },
-        F5: function() {//刷新验证码
+        F5() {//刷新验证码
             this.src = '/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
         },
-        testPhone: function() {
-            // 手机号本地校验正则
-            var testPhone = /^[1][3,4,5,7,8][0-9]{9}$/;
-            if (!testPhone.test(this.phone)) {
-                this.errormsg = '请输入正确的11位手机号码！';
+        noErr() {
+            this.errormsg.indexOf('手机') == -1 ? this.noError() : 0;
+            if (event.target.type == 'password') {
+                this.testDistrict();
+            }
+        },
+        phoneBlur() {
+            this.noError();
+            if (this.testPhone()) {
+                this.ajax.post('/xinda-api/register/valid-sms', {
+                    cellphone: this.phone,
+                    smsType: 1,
+                    validCode: this.messageTest,
+                }).then(rTP => {
+                    console.log('rTP: ', rTP);
+                    if (rTP.data.status == -2) {
+                        this.errormsg = rTP.data.msg;
+                        this.errorShow = true;
+                    }
+                }).catch((error) => {
+                    console.log('error', error);
+                });
+            }
+        },
+        testPhone() {
+            if (!this.phone) {
+                this.errormsg = '请填写手机号码！';
                 this.errorShow = true;
                 return false;
-            };
-            return true;
+            } else {
+                // 手机号本地校验正则
+                var testPhone = /^[1][3,4,5,7,8][0-9]{9}$/;
+                if (!testPhone.test(this.phone)) {
+                    this.errormsg = '请输入正确的11位手机号码！';
+                    this.errorShow = true;
+                    return false;
+                };
+                return true;
+            }
         },
-        testPassword: function() {
-            // 密码本地校验正则
-            var testPassword = /^(\w){6,20}$/;
-            if (!testPassword.test(this.PSD)) {
-                this.errormsg = '密码不符合规范！';
+        testPassword() {
+            if (!this.PSD) {
+                this.errormsg = '请填写密码！';
                 this.errorShow = true;
                 return false;
-            };
-            return true;
+            } else {
+                // 密码本地校验正则
+                var testPassword = /^(\w){6,20}$/;
+                if (!testPassword.test(this.PSD)) {
+                    this.errormsg = '密码不符合规范！';
+                    this.errorShow = true;
+                    return false;
+                };
+                return true;
+            }
         },
-        testDistrict: function() {
+        testDistrict() {
             if (this.districtVal == 'all') {
                 this.errormsg = '请选择正确的地区！';
                 this.errorShow = true;
@@ -174,37 +210,42 @@ export default {
             return true;
         },
         // 手机号已被注册验证
-        registeNow: function() {
-            this.testPassword();
-            this.testDistrict();
-            this.testPhone();
-            if (!this.errorShow) {
-                var registerTP = {
-                    cellphone: this.phone,
-                    smsType: 1,
-                    validCode: this.messageTest
-                };
-                this.ajax.post('/xinda-api/register/valid-sms', registerTP, {}).then((rTP) => {
-                    console.log('rtp', rTP);
-                    if (rTP.data.status == 1) {
-                        this.goToRegister();
-                    } else {
-                        this.errormsg = rTP.data.msg;
-                        this.errorShow = true;
-                        this.F5();
-                    }
-                }).catch((error) => {
-                    console.log('error', error);
-                });
+        registeNow() {
+            if (this.testPhone()) {
+                if (!this.imgCode || !this.messageTest) {
+                    this.errormsg = '请填写验证码！';
+                    this.errorShow = true;
+                } else if (this.testDistrict() && this.testPassword()) {
+                    this.validReg();
+                }
             }
         },
+        validReg() {
+            var registerTP = {
+                cellphone: this.phone,
+                smsType: 1,
+                validCode: this.messageTest,
+            };
+            this.ajax.post('/xinda-api/register/valid-sms', registerTP, {}).then((rTP) => {
+                console.log('rtp', rTP);
+                if (rTP.data.status == 1) {
+                    this.goToRegister();
+                } else {
+                    this.errormsg = rTP.data.msg;
+                    this.errorShow = true;
+                    this.F5();
+                }
+            }).catch((error) => {
+                console.log('error', error);
+            });
+        },
         // 通过，开始注册
-        goToRegister: function() {
+        goToRegister() {
             var shuju = {
                 cellphone: this.phone,
                 smsType: 1,
                 validCode: this.messageTest,
-                password: md5(this.PSD),
+                password: MD5(this.PSD),
                 regionId: this.districtVal,
             };
             this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/register/register', shuju, {}).then((canLog) => {
@@ -297,6 +338,7 @@ export default {
 </script>
 
 <style lang="less">
+@import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 .Register {
     display: flex;
     flex-wrap: wrap;

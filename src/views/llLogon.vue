@@ -36,7 +36,7 @@
                     还没有帐号？
                 </div>
                 <div class="Toregister">
-                    <a href="/Register" class="ToRegister">
+                    <a href="#/Register" class="ToRegister">
                         立即注册>>
                     </a>
                 </div>
@@ -94,36 +94,44 @@ export default {
                 this.failRe = true;
                 this.F5();
                 return false;
-            };
-            var logPar = {
-                loginId: this.phone,
-                password: MD5(this.password),
-                imgCode: this.imgtest,
-            }
-            // console.log(logPar);
-            this.ajax.post('/xinda-api/sso/login', logPar, {}).then((reData) => {
-                console.log(reData);
-                if (reData.data.status == 1) {
-                    this.successMsg = reData.data.msg;
-                    this.successRe = true;
+            } else {
+                var logPar = {
+                    loginId: this.phone,
+                    password: MD5(this.password),
+                    imgCode: this.imgtest,
+                }
+                // console.log(logPar);
+                if (this.password && this.imgtest) {
+                    this.ajax.post('/xinda-api/sso/login', logPar, {}).then((reData) => {
+                        console.log(reData);
+                        if (reData.data.status == 1) {
+                            this.successMsg = reData.data.msg;
+                            this.successRe = true;
 
-                    setTimeout(() => {
-                        this.successMsg = '';
-                        this.successRe = false;
+                            setTimeout(() => {
+                                this.successMsg = '';
+                                this.successRe = false;
 
-                        this.userAction(this.phone);
-                        // 登录成功，返回首页
-                        this.$router.push('/');
-                        // location.href  = '/';
-                    }, 2000);
+                                this.userAction(this.phone);
+                                sessionStorage.setItem('user',this.phone);
+                                // 登录成功，返回首页
+                                // this.$router.push('/');
+                                location.href  = '/';
+                            }, 2000);
+                        } else {
+                            this.failMsg = reData.data.msg;
+                            this.failRe = true;
+                            this.F5();
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+                    })
                 } else {
-                    this.failMsg = reData.data.msg;
+                    this.failMsg = '请输入密码或验证码！';
                     this.failRe = true;
                     this.F5();
                 }
-            }).catch((error) => {
-                console.log(error);
-            })
+            }
         }
     },
 
@@ -131,6 +139,7 @@ export default {
 </script>
 
 <style lang="less">
+@import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 .logonFrame {
     background-color: #f5f5f5;
     display: flex;

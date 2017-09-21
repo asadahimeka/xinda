@@ -12,6 +12,10 @@
                 <div class="wel">
                     欢迎注册
                 </div>
+                <el-alert class="errorEl" :title="errormsg" type="error" :closable="false" show-icon v-if="errorShow">
+                </el-alert>
+                <el-alert class="successEl" :title="successmsg" type="success" :closable="false" show-icon v-if="successShow">
+                </el-alert>
             </div>
         </div>
         <div class="mainBody">
@@ -22,7 +26,7 @@
                     <!-- 这里是验证码图片 -->
                     <img :src="src" alt="" @click="F5">
                 </div>
-                <input type="text" class="VerCode" placeholder="请输入短信验证码" @focus="noError">
+                <input type="text" class="VerCode" placeholder="请输入短信验证码" v-model="messageTest" @focus="noError">
                 <button class="clickGet" @click="getMessage">{{getMessageBtn}}</button>
                 <div class="area">
                     <select name="" id="province" @change="ChaProvinceEl" v-model="provinceVal">
@@ -41,7 +45,7 @@
                 <input type="password" placeholder="请设置密码" v-model="PSD" @focus="noError">
                 <div class="error">
                     <!-- 这里显示错误信息 -->
-                    {{errormsg}}
+                    <!-- 错误信息已经放到饿了么ui中 -->
                 </div>
                 <button class="registerNow" @click="registeNow">立即注册</button>
                 <div class="agreement">
@@ -55,7 +59,7 @@
             <div class="registerRight">
                 <p>已有帐号？</p>
                 <p>
-                    <a href="/#/Logon">立即登录>></a>
+                    <a href="/Logon">立即登录>></a>
                 </p>
                 <div class="getRight">
                     <img src="../../static/images/getRight.png" alt="">
@@ -66,7 +70,7 @@
 </template>
 
 <script>
-// import qs from 'qs'
+import MD5 from 'js-md5';
 export default {
     created() {
         this.getProvinceData();
@@ -74,11 +78,15 @@ export default {
     data() {
         return {
             errormsg: '',//显示错误信息
+            successmsg: '',//注册成功显示信息
             phone: '',//绑定手机号的Value值
             imgCode: '',//图片验证码的Value值
-            PSD: '',
-            getMessageBtn: '点击获取',
-            src: '/xinda-api/ajaxAuthcode',
+            messageTest: '',//短信验证码的Value值
+            PSD: '',//密码输入的Value值
+            getMessageBtn: '点击获取',//点击获取按钮
+            src: '/xinda-api/ajaxAuthcode',//图片获取地址
+            errorShow: false,//错误信息
+            successShow: false,//注册成功信息
             //下面是省市区三级联动的所有应用元素👇
             ProvinceAll: [],//所有的省元素
             provinceVal: 'all',//默认选中的省元素
@@ -91,6 +99,7 @@ export default {
     methods: {
         noError: function() {
             this.errormsg = '';
+            this.errorShow = false;
         },
         getMessage: function(e) {
             //点击获取短信验证码
@@ -104,8 +113,11 @@ export default {
                     console.log(fontMessage);
                     if (fontMessage.data.status == 1) {
                         this.errormsg = '';
-                        e.target.disabled = true;
-                        e.target.style.backgroundColor = '#f5f5f5';
+                        this.successmsg = fontMessage.data.msg;
+                        this.successShow = true;
+                        setTimeout(() => {
+                            this.successShow = false;
+                        }, 2000);
                         this.getMessageBtn = 59;
                         var timeLoop = setInterval(() => {
                             this.getMessageBtn -= 1;
@@ -113,6 +125,7 @@ export default {
                                 this.getMessageBtn = '点击获取';
                                 e.target.disabled = false;
                                 e.target.style.backgroundColor = '#fff';
+                                clearInterval(timeLoop);
                             }
                         }, 1000)
                     } else {
@@ -125,14 +138,14 @@ export default {
             };
         },
         F5: function() {//刷新验证码
-            // console.log(e.target);
             this.src = '/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
         },
         testPhone: function() {
             // 手机号本地校验正则
             var testPhone = /^[1][3,4,5,7,8][0-9]{9}$/;
             if (!testPhone.test(this.phone)) {
-                this.errormsg = '手机号输入不正确！';
+                this.errormsg = '请输入正确的11位手机号码！';
+                this.errorShow = true;
                 return false;
             };
             return true;
@@ -141,13 +154,70 @@ export default {
             // 密码本地校验正则
             var testPassword = /^(\w){6,20}$/;
             if (!testPassword.test(this.PSD)) {
-                this.errormsg = '密码不符合规范！'
+                this.errormsg = '密码不符合规范！';
+                this.errorShow = true;
                 return false;
             };
+            return true;
         },
+        testDistrict: function() {
+            if (this.districtVal == 'all') {
+                this.errormsg = '请选择正确的地区！';
+                this.errorShow = true;
+                return false;
+            }
+            return true;
+        },
+        // 手机号已被注册验证
         registeNow: function() {
-            this.testPhone();
             this.testPassword();
+            this.testDistrict();
+            this.testPhone();
+            if (!this.errorShow) {
+                var registerTP = {
+                    cellphone: this.phone,
+                    smsType: 1,
+                    validCode: this.messageTest
+                };
+                this.ajax.post('/xinda-api/register/valid-sms', registerTP, {}).then((rTP) => {
+                    console.log('rtp', rTP);
+                    if (rTP.data.status == 1) {
+                        this.goToRegister();
+                    } else {
+                        this.errormsg = rTP.data.msg;
+                        this.errorShow = true;
+                        this.F5();
+                    }
+                }).catch((error) => {
+                    console.log('error', error);
+                });
+            }
+        },
+        // 通过，开始注册
+        goToRegister: function() {
+            var shuju = {
+                cellphone: this.phone,
+                smsType: 1,
+                validCode: this.messageTest,
+                password: md5(this.PSD),
+                regionId: this.districtVal,
+            };
+            this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/register/register', shuju, {}).then((canLog) => {
+                console.log(canLog);
+                if (canLog.data.status == 1) {
+                    this.successmsg = canLog.data.msg;
+                    this.successShow = true;
+                    setTimeout(() => {
+                        // 页面自动跳转到登录页
+                        this.$router.push('/Logon');
+                    }, 2000);
+                } else {
+                    this.errormsg = canLog.data.msg;
+                    this.errorShow = true;
+                }
+            }).catch((error) => {
+                console.log(error);
+            })
         },
         //👇👇👇👇👇👇👇👇👇👇👇👇省市区三级联动 纯手写源生js👇👇👇👇👇👇👇👇👇👇👇👇👇
         //获取省市区的select元素
@@ -238,6 +308,7 @@ export default {
             height: 100%;
             display: flex;
             align-items: center;
+            position: relative;
             .Logo {
                 margin-right: 12px;
                 display: flex;
@@ -259,6 +330,21 @@ export default {
             .wel {
                 font-size: 18px;
                 color: #2a2a2a;
+            }
+            .errorEl,
+            .successEl {
+                width: 300px;
+                height: 30px;
+                position: absolute;
+                left: 50%;
+                top: 150px;
+                margin-left: -150px;
+                .el-alert__content {
+                    display: table-cell;
+                    padding: 0 8px;
+                    display: flex;
+                    align-items: center;
+                }
             }
         }
     }

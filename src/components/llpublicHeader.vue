@@ -1,7 +1,10 @@
 <template>
     <div class="publicheader">
+        <div class="exitMessage">
+
+        </div>
         <div class="headerframe">
-            <div class="header unLog" v-if="showUse">
+            <div class="header unLog" v-if="!getPhoneNum">
                 <div class="headerleft">
                     <div class="wel">欢迎来到信达！</div>
                     <a href="/#/Logon" class="login">{{msg}}</a>
@@ -14,18 +17,19 @@
                         <!-- 点击下面的a标签进入购物车 -->
                         <!-- <i class="iconcart icon-cart"></i> -->
                         <p>购物车
-                            <a href="">0</a>件</p>
+                            <a href="/#/shcart">0</a>件</p>
                     </div>
                     <a href="">服务商入口</a>
                 </div>
             </div>
-            <div class="header enLog" v-if="!showUse">
+            <div class="header enLog" v-if="getPhoneNum">
                 <div class="headerleft">
                     <a href="javascript:void(0);">
-                        <!-- 这里是已经登录的用户手机号 -->13800138000
+                        <!-- 这里是已经登录的用户手机号 -->
+                        {{getPhoneNum}}
                     </a>
                     <p>欢迎来到信达!</p>
-                    <a href="">
+                    <a href="javascript:void(0);" @click="exit">
                         【退出】
                     </a>
                 </div>
@@ -33,7 +37,7 @@
                     <div class="cart">
                         <i class="iconcart">&#xe604;</i>
                         <p>购物车
-                            <a href="">0</a>件</p>
+                            <a href="/#/shcart">0</a>件</p>
                     </div>
                     <div class="myOrder">
                         <i class="iconOrder">
@@ -49,12 +53,38 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
+    created() {
+        console.log(12312321);
+        this.ajax.post('/xinda-api/sso/login-info').then((user) => {
+            console.log('user', user);
+            if (user.data.data) {
+                console.log(5555);
+                this.getPhoneNum = user.data.data.name;
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+    },
     data() {
         return {
             msg: '登录',
-            showUse: true
+            getPhoneNum: getUserName || '',
         }
+    },
+    methods: {
+        exit: function() {
+            this.ajax.post('/xinda-api/sso/ logout').then((out) => {
+                console.log(out);
+                window.location.reload();
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
+    },
+    computed: {
+        ...mapGetters(['getUserName']),
     }
 }
 </script>
@@ -64,6 +94,10 @@ export default {
 a {
     text-decoration: none;
     color: #2693d4;
+}
+
+.exitMessage {
+    position: absolute;
 }
 
 .headerframe {

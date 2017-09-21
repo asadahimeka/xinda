@@ -195,7 +195,7 @@
                     <a href="">公司工商</a>
                 </li>
                 <li>
-                    <a href="#/JoinUs">加盟我们</a>
+                    <a href="/#/JoinUs">加盟我们</a>
                 </li>
                 <li>
                     <a href="">店铺</a>

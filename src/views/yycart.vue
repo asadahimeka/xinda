@@ -269,7 +269,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" scoped>
+<style lang="less">
 @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 
 @gwidth: 1200px;

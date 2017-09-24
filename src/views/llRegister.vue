@@ -115,7 +115,6 @@ export default {
                     imgCode: this.imgCode
                 };
                 this.ajax.post('/xinda-api/register/sendsms', message, {}).then((fontMessage) => {
-                    console.log(fontMessage);
                     if (fontMessage.data.status == 1) {
                         this.errormsg = '';
                         this.successmsg = fontMessage.data.msg;
@@ -124,12 +123,15 @@ export default {
                             this.successShow = false;
                         }, 2000);
                         this.getMessageBtn = 59;
+                        e.target.disabled = true;
+                        e.target.style.backgroundColor = '#f1f1f1';
                         var timeLoop = setInterval(() => {
                             this.getMessageBtn -= 1;
                             if (this.getMessageBtn == 0) {
                                 this.getMessageBtn = '点击获取';
                                 e.target.disabled = false;
                                 e.target.style.backgroundColor = '#fff';
+                                this.F5();
                                 clearInterval(timeLoop);
                             }
                         }, 1000)

@@ -53,21 +53,21 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
     created() {
         this.ajax.post('/xinda-api/sso/login-info').then((user) => {
             if (user.data.data) {
-                this.getPhoneNum = user.data.data.name;
+                this.userAction(user.data.data.name);
             }
         }).catch((error) => {
             console.log(error);
-        })
+        });
+
     },
     data() {
         return {
-            // msg: '登录',
-            // getPhoneNum: getUserName,
+            
         }
     },
     methods: {
@@ -77,7 +77,8 @@ export default {
             }).catch((error) => {
                 console.log(error);
             })
-        }
+        },
+        ...mapActions(['userAction']),
     },
     computed: {
         ...mapGetters(['getUserName', 'getCartnum']),

@@ -16,15 +16,15 @@
         </div>
         <div class="mainBody">
             <div class="inLogon">
-                <input type="number" placeholder="请输入手机号" v-model="phone" @focus="thisFocus">
-                <input type="password" placeholder="请输入密码" v-model="password" @focus="thisFocus">
-                <input type="text" placeholder="请输入验证码" v-model="imgtest" @focus="thisFocus">
+                <input type="number" placeholder="请输入手机号" v-model="phone" @focus="thisFocus()" @blur="thisBlur">
+                <input type="password" placeholder="请输入密码" v-model="password" @focus="thisFocus()" @blur="thisBlur">
+                <input type="text" placeholder="请输图片入验证码" v-model="imgtest" @focus="thisFocus()" @blur="thisBlur">
                 <div class="verCode" style="background-color:black">
                     <!-- 这里是验证码图片 -->
                     <img :src="src" alt="" @click="F5">
                 </div>
                 <div class="getPSD">
-                    <a href="/ForPSD">忘记密码？</a>
+                    <a href="/#/ForPSD">忘记密码？</a>
                 </div>
                 <button @click="logonNow">立即登录</button>
             </div>
@@ -57,22 +57,28 @@ import MD5 from 'js-md5';
 import { mapActions } from 'vuex';
 export default {
     created() {
-        onkeydown = (e) => {
-            if (e.keyCode == 13) {
-                this.logonNow();
+        this.ajax.post('/xinda-api/sso/login-info').then((ready) => {
+            if (ready.data.status == 1) {
+                this.successMsg = '自动登录成功，正在返回主页...';
+                this.successRe = true;
+                setTimeout(() => {
+                    this.$router.push('/')
+                }, 2000);
             }
-        }
+        }).catch((error) => {
+            console.log('error', error);
+        })
     },
     data() {
         return {
-            phone: '',
-            password: '',
-            imgtest: '',
-            successMsg: '1',
-            failMsg: '2',
-            successRe: false,
-            failRe: false,
-            src: '/xinda-api/ajaxAuthcode',
+            phone: '',//手机号的Value值
+            password: '',//密码的Value值
+            imgtest: '',//图片验证码的Value值
+            successMsg: '',//成功信息
+            failMsg: '',//失败信息
+            successRe: false,//成功信息显示flag
+            failRe: false,//失败信息显示flag
+            src: '/xinda-api/ajaxAuthcode',//验证码获取地址
         }
     },
     methods: {
@@ -85,6 +91,19 @@ export default {
             this.successMsg = '';
             this.successRe = false;
             this.failRe = false;
+            this.flag = true;
+            onkeydown = (e) => {
+                if (e.keyCode == 13) {
+                    this.logonNow();
+                }
+            };
+        },
+        thisBlur: function() {
+            onkeydown = (e) => {
+                if (e.keyCode == 13) {
+                    return false;
+                }
+            }
         },
         logonNow: function() {
             // 手机号码验证
@@ -102,7 +121,6 @@ export default {
             }
             // console.log(logPar);
             this.ajax.post('/xinda-api/sso/login', logPar, {}).then((reData) => {
-                console.log(reData);
                 if (reData.data.status == 1) {
                     this.successMsg = reData.data.msg;
                     this.successRe = true;

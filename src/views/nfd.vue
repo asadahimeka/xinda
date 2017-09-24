@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="setbg">
         <div class="hello">
             <img src="../../static/images/404.gif" alt="">
         </div>
@@ -13,25 +13,48 @@
 
 <script>
 export default {
-    name: 'nfd'
+    name: 'nfd',
+    data() {
+        return {
+
+        }
+    },
+    created() {
+        setTimeout(() => {
+            this.mmp();
+        }, 0);
+    },
+    methods: {
+        mmp: function() {
+            var bw = window.screen.availWidth,
+                bh = window.screen.availHeight,
+                box = document.querySelector('.setbg');
+            box.style.width = bw + 'px';
+            box.style.height = bh + 'px';
+        }
+    }
 }
 </script>
 
-<style lang="less" >
-.publicheader,
-.footer {
-    display: none;
-}
-
-body {
+<style lang="less">
+// .publicheader,
+// .footer {
+//     display: none;
+// }
+.setbg {
+    padding-top: 80px;
+    padding-bottom: 30px;
     background: #F1F4F8;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .hello {
     width: 1000px;
     height: 460px;
     overflow: hidden;
-    margin: 40px auto;
+    margin: 0px auto;
     img {
         width: 100%;
     }

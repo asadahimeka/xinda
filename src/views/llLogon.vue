@@ -123,8 +123,8 @@ export default {
             this.ajax.post('/xinda-api/sso/login', logPar, {}).then((reData) => {
                 if (reData.data.status == 1) {
                     this.successMsg = reData.data.msg;
-                    this.successRe = true;
-
+                    
+                    thisjidsisa;
                     setTimeout(() => {
                         this.successMsg = '';
                         this.successRe = false;

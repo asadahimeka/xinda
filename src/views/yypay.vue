@@ -211,9 +211,9 @@ export default {
                         this.codeUrl = res.data.data;
                     } else {
                         this.fbShow = true;
+                        sessionStorage.setItem('payuri', res.data);
+                        window.open('#/paybridge');
                     }
-                    sessionStorage.setItem('payuri', res.data);
-                    window.open('#/paybridge');
                 }).catch(res => {
                     console.log('Axios: ', res);
                 });

@@ -5,7 +5,7 @@
         </div>
         <div class="headerframe">
             <!-- <div class="header unLog" v-if="!getUserName"> -->
-            <div class="header unLog" v-if="!user">                
+            <div class="header unLog" v-if="!user">
                 <div class="headerleft">
                     <div class="wel">欢迎来到信达！</div>
                     <a href="/#/Logon" class="login">登录</a>
@@ -69,7 +69,7 @@ export default {
     },
     data() {
         return {
-            
+
         }
     },
     methods: {
@@ -85,7 +85,7 @@ export default {
     },
     computed: {
         ...mapGetters(['getUserName', 'getCartnum']),
-        user(){
+        user() {
             return sessionStorage.getItem('user');
         }
     }

@@ -33,22 +33,22 @@ export default new Router({
           path: 'JoinUs',
           component: JoinUs
         }, {
-          path: '/shcart',
+          path: 'shcart',
           name: 'shcart',
           component: Shcart
         },
         {
-          path: '/pay',
+          path: 'pay',
           name: 'pay',
           component: Pay
         },
         {
-          path: '/siharauseikou',
+          path: 'siharauseikou',
           name: 'paysuccess',
           component: PaySuccess
         },
         {
-          path: '/siharausippai',
+          path: 'siharausippai',
           name: 'payfail',
           component: PayFail
         },

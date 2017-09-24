@@ -62,8 +62,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
     created() {
         this.ajax.post('/xinda-api/sso/login-info').then((user) => {
@@ -95,7 +94,8 @@ export default {
             }).catch((error) => {
                 console.log(error);
             })
-        }
+        },
+        ...mapActions(['userAction']),
     },
     computed: {
         ...mapGetters(['getUserName', 'getCartnum']),

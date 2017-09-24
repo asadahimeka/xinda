@@ -63,15 +63,8 @@ export default {
             if(displayState == ''||displayState == 'none'){
                 chooseCity.style.display = 'block';
             }
-            var canshu = qs.stringify({
-
-            });
-            this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/common/open-region',canshu,{}).then((data)=>{
-                var _this = data.data.data;
-                // var allcity = [];
-                // console.log('data',_this);
-                this.items = _this;
-
+            this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/common/open-region').then((data)=>{
+                this.items = data.data.data;
             }).catch(function(error){
                 console.log('error',error);
             })
@@ -79,7 +72,6 @@ export default {
         endCity:function(e){
             var finalCity = document.querySelector('.finalCity');
             var changeCityInner = document.querySelector('.changeCityInner');
-            // console.log(e);
             finalCity.innerHTML = e.target.innerHTML;
             changeCityInner.style.display = 'none';
         }

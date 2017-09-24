@@ -22,7 +22,7 @@
                 </el-alert>
             </div>
             <div class="bodyLeft">
-                <input type="number" placeholder="请输入手机号码" v-model="phone" @focus="cleanMsg" @blur="unkey">
+                <input type="number" placeholder="请输入手机号码" v-model="phone" @focus="cleanMsg" @blur="unkey" autofocus>
                 <input type="text" placeholder="请输入图片验证码" v-model="imgCode" @focus="cleanMsg" @blur="unkey">
                 <div class="verCode" @click="F5">
                     <!-- 这里是图片验证码 -->

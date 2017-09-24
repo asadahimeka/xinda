@@ -7,7 +7,10 @@
 
         <el-alert v-if="gfail" title="Get data failed." type="error" show-icon></el-alert>
 
-        <div class="b-order" v-loading="loading">
+        <div class="b-order" v-if="!orderlist.length">
+            <el-alert title="No order information." type="error" :closable="false" show-icon></el-alert>
+        </div>
+        <div class="b-order" v-if="orderlist.length" v-loading="loading">
             <div class="odr-tit">
                 <div class="tit-item1">订单编号：
                     <!-- TODO -->
@@ -79,7 +82,7 @@
             <div class="amount">金额总计
                 <b class="money-color">&nbsp;￥&nbsp;{{fmtPrice(order.totalPrice)}}</b>
             </div>
-            <a class="balance" @click="submit(payNo,order.businessNo)">去结算</a>
+            <button class="balance" @click="submit(payNo,order.businessNo)" :disabled="order.businessNo==undefined">去结算</button>
         </div>
 
         <div class="pay-fb" v-show="fbShow">
@@ -163,23 +166,29 @@ export default {
                 { businessNo: this.$route.query.bno },
             ).then(res => {
                 if (res.data.status == 1) {
-                    this.order = res.data.data.businessOrder;
-                    this.orderlist = res.data.data.serviceOrderList;
-                    this.loading = false;
-                } else {
+                    if (res.data.data.businessOrder.status == 1) {
+                        this.order = res.data.data.businessOrder;
+                        this.orderlist = res.data.data.serviceOrderList;
+                        this.loading = false;
+                    } else {
+                        this.$message({ type: 'warning', message: '订单已支付或取消', duration: 2000 });
+                        // this.$router.push('/');
+                    }
+                } else if (!res.data.data) {
                     this.$message({
                         type: "warning",
-                        message: '请先登录！跳转至登录界面',
+                        message: res.data.msg,
                         duration: 2000,
                     });
                     //TODO
-                    this.$router.push('/Logon');
+                    // this.$router.push('/Logon');
                 }
             }).catch(res => {
                 this.loading = false;
                 this.gfail = true;
                 console.log('Axios: ', res);
             });
+
         },
         submit(payNo, businessNo) {
             if (!payNo) {
@@ -197,16 +206,25 @@ export default {
                     '/xinda-api/pay/' + payNo,
                     { businessNo },
                 ).then(res => {
-                    if (res.data.status == 1) {
-                        if (payNo == 'weixin-pay') {
-                            this.wxfbShow = true;
-                            this.codeUrl = res.data.data;
-                        } else {
-                            this.fbShow = true;
-                        }
+                    console.log(res);
+                    if (payNo == 'weixin-pay') {
+                        this.wxfbShow = true;
+                        this.codeUrl = res.data.data;
                     } else {
-                        this.$message({ type: 'error', message: res.data.msg, duration: 1000 });
+                        this.fbShow = true;
                     }
+                    sessionStorage.setItem('payuri',res.data);
+                    window.open('#/paybridge');
+                    // if (res.data.status == 1) {
+                    //     if (payNo == 'weixin-pay') {
+                    //         this.wxfbShow = true;
+                    //         this.codeUrl = res.data.data;
+                    //     } else {
+                    //         this.fbShow = true;
+                    //     }
+                    // } else if (res.data.status < 0) {
+                    //     this.$message({ type: 'error', message: res.data.msg, duration: 1000 });
+                    // }
                 }).catch(res => {
                     console.log('Axios: ', res);
                 });
@@ -226,13 +244,13 @@ export default {
         },
     },
     created() {
+        window.scrollTo(0, 0);
         this.getOrder();
     }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" scoped>
+<style lang="less">
 @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 
 @gwidth: 1200px;
@@ -246,7 +264,7 @@ export default {
     }
     &:hover .allNavigation {
         display: block;
-        z-index: 10;
+        z-index: 10002;
     }
 }
 
@@ -442,11 +460,12 @@ body {
     .balance {
         float: right;
         width: 100px;
-        height: 25px;
+        height: 30px;
         line-height: 25px;
         border: 1px solid @mcolor;
         border-radius: 5px;
         color: @mcolor;
+        background: #fff;
         text-align: center;
         text-decoration: none;
         cursor: pointer;
@@ -571,5 +590,9 @@ body {
 .el-alert {
     width: 300px;
     margin: 40px auto;
+}
+
+.el-alert__content {
+    padding: 0 20px;
 }
 </style>

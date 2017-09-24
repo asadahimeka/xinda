@@ -4,7 +4,8 @@
 
         </div>
         <div class="headerframe">
-            <div class="header unLog" v-if="!getUserName">
+            <!-- <div class="header unLog" v-if="!getUserName"> -->
+            <div class="header unLog" v-if="!user">                
                 <div class="headerleft">
                     <div class="wel">欢迎来到信达！</div>
                     <a href="/#/Logon" class="login">登录</a>
@@ -13,20 +14,21 @@
                 <div class="headerright">
                     <div class="cart">
                         <i class="iconcart">&#xe604;</i>
-
                         <!-- 点击下面的a标签进入购物车 -->
                         <!-- <i class="iconcart icon-cart"></i> -->
-                        <p>购物车
-                            <a href="/#/shcart">{{getCartnum}}</a>件</p>
+                        <p>&nbsp;购物车
+                            <a href="/#/shcart">{{getCartnum}}</a>&nbsp;件</p>
                     </div>
                     <a href="">服务商入口</a>
                 </div>
             </div>
-            <div class="header enLog" v-if="getUserName">
+            <!-- <div class="header enLog" v-if="getUserName"> -->
+            <div class="header enLog" v-if="user">
                 <div class="headerleft">
                     <a href="javascript:void(0);">
                         <!-- 这里是已经登录的用户手机号 -->
-                        {{getUserName}}
+                        <!-- {{getUserName}} -->
+                        {{user}}
                     </a>
                     <p>欢迎来到信达!</p>
                     <a href="javascript:void(0);" @click="exit">
@@ -73,6 +75,7 @@ export default {
     methods: {
         exit: function() {
             this.ajax.post('/xinda-api/sso/ logout').then((out) => {
+                sessionStorage.removeItem('user');
                 window.location.reload();
             }).catch((error) => {
                 console.log(error);
@@ -82,6 +85,9 @@ export default {
     },
     computed: {
         ...mapGetters(['getUserName', 'getCartnum']),
+        user(){
+            return sessionStorage.getItem('user');
+        }
     }
 }
 </script>

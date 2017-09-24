@@ -16,7 +16,7 @@
         </div>
         <div class="mainBody">
             <div class="inLogon">
-                <input type="number" placeholder="请输入手机号" v-model="phone" @focus="thisFocus()" @blur="thisBlur">
+                <input type="number" placeholder="请输入手机号" v-model="phone" @focus="thisFocus()" @blur="thisBlur" autofocus>
                 <input type="password" placeholder="请输入密码" v-model="password" @focus="thisFocus()" @blur="thisBlur">
                 <input type="text" placeholder="请输图片入验证码" v-model="imgtest" @focus="thisFocus()" @blur="thisBlur">
                 <div class="verCode" style="background-color:black">
@@ -36,7 +36,7 @@
                     还没有帐号？
                 </div>
                 <div class="Toregister">
-                    <a href="/Register" class="ToRegister">
+                    <a href="#/Register" class="ToRegister">
                         立即注册>>
                     </a>
                 </div>
@@ -130,9 +130,10 @@ export default {
                         this.successRe = false;
 
                         this.userAction(this.phone);
+                        sessionStorage.setItem('user', this.phone);
                         // 登录成功，返回首页
-                        this.$router.push('/');
-                        // location.href  = '/';
+                        // this.$router.push('/');
+                        location.href = '/';
                     }, 2000);
                 } else {
                     this.failMsg = reData.data.msg;
@@ -149,6 +150,7 @@ export default {
 </script>
 
 <style lang="less">
+@import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 .logonFrame {
     background-color: #f5f5f5;
     display: flex;

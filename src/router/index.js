@@ -8,16 +8,16 @@ import JoinUs from '../views/llJoinUs.vue'
 import Logon from '../views/llLogon.vue'
 import Register from '../views/llRegister.vue'
 import ForPSD from '../views/llForgetPSD.vue'
-import ElementUI from 'element-ui' 
-import 'element-ui/lib/theme-default/index.css'
 
 import Shcart from '../views/yycart.vue'
 import Pay from '../views/yypay.vue'
 import PaySuccess from '../views/yypsucs.vue'
 import PayFail from '../views/yypfail.vue'
+import Nfd from '../views/nfd.vue'
+import PayBridge from '../views/yypaybrg.vue'
+
 
 Vue.use(Router)
-Vue.use(ElementUI)
 
 export default new Router({
   routes: [
@@ -51,9 +51,7 @@ export default new Router({
           path: '/siharausippai',
           name: 'payfail',
           component: PayFail
-        }
-
-
+        },
 
 
       ]
@@ -66,6 +64,18 @@ export default new Router({
     }, {
       path: '/ForPSD',
       component: ForPSD
+    }, {
+      path: '/paybridge',
+      name: 'paybdg',
+      component: PayBridge
     },
+
+
+
+    {
+      path: '/*',
+      component: Nfd
+    },
+
   ]
 })

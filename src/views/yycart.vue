@@ -22,9 +22,9 @@
                 </tr>
                 <tr class="cartitem" :key="item.serviceId">
                     <!-- TODO toDetail, img:src -->
-                    <td class="shoplogo" @click="toDetail('/',item.providerId)"><img :src="pichost+item.providerImg" alt="shop img not found"></td>
-                    <td class="srvname" @click="toDetail('/',item.serviceId)">{{item.serviceName}}</td>
-                    <td>￥{{fmtPrice(item.unitPrice)+item.unit}}</td>
+                    <td class="shoplogo" @click="toDetail('/',item.providerId)"><img :src="dealSrc(item.providerImg)" alt="shop img not found"></td>
+                    <td class="srvname" :title="item.serviceName" @click="toDetail('/',item.serviceId)">{{item.serviceName}}</td>
+                    <td>￥{{fmtPrice(item.unitPrice)+(item.unit||'')}}</td>
                     <td>
                         <button class="min" @click="item.buyNum=clkMin(item.buyNum)">-</button>
                         <input type="text" class="shnum" v-model="item.buyNum" @change="item.buyNum=cartChange(item.buyNum)" @focus="focus" v-numberonly>
@@ -40,7 +40,9 @@
         <div v-if="!cartlist.length" class="loading emp">
             <img src="../assets/cart.jpg" alt=""><br>
             <span>购物车空空如也，去首页逛逛吧！</span><br>
-            <button><a href="#/">去首页</a></button>
+            <button>
+                <a href="#/">去首页</a>
+            </button>
         </div>
         <el-alert v-if="gfail01" title="Get data failed." type="error" show-icon></el-alert>
 
@@ -65,6 +67,7 @@
             <div v-for="item in srvlist" class="srv-card" @click="toDetail('/',item.id)" v-bind:key="item.id">
                 <h2 :title="item.serviceName">{{item.serviceName}}</h2>
                 <!-- TODO -->
+                <span></span>
                 <i></i>
                 <p :title="item.serviceInfo" class="srv-gmy">{{item.serviceInfo}}</p>
                 <p>销量：{{item.buyNum}}</p>
@@ -97,6 +100,9 @@ export default {
     },
     methods: {
         ...mapActions(['cartAction']),
+        dealSrc(src) {
+            return /^\/[^/]/.test(src) ? this.pichost + src : src;
+        },
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
@@ -120,6 +126,7 @@ export default {
             this.ajax.post(
                 '/xinda-api/cart/list'
             ).then(res => {
+                console.log(res);
                 if (res.data.status == 1) {
                     this.cartlist = res.data.data;
                     this.loading0 = false;
@@ -212,6 +219,7 @@ export default {
                     '/xinda-api/cart/del',
                     { id: item.serviceId }
                 ).then(res => {
+                    console.log(res);
                     if (res.data.status == 1) {
                         let i = this.cartlist.indexOf(item);
                         this.cartlist.splice(i, 1);
@@ -249,6 +257,31 @@ export default {
         }
     },
     created() {
+        window.scrollTo(0, 0);
+        
+        this.ajax.post(
+            '/xinda-api/cart/add',
+            {
+                id: "9fce32b0044f4d43ae272d6a5b9d1f2b",
+                num: 1
+            }
+        ).then(res => {
+            console.log(res);
+        }).catch(res => {
+            console.log('Axios: ', res);
+        });
+        this.ajax.post(
+            '/xinda-api/cart/add',
+            {
+                id: '0cb85ec6b63b41fc8aa07133b6144ea3',
+                num: 1
+            }
+        ).then(res => {
+            console.log(res);
+        }).catch(res => {
+            console.log('Axios: ', res);
+        });
+
         this.getCart();
         this.ajax.post(
             '/xinda-api/recommend/list'
@@ -268,7 +301,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
 @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 
@@ -281,7 +313,7 @@ export default {
     }
     &:hover .allNavigation {
         display: block;
-        z-index: 10;
+        z-index: 10002;
     }
 }
 
@@ -374,6 +406,7 @@ body {
     }
     .amount {
         height: 50px;
+        margin-right: 20px;
         line-height: 50px;
         text-align: right;
         b {
@@ -414,11 +447,21 @@ body {
                 margin-top: 0;
                 font-weight: 500;
             }
-            i {
-                width: 235px;
-                height: 10px;
+            span {
                 display: inline-block;
-                background: url("../assets/line.jpg") no-repeat;
+                width: 6px;
+                height: 6px;
+                vertical-align: middle;
+                border-radius: 100%;
+                background: @mcolor;
+            }
+            i {
+                display: inline-block;
+                width: 160px;
+                height: 1px;
+                margin-left: -4px;
+                vertical-align: middle;
+                background: linear-gradient(90deg, @mcolor, @mcolor, #fff);
             }
             b {
                 font-size: 30px;
@@ -463,17 +506,17 @@ body {
         top: 0;
         left: 46%;
     }
-    img{
+    img {
         width: 560px;
         height: 250px;
         margin: 0 auto;
     }
-    span{
+    span {
         text-align: center;
         font-size: 18px;
         color: @mcolor;
     }
-    button{
+    button {
         width: 200px;
         height: 50px;
         line-height: 50px;
@@ -482,14 +525,14 @@ body {
         background: @mcolor;
         border: 0;
         border-radius: 5px;
-        a{
+        a {
             color: #fff;
             text-decoration: none;
         }
     }
 }
 
-.emp{
+.emp {
     height: 400px;
     margin-top: 0;
     margin-bottom: 40px;

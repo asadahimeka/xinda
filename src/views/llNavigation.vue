@@ -4,7 +4,7 @@
             <ul>
                 <li class="mainA">
                     <a href="javascript:void(0)">全部产品</a>
-                    <div class="allNavigation">
+                    <div class="allNavigation" v-show="show">
                         <div class="finance">
                             <i class="navigationLogo">
                                 &#xe653;
@@ -189,10 +189,10 @@
                     </div>
                 </li>
                 <li>
-                    <a href="javascript:void(0);">财税服务</a>
+                    <a href="#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=1&pid=8a82f52b674543e298d2e5f685946e6e">财税服务</a>
                 </li>
                 <li>
-                    <a href="">公司工商</a>
+                    <a href="#/slist?id=5af629246fa34f6f8d49758c6a7b25f1&code=4&pid=19b94314bc1a4b078d2402f8727c388b">公司工商</a>
                 </li>
                 <li>
                     <a href="/#/JoinUs">加盟我们</a>
@@ -207,11 +207,30 @@
 
 <script>
 export default {
-
+    data() {
+        return { show: 0 }
+    },
+    created() {
+        this.$route.path == '/' ? this.show = 1 : 0;
+    },
+    watch: {
+        $route(val) {
+            this.show = val.path == '/' ? 1 : 0;
+        }
+    },
 }
 </script>
 
 <style lang="less">
+.mainA {
+    .allNavigation {
+        z-index: 2;
+    }
+    &:hover .allNavigation {
+        display: block !important;
+    }
+}
+
 .navigation {
     width: 100%;
     height: 40px;
@@ -226,6 +245,7 @@ export default {
             display: flex;
             width: 200px;
             height: 100%;
+            line-height: 3;
             justify-content: center;
             position: relative;
             .allNavigation {

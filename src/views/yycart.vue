@@ -24,9 +24,9 @@
                     <!-- TODO toDetail, img:src -->
                     <td class="shoplogo" @click="toDetail('/',item.providerId)"><img :src="dealSrc(item.providerImg)" alt="shop img not found"></td>
                     <td class="srvname" :title="item.serviceName" @click="toDetail('/',item.serviceId)">{{item.serviceName}}</td>
-                    <td>￥{{fmtPrice(item.unitPrice)+(item.unit||'')}}</td>
+                    <td>￥{{fmtPrice(item.unitPrice)+'&nbsp;'+dealUnit(item.unit)}}</td>
                     <td>
-                        <button class="min" @click="item.buyNum=clkMin(item.buyNum)">-</button>
+                        <button class="min" @click="item.buyNum=clkMin(item.buyNum)" :disabled="item.buyNum==1">-</button>
                         <input type="text" class="shnum" v-model="item.buyNum" @change="item.buyNum=cartChange(item.buyNum)" @focus="focus" v-numberonly>
                         <button class="pls" @click="item.buyNum=clkPls(item.buyNum)">+</button>
                     </td>
@@ -37,6 +37,7 @@
                 </tr>
             </template>
         </table>
+        <el-alert v-if="gfail01" title="Get data failed." type="error" show-icon></el-alert>
         <div v-if="!cartlist.length" class="loading emp">
             <img src="../assets/cart.jpg" alt=""><br>
             <span>购物车空空如也，去首页逛逛吧！</span><br>
@@ -44,7 +45,6 @@
                 <a href="#/">去首页</a>
             </button>
         </div>
-        <el-alert v-if="gfail01" title="Get data failed." type="error" show-icon></el-alert>
 
         <div v-if="cartlist.length" class="btm">
             <div class="amount">金额总计
@@ -98,6 +98,25 @@ export default {
             srvlist: [],
         }
     },
+    created() {
+        window.scrollTo(0, 0);
+        this.getCart();
+        this.ajax.post(
+            '/xinda-api/recommend/list'
+        ).then(res => {
+            if (res.data.status == 1) {
+                this.srvlist = res.data.data.product;
+                this.loading = false;
+            } else {
+                this.$message({ type: 'warning', message: res.data.msg });
+                this.gfail = true;
+            }
+        }).catch(res => {
+            this.loading = false;
+            this.gfail = true;
+            console.log('Axios: ', res);
+        });
+    },
     methods: {
         ...mapActions(['cartAction']),
         dealSrc(src) {
@@ -105,6 +124,9 @@ export default {
         },
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
+        },
+        dealUnit(u) {
+            return u ? u.substr(u.indexOf(':') + 1).replace(/[?\s]+/g, '') : '元';
         },
         clkMin(num) {
             return num = parseInt(num) < 2 ? 1 : parseInt(num) - 1;
@@ -126,11 +148,12 @@ export default {
             this.ajax.post(
                 '/xinda-api/cart/list'
             ).then(res => {
-                console.log(res);
                 if (res.data.status == 1) {
                     this.cartlist = res.data.data;
                     this.loading0 = false;
+                    this.cartAction(this.cartlist.length);
                 } else {
+                    this.$message({ type: 'warning', message: res.data.msg });
                     this.gfail01 = true;
                 }
             }).catch(res => {
@@ -156,6 +179,7 @@ export default {
                         num: this.cartlist[i].buyNum,
                     }
                 ).then(res => {
+                    console.log('conti', res);
                     if (res.data.status == -1) {
                         this.$message({ type: 'error', message: res.data.msg, duration: 1000 });
                     } else if (i == this.cartlist.length - 1) {
@@ -219,12 +243,11 @@ export default {
                     '/xinda-api/cart/del',
                     { id: item.serviceId }
                 ).then(res => {
-                    console.log(res);
                     if (res.data.status == 1) {
                         let i = this.cartlist.indexOf(item);
                         this.cartlist.splice(i, 1);
                         //TODO
-                        // this.cartAction(this.cartlist.length);
+                        this.cartAction(this.cartlist.length);
                         this.$message({ type: 'success', message: '删除成功!' });
                     } else {
                         this.$message({ type: 'error', message: res.data.msg });
@@ -256,66 +279,14 @@ export default {
             }
         }
     },
-    created() {
-        window.scrollTo(0, 0);
-        
-        this.ajax.post(
-            '/xinda-api/cart/add',
-            {
-                id: "9fce32b0044f4d43ae272d6a5b9d1f2b",
-                num: 1
-            }
-        ).then(res => {
-            console.log(res);
-        }).catch(res => {
-            console.log('Axios: ', res);
-        });
-        this.ajax.post(
-            '/xinda-api/cart/add',
-            {
-                id: '0cb85ec6b63b41fc8aa07133b6144ea3',
-                num: 1
-            }
-        ).then(res => {
-            console.log(res);
-        }).catch(res => {
-            console.log('Axios: ', res);
-        });
-
-        this.getCart();
-        this.ajax.post(
-            '/xinda-api/recommend/list'
-        ).then(res => {
-            if (res.data.status == 1) {
-                this.srvlist = res.data.data.hq;
-                this.loading = false;
-            } else {
-                this.gfail = true;
-            }
-        }).catch(res => {
-            this.loading = false;
-            this.gfail = true;
-            console.log('Axios: ', res);
-        });
-    }
 }
 </script>
 
 <style lang="less">
-@import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
-
+// @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 @gwidth: 1200px;
 @mcolor: #2693d4;
 @borclr: #b6b6b6;
-.mainA {
-    .allNavigation {
-        display: none;
-    }
-    &:hover .allNavigation {
-        display: block;
-        z-index: 10002;
-    }
-}
 
 body {
     margin: 0;
@@ -379,6 +350,7 @@ body {
             .pls {
                 display: inline-block;
                 vertical-align: middle;
+                width: 20px;
                 height: 22px;
                 background: #f1f1f1;
                 border: 1px solid #f6f6f6;

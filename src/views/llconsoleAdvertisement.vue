@@ -1,41 +1,32 @@
 <template>
-    <div id="swiper">
-        <swiper :options="swiperOption" ref="mySwiper">
-            <!-- 这部分放你要渲染的那些内容 -->
-            <swiper-slide v-for="(item, k) in items" :key="k">
-                <!-- 在这里遍历所有轮播图片 -->
-                <img :src="item" alt="">
-            </swiper-slide>
-            <!-- 这是轮播的小圆点 -->
-            <div class="swiper-pagination" slot="pagination"></div>
-        </swiper>
+    <div>
+        <div id="swiper">
+            <swiper :options="swiperOption" ref="mySwiper">
+                <!-- 这部分放你要渲染的那些内容 -->
+                <swiper-slide v-for="(item, k) in items" :key="k">
+                    <!-- 在这里遍历所有轮播图片 -->
+                    <img :src="item" alt="">
+                </swiper-slide>
+                <!-- 这是轮播的小圆点 -->
+                <div class="swiper-pagination" slot="pagination"></div>
+            </swiper>
+        </div>
+        <x-index></x-index>
     </div>
 </template>
 
 <script>  
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
-import axios from 'axios';
-import qs from 'qs';
-
+import xindex from './xxindex'
 
 export default {
     created() {
-        axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-        var canshu = qs.stringify({
-
-        });
-        axios.post('http://115.182.107.203:8088/xinda/xinda-api/recommend/list', canshu, {}).then(function(data) {
-            // console.log('axios data', data);
-            // 这里写回调函数
-
-
-        }).catch(function(error) {
-            console.log('axios error', error);
-        });
+        window.scrollTo(0, 0);
     },
     components: {
         swiper,
-        swiperSlide
+        swiperSlide,
+        'x-index': xindex,
     },
     data() {
         return {
@@ -90,7 +81,4 @@ export default {
     height: 401px;
 }
 
-.allNavigation {
-    z-index: 2;
-}
 </style>

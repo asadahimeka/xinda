@@ -7,7 +7,7 @@
 
         <el-alert v-if="gfail" title="Get data failed." type="error" show-icon></el-alert>
 
-        <div class="b-order" v-if="!orderlist.length">
+        <div class="b-order" v-if="!orderlist.length" v-loading="loading">
             <el-alert title="No order information." type="error" :closable="false" show-icon></el-alert>
         </div>
         <div class="b-order" v-if="orderlist.length" v-loading="loading">
@@ -165,6 +165,7 @@ export default {
                 '/xinda-api/business-order/detail',
                 { businessNo: this.$route.query.bno },
             ).then(res => {
+                console.log(res);
                 if (res.data.status == 1) {
                     if (res.data.data.businessOrder.status == 1) {
                         this.order = res.data.data.businessOrder;
@@ -172,16 +173,14 @@ export default {
                         this.loading = false;
                     } else {
                         this.$message({ type: 'warning', message: '订单已支付或取消', duration: 2000 });
-                        // this.$router.push('/');
+                        this.$router.push('/');
                     }
+                } else if (res.data.status == -999) {
+                    this.$message({ type: "warning", message: res.data.msg, duration: 1000 });
+                    this.$router.push('/Logon');
                 } else if (!res.data.data) {
-                    this.$message({
-                        type: "warning",
-                        message: res.data.msg,
-                        duration: 2000,
-                    });
-                    //TODO
-                    // this.$router.push('/Logon');
+                    this.$message({ type: "warning", message: res.data.msg, duration: 1000 });
+                    this.$router.push('/');
                 }
             }).catch(res => {
                 this.loading = false;
@@ -213,18 +212,8 @@ export default {
                     } else {
                         this.fbShow = true;
                     }
-                    sessionStorage.setItem('payuri',res.data);
+                    sessionStorage.setItem('payuri', res.data);
                     window.open('#/paybridge');
-                    // if (res.data.status == 1) {
-                    //     if (payNo == 'weixin-pay') {
-                    //         this.wxfbShow = true;
-                    //         this.codeUrl = res.data.data;
-                    //     } else {
-                    //         this.fbShow = true;
-                    //     }
-                    // } else if (res.data.status < 0) {
-                    //     this.$message({ type: 'error', message: res.data.msg, duration: 1000 });
-                    // }
                 }).catch(res => {
                     console.log('Axios: ', res);
                 });

@@ -4,8 +4,8 @@
 
         </div>
         <div class="headerframe">
-            <!-- <div class="header unLog" v-if="!getUserName"> -->
-            <div class="header unLog" v-if="!user">                
+            <div class="header unLog" v-if="!getUserName">
+                <!-- <div class="header unLog" v-if="!user">                 -->
                 <div class="headerleft">
                     <div class="wel">欢迎来到信达！</div>
                     <a href="/#/Logon" class="login">登录</a>
@@ -13,22 +13,25 @@
                 </div>
                 <div class="headerright">
                     <div class="cart">
-                        <i class="iconcart">&#xe604;</i>
-                        <!-- 点击下面的a标签进入购物车 -->
-                        <!-- <i class="iconcart icon-cart"></i> -->
-                        <p>&nbsp;购物车
-                            <a href="/#/shcart">{{getCartnum}}</a>&nbsp;件</p>
+                        <a href="/#/shcart">
+                            <i class="iconcart">&#xe604;</i>
+                        </a>
+                        <a href="/#/shcart">
+                            <!-- 点击下面的a标签进入购物车 -->
+                            <p>&nbsp;购物车
+                                <span>{{getCartnum}}</span>&nbsp;件</p>
+                        </a>
                     </div>
                     <a href="">服务商入口</a>
                 </div>
             </div>
-            <!-- <div class="header enLog" v-if="getUserName"> -->
-            <div class="header enLog" v-if="user">
+            <div class="header enLog" v-if="getUserName">
+                <!-- <div class="header enLog" v-if="user"> -->
                 <div class="headerleft">
                     <a href="javascript:void(0);">
                         <!-- 这里是已经登录的用户手机号 -->
-                        <!-- {{getUserName}} -->
-                        {{user}}
+                        {{getUserName}}
+                        <!-- {{user}} -->
                     </a>
                     <p>欢迎来到信达!</p>
                     <a href="javascript:void(0);" @click="exit">
@@ -37,9 +40,13 @@
                 </div>
                 <div class="headerright">
                     <div class="cart">
-                        <i class="iconcart">&#xe604;</i>
-                        <p>购物车
-                            <a href="/#/shcart">0</a>件</p>
+                        <a href="/#/shcart">
+                            <i class="iconcart">&#xe604;</i>
+                        </a>
+                        <a href="/#/shcart">
+                            <p>&nbsp;购物车
+                                <span>{{getCartnum}}</span>&nbsp;件</p>
+                        </a>
                     </div>
                     <div class="myOrder">
                         <i class="iconOrder">
@@ -56,25 +63,34 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 export default {
     created() {
         this.ajax.post('/xinda-api/sso/login-info').then((user) => {
             if (user.data.data) {
-                this.getPhoneNum = user.data.data.name;
+                this.userAction(user.data.data.name);
             }
         }).catch((error) => {
             console.log(error);
-        })
+        });
+        this.ajax.post('/xinda-api/cart/cart-num').then((res) => {
+            if (res.data.data.cartNum) {
+                this.cartAction(res.data.data.cartNum);
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
     },
     data() {
         return {
-            
+
         }
     },
     methods: {
+        ...mapActions(['userAction', 'cartAction']),
         exit: function() {
-            this.ajax.post('/xinda-api/sso/ logout').then((out) => {
-                sessionStorage.removeItem('user');
+            this.ajax.post('/xinda-api/sso/logout').then((out) => {
+                // sessionStorage.removeItem('user');
                 window.location.reload();
             }).catch((error) => {
                 console.log(error);
@@ -83,9 +99,9 @@ export default {
     },
     computed: {
         ...mapGetters(['getUserName', 'getCartnum']),
-        user(){
-            return sessionStorage.getItem('user');
-        }
+        // user() {
+        //     return sessionStorage.getItem('user');
+        // }
     }
 }
 </script>
@@ -145,12 +161,19 @@ a {
                 align-items: center;
                 margin-right: 10px;
                 .iconcart {
+                    color: #000;
                     font-family: "iconfont" !important;
                     font-size: 17px;
                     font-style: normal;
                     -webkit-font-smoothing: antialiased;
                     -webkit-text-stroke-width: 0.2px;
                     -moz-osx-font-smoothing: grayscale;
+                }
+                p {
+                    color: #000;
+                    span {
+                        color: #2693D4;
+                    }
                 }
             }
         }

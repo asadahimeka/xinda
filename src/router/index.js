@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Contents from '../views/llContent.vue'
-import Navigation from '../views/llNavigation.vue'
 import ConsoleAdvertisement from '../views/llconsoleAdvertisement.vue'
 import JoinUs from '../views/llJoinUs.vue'
 import Logon from '../views/llLogon.vue'
@@ -13,11 +12,13 @@ import Shcart from '../views/yycart.vue'
 import Pay from '../views/yypay.vue'
 import PaySuccess from '../views/yypsucs.vue'
 import PayFail from '../views/yypfail.vue'
-import Nfd from '../views/nfd.vue'
 import PayBridge from '../views/yypaybrg.vue'
+import Nfd from '../views/nfd.vue'
 
+import Financial from '../views/xxfiscal.vue'
+import Shdetail from '../views/xxspdetail.vue'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -33,24 +34,29 @@ export default new Router({
           path: 'JoinUs',
           component: JoinUs
         }, {
-          path: '/shcart',
+          path: 'shcart',
           name: 'shcart',
           component: Shcart
-        },
-        {
-          path: '/pay',
+        },{
+          path: 'pay',
           name: 'pay',
           component: Pay
-        },
-        {
-          path: '/siharauseikou',
+        },{
+          path: 'siharauseikou',
           name: 'paysuccess',
           component: PaySuccess
-        },
-        {
-          path: '/siharausippai',
+        },{
+          path: 'siharausippai',
           name: 'payfail',
           component: PayFail
+        },{
+          path: 'slist',
+          name: 'srvlist',
+          component: Financial
+        },{
+          path: 'shdetail',
+          name: 'shdetail',
+          component: Shdetail
         },
 
 
@@ -76,6 +82,5 @@ export default new Router({
       path: '/*',
       component: Nfd
     },
-
   ]
 })

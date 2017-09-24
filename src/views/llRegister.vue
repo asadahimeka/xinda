@@ -21,12 +21,12 @@
         <div class="mainBody">
             <div class="registerLeft">
                 <input type="number" placeholder="请输入手机号码" v-model="phone" @focus="noError" @blur="phoneBlur" autofocus>
-                <input type="text" placeholder="请输入图片验证码" v-model="imgCode" @focus="noErr">
+                <input type="text" placeholder="请输入图片验证码" v-model="imgCode" @focus="noErr" @blur="testCodeEmpty">
                 <div class="verCode">
                     <!-- 这里是验证码图片 -->
                     <img :src="src" alt="" @click="F5">
                 </div>
-                <input type="text" class="VerCode" placeholder="请输入短信验证码" v-model="messageTest" @focus="noErr">
+                <input type="text" class="VerCode" placeholder="请输入短信验证码" v-model="messageTest" @focus="noErr" @blur="testCodeEmpty">
                 <button class="clickGet" @click="getMessage">{{getMessageBtn}}</button>
                 <div class="area">
                     <select name="" id="province" @change="ChaProvinceEl" v-model="provinceVal">
@@ -42,7 +42,7 @@
                         <option v-for="(district,i) in DistrictAll" :value="district.item_code" :key="i">{{district.item_name}}</option>
                     </select>
                 </div>
-                <input type="password" placeholder="请设置密码" v-model="PSD" @focus="noErr">
+                <input type="password" placeholder="请设置密码" v-model="PSD" @focus="noErr" @blur="testPassword">
                 <div class="error">
                     <!-- 这里显示错误信息 -->
                     <!-- 错误信息已经放到Element ui中 -->
@@ -132,15 +132,16 @@ export default {
                                 e.target.style.backgroundColor = '#fff';
                                 clearInterval(timeLoop);
                             }
-                        }, 1000)
+                        }, 1000);
                     } else {
                         this.errormsg = fontMessage.data.msg;
+                        this.errorShow = true;
                         this.F5();
                     }
                 }).catch((error) => {
                     console.log('e', error);
-                })
-            };
+                });
+            }
         },
         F5() {//刷新验证码
             this.src = '/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
@@ -151,15 +152,15 @@ export default {
                 this.testDistrict();
             }
         },
+        // 验证手机号是否已被注册
         phoneBlur() {
-            this.noError();
             if (this.testPhone()) {
                 this.ajax.post('/xinda-api/register/valid-sms', {
                     cellphone: this.phone,
                     smsType: 1,
                     validCode: this.messageTest,
                 }).then(rTP => {
-                    console.log('rTP: ', rTP);
+                    // console.log('rTP: ', rTP);
                     if (rTP.data.status == -2) {
                         this.errormsg = rTP.data.msg;
                         this.errorShow = true;
@@ -209,16 +210,16 @@ export default {
             }
             return true;
         },
-        // 手机号已被注册验证
-        registeNow() {
-            if (this.testPhone()) {
-                if (!this.imgCode || !this.messageTest) {
-                    this.errormsg = '请填写验证码！';
-                    this.errorShow = true;
-                } else if (this.testDistrict() && this.testPassword()) {
-                    this.validReg();
-                }
+        testCodeEmpty() {
+            if (!this.imgCode || !this.messageTest) {
+                this.errormsg = '请填写验证码！';
+                this.errorShow = true;
+                return false;
             }
+            return true;
+        },
+        registeNow() {
+            this.testPhone() && this.testCodeEmpty() && this.testDistrict() && this.testPassword() ? this.validReg() : 0;
         },
         validReg() {
             var registerTP = {

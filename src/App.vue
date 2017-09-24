@@ -21,6 +21,8 @@ export default {
 </script>
 
 <style lang="less">
+@import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
+
 * {
   padding: 0;
   margin: 0;

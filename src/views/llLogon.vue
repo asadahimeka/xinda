@@ -46,7 +46,7 @@
             </div>
             <el-alert :title="successMsg" type="success" show-icon :closable="false" class="success" v-if="successRe">
             </el-alert>
-            <el-alert :title="failMsg" type="error" show-icon :closable="false" class="fail" v-if="failRe">
+            <el-alert :title="failMsg" type="error" show-icon :closable="false" class="fail" v-if="failRe&&!successRe">
             </el-alert>
         </div>
     </div>
@@ -57,6 +57,14 @@ import MD5 from 'js-md5';
 import { mapActions } from 'vuex';
 export default {
     created() {
+        this.ajax.post('/xinda-api/sso/login-info').then((user) => {
+            if (user.data.status == 1) {
+                this.$message({ type: 'warning', message: '您已登录！', duration: 1000 });
+                this.$router.push('/')
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
         onkeydown = (e) => {
             if (e.keyCode == 13) {
                 this.logonNow();
@@ -76,7 +84,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['userAction']),
+        ...mapActions(['userAction', 'cartAction']),
         F5: function() {//刷新验证码
             this.src = '/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
         },
@@ -109,15 +117,20 @@ export default {
                             this.successRe = true;
 
                             setTimeout(() => {
-                                this.successMsg = '';
-                                this.successRe = false;
-
                                 this.userAction(this.phone);
-                                sessionStorage.setItem('user',this.phone);
-                                // 登录成功，返回首页
-                                // this.$router.push('/');
-                                location.href  = '/';
-                            }, 2000);
+                                // sessionStorage.setItem('user',this.phone);
+
+                                //如果是点击“立即购买”跳转过来的，登录成功后跳转到购物车
+                                var p = sessionStorage.getItem('pathToLogin');
+                                if (p == '/slist' || p == '/shdetail') {
+                                    sessionStorage.removeItem('pathToLogin');
+                                    this.cartAction(1);
+                                    this.$router.push('/shcart');
+                                } else {
+                                    // 登录成功，返回首页
+                                    this.$router.push('/');
+                                }
+                            }, 1500);
                         } else {
                             this.failMsg = reData.data.msg;
                             this.failRe = true;

@@ -3278,7 +3278,8 @@ global.cityJson = [
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
-    router, store,
+    router,
+    store,
     template: '<App/>',
     components: { App }
 })

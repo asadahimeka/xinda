@@ -21,7 +21,6 @@ export default {
 </script>
 
 <style lang="less">
-<<<<<<< HEAD
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -53,7 +52,6 @@ ul, li {
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
-=======
 @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 
 * {
@@ -78,7 +76,6 @@ select {
   url('//at.alicdn.com/t/font_414122_40spcttfjv6de7b9.woff') format('woff'),
   url('//at.alicdn.com/t/font_414122_40spcttfjv6de7b9.ttf') format('truetype'),
   url('//at.alicdn.com/t/font_414122_40spcttfjv6de7b9.svg#iconfont') format('svg');
->>>>>>> a5c4867f2f29bc4bb7133685947870f69f221698
 }
 
 </style>

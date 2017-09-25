@@ -210,6 +210,7 @@ export default {
 .redicon {
     color: #f00;
 }
+
 .blackicon {
     color: #000;
 }

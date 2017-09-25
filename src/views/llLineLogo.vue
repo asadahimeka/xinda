@@ -18,8 +18,10 @@
                     <a :class="{interfaceActive:!TTT}" @click="BBB" href="javascript:;">服务商</a>
                 </div>
                 <div class="inputSearch">
-                    <input type="text" class="search_input" placeholder="搜索您需要的服务或服务商">
-                    <button class="search_button">&#xe600;</button>
+                    <input type="text" class="search_input" placeholder="搜索您需要的服务或服务商" v-model="searchCode">
+                    <a :href='"/#/search?sn="+searchCode+"&pc="+isPC'>
+                        <button class="search_button">&#xe600;</button>
+                    </a>
                 </div>
                 <div class="pushService">
                     <p>热门服务：</p>
@@ -55,6 +57,8 @@ export default {
         return {
             items: '',
             TTT: true,
+            searchCode: '',
+            isPC: 0,
         }
     },
     methods: {
@@ -78,9 +82,11 @@ export default {
         },
         bbb: function() {
             this.TTT = true;
+            this.isPC = 0;
         },
         BBB: function() {
             this.TTT = false;
+            this.isPC = 1;
         }
     }
 }

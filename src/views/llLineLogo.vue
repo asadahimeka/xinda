@@ -13,9 +13,9 @@
             </div>
             <div class="searchFrame">
                 <div class="interfaceForSearch">
-                    <a class="interfaceActive" href="">产品</a>
+                    <a :class="{interfaceActive:TTT}" @click="bbb" href="javascript:;">产品</a>
                     <div class="partingLine"></div>
-                    <a href="">服务商</a>
+                    <a :class="{interfaceActive:!TTT}" @click="BBB" href="javascript:;">服务商</a>
                 </div>
                 <div class="inputSearch">
                     <input type="text" class="search_input" placeholder="搜索您需要的服务或服务商">
@@ -51,29 +51,36 @@
 <script>
 import qs from 'qs';
 export default {
-    data(){
+    data() {
         return {
-            items:'',
+            items: '',
+            TTT: true,
         }
     },
     methods: {
         changeCity: function() {
             var chooseCity = document.querySelector('.changeCityInner');
             var displayState = chooseCity.style.display;
-            if(displayState == ''||displayState == 'none'){
+            if (displayState == '' || displayState == 'none') {
                 chooseCity.style.display = 'block';
             }
-            this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/common/open-region').then((data)=>{
+            this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/common/open-region').then((data) => {
                 this.items = data.data.data;
-            }).catch(function(error){
-                console.log('error',error);
+            }).catch(function(error) {
+                console.log('error', error);
             })
         },
-        endCity:function(e){
+        endCity: function(e) {
             var finalCity = document.querySelector('.finalCity');
             var changeCityInner = document.querySelector('.changeCityInner');
             finalCity.innerHTML = e.target.innerHTML;
             changeCityInner.style.display = 'none';
+        },
+        bbb: function() {
+            this.TTT = true;
+        },
+        BBB: function() {
+            this.TTT = false;
         }
     }
 }
@@ -112,8 +119,7 @@ export default {
             display: flex;
             align-content: center;
             align-items: center;
-            flex-wrap: wrap;
-            // justify-content: center;
+            flex-wrap: wrap; // justify-content: center;
             font-size: 14px;
             margin-right: 96px;
         }
@@ -212,6 +218,7 @@ export default {
         }
     }
 }
+
 .changeCityInner {
     width: 986px;
     height: 241px;

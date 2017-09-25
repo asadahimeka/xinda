@@ -495,9 +495,10 @@ a {
             margin-bottom: 5px;
             img {
                 margin-top: 23px;
+                width: 109px;
             }
             .imgdiv {
-                width: 108px;
+                width: 109px;
                 height: 108px;
                 text-align: center;
                 border: 1px solid #ccc;

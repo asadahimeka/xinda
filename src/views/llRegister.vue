@@ -21,12 +21,12 @@
         <div class="mainBody">
             <div class="registerLeft">
                 <input type="number" placeholder="请输入手机号码" v-model="phone" @focus="noError" @blur="phoneBlur" autofocus>
-                <input type="text" placeholder="请输入图片验证码" v-model="imgCode" @focus="noErr" @blur="testCodeEmpty">
+                <input type="text" placeholder="请输入图片验证码" v-model="imgCode" @focus="noErr">
                 <div class="verCode">
                     <!-- 这里是验证码图片 -->
                     <img :src="src" alt="" @click="F5">
                 </div>
-                <input type="text" class="VerCode" placeholder="请输入短信验证码" v-model="messageTest" @focus="noErr" @blur="testCodeEmpty">
+                <input type="text" class="VerCode" placeholder="请输入短信验证码" v-model="messageTest" @focus="noErr">
                 <button class="clickGet" @click="getMessage">{{getMessageBtn}}</button>
                 <div class="area">
                     <select name="" id="province" @change="ChaProvinceEl" v-model="provinceVal">
@@ -116,7 +116,6 @@ export default {
                 };
                 this.ajax.post('/xinda-api/register/sendsms', message, {}).then((fontMessage) => {
                     if (fontMessage.data.status == 1) {
-                        this.errormsg = '';
                         this.successmsg = fontMessage.data.msg;
                         this.successShow = true;
                         setTimeout(() => {

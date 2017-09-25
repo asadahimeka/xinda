@@ -42,18 +42,16 @@ export default {
 //     display: none;
 // }
 .setbg {
-    padding-top: 80px;
+    padding-top: 30px;
     padding-bottom: 30px;
-    background: #F1F4F8;
+    background: #fff;
     position: fixed;
     top: 0;
     left: 0;
 }
 
 .hello {
-    width: 1000px;
-    height: 460px;
-    overflow: hidden;
+    width: 780px;
     margin: 0px auto;
     img {
         width: 100%;

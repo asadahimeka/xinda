@@ -728,7 +728,7 @@ export default {
 .pay-fb {
     z-index: 9;
     position: absolute;
-    top: 30%;
+    top: 20%;
     left: 25%;
     width: 675px; // height: 290px;
     border-right: 2px solid #ccc;

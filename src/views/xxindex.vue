@@ -113,6 +113,7 @@ a{
       cursor: pointer;
       &:hover {
         box-shadow: 0px 0px 5px @mcolor;
+        transition: .4s ease-in-out;
       }
       .smlistbg {
         width: 250px;
@@ -178,6 +179,7 @@ a{
       cursor: pointer;
       &:hover {
         box-shadow: 0px 0px 5px @mcolor;
+        transition: .4s ease-in-out;
       }
       img {
         height: 41px;

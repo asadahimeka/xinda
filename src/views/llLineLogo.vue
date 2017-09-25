@@ -19,7 +19,7 @@
                 </div>
                 <div class="inputSearch">
                     <input type="text" class="search_input" placeholder="搜索您需要的服务或服务商" v-model="searchCode">
-                    <a :href='"/#/search?sn="+searchCode+"&pc="+isPC'>
+                    <a :href='"/#/search?sn="+searchCode+"&pc="+ispr'>
                         <button class="search_button">&#xe600;</button>
                     </a>
                 </div>
@@ -58,7 +58,7 @@ export default {
             items: '',
             TTT: true,
             searchCode: '',
-            isPC: 0,
+            ispr: 0,
         }
     },
     methods: {
@@ -82,11 +82,11 @@ export default {
         },
         bbb: function() {
             this.TTT = true;
-            this.isPC = 0;
+            this.ispr = 0;
         },
         BBB: function() {
             this.TTT = false;
-            this.isPC = 1;
+            this.ispr = 1;
         }
     }
 }

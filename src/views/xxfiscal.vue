@@ -3,13 +3,13 @@
         <div class="fiscal">
             <p class="top">&nbsp;首页/{{chName}}</p>
             <div class="fiscal_menu">
-                <div class="list">
+                <div class="list" v-loading="load1">
                     <div class="list1">
                         <div class="list1l">
                             <b>服务分类</b>
                         </div>
-                        <div class="list1r" v-for="(tab,i) in tabs2" :key="i">
-                            <div class="list1r2" :class="{list1r1:i==on}" @click="click(i,tab.code)">
+                        <div class="list1r" v-for="(tab,k,i) in tabs2" :key="i">
+                            <div class="list1r2" :class="{list1r1:code==tab.code}" @click="click(tab.code)">
                                 <p>{{tab.name}}</p>
                             </div>
                         </div>
@@ -19,7 +19,7 @@
                             <b>类型</b>
                         </div>
                         <div class="list2div">
-                            <div class="list2r" :class="{list1r1:i==on2}" v-for="(tab,i) in tabs3[on]" :key="i" @click="click2(i,tab)">
+                            <div class="list2r" :class="{list1r1:tab.id==pid}" v-for="(tab,k,i) in tabs3" :key="i" @click="click2(tab.id)">
                                 <div class="list1r2">
                                     {{tab.name}}
                                 </div>
@@ -31,13 +31,19 @@
                             <b>服务区域</b>
                         </div>
                         <div class="zone">
-                            <select name="" id=""><option value="">北京</option></select>
+                            <select name="" id="">
+                                <option value="">北京</option>
+                            </select>
                         </div>
                         <div class="zone1">
-                            <select name="" id=""><option value="">北京市</option></select>
+                            <select name="" id="">
+                                <option value="">北京市</option>
+                            </select>
                         </div>
                         <div class="zone2">
-                            <select name="" id=""><option value="">朝阳区</option></select>
+                            <select name="" id="">
+                                <option value="">朝阳区</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -91,11 +97,10 @@ export default {
     name: 'fiscal',
     data() {
         return {
-            tabs2: [],
-            tabs3: [],
+            load1:1,
+            tabs2: {},
+            tabs3: {},
             refiscal: [],
-            on: 0,
-            on2: 0,
             on3: 1,
             on4: 0,
             arrow: ['↿↾', '⇃⇂'],
@@ -115,6 +120,8 @@ export default {
                 productId: "8a82f52b674543e298d2e5f685946e6e",
                 sort: '',
             },
+            code: '1',
+            pid: '8a82f52b674543e298d2e5f685946e6e',
         }
     },
     computed: {
@@ -125,16 +132,14 @@ export default {
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
-        click(i, code) {
-            this.on = i;
-            this.on2 = 0;
-            this.pdata.productTypeCode = code;
-            this.pdata.productId = this.tabs3[i][0].id;
+        click(code) {
+            this.code = this.pdata.productTypeCode = code;
+            this.pid = this.pdata.productId = Object.values(this.tabs2[code].itemList)[0].id;
+            this.getChoose();
             this.getPack();
         },
-        click2(i, tab) {
-            this.on2 = i;
-            this.pdata.productId = tab.id;
+        click2(pid) {
+            this.pid = this.pdata.productId = pid;
             this.getPack();
         },
         click3() {
@@ -181,11 +186,12 @@ export default {
                 if (res.data.status == 1) {
                     this.chName = res.data.data[this.chId].name;
                     var tabs = res.data.data[this.chId].itemList;
-                    this.tabs2 = Object.values(tabs).sort((a, b) => a.code - b.code);
-                    this.tabs3.splice(0, this.tabs3.length);
-                    for (let i = 0; i < this.tabs2.length; i++) {
-                        this.tabs3.push(Object.values(this.tabs2[i].itemList))
+                    var keys = Object.keys(tabs).sort((a, b) => tabs[a].showOrder - tabs[b].showOrder);
+                    for (var k in keys) {
+                        this.tabs2[tabs[keys[k]].code] = tabs[keys[k]];
                     }
+                    this.tabs3 = this.tabs2[this.code].itemList;
+                    this.load1 =0;
                 } else {
                     this.err = 1;
                     this.errmsg = res.data.msg;
@@ -254,16 +260,19 @@ export default {
     },
     created() {
         this.chId = this.$route.query.id || this.chId;
+        this.code = this.$route.query.code || this.code;
         this.pdata.productTypeCode = this.$route.query.code || this.pdata.productTypeCode;
+        this.pid = this.$route.query.pid || this.pid;
         this.pdata.productId = this.$route.query.pid || this.pdata.productId;
         this.getChoose();
         this.getPack();
     },
     watch: {
         $route(val) {
+            this.on = 0;
             this.chId = val.query.id;
-            this.pdata.productTypeCode = val.query.code;
-            this.pdata.productId = val.query.pid;
+            this.code = this.pdata.productTypeCode = val.query.code;
+            this.pid = this.pdata.productId = val.query.pid;
             this.getChoose();
             this.getPack();
         }
@@ -393,29 +402,29 @@ a {
                 width: 100%px;
                 height: 43px;
             }
-            .zone{
+            .zone {
                 display: block;
                 margin-top: -30px;
                 margin-left: 118px;
-                select{
+                select {
                     width: 65px;
                     height: 23px;
                 }
             }
-            .zone1{
+            .zone1 {
                 display: block;
                 margin-top: -24px;
                 margin-left: 195px;
-                select{
+                select {
                     width: 65px;
                     height: 23px;
                 }
             }
-            .zone2{
+            .zone2 {
                 display: block;
                 margin-top: -23px;
                 margin-left: 272px;
-                select{
+                select {
                     width: 65px;
                     height: 23px;
                 }

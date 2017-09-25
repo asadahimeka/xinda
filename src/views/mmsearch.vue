@@ -16,13 +16,21 @@
         <div class="content">
             <!-- 排序 -->
             <div class="listheader">
+<<<<<<< HEAD
                 <ul v-for = "(sort,i) in Sort" :key="i">
+=======
+                <ul v-for = "(sort,i) in Sort">
+>>>>>>> f50485352b4e5ef13eb48eb3f2b06c6f3accc7d5
                     <li><a :class="{active:i==sort}" @click="sorc(i,sort.sort)">{{sort.way}}&nbsp;<i class="iconfont">&#xe731;</i></a></li>
                 </ul>
             </div>
             
             <!-- 产品列表 -->
+<<<<<<< HEAD
             <div class="productlist" v-for="(productlist,i) in products" :key="i">
+=======
+            <div class="productlist" v-for="productlist in products">
+>>>>>>> f50485352b4e5ef13eb48eb3f2b06c6f3accc7d5
                 <ul>
                     <li class="logo"><img :src="logoImg(productlist.providerImg)" alt=""></li>
                     <li><h4>{{productlist.serviceName}}</h4></li>
@@ -96,7 +104,11 @@ export default{
             this.getProducts();
         },
         getProducts() {
+<<<<<<< HEAD
             this.ajax.post('/xinda-api/product/package/search-grid', this.productData).then( (data) => {
+=======
+            this.ajax.post('/product/package/search-grid', this.productData, {}).then( (data) => {
+>>>>>>> f50485352b4e5ef13eb48eb3f2b06c6f3accc7d5
                 this.products = data.data.data;
                 console.log('产品:', this.products);
             })

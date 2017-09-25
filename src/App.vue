@@ -1,17 +1,27 @@
 <template>
   <div id="app">
-
+    <Top></Top>
     <router-view></router-view>
+    <Bottom></Bottom>
   </div>
 </template>
 
 <script>
+import Top from './components/llpublicHeader'
+import Contents from './views/llContent'
+import Bottom from './components/llpublicFooter'
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    Top,
+    Bottom,
+    Contents
+  }
 }
 </script>
 
 <style lang="less">
+<<<<<<< HEAD
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -43,6 +53,32 @@ ul, li {
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
+=======
+@import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
+
+* {
+  padding: 0;
+  margin: 0;
+  font-size: '宋体';
+}
+
+li {
+  list-style-type: none;
+}
+
+select {
+  outline: none;
+}
+
+@font-face {
+  font-family: 'iconfont';
+  /* project id 414122 */
+  src: url('//at.alicdn.com/t/font_414122_40spcttfjv6de7b9.eot');
+  src: url('//at.alicdn.com/t/font_414122_40spcttfjv6de7b9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_414122_40spcttfjv6de7b9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_414122_40spcttfjv6de7b9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_414122_40spcttfjv6de7b9.svg#iconfont') format('svg');
+>>>>>>> a5c4867f2f29bc4bb7133685947870f69f221698
 }
 
 </style>

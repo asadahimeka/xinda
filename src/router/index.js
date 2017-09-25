@@ -18,6 +18,10 @@ import Nfd from '../views/nfd.vue'
 import Financial from '../views/xxfiscal.vue'
 import Shdetail from '../views/xxspdetail.vue'
 
+import mmShopList from '../views/mmShopList.vue'
+import mmShop from '../views/mmShop.vue'
+import mmsearch from '../views/mmsearch.vue'
+
 Vue.use(Router);
 
 export default new Router({
@@ -37,27 +41,43 @@ export default new Router({
           path: 'shcart',
           name: 'shcart',
           component: Shcart
-        },{
+        }, {
           path: 'pay',
           name: 'pay',
           component: Pay
-        },{
+        }, {
           path: 'siharauseikou',
           name: 'paysuccess',
           component: PaySuccess
-        },{
+        }, {
           path: 'siharausippai',
           name: 'payfail',
           component: PayFail
-        },{
+        }, {
           path: 'slist',
           name: 'srvlist',
           component: Financial
-        },{
+        }, {
           path: 'shdetail',
           name: 'shdetail',
           component: Shdetail
+        }, {
+          path: 'shoplist',
+          name: 'mmShopList',
+          component: mmShopList,
+        },{
+          path: 'shop',
+          name: 'mmShop',
+          component: mmShop
         },
+        {
+          path: 'search',
+          name: 'mmsearch',
+          component: mmsearch
+        },
+
+
+
 
 
       ]

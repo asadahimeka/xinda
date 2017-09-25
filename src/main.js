@@ -9,6 +9,13 @@ import ElementUI from 'element-ui';
 import axios from 'axios';
 import qs from 'qs';
 
+//地区选择插件
+import VDistpicker from 'v-distpicker'
+Vue.component('v-distpicker', VDistpicker);
+
+import VPage from './components/v-page'
+Vue.component('v-page', VPage);
+
 // axios全局配置
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.interceptors.request.use((config) => {
@@ -23,6 +30,16 @@ Vue.use(VueAwesomeSwiper);
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
+
+/* eslint-disable no-new */
+new Vue({
+    el: '#app',
+    router,
+    store,
+    template: '<App/>',
+    components: { App }
+})
+
 
 //省市区三级联动全局变量
 global.provinceEl = document.getElementById("province");
@@ -3274,12 +3291,3 @@ global.cityJson = [
     { "item_code": "659004", "item_name": "五家渠市" }
 ]
 
-
-/* eslint-disable no-new */
-new Vue({
-    el: '#app',
-    router,
-    store,
-    template: '<App/>',
-    components: { App }
-})

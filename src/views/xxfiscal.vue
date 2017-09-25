@@ -270,6 +270,8 @@ export default {
     watch: {
         $route(val) {
             this.on = 0;
+            this.tabs2 = {};
+            this.tabs3 = {};
             this.chId = val.query.id;
             this.code = this.pdata.productTypeCode = val.query.code;
             this.pid = this.pdata.productId = val.query.pid;

@@ -56,7 +56,7 @@
                     <p>价格&nbsp;{{arrow[ai]}}</p>
                 </div>
             </div>
-            <div class="wares_list" v-loading="loading">
+            <div class="wares_list">
                 <div class="list_top">
                     <p>商品</p>
                     <span>价格</span>
@@ -64,7 +64,7 @@
                 <el-alert v-if="err" :title="errmsg" type="error" show-icon></el-alert>
                 <el-alert v-if="!refiscal.length" title="数据为空，请稍后再试。" type="info" show-icon></el-alert>
                 <template v-for="(item,i) in refiscal">
-                    <div class="wares_list_m" :key="i">
+                    <div class="wares_list_m" :key="i" v-loading="loading">
                         <div class="imgdiv">
                             <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'><img :src="relistimg+item.providerImg" alt=""></a>
                         </div>
@@ -98,6 +98,7 @@ export default {
     data() {
         return {
             load1:1,
+            loading: 1,
             tabs2: {},
             tabs3: {},
             refiscal: [],
@@ -109,7 +110,6 @@ export default {
             err: 0,
             errmsg: '',
             itemInx: null,
-            loading: 1,
             relistimg: 'http://115.182.107.203:8088/xinda/pic',
             chId: "2e110f0df53243c197fede52fba8e5d0",//财税服务
             chName: "财税服务",
@@ -135,20 +135,25 @@ export default {
         click(code) {
             this.code = this.pdata.productTypeCode = code;
             this.pid = this.pdata.productId = Object.values(this.tabs2[code].itemList)[0].id;
+            this.load1 = 1;
+            this.loading = 1;
             this.getChoose();
             this.getPack();
         },
         click2(pid) {
             this.pid = this.pdata.productId = pid;
+            this.loading = 1;
             this.getPack();
         },
         click3() {
             this.on3 = 1;
             this.on4 = 0;
             this.pdata.sort = '';
+            this.loading = 1;
             this.getPack();
         },
         click4() {
+            this.loading = 1;
             if (this.on4 == 1) {
                 if (this.au == 0) {
                     this.ai = 0;
@@ -191,7 +196,7 @@ export default {
                         this.tabs2[tabs[keys[k]].code] = tabs[keys[k]];
                     }
                     this.tabs3 = this.tabs2[this.code].itemList;
-                    this.load1 =0;
+                    this.load1 = 0;
                 } else {
                     this.err = 1;
                     this.errmsg = res.data.msg;
@@ -275,6 +280,7 @@ export default {
             this.chId = val.query.id;
             this.code = this.pdata.productTypeCode = val.query.code;
             this.pid = this.pdata.productId = val.query.pid;
+            this.load1 = 1;
             this.getChoose();
             this.getPack();
         }
@@ -500,7 +506,6 @@ a {
         }
         .wares_list_m {
             width: 100%;
-            height: 110px;
             padding: 10px 0;
             border-top: 1px solid #e5e5e5;
             margin-bottom: 5px;
@@ -521,6 +526,7 @@ a {
                 line-height: 2;
             }
             p {
+                width: 540px;
                 line-height: 2;
                 margin-left: 130px;
             }

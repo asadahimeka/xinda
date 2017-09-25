@@ -1,5 +1,5 @@
 <template>
-    <div class="spdetail">
+    <div class="spdetail" v-loading.fullscreen.lock="fsLoading" element-loading-text="加载中">
         <p>首页 /
             <span>{{type}}</span>
         </p>
@@ -149,6 +149,7 @@ export default {
     name: 'spdetail',
     data() {
         return {
+            fsLoading: true,
             pichost: "http://115.182.107.203:8088/xinda/pic",
             index: 0,
             prod: {},
@@ -185,7 +186,7 @@ export default {
                 "type": "1"
             }],
             jix: 0,
-            region:'',
+            region: '',
         }
     },
     created() {
@@ -200,7 +201,8 @@ export default {
     methods: {
         ...mapActions(['cartAction']),
         fmtPrice(p) {
-            return (parseFloat(p) * 0.01).toFixed(2);
+            p = (parseFloat(p) * 0.01).toFixed(2);
+            return isNaN(p) ? 0 : p;
         },
         fmtTime(msec) {
             var date = new Date(msec);
@@ -251,6 +253,7 @@ export default {
                     this.srvlist = res.data.data.serviceList;
                     this.getJudge();
                     // this.getJudgeList();
+                    this.fsLoading = false;
                 } else {
                     this.$message({ type: 'warning', message: res.data.msg });
                 }

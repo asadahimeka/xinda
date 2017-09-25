@@ -30,6 +30,15 @@
                         <div class="list3l">
                             <b>服务区域</b>
                         </div>
+                        <div class="zone">
+                            <select name="" id=""><option value="">北京</option></select>
+                        </div>
+                        <div class="zone1">
+                            <select name="" id=""><option value="">北京市</option></select>
+                        </div>
+                        <div class="zone2">
+                            <select name="" id=""><option value="">朝阳区</option></select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -384,6 +393,33 @@ a {
                 width: 100%px;
                 height: 43px;
             }
+            .zone{
+                display: block;
+                margin-top: -30px;
+                margin-left: 118px;
+                select{
+                    width: 65px;
+                    height: 23px;
+                }
+            }
+            .zone1{
+                display: block;
+                margin-top: -24px;
+                margin-left: 195px;
+                select{
+                    width: 65px;
+                    height: 23px;
+                }
+            }
+            .zone2{
+                display: block;
+                margin-top: -23px;
+                margin-left: 272px;
+                select{
+                    width: 65px;
+                    height: 23px;
+                }
+            }
             .list3l {
                 width: 99px;
                 height: 100%;
@@ -459,9 +495,10 @@ a {
             margin-bottom: 5px;
             img {
                 margin-top: 23px;
+                width: 109px;
             }
             .imgdiv {
-                width: 108px;
+                width: 109px;
                 height: 108px;
                 text-align: center;
                 border: 1px solid #ccc;

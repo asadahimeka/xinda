@@ -14,219 +14,368 @@
         </div>
         <!-- 内容区 -->
         <div class="content">
-            <!-- 排序 -->
-            <div class="listheader">
-                <ul v-for = "(sort,i) in Sort" :key="i">
-                    <li><a :class="{active:i==sort}" @click="sorc(i,sort.sort)">{{sort.way}}&nbsp;<i class="iconfont">&#xe731;</i></a></li>
-                </ul>
-            </div>
-            
             <!-- 产品列表 -->
-            <div class="productlist" v-for="(productlist,i) in products" :key="i">
-                <ul>
-                    <li class="logo"><img :src="logoImg(productlist.providerImg)" alt=""></li>
-                    <li><h4>{{productlist.serviceName}}</h4></li>
-                    <li class="info">{{productlist.serviceInfo}}</li>
-                    <li><span>{{productlist.providerName}}</span><span>{{productlist.regionName}}</span></li>
-                </ul>
-                <div>
-                    <div class="price">￥{{productlist.price/100}}</div>
-                    <button>立即购买</button>
-                    <button>加入购物车</button>
+            <div v-if="ispr==0">
+                <div class="wrap">
+                    <div class="listheader">
+                        <ul v-for="(sort,i) in Sort" :key="i">
+                            <li>
+                                <a :class="{active:i==sorti}" @click="sortType(i,sort.sort)">{{sort.way}}&nbsp;
+                                    <i class="iconfont">&#xe731;</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="none" v-if="!products.length">
+                        <el-alert title="没有符合条件的内容" type="info" :closable="false" show-icon></el-alert>
+                    </div>
+                    <div class="productlist" v-for="(productlist,i) in products" :key="i">
+                        <ul class="listbox">
+                            <li class="logo"><img :src="logoImg(productlist.providerImg)" alt=""></li>
+                            <li>
+                                <h4>{{productlist.serviceName}}</h4>
+                            </li>
+                            <li class="info">{{productlist.serviceInfo}}</li>
+                            <li>
+                                <span>{{productlist.providerName}}</span>
+                                <span>{{productlist.regionName}}</span>
+                            </li>
+                        </ul>
+                        <div>
+                            <div class="price">
+                                <P>￥{{productlist.price/100}}</P>
+                                <button>立即购买</button>
+                                <button>加入购物车</button>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
+                <v-page :curInx="cur" :pageSize="pageSize" :pageChange="productPage" :totalShow="true"></v-page>
             </div>
 
             <!-- 店铺列表 -->
-            <div class="providerlist">
-                
+            <div class="" v-if="ispr==1">
+                <div class="wrap">
+                    <div class="providerlist" v-for="(providerinfo,i) in providers" :key="i">
+                        <ul class="listbox">
+                            <li class="logo"><img :src="logoImg(providerinfo.providerImg)" alt=""></li>
+                            <li>
+                                <h4>{{providerinfo.providerName}}</h4>
+                            </li>
+                            <li class="info">
+                                <div><img src="../assets/icon_gold.png">&nbsp;&nbsp;金牌服务商</div>
+                                {{providerinfo.productTypes}}
+
+                            </li>
+                            <li>
+                                <span>累计服务客户次数：{{providerinfo.orderNum}}</span>
+                                <span>好评率:{{rate(providerinfo.goodJudge,providerinfo.totalJudge)}}</span>
+                                <span>{{providerinfo.regionName}}</span>
+                            </li>
+                        </ul>
+                        <div>
+                            <a class="enter" :href='"#/shop?id="+providerinfo.id'>进入店铺</a>
+                        </div>
+                    </div>
+                </div>
+                <v-page :curInx="cur" :pageSize="pageSize" :pageChange="providerPage" :totalShow="false"></v-page>
             </div>
-
         </div>
-         <!-- 分页 -->
-        <!-- <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page> -->
-
-        
-        
 
     </div>
 </template>
 
 
 <script>
-export default{ 
-    created() {
-        
-    },
-    data(){
+export default {
+    data() {
         return {
-
+            sorti: 0,
             Sort: [{
                 sort: '',
                 way: '默认排序',
-                },{
+            }, {
                 sort: 2,
                 way: '价格升序',
-                },{
+            }, {
                 sort: 3,
                 way: '价格降序',
-                },
+            },
             ],
             productData: {
-                start:0,
-                limit:8,
-                searchName:'',
-                sort:''
+                start: 0,
+                limit: 8,
+                searchName: '',
+                sort: ''
             },
             products: [],
 
             providerData: {
-                start:0,
-                limit:8,
-                searchName:'',
-                sort:1,
+                start: 0,
+                limit: 8,
+                searchName: '',
+                sort: '',
             },
             providers: [],
+            cur: 1,
+            pageSize: 0,
+            ispr: 0,
         }
     },
-    methods:{
-
-        sort(i,sort) {
-            this.sort = i;
-            this.ajdata.sort = sort;
+    created() {
+        console.log(this.$route.query);
+        this.getSearchRes();
+    },
+    watch: {
+        $route(val) {
+            if (val) {
+                this.getSearchRes();
+            }
+        }
+    },
+    methods: {
+        getSearchRes() {
+            this.ispr = this.$route.query.ispr;
+            if (this.ispr == 0) {
+                this.productData.searchName = this.$route.query.sn
+                this.getProducts();
+            } else if (this.ispr == 1) {
+                this.providerData.searchName = this.$route.query.sn
+                this.getProviders();
+            }
+        },
+        sortType(i, sort) {
+            this.sorti = i;
+            this.productData.sort = sort;
             this.getProducts();
         },
         getProducts() {
-            this.ajax.post('/xinda-api/product/package/search-grid', this.productData).then( (data) => {
+            this.ajax.post('xinda-api/product/package/search-grid', this.productData, {}).then((data) => {
                 this.products = data.data.data;
-                console.log('产品:', this.products);
-            })
-
+                this.pageSize = data.data.pageSize;
+                console.log(data);
+                // console.log('产品:', this.products);
+            }).catch((error) => {
+                console.log('axios error', error);
+            });
+        },
+        getProviders() {
+            this.ajax.post('/xinda-api/provider/search-grid', this.providerData, {}).then((data) => {
+                console.log(data);
+                this.providers = data.data.data;
+                this.pageSize = data.data.pageSize;
+                // console.log('服务商:', this.providers);
+            }).catch((error) => {
+                console.log('axios error', error);
+            });
         },
         logoImg(providerImg) {
-           return providerImg.substr(0, 1) == '/' ? 'http://115.182.107.203:8088/xinda/pic' + providerImg : providerImg;
+            return providerImg.substr(0, 1) == '/' ? 'http://115.182.107.203:8088/xinda/pic' + providerImg : providerImg;
         },
+        rate(goodJudge, totalJudge) {
+            var rate;
+            totalJudge == 0 ? rate = '暂无评价' : rate = Math.round(goodJudge / totalJudge * 10000) / 100 + "%";
+            return rate;
 
-    },   
-    created(){
-        this.getProducts();
+        },
+        productPage(curPage) {
+            this.cur = curPage;
+            this.productData.start = (curPage - 1) * this.productData.limit;
+            this.getProducts();
+        },
+        providerPage(curPage) {
+            this.cur = curPage;
+            this.providerData.start = (curPage - 1) * this.providerData.limit;
+            this.getPrviders();
+        },
 
     },
 }
 
 </script>
 
-<style lang="less">
-    .container {
-        width: 1200px;
-        margin: 0 auto;
+<style lang="less" scoped>
+.container {
+    width: 1200px;
+    margin: 0 auto;
 
-        .content {
-            float: left;
-            width: 948px;
-            height: auto;
-            border: 1px solid #ccc;
-        }
-        // 右侧栏
-        .sidebar {
-            float: right;
-            width: 238px;
-            height: auto;
-            border: 1px solid #ccc;
-            text-align: center;
-
-            .icons {
-                margin: 15px auto;
-                width: 94px;
-                height: 94px;
-                background-color: #f9f9f9;
-                background-position: 50% 50%;
-                background-repeat: no-repeat;
-                border-radius: 100%;
-            }
-            .cup {
-                background-image: url(../assets/icon_cup.png);
-            }
-            .men {
-                background-image: url(../assets/icon_men.png);
-            }
-            .shield {
-                background-image: url(../assets/icon_shield.png);
-            }
-            .crown {
-                background-image: url(../assets/icon_crown.png);
-            }
-            h3 {
-                font-weight: 400;
-                margin: 0 40px 20px 40px;
-                padding-bottom: 5px;
-                border-bottom: 1px solid #ccc;
-            }
-        }
+    .content {
+        float: left;
+        padding: 10px 0;
+        width: 948px;
+        height: auto; // border: 1px solid #ccc;
     }
-
-    // 内容
-    .listheader {
-        display: flex;
-        background: #f7f7f7;
-        border-bottom: 1px solid #ccc;
+    .wrap {
+        border: 1px solid #ccc;
+    } // 右侧栏
+    .sidebar {
+        float: right;
+        margin: 10px 0;
+        width: 238px;
+        height: auto;
+        border: 1px solid #ccc;
         text-align: center;
-        font-size: 14px;
 
-        ul,li {
-            float: left;
-            line-height: 40px;
-
-            a {
-                display: inline-block;
-                width: 110px;
-                height: 40px;
-                color: #000;
-                
-            }
-            a:hover,.active {
-                color: #fff;
-                background: #2594d4;
-                cursor: pointer;
-            }
+        .icons {
+            margin: 15px auto;
+            width: 94px;
+            height: 94px;
+            background-color: #f9f9f9;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            border-radius: 100%;
         }
-    }
-    .productlist {
-        clear: both;
-
-        ul {
-            margin: 15px;
-            border-top: 1px solid #eee;
-
-            li {
-                float: left;
-                font-size: 14px;
-                width: 600px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
+        .cup {
+            background-image: url(../assets/icon_cup.png);
         }
-        .logo {
-                width: 100px;
-                height: 100px;
-                text-align: center;
-                line-height: 100px;
-                margin-right: 15px;
-
-                img {
-                    width: 100%;
-                    height: auto;
-                }
-            }
-        h4 {
-            margin: 10px 0;
+        .men {
+            background-image: url(../assets/icon_men.png);
+        }
+        .shield {
+            background-image: url(../assets/icon_shield.png);
+        }
+        .crown {
+            background-image: url(../assets/icon_crown.png);
+        }
+        h3 {
             font-weight: 400;
-            font-size: 16px;
-        }
-        .info {
-            color: #666;
-            margin-bottom: 10px;
+            margin: 0 40px 20px 40px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ccc;
         }
     }
+} // 内容
+.listheader {
+    display: flex;
+    background: #f7f7f7;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    font-size: 14px;
+    overflow: hidden;
 
+    &>ul,
+    li {
+        float: left;
+        line-height: 40px;
+
+        a {
+            display: inline-block;
+            width: 110px;
+            height: 40px;
+            color: #000;
+            cursor: pointer;
+        }
+        a:hover,
+        .active {
+            color: #fff;
+            background: #2594d4;
+            cursor: pointer;
+        }
+    }
+}
+
+.productlist,
+.providerlist {
+    clear: both;
+    position: relative;
+    overflow: hidden;
+
+    ul {
+        margin: 15px;
+        border-top: 1px solid #eee;
+
+        li {
+            float: left;
+            font-size: 14px;
+            width: 580px;
+            overflow: hidden;
+            text-overflow: ellipsis; // white-space: nowrap;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+
+            img {
+                vertical-align: middle;
+                height: 20px;
+            }
+
+            &> :nth-child(2),
+             :nth-child(3) {
+                padding-left: 30px;
+            }
+        }
+    }
+    .logo {
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        line-height: 100px;
+        margin: 10px;
+        margin-left: 0;
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+    h4 {
+        margin: 10px 0;
+        font-weight: 400;
+        font-size: 16px;
+    }
+    .info {
+        color: #666;
+        margin-bottom: 10px;
+        height: 40px;
+    }
+    .price {
+        position: absolute;
+        right: 10px;
+        font-size: 30px;
+        color: #f00;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    button {
+        margin-left: 5px;
+        width: 90px;
+        height: 30px;
+        background: #2594d4;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .enter {
+        position: absolute;
+        right: 15px;
+        display: inline-block;
+        margin-top: 25px;
+        padding: 10px 20px;
+        background: #ff5b1b;
+        color: #fff;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+}
+
+.page-bar {
+    // clear: both;
+    margin: 10px auto;
+    width: fit-content;
+}
+
+.hidden {
+    display: none;
+}
+
+.none {
+    width: 100%;
+    height: 200px;
+    padding-top: 100px;
+    text-align: center;
+}
 </style>

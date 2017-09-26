@@ -33,7 +33,7 @@
             </div>
             <div class="refer">
                 <b>顶级服务商</b>
-                <p>北京信达服务中心</p>
+                <p>{{prvdr.name}}</p>
                 <button @click="fbShow=1">马上咨询</button>
                 <span>
                     <a href="">查看服务商</a>
@@ -107,6 +107,7 @@
                         <img :src="dealSrc(j.memberImg)" alt="">
                     </div>
                 </div>
+                <v-page :curInx="1" :pageSize="1" :totalShow="false"></v-page>
             </div>
         </div>
 
@@ -158,6 +159,7 @@ export default {
             srv: {},
             srvlist: [],
             type: '商品详情',
+            prvdr:'',
             sid: this.$route.query.sid,
             src: '/xinda-api/ajaxAuthcode',//图片验证码获取地址
             phone: '',//绑定手机号的Value值
@@ -167,11 +169,11 @@ export default {
             fbShow: 0,
             callShow: 1,
             judge: {
-                goodNum: 0,
+                goodNum: 1,
                 midNum: 0,
                 badNum: 0,
             },
-            rate: [0, 0, 0],
+            rate: [100, 0, 0],
             judgelist: [{
                 "content": "服务很快",
                 "id": "75edf7f7131a49a3ad60db78b6c1997b",
@@ -247,11 +249,12 @@ export default {
             ).then(res => {
                 if (res.data.status == 1) {
                     this.prod = res.data.data.product;
+                    this.prvdr = res.data.data.provider;
                     this.region = res.data.data.regionText;
                     this.srv = res.data.data.providerProduct;
                     this.srv.serviceContent = this.dealImg(this.srv.serviceContent);
                     this.srvlist = res.data.data.serviceList;
-                    this.getJudge();
+                    // this.getJudge();
                     // this.getJudgeList();
                     this.fsLoading = false;
                 } else {
@@ -869,5 +872,8 @@ export default {
 .el-alert {
     width: 300px;
     margin: 20px auto;
+}
+.page-bar{
+    text-align: center;
 }
 </style>

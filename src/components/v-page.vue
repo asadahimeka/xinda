@@ -1,13 +1,13 @@
 <template lang="html">
   <div class="page-bar">
     <ul>
-      <li><button @click="btnClick(1)" v-if="!curInx==1">首页</button></li>
+      <li><button @click="btnClick(1)" v-if="curInx!=1">首页</button></li>
       <li><button @click="btnClick(curInx-1)" :disabled="curInx==1">上一页</button></li>
       <li v-for="index in indexs"  :class="{ active: curInx == index}">
           <button v-on:click="btnClick(index)">{{ index }}</button>
       </li>
       <li><button @click="btnClick(curInx+1)" :disabled="curInx==pageSize">下一页</button></li>
-      <li><button @click="btnClick(pageSize)" v-if="!curInx==pageSize">尾页</button></li>
+      <li><button @click="btnClick(pageSize)" v-if="pageSize&&curInx!=pageSize">尾页</button></li>
       <li v-if="totalShow"><button>共<i>{{pageSize}}</i>页</button></li>
     </ul>
   </div>

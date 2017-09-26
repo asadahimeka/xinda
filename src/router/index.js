@@ -22,6 +22,11 @@ import mmShopList from '../views/mmShopList.vue'
 import mmShop from '../views/mmShop.vue'
 import mmsearch from '../views/mmsearch.vue'
 
+import MemberCen from '../views/ffmember-center.vue'
+import Order from '../views/ffmember-first.vue'
+import Evaluate from '../views/ffmember-second.vue'
+import Uerset from '../views/ffmember-third.vue'
+
 Vue.use(Router);
 
 export default new Router({
@@ -74,12 +79,23 @@ export default new Router({
           path: 'search',
           name: 'mmsearch',
           component: mmsearch
-        },
-
-
-
-
-
+        },{
+          path: 'MemberCen',
+          component: MemberCen,
+          children: [
+            {
+              path: 'Order',
+              component: Order,
+              alias: '/MemberCen'
+            }, {
+              path: 'Evaluate',
+              component: Evaluate,
+            }, {
+              path: 'Uerset',
+              component: Uerset
+            }
+          ]
+        }
       ]
     }, {
       path: '/Logon',
@@ -95,9 +111,6 @@ export default new Router({
       name: 'paybdg',
       component: PayBridge
     },
-
-
-
     {
       path: '/*',
       component: Nfd

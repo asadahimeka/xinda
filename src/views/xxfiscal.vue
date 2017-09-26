@@ -63,28 +63,27 @@
                 </div>
                 <el-alert v-if="err" :title="errmsg" type="error" show-icon></el-alert>
                 <el-alert v-if="!refiscal.length" title="数据为空，请稍后再试。" type="info" show-icon></el-alert>
-                <template v-for="(item,i) in refiscal">
-                    <div class="wares_list_m" :key="i" v-loading="loading">
-                        <div class="imgdiv">
-                            <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'><img :src="relistimg+item.providerImg" alt=""></a>
-                        </div>
-                        <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'>
-                            <b>{{item.serviceName}}</b>
-                        </a>
-                        <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'>
-                            <p>{{item.serviceInfo}}</p>
-                        </a>
-                        <span class="gongsi">{{item.providerName}}</span>
-                        <span class="dizhi">{{item.regionName}}</span>
-                        <span class="money">￥&nbsp;{{fmtPrice(item.marketPrice)}}</span>
-                        <div class="order_div">
-                            <a href="javascript:;" class="order" @click="buyNow(item)">立即购买</a>
-                        </div>
-                        <div class="joincart_div">
-                            <a href="javascript:;" class="joincart" @click="addCart(item,i)">加入购物车</a>
-                        </div>
+                <div v-for="(item,i) in refiscal" class="wares_list_m" :key="i" v-loading="loading">
+                    <div class="imgdiv">
+                        <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'><img :src="relistimg+item.providerImg" alt=""></a>
                     </div>
-                </template>
+                    <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'>
+                        <b>{{item.serviceName}}</b>
+                    </a>
+                    <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'>
+                        <p>{{item.serviceInfo}}</p>
+                    </a>
+                    <span class="gongsi">{{item.providerName}}</span>
+                    <span class="dizhi">{{item.regionName}}</span>
+                    <span class="money">￥&nbsp;{{fmtPrice(item.marketPrice)}}</span>
+                    <div class="order_div">
+                        <a href="javascript:;" class="order" @click="buyNow(item)">立即购买</a>
+                    </div>
+                    <div class="joincart_div">
+                        <a href="javascript:;" class="joincart" @click="addCart(item,i)">加入购物车</a>
+                    </div>
+                </div>
+                <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
             </div>
         </div>
         <div class="advimg"><img src="../../static/images/u684.png" alt="" class="right_img"></div>
@@ -97,7 +96,7 @@ export default {
     name: 'fiscal',
     data() {
         return {
-            load1:1,
+            load1: 1,
             loading: 1,
             tabs2: {},
             tabs3: {},
@@ -113,6 +112,8 @@ export default {
             relistimg: 'http://115.182.107.203:8088/xinda/pic',
             chId: "2e110f0df53243c197fede52fba8e5d0",//财税服务
             chName: "财税服务",
+            pageSize:0,
+            cur:1,
             pdata: {
                 start: 0,
                 limit: 8,
@@ -174,9 +175,15 @@ export default {
             this.on3 = 0;
             this.on4 = 1;
         },
+        pageChange(curPage) {
+            this.cur = curPage;
+            this.pdata.start = (curPage - 1) * this.pdata.limit;
+            this.getPack();
+        },
         getPack() {
             this.ajax.post('/xinda-api/product/package/grid', this.pdata).then((res) => {
                 if (res.data.data) {
+                    this.pageSize = res.data.pageSize;
                     this.refiscal = res.data.data;
                     this.loading = 0;
                 } else {
@@ -584,5 +591,9 @@ a {
 .el-alert {
     width: 300px;
     margin: 50px auto;
+}
+.page-bar{
+    margin-top: 40px;
+    text-align: center;
 }
 </style>

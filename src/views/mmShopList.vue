@@ -145,12 +145,14 @@ export default {
         pageChange(curPage) {
             this.cur = curPage;
             this.ajdata.start = (curPage - 1) * this.ajdata.limit;
+            this.loading = true;
             this.getShop();
         },
         onSelected(data) {
             console.log(data);
             if (data) {
                 this.ajdata.regionId = data.area.code;
+                this.loading = true;
                 this.getShop();
             } else {
                 console.log('VDistpicker Error');

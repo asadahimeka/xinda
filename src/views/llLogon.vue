@@ -10,7 +10,7 @@
                     <!-- 分隔 -->
                 </div>
                 <div class="wel">
-                    欢迎登陆
+                    欢迎登录
                 </div>
             </div>
         </div>

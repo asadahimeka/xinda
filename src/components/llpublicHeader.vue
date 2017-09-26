@@ -52,9 +52,9 @@
                         <i class="iconOrder">
                             &#xe698;
                         </i>
-                        <a href="">我的订单</a>
+                        <a href="#/MemberCen">我的订单</a>
                     </div>
-                    <a href="">服务商入口</a>
+                    <a href="#/shoplist">服务商入口</a>
                 </div>
             </div>
         </div>

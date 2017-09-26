@@ -32,7 +32,7 @@
                     <div v-for="item in orderlist" class="odr-dtl" :key="item.id">
                         <div>服务名称：
                             <!-- TODO -->
-                            <a :title="item.serviceInfo" @click="toDetail('/',item.serviceId)" target="_blank">{{item.serviceName}}</a>
+                            <a :title="item.serviceName+':'+item.serviceInfo" :href="'#/shdetail?sid='+item.serviceId" target="_blank">{{item.serviceName}}</a>
                         </div>
                         <div>单价：
                             <b class="money-color">￥{{fmtPrice(item.unitPrice)}}</b>元</div>
@@ -110,7 +110,7 @@
             </div>
             <div class="fb-msg">
                 <div class="qrimg">
-                    <img :src="codeUrl" alt="">
+                    <img :src="codeUrl" alt="Load QR Code failed.">
                 </div>
                 <p>请您使用微信扫一扫&nbsp;进行扫码支付</p>
                 <button>
@@ -193,13 +193,7 @@ export default {
             if (!payNo) {
                 this.$alert('请选择支付方式！', '提示');
             } else if (payNo == 'bank') {
-                this.$notify({
-                    type: 'info',
-                    title: '进行线下转账',
-                    message: '转账时请你将订单编号备注在付款信息里；转账完成时，请通知客服。',
-                    duration: 0,
-                    offset: 200,
-                });
+                this.$alert('转账时请你将订单编号备注在付款信息里；转账完成时，请通知客服。', '进行线下转账');
             } else {
                 this.ajax.post(
                     '/xinda-api/pay/' + payNo,
@@ -235,27 +229,24 @@ export default {
     created() {
         window.scrollTo(0, 0);
         this.getOrder();
+    },
+    watch: {
+        $route(val) {
+            if (val) {
+                this.$router.afterEach((to, from, next) => { window.scrollTo(0, 0); });
+            }
+        }
     }
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 
 @gwidth: 1200px;
 @mcolor: #2693d4;
 @borclr: #b6b6b6;
 @redclr: #fa6463;
-
-.mainA {
-    .allNavigation {
-        display: none;
-    }
-    &:hover .allNavigation {
-        display: block;
-        z-index: 10002;
-    }
-}
 
 body {
     margin: 0;

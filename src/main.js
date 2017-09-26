@@ -32,16 +32,6 @@ Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
 
-/* eslint-disable no-new */
-new Vue({
-    el: '#app',
-    router,
-    store,
-    template: '<App/>',
-    components: { App }
-})
-
-
 //省市区三级联动全局变量
 global.provinceEl = document.getElementById("province");
 global.cityEl = document.getElementById("city");
@@ -3292,3 +3282,11 @@ global.cityJson = [
     { "item_code": "659004", "item_name": "五家渠市" }
 ]
 
+/* eslint-disable no-new */
+new Vue({
+    el: '#app',
+    router,
+    store,
+    template: '<App/>',
+    components: { App }
+})

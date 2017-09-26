@@ -57,6 +57,9 @@
             <!-- 店铺列表 -->
             <div class="" v-if="ispr==1">
                 <div class="wrap">
+                    <div class="none" v-if="!providers.length">
+                        <el-alert title="没有符合条件的内容" type="info" :closable="false" show-icon></el-alert>
+                    </div>
                     <div class="providerlist" v-for="(providerinfo,i) in providers" :key="i">
                         <ul class="listbox">
                             <li class="logo"><img :src="logoImg(providerinfo.providerImg)" alt=""></li>
@@ -374,8 +377,13 @@ export default {
 
 .none {
     width: 100%;
-    height: 200px;
+    height: 555px;
     padding-top: 100px;
     text-align: center;
+}
+
+.el-alert{
+    width: 300px;
+    margin: 0 auto;
 }
 </style>

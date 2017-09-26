@@ -19,7 +19,7 @@
                 </div>
                 <div class="inputSearch">
                     <input type="text" class="search_input" placeholder="搜索您需要的服务或服务商" v-model="searchCode" @keypress="toSearch">
-                    <a :href='"/#/search?sn="+searchCode+"&pc="+ispr'>
+                    <a :href='"/#/search?sn="+searchCode+"&ispr="+ispr'>
                         <button class="search_button">&#xe600;</button>
                     </a>
                 </div>

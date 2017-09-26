@@ -11,13 +11,19 @@
                 <div class="swiper-pagination" slot="pagination"></div>
             </swiper>
         </div>
-        <x-index></x-index>
+        <xIndex></xIndex>
+        <mmProperty></mmProperty>
+        <mmService></mmService>
+        <mmPartners></mmPartners>
     </div>
 </template>
 
 <script>  
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
-import xindex from './xxindex'
+import xIndex from './xxindex'
+import mmProperty from '../views/mmProperty.vue'
+import mmService from '../views/mmService.vue'
+import mmPartners from '../views/mmPartners.vue'
 
 export default {
     created() {
@@ -26,7 +32,10 @@ export default {
     components: {
         swiper,
         swiperSlide,
-        'x-index': xindex,
+        xIndex,
+        mmProperty,
+        mmService,
+        mmPartners,
     },
     data() {
         return {

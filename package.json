@@ -12,10 +12,10 @@
   "dependencies": {
     "axios": "^0.16.2",
     "element-ui": "^1.4.4",
-    "v-distpicker": "^1.0.8",
-    "vue": "^2.4.2",
     "js-md5": "^0.6.0",
+    "vue": "^2.4.2",
     "vue-awesome-swiper": "^2.5.4",
+    "v-distpicker": "^1.0.8",
     "vue-router": "^2.7.0",
     "vuex": "^2.4.0"
   },

@@ -18,15 +18,15 @@
                     <a :class="{interfaceActive:!TTT}" @click="BBB" href="javascript:;">服务商</a>
                 </div>
                 <div class="inputSearch">
-                    <input type="text" class="search_input" placeholder="搜索您需要的服务或服务商" v-model="searchCode">
+                    <input type="text" class="search_input" placeholder="搜索您需要的服务或服务商" v-model="searchCode" @keypress="toSearch">
                     <a :href='"/#/search?sn="+searchCode+"&pc="+ispr'>
                         <button class="search_button">&#xe600;</button>
                     </a>
                 </div>
                 <div class="pushService">
                     <p>热门服务：</p>
-                    <a href="">社保开户</a>
-                    <a href="">公司注册</a>
+                    <a href="/#/slist?id=cc7eb9bbd40f4b0e9f31c8cbcb903a59&code=6&pid=5e0220d58f30436e92a8d0052b4b8203">社保开户</a>
+                    <a href="/#/slist?id=5af629246fa34f6f8d49758c6a7b25f1&code=4&pid=19b94314bc1a4b078d2402f8727c388b">公司注册</a>
                 </div>
             </div>
             <div class="callUs">
@@ -87,6 +87,11 @@ export default {
         BBB: function() {
             this.TTT = false;
             this.ispr = 1;
+        },
+        toSearch: function(e) {
+            if (e.keyCode == 13) {
+                this.$router.push({ path: "search", query: { sn: this.searchCode, ispr: this.ispr } });
+            }
         }
     }
 }

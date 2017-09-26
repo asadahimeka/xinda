@@ -199,7 +199,7 @@
                     <a href="/#/JoinUs">加盟我们</a>
                 </li>
                 <li>
-                    <a href="">店铺</a>
+                    <a href="/#/shoplist">店铺</a>
                 </li>
             </ul>
         </div>
@@ -225,7 +225,7 @@ export default {
 <style lang="less">
 .mainA {
     .allNavigation {
-        z-index: 2;
+        z-index: 10002;
     }
     &:hover .allNavigation {
         display: block !important;

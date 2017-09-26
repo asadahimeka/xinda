@@ -37,7 +37,7 @@
                     </template>
                     <!-- 分页 -->
                     <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
-                </el-tab-pane>
+                    </el-tab-pane>
                 <el-tab-pane label="客服" name="second">
                     <div class="servicebox">
                         <span>工作时间：{{shopinfo.workTime}}</span><br>
@@ -46,7 +46,7 @@
                 </el-tab-pane>
                 <el-tab-pane label="资质证书" name="third"></el-tab-pane>
                     <div class="license"><img :src="businessImg(shopinfo.businessCertPath)" alt=""></div>
-            </el-tabs>
+                </el-tabs>
         </div>
     </div>
 </template>
@@ -59,7 +59,7 @@ export default{
             id: this.$route.query.id,
 
         };
-        this.ajax.post('/provider/detail',canshu,{}).then((data)=> {
+        this.ajax.post('xinda-api/provider/detail',canshu,{}).then((data)=> {
             this.shopinfo = data.data.data;
             console.log('axios data', this.shopinfo );
         this.getServCont();
@@ -100,7 +100,7 @@ export default{
                 limit:this.limit,
                 providerId: this.$route.query.id,
             };
-            this.ajax.post('/product/package/grid',canshu1,{}).then((data)=> {
+            this.ajax.post('xinda-api/product/package/grid',canshu1,{}).then((data)=> {
                 this.contentList = data.data.data;
                 // console.log(data.data.data);
                 this.pageSize = data.data.pageSize;
@@ -114,7 +114,7 @@ export default{
     
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     .container {
         width: 1200px;
         margin: 0 auto;

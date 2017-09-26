@@ -150,7 +150,7 @@ export default{
             }
         },
         getShop(){
-            this.ajax.post('/provider/grid', this.ajdata, {}).then((data)=> {
+            this.ajax.post('xinda-api/provider/grid', this.ajdata, {}).then((data)=> {
                 this.shopinfo = data.data.data;
                 // console.log(this.shopinfo);
                 this.pageSize = data.data.pageSize;
@@ -200,7 +200,7 @@ export default{
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 // 图标
 .redicon {
     color: #f00;

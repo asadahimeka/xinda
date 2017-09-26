@@ -11,7 +11,6 @@
             <a href="javascript:;"><img src="../../static/images/partner_12.gif" alt=""></a>
             <a href="javascript:;"><img src="../../static/images/partner_14.gif" alt=""></a>
         </div>
-        
     </div>
 </template>
 
@@ -19,7 +18,7 @@
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     .container {
         width: 1200px;
         margin: 0 auto;

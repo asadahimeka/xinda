@@ -32,11 +32,11 @@
                         <p>销量：{{content.buyNum}}</p>
                         <p class="price">￥ {{content.price/100}}</p>
                         <span>原价：{{content.marketPrice/100}}</span>
-                        <a href="">查看详情>>></a>
+                        <a :href='"#/shdetail?sid="+content.id'>查看详情>>></a>
                     </div>
                     <!-- 分页 -->
                     <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
-                </el-tab-pane>
+                    </el-tab-pane>
                 <el-tab-pane label="客服" name="second">
                     <div class="servicebox">
                         <span>工作时间：{{shopinfo.workTime}}</span><br>
@@ -46,8 +46,8 @@
                     </div>
                 </el-tab-pane>
                 <el-tab-pane label="资质证书" name="third"></el-tab-pane>
-                <div class="license"><img :src="businessImg(shopinfo.businessCertPath)" alt=""></div>
-            </el-tabs>
+                    <div class="license"><img :src="businessImg(shopinfo.businessCertPath)" alt=""></div>
+                </el-tabs>
         </div>
     </div>
 </template>
@@ -60,7 +60,7 @@ export default {
             id: this.$route.query.id,
 
         };
-        this.ajax.post('/xinda-api/provider/detail', canshu, {}).then((data) => {
+        this.ajax.post('xinda-api/provider/detail',canshu,{}).then((data)=> {
             this.shopinfo = data.data.data;
             console.log('axios data', this.shopinfo);
             this.getServCont();
@@ -101,7 +101,7 @@ export default {
                 limit: this.limit,
                 providerId: this.$route.query.id,
             };
-            this.ajax.post('/xinda-api/product/package/grid', canshu1).then((data) => {
+            this.ajax.post('xinda-api/product/package/grid',canshu1,{}).then((data)=> {
                 this.contentList = data.data.data;
                 // console.log(data.data.data);
                 this.pageSize = data.data.pageSize;
@@ -115,30 +115,26 @@ export default {
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .container {
     width: 1200px;
     margin: 0 auto;
 }
-
 &>div {
     float: left;
 }
-
 .shopHeader {
     margin-bottom: 25px;
     padding-top: 40px;
     padding-left: 60px;
     height: 140px;
     border: 1px solid #ccc;
-
     > :nth-child(1) {
         float: left;
         width: 80px;
         height: 80px; // border-radius: 100%;
         overflow: hidden;
         line-height: 80px;
-
         img {
             max-width: 100%;
             height: auto;
@@ -154,7 +150,6 @@ export default {
         margin: 5px 0;
     }
 }
-
 .shopLeft {
     float: left;
     width: 298px;
@@ -163,7 +158,6 @@ export default {
     font-size: 14px;
     color: #333;
     margin-bottom: 100px;
-
     h2 {
         margin-top: 20px;
         margin-left: 30px;
@@ -177,7 +171,6 @@ export default {
         margin-top: 55px;
         height: 250px;
         border-top: 1px solid #ccc;
-
         >div {
             float: left;
             margin-top: 35px;
@@ -193,15 +186,12 @@ export default {
         }
     }
 }
-
 .shopRight {
     position: relative;
     float: right;
     width: 878px;
     height: 583px;
     border: 1px solid #ccc;
-
-
     h1 {
         text-align: center;
         padding-top: 10px;
@@ -217,7 +207,6 @@ export default {
         width: 235px;
         height: 160px;
         border: 1px solid #ccc;
-
         h3 {
             margin-bottom: 10px;
             font-weight: 400;
@@ -278,14 +267,12 @@ export default {
         position: relative;
         padding-bottom: 100px;
     }
-
     .servicebox {
         margin-top: 10px;
         margin-left: 30px;
         font-size: 21px;
         font-weight: 700;
         line-height: 40px;
-
         span {
             display: inline-block;
             height: 40px;
@@ -300,7 +287,6 @@ export default {
         margin: 10px auto;
         max-width: 400px;
         height: 400px;
-
         img {
             height: 400px;
             width: auto;

@@ -15,7 +15,7 @@
             </div>
             <div>
                 <div class="siftingHeader">产品类型</div>
-                <ul class="produclist font14" v-for="(item,i) in prodType" :key="i">
+                <ul class="produclist font14" v-for="(item,i) in prodType">
                     <li>
                         <a :class="{active:i==proi}" @click="proc(i,item.code)">{{item.name}}</a>
                     </li>
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="Shopboxtitle font14">
-            <ul v-for="(item,i) in shopSort" :key="i">
+            <ul v-for="(item,i) in shopSort">
                 <li>
                     <a :class="{active:i==sori}" @click="sorc(i,item.sort)">{{item.name}}&nbsp;
                         <i class="iconfont">&#xe731;</i>
@@ -55,7 +55,7 @@
                         <div>{{info.regionName}}</div>
                         <div>累计服务客户次数:{{info.orderNum}}
                             <span class="line">|</span>好评率:{{rate(info.goodJudge,info.totalJudge)}}</div>
-                        <ul v-for="(product,i) in info.productTypes" :key="i">
+                        <ul v-for="product in info.productTypes">
                             <li>{{product}}</li>
                         </ul>
                         <a @click="enter(info.id)">进入店铺</a>
@@ -159,7 +159,7 @@ export default {
             }
         },
         getShop() {
-            this.ajax.post('/xinda-api/provider/grid', this.ajdata).then((data) => {
+            this.ajax.post('xinda-api/provider/grid', this.ajdata, {}).then((data) => {
                 this.shopinfo = data.data.data;
                 // console.log(this.shopinfo);
                 this.pageSize = data.data.pageSize;
@@ -203,7 +203,9 @@ export default {
     },
     created() {
         this.getShop();
+
     },
+
 }
 </script>
 
@@ -246,10 +248,8 @@ export default {
     li {
         float: left;
         line-height: 40px;
-
         a {
             display: inline-block;
-
             margin-left: 10px;
             margin-right: 5px;
             line-height: 25px;
@@ -406,7 +406,6 @@ export default {
     margin: 10px auto;
     width: fit-content;
 }
-
 
 
 

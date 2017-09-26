@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="page-bar">
+  <div class="page-bar" v-if="pageSize">
     <ul>
       <li><button @click="btnClick(1)" v-if="curInx!=1">首页</button></li>
       <li><button @click="btnClick(curInx-1)" :disabled="curInx==1">上一页</button></li>
@@ -8,7 +8,7 @@
       </li>
       <li><button @click="btnClick(curInx+1)" :disabled="curInx==pageSize">下一页</button></li>
       <li><button @click="btnClick(pageSize)" v-if="pageSize&&curInx!=pageSize">尾页</button></li>
-      <li v-if="totalShow"><button>共<i>{{pageSize}}</i>页</button></li>
+      <li v-if="totalShow"><button class="total" disabled>共<i>{{pageSize}}</i>页</button></li>
     </ul>
   </div>
 </template>
@@ -72,7 +72,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="less">
 ul,li {
   margin: 0px;
   padding: 0px;
@@ -118,4 +118,12 @@ ul,li {
   margin: 0px 4px;
   font-size: 12px;
 }
+
+.total{
+  cursor: default !important; 
+  &:hover {
+    background-color: #fff !important;
+  }
+}
+
 </style>

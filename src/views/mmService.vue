@@ -2,29 +2,26 @@
     <div class="service container">
         <div class="moduleTitle">
             <h3>
-                <a :class="{active : show}" @click="getProvider()">推荐服务商</a>
+                <a :class="{active : show}" @click="clk1()">推荐服务商</a>
             </h3>
             <h3>
-                <a :class="{active : !show}" @click="getProduct()">推荐服务</a>
+                <a :class="{active : !show}" @click="clk2()">推荐服务</a>
             </h3>
         </div>
         <div class="moduleBody">
-            <template v-if="!show">
-                <a v-for="list in providerList" @click="enter(list.id)" :key="list.id">
+            <template v-for="(list,i) in providerList">
+                <a v-if="show" @click="enter(list.id)" :key="i">
                     <div><img :src="providerImg(list.providerImg)" alt=""></div>
                     <h3>{{list.providerName}}</h3>
                     <span>服务指数：8.9分</span>
                     <span>提供的服务:</span>
                     <template v-for="(prod,i) in list.products">
                         <p v-if="i<4" :key="i">{{prod}}</p>
-                        <!-- <p>高新企业担保认定</p>
-                            <p>软件著作权登记</p>
-                            <p>商标快速注册通道</p> -->
                     </template>
                 </a>
             </template>
-            <template v-if="!show">
-                <a v-for="list in productList" :key="list.id" @click="enter(list.id)">
+            <template v-for="(list,i) in productList">
+                <a :key="i" v-if="!show" @click="enter(list.id)">
                     <div><img :src="providerImg(list.providerImg)" alt=""></div>
                     <h3>{{list.serviceName}}</h3>
                     <h4>{{list.providerName}}</h4>
@@ -49,18 +46,24 @@ export default {
         };
     },
     methods: {
+        clk1() {
+            this.show = true;
+            this.getProvider();
+        },
+        clk2() {
+            this.show = false;
+            this.getProduct();
+        },
         getProduct() {
-            this.ajax.post('/xinda-api/recommend/list').then((data) => {
+            this.ajax.post('xinda-api/recommend/list', {}).then((data) => {
                 this.productList = data.data.data.product;
                 // console.log('product', this.productList);
-                this.show = false;
             })
         },
         getProvider() {
-            this.ajax.post('/xinda-api/recommend/list').then((data) => {
+            this.ajax.post('xinda-api/recommend/list', {}).then((data) => {
                 this.providerList = data.data.data.provider;
                 console.log('provider', this.providerList);
-                this.show = true;
                 for (var i = 0; i < this.providerList.length; i++) {
                     this.providerList[i].products = this.providerList[i].products.split(',');
                 }
@@ -74,8 +77,8 @@ export default {
                 })
             } else {
                 this.$router.push({
-                    path: '/',
-                    query: { id },
+                    path: '/shdetail',
+                    query: { sid: id },
                 })
             }
 
@@ -93,7 +96,7 @@ export default {
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .container {
     width: 1200px;
     margin: 0 auto;

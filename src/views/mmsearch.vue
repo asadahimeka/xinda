@@ -27,17 +27,24 @@
                         </ul>
                     </div>
                     <div class="none" v-if="!products.length">
-                        <el-alert title="没有符合条件的内容" type="info" :closable="false" show-icon></el-alert>
+                        <img src="../../static/images/none.png" alt="">
+                        <p>Sorry！没有符合搜索的内容 o(╥﹏╥)o</p>
                     </div>
                     <div class="productlist" v-for="(productlist,i) in products" :key="i">
                         <ul class="listbox">
-                            <li class="logo"><img :src="logoImg(productlist.providerImg)" alt=""></li>
+                            <li class="logo">
+                                <a :href='"#/shdetail?sid="+productlist.id'><img :src="logoImg(productlist.providerImg)" alt=""></a>
+                            </li>
                             <li>
-                                <h4>{{productlist.serviceName}}</h4>
+                                <a :href='"#/shdetail?sid="+productlist.id'>
+                                    <h4>{{productlist.serviceName}}</h4>
+                                </a>
                             </li>
                             <li class="info">{{productlist.serviceInfo}}</li>
                             <li>
-                                <span>{{productlist.providerName}}</span>
+                                <a :href='"#/shop?id="+productlist.providerId'>
+                                    <span>{{productlist.providerName}}</span>
+                                </a>
                                 <span>{{productlist.regionName}}</span>
                             </li>
                         </ul>
@@ -55,10 +62,13 @@
             </div>
 
             <!-- 店铺列表 -->
-            <div class="" v-if="ispr==1">
+            <div v-if="ispr==1">
                 <div class="wrap">
+                    <div class="kong">
+                    </div>
                     <div class="none" v-if="!providers.length">
-                        <el-alert title="没有符合条件的内容" type="info" :closable="false" show-icon></el-alert>
+                        <img src="../../static/images/none.png" alt="">
+                        <p>Sorry！没有符合搜索的内容 o(╥﹏╥)o</p>
                     </div>
                     <div class="providerlist" v-for="(providerinfo,i) in providers" :key="i">
                         <ul class="listbox">
@@ -298,6 +308,14 @@ export default {
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
 
+            a {
+                color: #000;
+
+                 :hover {
+                    color: #2594d4;
+                }
+            }
+
             img {
                 vertical-align: middle;
                 height: 20px;
@@ -326,6 +344,7 @@ export default {
         margin: 10px 0;
         font-weight: 400;
         font-size: 16px;
+        color: #2594d4;
     }
     .info {
         color: #666;
@@ -366,7 +385,6 @@ export default {
 }
 
 .page-bar {
-    // clear: both;
     margin: 10px auto;
     width: fit-content;
 }
@@ -377,13 +395,16 @@ export default {
 
 .none {
     width: 100%;
-    height: 555px;
+    height: 515px;
     padding-top: 100px;
     text-align: center;
+
+    p {
+        margin-top: 20px;
+    }
 }
 
-.el-alert{
-    width: 300px;
-    margin: 0 auto;
+.kong {
+    height: 40px;
 }
 </style>

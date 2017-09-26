@@ -32,7 +32,7 @@
                         <p>销量：{{content.buyNum}}</p>
                         <p class="price">￥ {{content.price/100}}</p>
                         <span>原价：{{content.marketPrice/100}}</span>
-                        <a href="">查看详情>>></a>
+                        <a :href='"#/shdetail?sid="+content.id'>查看详情>>></a>
                     </div>
                     <!-- 分页 -->
                     <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>

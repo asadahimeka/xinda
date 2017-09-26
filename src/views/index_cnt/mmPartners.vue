@@ -4,12 +4,12 @@
             <h3>知识产权</h3>
         </div>
         <div class="moduleBody">
-            <a href="javascript:;"><img src="../../static/images/partner_03.gif" alt=""></a>
-            <a href="javascript:;"><img src="../../static/images/partner_05.jpg" alt=""></a>
-            <a href="javascript:;"><img src="../../static/images/partner_08.gif" alt=""></a>
-            <a href="javascript:;"><img src="../../static/images/partner_10.gif" alt=""></a>
-            <a href="javascript:;"><img src="../../static/images/partner_12.gif" alt=""></a>
-            <a href="javascript:;"><img src="../../static/images/partner_14.gif" alt=""></a>
+            <a href="javascript:;"><img src="../../../static/images/partner_03.gif" alt=""></a>
+            <a href="javascript:;"><img src="../../../static/images/partner_05.jpg" alt=""></a>
+            <a href="javascript:;"><img src="../../../static/images/partner_08.gif" alt=""></a>
+            <a href="javascript:;"><img src="../../../static/images/partner_10.gif" alt=""></a>
+            <a href="javascript:;"><img src="../../../static/images/partner_12.gif" alt=""></a>
+            <a href="javascript:;"><img src="../../../static/images/partner_14.gif" alt=""></a>
         </div>
     </div>
 </template>
@@ -34,7 +34,7 @@
         }
     }
     .moduleBody {
-        
+        margin-bottom: 50px;
         a {
             display: inline-block;
             border: 1px solid #ccc;

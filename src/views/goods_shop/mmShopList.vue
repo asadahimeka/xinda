@@ -41,7 +41,7 @@
                 <div class="shopBox" :key="info.id">
                     <div class="boxleft">
                         <div><img :src="imgurl(info.providerImg)"></div>
-                        <div><img src="../assets/icon_gold.png">&nbsp;&nbsp;金牌服务商</div>
+                        <div><img src="../../assets/icon_gold.png">&nbsp;&nbsp;金牌服务商</div>
                     </div>
                     <div class="boxright">
                         <div>{{info.providerName}}</div>

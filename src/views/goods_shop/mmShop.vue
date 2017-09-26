@@ -13,10 +13,10 @@
             <h2>公司介绍</h2>
             <p>{{shopinfo.providerInfo}}</p>
             <div>
-                <div><img src="../assets/icon_vouch.png" alt="">平台担保</div>
-                <div><img src="../assets/icon_service.png" alt="">优质服务</div>
-                <div><img src="../assets/icon_supervise.png" alt="">过程监督</div>
-                <div><img src="../assets/icon_money.png" alt="">增值服务</div>
+                <div><img src="../../assets/icon_vouch.png" alt="">平台担保</div>
+                <div><img src="../../assets/icon_service.png" alt="">优质服务</div>
+                <div><img src="../../assets/icon_supervise.png" alt="">过程监督</div>
+                <div><img src="../../assets/icon_money.png" alt="">增值服务</div>
             </div>
         </div>
         <!-- 内容区 -->
@@ -41,7 +41,7 @@
                     <div class="servicebox">
                         <span>工作时间：{{shopinfo.workTime}}</span><br>
                         <span>QQ咨询：
-                            <a :href="'tencent://message/?uin='+shopinfo.qq" class="Qicon"><img src="../assets/icon_qq.png" alt=""></a>
+                            <a :href="'tencent://message/?uin='+shopinfo.qq" class="Qicon"><img src="../../assets/icon_qq.png" alt=""></a>
                         </span>
                     </div>
                 </el-tab-pane>

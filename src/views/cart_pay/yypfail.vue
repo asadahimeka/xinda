@@ -80,7 +80,7 @@ body {
         width: 150px;
         height: 150px;
         margin-right: 75px;
-        background: url("../assets/sad.svg") no-repeat;
+        background: url("../../assets/sad.svg") no-repeat;
     }
     .dtl {
         h1 {

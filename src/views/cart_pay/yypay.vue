@@ -382,20 +382,20 @@ body {
     }
     .upay {
         width: 161px;
-        background: url("../assets/unipay.svg") no-repeat;
+        background: url("../../assets/unipay.svg") no-repeat;
     }
     .wxpay {
-        background: url("../assets/wx.svg") no-repeat;
+        background: url("../../assets/wx.svg") no-repeat;
     }
     .alipay {
-        background: url("../assets/alipay.svg") no-repeat;
+        background: url("../../assets/alipay.svg") no-repeat;
     }
     .bankpay {
         width: 123px;
         height: 85px;
         margin-left: 10px;
         margin-top: -30px;
-        background: url("../assets/zs.svg") no-repeat;
+        background: url("../../assets/zs.svg") no-repeat;
     }
 }
 

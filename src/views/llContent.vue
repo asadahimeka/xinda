@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import LineLogo from './llLineLogo'
-import Navigation from './llNavigation'
+import LineLogo from './nav/llLineLogo'
+import Navigation from './nav/llNavigation'
 export default {
     components: {
         LineLogo,

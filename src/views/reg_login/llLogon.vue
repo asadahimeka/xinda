@@ -3,7 +3,7 @@
         <div class="logoLine">
             <div class="autoLine">
                 <a href="/">
-                    <img src="../../static/images/QQ图片20170517185752.png" alt="">
+                    <img src="../../../static/images/QQ图片20170517185752.png" alt="">
                     <p>信达</p>
                 </a>
                 <div class="getset">
@@ -41,7 +41,7 @@
                     </a>
                 </div>
                 <div class="getRight">
-                    <img src="../../static/images/getRight.png">
+                    <img src="../../../static/images/getRight.png">
                 </div>
             </div>
             <el-alert :title="successMsg" type="success" show-icon :closable="false" class="success" v-if="successRe">
@@ -122,7 +122,7 @@ export default {
 
                                 //如果是点击“立即购买”跳转过来的，登录成功后跳转到购物车
                                 var p = sessionStorage.getItem('pathToLogin');
-                                if (p == '/slist' || p == '/shdetail') {
+                                if (p == '/slist' || p == '/shdetail' || p == '/search') {
                                     sessionStorage.removeItem('pathToLogin');
                                     this.cartAction(1);
                                     this.$router.push('/shcart');

@@ -7,7 +7,7 @@
     <div class="setti">
       <!--账户设置部分-->
       <div class="sett2">
-        <span>当前头像：</span><img src="../assets/userheader.png" alt="">
+        <span>当前头像：</span><img src="../../assets/userheader.png" alt="">
         <el-upload class="avatar-uploader" action="" :show-file-list="false" :on-success="handleAvatarSuccess">
           <img v-if="imageUrl" :src="imageUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>

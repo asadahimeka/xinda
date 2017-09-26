@@ -40,7 +40,7 @@
                 </span>
             </div>
         </div>
-        <img src="../../static/images/u1225.png" alt="" class="hf">
+        <img src="../../../static/images/u1225.png" alt="" class="hf">
         <div class="clickmenu">
             <div class="clserve" :class="{public:!index}" @click="index=0">
                 服务内容

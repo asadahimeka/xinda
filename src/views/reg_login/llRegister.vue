@@ -3,7 +3,7 @@
         <div class="lineLogo">
             <div class="LinePosition">
                 <a href="/" class="Logo">
-                    <img src="../../static/images/QQ图片20170517185752.png" alt="">
+                    <img src="../../../static/images/QQ图片20170517185752.png" alt="">
                     <p>信达</p>
                 </a>
                 <div class="setget">
@@ -62,7 +62,7 @@
                     <a href="#/Logon">立即登录>></a>
                 </p>
                 <div class="getRight">
-                    <img src="../../static/images/getRight.png" alt="">
+                    <img src="../../../static/images/getRight.png" alt="">
                 </div>
             </div>
         </div>

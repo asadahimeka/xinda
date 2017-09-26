@@ -4,7 +4,7 @@
             <div style="width:242px;height:20px;color:#696969;margin:10px;">首页/个人中心</div>
             <div class="member-user">
                 <div class="via">
-                    <a href=""><img src="../assets/userheader.png"></a>
+                    <a href=""><img src="../../assets/userheader.png"></a>
                 </div>
                 <p class="phone-number">{{username}}</p>
             </div>
@@ -92,13 +92,13 @@ export default {
                 font-size: 18px;
             }
             .myOrder {
-                background: url("../../static/images/dingdan.png") no-repeat 50px 13px;
+                background: url("../../../static/images/dingdan.png") no-repeat 50px 13px;
             }
             .userComment {
-                background: url("../../static/images/useevaluationr.png") no-repeat 50px 15px;
+                background: url("../../../static/images/useevaluationr.png") no-repeat 50px 15px;
             }
             .accountSetup {
-                background: url("../../static/images/set.png") no-repeat 47px 12.5px;
+                background: url("../../../static/images/set.png") no-repeat 47px 12.5px;
             }
         }
     }

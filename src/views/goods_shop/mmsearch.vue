@@ -27,7 +27,7 @@
                         </ul>
                     </div>
                     <div class="none" v-if="!products.length">
-                        <img src="../../static/images/none.png" alt="">
+                        <img src="../../../static/images/none.png" alt="">
                         <p>Sorry！没有符合搜索的内容 o(╥﹏╥)o</p>
                     </div>
                     <div class="productlist" v-for="(productlist,i) in products" :key="i">
@@ -51,8 +51,8 @@
                         <div>
                             <div class="price">
                                 <P>￥{{productlist.price/100}}</P>
-                                <button>立即购买</button>
-                                <button>加入购物车</button>
+                                <button @click="buyNow(productlist)">立即购买</button>
+                                <button @click="addCart(productlist)">加入购物车</button>
                             </div>
 
                         </div>
@@ -67,7 +67,7 @@
                     <div class="kong">
                     </div>
                     <div class="none" v-if="!providers.length">
-                        <img src="../../static/images/none.png" alt="">
+                        <img src="../../../static/images/none.png" alt="">
                         <p>Sorry！没有符合搜索的内容 o(╥﹏╥)o</p>
                     </div>
                     <div class="providerlist" v-for="(providerinfo,i) in providers" :key="i">
@@ -77,7 +77,7 @@
                                 <h4>{{providerinfo.providerName}}</h4>
                             </li>
                             <li class="info">
-                                <div><img src="../assets/icon_gold.png">&nbsp;&nbsp;金牌服务商</div>
+                                <div><img src="../../assets/icon_gold.png">&nbsp;&nbsp;金牌服务商</div>
                                 {{providerinfo.productTypes}}
 
                             </li>
@@ -101,6 +101,7 @@
 
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
     data() {
         return {
@@ -137,8 +138,11 @@ export default {
         }
     },
     created() {
-        console.log(this.$route.query);
+        // console.log(this.$route.query);
         this.getSearchRes();
+    },
+    computed: {
+        ...mapGetters(['getCartnum'])
     },
     watch: {
         $route(val) {
@@ -148,6 +152,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['cartAction']),
         getSearchRes() {
             this.ispr = this.$route.query.ispr;
             if (this.ispr == 0) {
@@ -167,7 +172,7 @@ export default {
             this.ajax.post('xinda-api/product/package/search-grid', this.productData, {}).then((data) => {
                 this.products = data.data.data;
                 this.pageSize = data.data.pageSize;
-                console.log(data);
+                // console.log(data);
                 // console.log('产品:', this.products);
             }).catch((error) => {
                 console.log('axios error', error);
@@ -175,7 +180,7 @@ export default {
         },
         getProviders() {
             this.ajax.post('/xinda-api/provider/search-grid', this.providerData, {}).then((data) => {
-                console.log(data);
+                // console.log(data);
                 this.providers = data.data.data;
                 this.pageSize = data.data.pageSize;
                 // console.log('服务商:', this.providers);
@@ -196,11 +201,71 @@ export default {
             this.cur = curPage;
             this.productData.start = (curPage - 1) * this.productData.limit;
             this.getProducts();
+            window.scrollTo(0, 380);
         },
         providerPage(curPage) {
             this.cur = curPage;
             this.providerData.start = (curPage - 1) * this.providerData.limit;
             this.getPrviders();
+            window.scrollTo(0, 380);
+        },
+        open(title, content, msg, url) {
+            this.$alert(content, title, {
+                confirmButtonText: '确定',
+                lockScroll: false,
+                callback: () => {
+                    this.$message({ type: "info", message: msg, duration: 1000 });
+                    setTimeout(() => this.$router.push(url), 1000);
+                }
+            });
+        },
+        buyNow(item) {
+            this.ajax.post(
+                '/xinda-api/cart/add',
+                { id: item.id, num: 1 },
+            ).then(res => {
+                if (res.data.status == 1) {
+                    this.ajax.post(
+                        '/xinda-api/cart/submit'
+                    ).then(res => {
+                        if (res.data.status == -1) {
+                            // TODO
+                            sessionStorage.setItem('pathToLogin', this.$route.path);
+                            this.open('提示', res.data.msg, "跳转至登录界面", '/Logon');
+                        } else if (res.data.status == 1) {
+                            //TODO
+                            this.$router.push({ path: '/pay', query: { bno: res.data.data } })
+                        }
+                    }).catch(res => {
+                        console.log('Axios: ', res);
+                    });
+                } else {
+                    this.$message({ type: 'warning', message: res.data.msg, duration: 1000 });
+                }
+            }).catch(res => {
+                console.log('Axios: ', res);
+            });
+        },
+        addCart(item) {
+            this.ajax.post(
+                '/xinda-api/cart/add',
+                { id: item.id, num: 1 },
+            ).then(res => {
+                if (res.data.status == 1) {
+                    this.$message({ type: 'success', message: res.data.msg, duration: 1000 });
+                    this.ajax.post('/xinda-api/cart/cart-num').then(res => {
+                        if (res.data.status == 1) {
+                            this.cartAction(res.data.data.cartNum);
+                        } else {
+                            this.$message({ type: 'warning', message: res.data.msg, duration: 1000 });
+                        }
+                    });
+                } else {
+                    this.$message({ type: 'warning', message: res.data.msg, duration: 1000 });
+                }
+            }).catch(res => {
+                console.log('Axios: ', res);
+            });
         },
 
     },
@@ -240,16 +305,16 @@ export default {
             border-radius: 100%;
         }
         .cup {
-            background-image: url(../assets/icon_cup.png);
+            background-image: url(../../assets/icon_cup.png);
         }
         .men {
-            background-image: url(../assets/icon_men.png);
+            background-image: url(../../assets/icon_men.png);
         }
         .shield {
-            background-image: url(../assets/icon_shield.png);
+            background-image: url(../../assets/icon_shield.png);
         }
         .crown {
-            background-image: url(../assets/icon_crown.png);
+            background-image: url(../../assets/icon_crown.png);
         }
         h3 {
             font-weight: 400;

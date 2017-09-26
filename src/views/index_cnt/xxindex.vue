@@ -45,10 +45,10 @@ export default {
       relistimg: 'http://115.182.107.203:8088/xinda/pic',
       starlist: [],
       starimg: [
-        "../../static/images/qianbao.svg",
-        "../../static/images/zhuce.svg",
-        "../../static/images/zhuce1.svg",
-        "../../static/images/zhuce1.svg",
+        "../../../static/images/qianbao.svg",
+        "../../../static/images/zhuce.svg",
+        "../../../static/images/zhuce1.svg",
+        "../../../static/images/zhuce1.svg",
       ],
       err: 0,
     }

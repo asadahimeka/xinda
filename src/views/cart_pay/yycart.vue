@@ -39,7 +39,7 @@
         </table>
         <el-alert v-if="gfail01" title="Get data failed." type="error" show-icon></el-alert>
         <div v-if="!cartlist.length" class="loading emp">
-            <img src="../assets/cart.jpg" alt=""><br>
+            <img src="../../assets/cart.jpg" alt=""><br>
             <span>购物车空空如也，去首页逛逛吧！</span><br>
             <button>
                 <a href="#/">去首页</a>

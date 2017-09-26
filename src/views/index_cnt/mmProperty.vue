@@ -6,14 +6,14 @@
         <div class="moduleBodyB">
             <div>
                 <div>
-                    <h3>知识产权</h3>
+                    <h3><a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8">知识产权</a></h3>
                     <ul>
-                        <li>|&nbsp;商标注册</li>
-                        <li>|&nbsp;版权保护</li>
-                        <li>|&nbsp;专利申请</li>
+                        <li><a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8">|&nbsp;商标注册</a></li>
+                        <li><a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=9">|&nbsp;版权保护</a></li>
+                        <li><a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=10">|&nbsp;专利申请</a></li>
                     </ul>
                 </div>
-                <a href="javascript:;"><img src="../../static/images/property_03.jpg" alt=""></a>
+                <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../../static/images/property_03.jpg" alt=""></a>
             </div>
             <div>
                 <div>
@@ -23,7 +23,7 @@
                         <span>/次</span>
                     </h2>
                 </div>
-                <a href="javascript:;"><img src="../../static/images/property_05.jpg" alt=""></a>
+                <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../../static/images/property_05.jpg" alt=""></a>
             </div>
             <div>
                 <div>
@@ -33,7 +33,7 @@
                         <span>/次</span>
                     </h2>
                 </div>
-                <a href="javascript:;"><img src="../../static/images/property_07.jpg" alt=""></a>
+                <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=10"><img src="../../../static/images/property_07.jpg" alt=""></a>
             </div>
             <div>
                 <div>
@@ -43,30 +43,30 @@
                         <span>/次</span>
                     </h2>
                 </div>
-                <a href="javascript:;"><img src="../../static/images/property_11.jpg" alt=""></a>
+                <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=9"><img src="../../../static/images/property_11.jpg" alt=""></a>
             </div>
         </div>
         <div class="propertyFooter">
             <div>
-                <img src="../assets/icon_certification.png" alt="">
+                <img src="../../assets/icon_certification.png" alt="">
                 <h2>资质认证<br>
                     <span>服务商100%实名认证</span>
                 </h2>
             </div>
             <div>
-                <img src="../assets/icon_pay.png" alt="">
+                <img src="../../assets/icon_pay.png" alt="">
                 <h2>支付安全<br>
                     <span>明码标价支付</span>
                 </h2>
             </div>
             <div>
-                <img src="../assets/icon_compensation.png" alt="">
+                <img src="../../assets/icon_compensation.png" alt="">
                 <h2>保险赔付<br>
                     <span>出现问题保险赔付</span>
                 </h2>
             </div>
             <div>
-                <img src="../assets/icon_aftersale.png" alt="">
+                <img src="../../assets/icon_aftersale.png" alt="">
                 <h2>售后无忧<br>
                     <span>客服经理全程跟进</span>
                 </h2>

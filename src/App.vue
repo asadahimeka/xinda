@@ -18,16 +18,17 @@ export default {
     Contents
   },
   watch: {
-    // $route(val) {
-    //   if (val) {
-    //     this.$router.afterEach((to, from, next) => { window.scrollTo(0, 0); });
-    //   }
-    // }
+    $route(val) {
+      if (val) {
+        this.$router.afterEach((to, from, next) => { window.scrollTo(0, 0); });
+      }
+    }
   }
 }
 </script>
 
 <style lang="less">
+//ElementUI
 @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 
 * {

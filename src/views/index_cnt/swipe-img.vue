@@ -1,29 +1,19 @@
 <template>
-    <div>
-        <div id="swiper">
-            <swiper :options="swiperOption" ref="mySwiper">
-                <!-- 这部分放你要渲染的那些内容 -->
-                <swiper-slide v-for="(item, k) in items" :key="k">
-                    <!-- 在这里遍历所有轮播图片 -->
-                    <img :src="item" alt="">
-                </swiper-slide>
-                <!-- 这是轮播的小圆点 -->
-                <div class="swiper-pagination" slot="pagination"></div>
-            </swiper>
-        </div>
-        <xIndex></xIndex>
-        <mmProperty></mmProperty>
-        <mmService></mmService>
-        <mmPartners></mmPartners>
+    <div id="swiper">
+        <swiper :options="swiperOption" ref="mySwiper">
+            <!-- 这部分放你要渲染的那些内容 -->
+            <swiper-slide v-for="(item, k) in items" :key="k">
+                <!-- 在这里遍历所有轮播图片 -->
+                <img :src="item" alt="">
+            </swiper-slide>
+            <!-- 这是轮播的小圆点 -->
+            <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
     </div>
 </template>
 
 <script>  
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
-import xIndex from './xxindex'
-import mmProperty from '../views/mmProperty.vue'
-import mmService from '../views/mmService.vue'
-import mmPartners from '../views/mmPartners.vue'
 
 export default {
     created() {
@@ -32,10 +22,6 @@ export default {
     components: {
         swiper,
         swiperSlide,
-        xIndex,
-        mmProperty,
-        mmService,
-        mmPartners,
     },
     data() {
         return {
@@ -49,10 +35,10 @@ export default {
             },
             swiperSlides: [1, 2, 3, 4, 5],
             items: [
-                "../../static/images/timg.jpg",
-                "../../static/images/timg (1).jpg",
-                "../../static/images/timg (2).jpg",
-                "../../static/images/timg (3).jpg",
+                "../../../static/images/timg.jpg",
+                "../../../static/images/timg (1).jpg",
+                "../../../static/images/timg (2).jpg",
+                "../../../static/images/timg (3).jpg",
             ]
         }
     },
@@ -89,5 +75,4 @@ export default {
     width: 100%;
     height: 401px;
 }
-
 </style>

@@ -55,7 +55,7 @@
                         <div>{{info.regionName}}</div>
                         <div>累计服务客户次数:{{info.orderNum}}
                             <span class="line">|</span>好评率:{{rate(info.goodJudge,info.totalJudge)}}</div>
-                        <ul v-for="product in info.productTypes">
+                        <ul v-for="(product,i) in info.productTypes" :key="i">
                             <li>{{product}}</li>
                         </ul>
                         <a @click="enter(info.id)">进入店铺</a>
@@ -210,6 +210,22 @@ export default {
 </script>
 
 <style lang="less">
+// 三级联动
+.sate {
+    select {
+        float: left;
+        margin-left: 10px;
+        margin-top: 5px;
+        padding: 0;
+        padding-left: 25px;
+        width: 120px;
+        height: 30px;
+        font-size: 14px;
+    }
+}
+</style>
+
+<style lang="less" scoped>
 // 图标
 .redicon {
     color: #f00;
@@ -368,19 +384,9 @@ export default {
             }
         }
     }
-} // 三级联动
-.sate {
-    select {
-        float: left;
-        margin-left: 10px;
-        margin-top: 5px;
-        padding: 0;
-        padding-left: 25px;
-        width: 120px;
-        height: 30px;
-        font-size: 14px;
-    }
-} // 提示框
+}
+
+// 提示框
 .none {
     width: 1200px;
     height: 200px;
@@ -406,8 +412,6 @@ export default {
     margin: 10px auto;
     width: fit-content;
 }
-
-
 
 @media screen and (max-with: 1200px) {}
 </style>

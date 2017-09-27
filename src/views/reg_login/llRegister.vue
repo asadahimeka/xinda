@@ -2,7 +2,7 @@
     <div class="Register">
         <div class="lineLogo">
             <div class="LinePosition">
-                <a href="/" class="Logo">
+                <a href="/#" class="Logo">
                     <img src="../../../static/images/QQ图片20170517185752.png" alt="">
                     <p>信达</p>
                 </a>

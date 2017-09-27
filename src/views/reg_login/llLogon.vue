@@ -2,7 +2,7 @@
     <div class="logonFrame">
         <div class="logoLine">
             <div class="autoLine">
-                <a href="/">
+                <a href="/#">
                     <img src="../../../static/images/QQ图片20170517185752.png" alt="">
                     <p>信达</p>
                 </a>

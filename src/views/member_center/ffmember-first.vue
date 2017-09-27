@@ -55,11 +55,14 @@
                         </p>
                     </div>
                 </div>
-                <div class="form form1" style="text-align:center;">
+                <div class="form form1" style="text-align:center;" v-if="item.status==1">
                     <span style="display:inline-block;width:80px;height:35px;margin-top:16%;line-height:35px;border:1px solid #2693d4;border-radius:5px;background:#2693d4;color:#fff;">
                         <a :href='"#/pay?bno="+item.businessNo' style="color:#fff">付款</a>
                     </span><br>
                     <span @click="delOrder(item.id,i)" style="display:inline-block;color:#2693d4;cursor:pointer;margin-top:10px;font-size:15px;">删除订单</span>
+                </div>
+                <div class="form form1" style="text-align:center;" v-if="item.status!=1">
+                    <span @click="delOrder(item.id,i)" style="display:inline-block;color:#2693d4;cursor:pointer;margin-top:30%;font-size:15px;">删除订单</span>
                 </div>
             </div>
         </template>

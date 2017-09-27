@@ -4,7 +4,7 @@
             <div style="width:242px;height:20px;color:#696969;margin:10px;">首页/个人中心</div>
             <div class="member-user">
                 <div class="via">
-                    <a href=""><img src="../../assets/userheader.png"></a>
+                    <a><img src="../../assets/userheader.png"></a>
                 </div>
                 <p class="phone-number">{{username}}</p>
             </div>

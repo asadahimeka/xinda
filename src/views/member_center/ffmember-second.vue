@@ -49,9 +49,9 @@
             </div>
             <div class="to3">
                 <span>评价：</span>
-                <input type="radio" style="margin-left:30px;" name="sex">好评
-                <input type="radio" style="margin-left:20px;" name="sex">中评
-                <input type="radio" style="margin-left:20px;" name="sex">差评
+                <input type="radio" style="margin-left:30px;" name="sex">&nbsp;好评
+                <input type="radio" style="margin-left:20px;" name="sex">&nbsp;中评
+                <input type="radio" style="margin-left:20px;" name="sex">&nbsp;差评
             </div>
             <div class="to4">
                 <span style="margin-right:30px;">评分：</span>

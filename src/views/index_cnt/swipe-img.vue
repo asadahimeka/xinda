@@ -63,7 +63,7 @@ export default {
     width: 1200px;
     height: 401px;
     margin: 0 auto;
-    background-color: #000;
+    /* background-color: #000; */
 }
 
 .swiper-container-horizontal {

@@ -3,7 +3,7 @@
         <div class="mainNavigation">
             <ul>
                 <li class="mainA">
-                    <a href="/#/" :class="{nota:$route.path!='/'}">全部产品</a>
+                    <a href="/#/" :class="{acta:$route.path=='/'}">全部产品</a>
                     <div class="allNavigation" v-show="show">
                         <div class="finance">
                             <i class="navigationLogo">
@@ -190,16 +190,20 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=1&pid=8a82f52b674543e298d2e5f685946e6e" :class="{nota:$route.path!='/slist'}">财税服务</a>
+                    <a href="#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=1&pid=8a82f52b674543e298d2e5f685946e6e" :class="{acta:$route.fullPath.indexOf('2e110f0df53243c197fede52fba8e5d0')>-1}">
+                        财税服务
+                    </a>
                 </li>
                 <li>
-                    <a href="#/slist?id=5af629246fa34f6f8d49758c6a7b25f1&code=4&pid=19b94314bc1a4b078d2402f8727c388b" :class="{nota:$route.path!='/slist'}">公司工商</a>
+                    <a href="#/slist?id=5af629246fa34f6f8d49758c6a7b25f1&code=4&pid=19b94314bc1a4b078d2402f8727c388b" :class="{acta:$route.fullPath.indexOf('5af629246fa34f6f8d49758c6a7b25f1')>-1}">
+                        公司工商
+                    </a>
                 </li>
                 <li>
-                    <a href="/#/JoinUs" :class="{nota:$route.path!='/JoinUs'}">加盟我们</a>
+                    <a href="/#/JoinUs" :class="{acta:$route.path=='/JoinUs'}">加盟我们</a>
                 </li>
                 <li>
-                    <a href="/#/shoplist" :class="{nota:$route.path!='/shoplist'}">店铺</a>
+                    <a href="/#/shoplist" :class="{acta:$route.path=='/shoplist'}">店铺</a>
                 </li>
             </ul>
         </div>
@@ -232,16 +236,15 @@ export default {
     }
 }
 
-.nota{
-    color: #000 !important;
-}
-
 .navigation {
     width: 100%;
     height: 40px;
     border-bottom: 1px solid #2693d4;
     display: flex;
     justify-content: center;
+    a {
+        color: #000;
+    }
     .mainNavigation ul {
         width: 1200px;
         height: 100%;
@@ -460,5 +463,13 @@ export default {
             }
         }
     }
+}
+
+.acta {
+    display: inline-block;
+    line-height: 2.5;
+    letter-spacing: 1px;
+    color: #2693d4 !important;
+    border-bottom: 4px solid #2693d4;
 }
 </style>

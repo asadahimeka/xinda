@@ -15,7 +15,7 @@
             </div>
             <div>
                 <div class="siftingHeader">产品类型</div>
-                <ul class="produclist font14" v-for="(item,i) in prodType">
+                <ul class="produclist font14" v-for="(item,i) in prodType" :key="i">
                     <li>
                         <a :class="{active:i==proi}" @click="proc(i,item.code)">{{item.name}}</a>
                     </li>
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="Shopboxtitle font14">
-            <ul v-for="(item,i) in shopSort">
+            <ul v-for="(item,i) in shopSort" :key="i">
                 <li>
                     <a :class="{active:i==sori}" @click="sorc(i,item.sort)">{{item.name}}&nbsp;
                         <i class="iconfont">&#xe731;</i>

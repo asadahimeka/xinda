@@ -1,7 +1,7 @@
 <template>
     <div class="fibg">
         <div class="fiscal">
-            <p class="top">&nbsp;首页/{{chName}}</p>
+            <p class="top">&nbsp;首页&nbsp;/&nbsp;{{chName}}</p>
             <div class="fiscal_menu">
                 <div class="list" v-loading="load1">
                     <div class="list1">
@@ -285,29 +285,33 @@ export default {
         },
     },
     created() {
-        this.chId = this.$route.query.id || this.chId;
-        this.code = this.$route.query.code || this.code;
-        this.pdata.productTypeCode = this.$route.query.code || this.pdata.productTypeCode;
-        if (this.$route.query.code && !this.$route.query.pid) {
-            this.pid = '';
-            this.pdata.productId = '';
-        } else if (this.$route.query.pid) {
-            this.pid = this.$route.query.pid || this.pid;
-            this.pdata.productId = this.$route.query.pid || this.pdata.productId;
-        }
-        this.getChoose();
-        this.getPack();
+        if (this.$route.query.code) {
+            this.chId = this.$route.query.id || this.chId;
+            this.code = this.$route.query.code || this.code;
+            this.pdata.productTypeCode = this.$route.query.code || this.pdata.productTypeCode;
+            if (this.$route.query.code && !this.$route.query.pid) {
+                this.pid = '';
+                this.pdata.productId = '';
+            } else if (this.$route.query.pid) {
+                this.pid = this.$route.query.pid || this.pid;
+                this.pdata.productId = this.$route.query.pid || this.pdata.productId;
+            }
+            this.getChoose();
+            this.getPack();
+        } 
     },
     watch: {
         $route(val) {
-            this.tabs2 = {};
-            this.tabs3 = {};
-            this.chId = val.query.id;
-            this.code = this.pdata.productTypeCode = val.query.code;
-            this.pid = this.pdata.productId = val.query.pid;
-            this.load1 = 1;
-            this.getChoose();
-            this.getPack();
+            if (this.$route.query.code) {
+                this.tabs2 = {};
+                this.tabs3 = {};
+                this.chId = val.query.id;
+                this.code = this.pdata.productTypeCode = val.query.code;
+                this.pid = this.pdata.productId = val.query.pid;
+                this.load1 = 1;
+                this.getChoose();
+                this.getPack();
+            } 
         }
     },
 }

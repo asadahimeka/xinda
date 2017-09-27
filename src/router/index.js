@@ -28,6 +28,8 @@ import Order from '../views/member_center/ffmember-first.vue'
 import Evaluate from '../views/member_center/ffmember-second.vue'
 import Uerset from '../views/member_center/ffmember-third.vue'
 
+import Test from '../components/srch-test.vue'
+
 Vue.use(Router);
 
 const router = new Router({
@@ -100,7 +102,19 @@ const router = new Router({
           ]
         }
       ]
-    }, {//登录页面
+    }, 
+    
+
+
+    {
+      path: '/test',
+      component: Test,
+    },
+    
+    
+
+
+    {//登录页面
       path: '/Logon',
       component: Logon,
     }, {//注册页面
@@ -115,7 +129,7 @@ const router = new Router({
       component: PayBridge
     },
     {//404
-      path: '/*',
+      path: '*',
       component: Nfd
     },
   ]

@@ -60,7 +60,7 @@ export default {
         this.ajax.post('/xinda-api/sso/login-info').then((user) => {
             if (user.data.status == 1) {
                 this.$message({ type: 'warning', message: '您已登录！', duration: 1000 });
-                this.$router.push('/')
+                this.$router.push('/');
             }
         }).catch((error) => {
             console.log(error);

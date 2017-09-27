@@ -1,10 +1,13 @@
 <template>
     <div id="member-center">
         <div class="member-left">
-            <div style="width:242px;height:20px;color:#696969;margin:10px;">首页/个人中心</div>
+            <div style="width:242px;height:20px;color:#696969;margin:10px;">首页 / 个人中心</div>
             <div class="member-user">
                 <div class="via">
-                    <a><img src="../../assets/userheader.png"></a>
+                    <a>
+                        <img src="../../assets/userheader.png" v-if="!headimg" alt="GET IMG FAILED">
+                        <img :src="dealSrc(headimg)" v-else alt="GET IMG FAILED">
+                    </a>
                 </div>
                 <p class="phone-number">{{username}}</p>
             </div>
@@ -28,24 +31,28 @@
 import { mapGetters } from 'vuex'
 export default {
     created() {
-        // console.log(this.getExUser);
-        //判断是否登陆
-        // this.ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
-        //     if (userMsg.data.status == 0) {
-        //         this.$message(userMsg.data.msg)
-        //         this.$router.push('/Logon');
-        //     } else {
-        //         this.username = userMsg.data.data.name;
-        //     }
-        // }).catch((error) => {
-        //     console.log('error', error);
-        // });
+        this.ajax.post('/xinda-api/member/info').then((userMsg) => {
+            if (userMsg.data.status == 1) {
+                this.username = userMsg.data.data.name;
+                // this.headimg = userMsg.data.data.headImg;
+            } else {
+                this.$message.warning(userMsg.data.msg);
+            }
+        }).catch((error) => {
+            console.log('error', error);
+        });
     },
     data() {
         return {
             username: '',
+            headimg: '',
             ia: -1,
         }
+    },
+    methods: {
+        dealSrc(src) {
+            return /^\/[^/]/.test(src) ? "http://115.182.107.203:8088/xinda/pic" + src : src;
+        },
     },
     computed: {
         ...mapGetters(['getExUser']),
@@ -54,14 +61,13 @@ export default {
         getExUser(val) {
             if (val == 0) {
                 this.$router.push('/#/');
-                // console.log(11111111);
             }
         }
     }
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 * {
     margin: 0;
     padding: 0;

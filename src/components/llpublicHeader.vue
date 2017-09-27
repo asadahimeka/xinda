@@ -8,7 +8,7 @@
             <div class="header unLog" v-if="!getExUser">
                 <div class="headerleft">
                     <div class="wel">欢迎来到信达！</div>
-                    <a href="/#/Logon" class="login">登录</a>
+                    <a href="javascript:;" class="login" @click="toLogin">登录</a>
                     <a href="/#/Register" class="register">快速注册</a>
                 </div>
                 <div class="headerright">
@@ -93,6 +93,9 @@ export default {
             }).catch((error) => {
                 console.log(error);
             })
+        },
+        toLogin() {
+            this.$router.push({ path: '/Logon', query: { redirect: this.$route.fullPath } });
         },
     },
     computed: {

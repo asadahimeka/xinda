@@ -18,10 +18,19 @@
                     <a :class="{interfaceActive:!TTT}" @click="BBB" href="javascript:;">服务商</a>
                 </div>
                 <div class="inputSearch">
-                    <input type="text" class="search_input" placeholder="搜索您需要的服务或服务商" v-model="searchCode" @keypress="toSearch">
-                    <a :href='"/#/search?sn="+searchCode+"&ispr="+ispr'>
+                    <input type="text" class="search_input" placeholder="搜索您需要的服务或服务商" v-model="searchKey" @input="search" @keydown.down.prevent="selectDown" @keydown.up.prevent="selectUp" @keypress="toSearch($event)">
+                    <input type="hidden" v-model="srhid">
+                    <a :href='"/#/search?sn="+searchKey+"&ispr="+ispr'>
                         <button class="search_button">&#xe600;</button>
                     </a>
+                    <div class="srhtip" v-if="skShow" @mouseleave="skShow=0">
+                        <div class="sres" v-for="(item,index) in result" :class="{sel:index==now}" @click="toDtl(item.id)" :key="index">
+                            <span :title="item.serviceInfo" v-if="!ispr">{{item.serviceName}}</span>
+                            <span class="rg" :title="item.serviceInfo" v-if="!ispr">{{item.serviceInfo}}</span>
+                            <span :title="item.providerInfo" v-if="ispr">{{item.providerName}}</span>
+                            <span class="rg" :title="item.providerInfo" v-if="ispr">{{item.regionName}}</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="pushService">
                     <p>热门服务：</p>
@@ -51,14 +60,20 @@
 </template>
 
 <script>
-import qs from 'qs';
+import _ from 'lodash'; //引入lodash
+let sources = [];//请求canceltoken列表
 export default {
     data() {
         return {
             items: '',
             TTT: true,
-            searchCode: '',
+            searchKey: '', //查询条件
+            result: [],//查询结果
+            now: -1,
+            url: '',
             ispr: 0,
+            skShow: 0,
+            srhid: '',
         }
     },
     methods: {
@@ -89,8 +104,117 @@ export default {
             this.ispr = 1;
         },
         toSearch: function(e) {
+            this.skShow = 0;
             if (e.keyCode == 13) {
-                this.$router.push({ path: "search", query: { sn: this.searchCode, ispr: this.ispr } });
+                if (this.srhid) {
+                    this.searchKey = '';
+                    !this.ispr
+                        ? this.$router.push({ path: '/shdetail', query: { sid: this.srhid } })
+                        : this.$router.push({ path: '/shop', query: { id: this.srhid } });
+                } else {
+                    this.$router.push({ path: "search", query: { sn: this.searchKey, ispr: this.ispr } });
+                }
+            }
+        },
+        toDtl(id) {
+            this.searchKey = '';
+            !this.ispr
+                ? this.$router.push({ path: '/shdetail', query: { sid: id } })
+                : this.$router.push({ path: '/shop', query: { id } });
+
+        },
+        selectDown: function() {
+            this.now++;
+            if (this.now == this.result.length) this.now = -1;
+            if (this.now > -1) {
+                this.srhid = this.result[this.now].id;
+                !this.ispr
+                    ? this.searchKey = this.result[this.now].serviceName
+                    : this.searchKey = this.result[this.now].providerName;
+            }
+        },
+        selectUp: function() {
+            this.now--;
+            if (this.now == -2) this.now = this.result.length - 1;
+            if (this.now > -1) {
+                this.srhid = this.result[this.now].id;
+                !this.ispr
+                    ? this.searchKey = this.result[this.now].serviceName
+                    : this.searchKey = this.result[this.now].providerName;
+            }
+        },
+        //使用_.debounce控制搜索的触发频率
+        //准备搜索
+        search: _.debounce(
+            function() {
+                let that = this;
+                //删除已经结束的请求
+                _.remove(sources, function(n) {
+                    return n.source === null;
+                });
+                //取消还未结束的请求
+                sources.forEach(function(item) {
+                    if (item !== null && item.source !== null && item.status === 1) {
+                        item.status = 0;
+                        item.source.cancel('取消上一个')
+                    }
+                });
+
+                //创建新的请求cancelToken,并设置状态请求中
+                var sc = {
+                    source: this.ajax.CancelToken.source(),
+                    status: 1 //状态1：请求中，0:取消中
+                };
+                //这个对象加入数组中
+                sources.push(sc);
+
+
+                //开始搜索数据，yourhttp替换成你自己的请求路径
+                this.now = -1;
+                if (!this.ispr) {
+                    this.url = 'xinda-api/product/package/search-grid';
+                } else {
+                    this.url = '/xinda-api/provider/search-grid';
+                }
+
+                if (this.searchKey == '') {
+                    this.skShow = 0;
+                } else {
+                    this.skShow = 1;
+                    this.ajax.post(this.url, {
+                        start: 0,
+                        limit: 8,
+                        searchName: this.searchKey,
+                        sort: ''
+                    }, {
+                            cancelToken: sc.source.token
+                        }).then(function(res) {
+                            //请求成功
+                            sc.source = null; //置空请求canceltoken
+
+                            //TODO这里处理搜索结果
+                            that.result = res.data.data;
+                        }).catch(function(thrown) {
+                            //请求失败
+                            sc.source = null; //置空请求canceltoken
+
+                            //下面的逻辑其实测试用
+                            if (this.ajax.isCancel(thrown)) {
+                                console.log('Request canceled', thrown.message);
+                            } else {
+                                //handle error
+                            }
+
+                        });
+                }
+            },
+            500 //空闲时间间隔设置500ms
+        )
+    },
+    watch: {
+        searchKey(val) {
+            if (val == '') {
+                this.skShow = 0;
             }
         }
     }
@@ -163,6 +287,7 @@ export default {
                 }
             }
             .inputSearch {
+                position: relative;
                 width: 586px;
                 height: 41px;
                 display: flex;
@@ -280,6 +405,45 @@ export default {
             user-select: none;
             cursor: pointer;
         }
+    }
+}
+
+.srhtip {
+    z-index: 11000;
+    position: absolute;
+    top: 40px;
+    left: 1px;
+    width: 481px;
+    border: 1px solid #2693d4;
+    border-top: 0;
+    background: #fff;
+}
+
+.sel {
+    background-color: #ccc;
+    .rg {
+        color: #fafafa;
+    }
+}
+
+.sres {
+    width: 479px;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    span {
+        display: inline-block;
+        width: 42%;
+        height: 100%;
+        margin-left: 20px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .rg {
+        font-size: 14px;
+        color: #555;
     }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="spdetail" v-loading.fullscreen.lock="fsLoading" element-loading-text="加载中">
+    <div class="spdetail" v-loading.fullscreen="fsLoading" element-loading-text="加载中">
         <p>首页 /
             <span>{{type}}</span>
         </p>
@@ -160,7 +160,7 @@ export default {
             srvlist: [],
             type: '商品详情',
             prvdr:'',
-            sid: this.$route.query.sid,
+            sid: '',
             src: '/xinda-api/ajaxAuthcode',//图片验证码获取地址
             phone: '',//绑定手机号的Value值
             imgCode: '',//图片验证码的Value值
@@ -193,11 +193,22 @@ export default {
     },
     created() {
         if (!this.$route.query.sid) {
+            this.fsLoading = false;
             this.$router.push('/');
         } else {
             window.scrollTo(0, 0);
+            this.sid = this.$route.query.sid;
             this.getChoose();
             this.getDetail();
+        }
+    },
+    watch:{
+        $route(val){
+            if(val){
+                this.sid = val.query.sid;
+                this.getChoose();
+                this.getDetail();
+            }
         }
     },
     methods: {
@@ -243,6 +254,7 @@ export default {
             return h && h.replace(/src=\"/g, 'src=\"' + this.pichost);
         },
         getDetail() {
+            this.fsLoading = true;            
             this.ajax.post(
                 '/xinda-api/product/package/detail',
                 { sId: this.sid },
@@ -748,7 +760,7 @@ export default {
     z-index: 9;
     position: absolute;
     top: 20%;
-    left: 25%;
+    left: 30%;
     width: 675px; // height: 290px;
     border-right: 2px solid #ccc;
     border-bottom: 2px solid #ccc;

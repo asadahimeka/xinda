@@ -9,6 +9,11 @@ import ElementUI from 'element-ui';
 import axios from 'axios';
 import qs from 'qs';
 
+//*** */
+import Mint from 'mint-ui';
+Vue.use(Mint);
+//*** */
+
 //地区选择插件
 import VDistpicker from 'v-distpicker'
 Vue.component('v-distpicker', VDistpicker);

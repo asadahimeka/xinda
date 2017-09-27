@@ -22,7 +22,7 @@
                                 <span>{{getCartnum}}</span>&nbsp;件</p>
                         </a>
                     </div>
-                    <a href="">服务商入口</a>
+                    <a href="#/shoplist">服务商入口</a>
                 </div>
             </div>
             <div class="header enLog" v-if="getUserName">

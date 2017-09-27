@@ -4,7 +4,7 @@
             <span>{{type}}</span>
         </p>
         <div class="detail">
-            <div class="detailimg"><img :src="dealSrc(prod.img)" alt=""></div>
+            <div class="detailimg"><img :src="dealSrc(prod.img)" alt="GET IMG FAILED"></div>
             <div class="detail_div">
                 <b>{{srv.serviceName}}</b>
                 <p class="describe">{{srv.serviceInfo}}</p>

@@ -230,6 +230,7 @@ export default {
                     ).then(res => {
                         if (res.data.status == -1) {
                             // TODO
+                            this.cartAction(0);
                             sessionStorage.setItem('pathToLogin', this.$route.path);
                             this.open('提示', res.data.msg, "跳转至登录界面", '/Logon');
                         } else if (res.data.status == 1) {

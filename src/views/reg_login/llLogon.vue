@@ -152,7 +152,6 @@ export default {
 </script>
 
 <style lang="less">
-@import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 .logonFrame {
     background-color: #f5f5f5;
     display: flex;

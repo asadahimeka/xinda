@@ -27,7 +27,9 @@
                 </div>
             </div>
 
-            <transition name="slide">
+            <!-- <transition name="slide"> -->
+            <el-collapse-transition>
+            <!-- <transition name="el-zoom-in-top"> -->
                 <div class="odr-list" v-show="!tri">
                     <div v-for="item in orderlist" class="odr-dtl" :key="item.id">
                         <div>服务名称：
@@ -43,7 +45,9 @@
                             <b class="money-color">￥{{fmtPrice(item.totalPrice)}}</b>元</div>
                     </div>
                 </div>
-            </transition>
+            <!-- </transition> -->
+            </el-collapse-transition>
+            <!-- </transition> -->
         </div>
 
         <div class="tpc money-color">支付方式</div>
@@ -127,6 +131,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
     name: 'pay',
     data() {
@@ -147,6 +152,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['cartAction']),
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
@@ -228,6 +234,7 @@ export default {
     },
     created() {
         window.scrollTo(0, 0);
+        this.cartAction(0);
         this.getOrder();
     },
     watch: {
@@ -241,7 +248,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 
 @gwidth: 1200px;
 @mcolor: #2693d4;

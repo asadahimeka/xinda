@@ -3,7 +3,7 @@
         <div class="_inner">
             <a class="logo_backhome" href="/">
                 <div class="logo">
-                    <img src="../../static/images/QQ图片20170517185752.png" alt="">
+                    <img src="../../../static/images/QQ图片20170517185752.png" alt="">
                 </div>
                 <div class="companyName">信达</div>
             </a>

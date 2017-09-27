@@ -63,7 +63,7 @@ export default {
         getProvider() {
             this.ajax.post('xinda-api/recommend/list', {}).then((data) => {
                 this.providerList = data.data.data.provider;
-                console.log('provider', this.providerList);
+                // console.log('provider', this.providerList);
                 for (var i = 0; i < this.providerList.length; i++) {
                     this.providerList[i].products = this.providerList[i].products.split(',');
                 }

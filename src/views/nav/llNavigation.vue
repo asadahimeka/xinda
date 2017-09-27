@@ -3,7 +3,7 @@
         <div class="mainNavigation">
             <ul>
                 <li class="mainA">
-                    <a href="javascript:void(0)">全部产品</a>
+                    <a href="/" :class="{nota:$route.path!='/'}">全部产品</a>
                     <div class="allNavigation" v-show="show">
                         <div class="finance">
                             <i class="navigationLogo">
@@ -41,7 +41,7 @@
                         </div>
                         <div class="companyBusiness">
                             <i class="navigationLogo">
-                                <img src="../assets/gongsigongshang.png" alt="">
+                                <img src="../../assets/gongsigongshang.png" alt="">
                             </i>
                             <div class="textRight">
                                 <div class="titleRight">
@@ -86,7 +86,7 @@
                         </div>
                         <div class="knowledge">
                             <i class="navigationLogo">
-                                <img src="../assets/knowledge.png" alt="">
+                                <img src="../../assets/knowledge.png" alt="">
                             </i>
                             <div class="textRight">
                                 <div class="titleRight">
@@ -190,16 +190,16 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=1&pid=8a82f52b674543e298d2e5f685946e6e">财税服务</a>
+                    <a href="#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=1&pid=8a82f52b674543e298d2e5f685946e6e" :class="{nota:$route.path!='/slist'}">财税服务</a>
                 </li>
                 <li>
-                    <a href="#/slist?id=5af629246fa34f6f8d49758c6a7b25f1&code=4&pid=19b94314bc1a4b078d2402f8727c388b">公司工商</a>
+                    <a href="#/slist?id=5af629246fa34f6f8d49758c6a7b25f1&code=4&pid=19b94314bc1a4b078d2402f8727c388b" :class="{nota:$route.path!='/slist'}">公司工商</a>
                 </li>
                 <li>
-                    <a href="/#/JoinUs">加盟我们</a>
+                    <a href="/#/JoinUs" :class="{nota:$route.path!='/JoinUs'}">加盟我们</a>
                 </li>
                 <li>
-                    <a href="/#/shoplist">店铺</a>
+                    <a href="/#/shoplist" :class="{nota:$route.path!='/shoplist'}">店铺</a>
                 </li>
             </ul>
         </div>
@@ -230,6 +230,10 @@ export default {
     &:hover .allNavigation {
         display: block !important;
     }
+}
+
+.nota{
+    color: #000 !important;
 }
 
 .navigation {

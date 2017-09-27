@@ -1,6 +1,6 @@
 <template>
     <div class="bri">
-        <img src="../../static/images/loading.gif" alt="">
+        <img src="../../../static/images/loading.gif" alt="">
     </div>
 </template>
 

@@ -16,11 +16,19 @@ export default {
     Top,
     Bottom,
     Contents
+  },
+  watch: {
+    $route(val) {
+      if (val) {
+        this.$router.afterEach((to, from, next) => { window.scrollTo(0, 0); });
+      }
+    }
   }
 }
 </script>
 
 <style lang="less">
+//ElementUI
 @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 
 * {
@@ -42,7 +50,8 @@ select {
 }
 
 @font-face {
-  font-family: 'iconfont';  /* project id 414122 */
+  font-family: 'iconfont';
+  /* project id 414122 */
   src: url('//at.alicdn.com/t/font_414122_5ktithybhjjor.eot');
   src: url('//at.alicdn.com/t/font_414122_5ktithybhjjor.eot?#iefix') format('embedded-opentype'),
   url('//at.alicdn.com/t/font_414122_5ktithybhjjor.woff') format('woff'),
@@ -50,10 +59,11 @@ select {
   url('//at.alicdn.com/t/font_414122_5ktithybhjjor.svg#iconfont') format('svg');
 }
 
-.iconfont{
+.iconfont {
   vertical-align: middle;
-  font-family:"iconfont" !important;
-  font-size:16px;font-style:normal;
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;

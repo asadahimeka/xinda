@@ -28,7 +28,7 @@
             <div class="header enLog" v-if="getUserName">
                 <!-- <div class="header enLog" v-if="user"> -->
                 <div class="headerleft">
-                    <a href="javascript:void(0);">
+                    <a href="#/MemberCen">
                         <!-- 这里是已经登录的用户手机号 -->
                         {{getUserName}}
                         <!-- {{user}} -->
@@ -52,9 +52,9 @@
                         <i class="iconOrder">
                             &#xe698;
                         </i>
-                        <a href="">我的订单</a>
+                        <a href="#/MemberCen">我的订单</a>
                     </div>
-                    <a href="">服务商入口</a>
+                    <a href="#/shoplist">服务商入口</a>
                 </div>
             </div>
         </div>

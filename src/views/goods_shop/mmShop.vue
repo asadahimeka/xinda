@@ -13,10 +13,10 @@
             <h2>公司介绍</h2>
             <p>{{shopinfo.providerInfo}}</p>
             <div>
-                <div><img src="../assets/icon_vouch.png" alt="">平台担保</div>
-                <div><img src="../assets/icon_service.png" alt="">优质服务</div>
-                <div><img src="../assets/icon_supervise.png" alt="">过程监督</div>
-                <div><img src="../assets/icon_money.png" alt="">增值服务</div>
+                <div><img src="../../assets/icon_vouch.png" alt="">平台担保</div>
+                <div><img src="../../assets/icon_service.png" alt="">优质服务</div>
+                <div><img src="../../assets/icon_supervise.png" alt="">过程监督</div>
+                <div><img src="../../assets/icon_money.png" alt="">增值服务</div>
             </div>
         </div>
         <!-- 内容区 -->
@@ -32,7 +32,7 @@
                         <p>销量：{{content.buyNum}}</p>
                         <p class="price">￥ {{content.price/100}}</p>
                         <span>原价：{{content.marketPrice/100}}</span>
-                        <a href="">查看详情>>></a>
+                        <a :href='"#/shdetail?sid="+content.id'>查看详情>>></a>
                     </div>
                     <!-- 分页 -->
                     <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
@@ -41,7 +41,7 @@
                     <div class="servicebox">
                         <span>工作时间：{{shopinfo.workTime}}</span><br>
                         <span>QQ咨询：
-                            <a :href="'tencent://message/?uin='+shopinfo.qq" class="Qicon"><img src="../assets/icon_qq.png" alt=""></a>
+                            <a :href="'tencent://message/?uin='+shopinfo.qq" class="Qicon"><img src="../../assets/icon_qq.png" alt=""></a>
                         </span>
                     </div>
                 </el-tab-pane>

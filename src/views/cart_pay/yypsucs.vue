@@ -78,7 +78,7 @@ body {
         width: 150px;
         height: 150px;
         margin-right: 75px;
-        background: url("../assets/smile.svg") no-repeat;
+        background: url("../../assets/smile.svg") no-repeat;
     }
     .dtl {
         h1 {

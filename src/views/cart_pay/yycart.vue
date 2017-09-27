@@ -23,7 +23,7 @@
                 <tr class="cartitem" :key="item.serviceId">
                     <!-- TODO toDetail, img:src -->
                     <td class="shoplogo" @click="toDetail('/',item.providerId)"><img :src="dealSrc(item.providerImg)" alt="shop img not found"></td>
-                    <td class="srvname" :title="item.serviceName" @click="toDetail('/',item.serviceId)">{{item.serviceName}}</td>
+                    <td class="srvname" :title="item.serviceName" @click="toDetail('/shdetail',item.serviceId)">{{item.serviceName}}</td>
                     <td>￥{{fmtPrice(item.unitPrice)+'&nbsp;'+dealUnit(item.unit)}}</td>
                     <td>
                         <button class="min" @click="item.buyNum=clkMin(item.buyNum)" :disabled="item.buyNum==1">-</button>
@@ -39,7 +39,7 @@
         </table>
         <el-alert v-if="gfail01" title="Get data failed." type="error" show-icon></el-alert>
         <div v-if="!cartlist.length" class="loading emp">
-            <img src="../assets/cart.jpg" alt=""><br>
+            <img src="../../assets/cart.jpg" alt=""><br>
             <span>购物车空空如也，去首页逛逛吧！</span><br>
             <button>
                 <a href="#/">去首页</a>
@@ -64,7 +64,7 @@
                 <p>Loading...</p>
             </div>
             <!-- TODO -->
-            <div v-for="item in srvlist" class="srv-card" @click="toDetail('/',item.id)" v-bind:key="item.id">
+            <div v-for="item in srvlist" class="srv-card" @click="toDetail('/shdetail',item.id)" v-bind:key="item.id">
                 <h2 :title="item.serviceName">{{item.serviceName}}</h2>
                 <!-- TODO -->
                 <span></span>
@@ -76,7 +76,7 @@
                 </p>
                 <p>
                     <s>原价：￥{{fmtPrice(item.marketPrice)}}</s>
-                    <a>查看详情>>></a>
+                    <a :href='"#/shdetail?sid="+item.id'>查看详情>>></a>
                 </p>
             </div>
         </div>
@@ -211,6 +211,7 @@ export default {
                                 this.open('提示', res.data.msg, "跳转至登录界面", '/Logon');
                             } else if (res.data.status == 1) {
                                 //TODO
+                                this.cartAction(0);
                                 this.$router.push({ path: '/pay', query: { bno: res.data.data } })
                             }
                         }).catch(res => {
@@ -260,7 +261,7 @@ export default {
             });
         },
         toDetail(path, id) {
-            this.$router.push({ path, query: { id } });
+            this.$router.push({ path, query: { sid:id } });
             this.$router.afterEach((to, from, next) => {
                 window.scrollTo(0, 0);
             });
@@ -282,8 +283,7 @@ export default {
 }
 </script>
 
-<style lang="less">
-// @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
+<style lang="less" scoped>
 @gwidth: 1200px;
 @mcolor: #2693d4;
 @borclr: #b6b6b6;
@@ -418,6 +418,7 @@ body {
             h2 {
                 margin-top: 0;
                 font-weight: 500;
+                cursor: pointer;
             }
             span {
                 display: inline-block;

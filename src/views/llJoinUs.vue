@@ -193,15 +193,6 @@ export default {
 </script>
 
 <style lang="less">
-.mainA {
-    .allNavigation {
-        display: none;
-    }
-    &:hover .allNavigation {
-        display: block;
-        z-index: 10;
-    }
-}
 
 .joinUsFrame {
     display: flex;

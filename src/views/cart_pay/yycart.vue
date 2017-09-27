@@ -179,7 +179,6 @@ export default {
                         num: this.cartlist[i].buyNum,
                     }
                 ).then(res => {
-                    console.log('conti', res);
                     if (res.data.status == -1) {
                         this.$message({ type: 'error', message: res.data.msg, duration: 1000 });
                     } else if (i == this.cartlist.length - 1) {
@@ -208,7 +207,7 @@ export default {
                         ).then(res => {
                             if (res.data.status == -1) {
                                 // TODO
-                                this.open('提示', res.data.msg, "跳转至登录界面", '/Logon');
+                                this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
                             } else if (res.data.status == 1) {
                                 //TODO
                                 this.cartAction(0);
@@ -223,13 +222,18 @@ export default {
                 });
             }
         },
-        open(title, content, msg, url) {
+        open(title, content, msg, path, query) {
             this.$alert(content, title, {
                 confirmButtonText: '确定',
                 lockScroll: false,
                 callback: () => {
-                    this.$message({ type: "info", message: msg, duration: 1000 });
-                    setTimeout(() => this.$router.push(url), 1000);
+                    if (query) {
+                        this.$message({ type: "info", message: msg, duration: 1000 });
+                        setTimeout(() => this.$router.push({ path, query }), 1000);
+                    } else {
+                        this.$message({ type: "info", message: msg, duration: 1000 });
+                        setTimeout(() => this.$router.push(path), 1000);
+                    }
                 }
             });
         },

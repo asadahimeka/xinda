@@ -6,25 +6,25 @@ export default new Vuex.Store({
     //状态集合
     state: {
         cartnum: 0,
-        // phoneNum: '',
-        username: ''
+        username: '',
+        exUser: 0,
     },
     //突变集合
     mutations: {
         CARTMUTA: (state, num) => state.cartnum = num,
-        // PHONEMUTA: (state, num) => state.phoneNum = num,
-        USER: (state, num) => state.username = num,
+        USER: (state, user) => state.username = user,
+        EXUSERMUTA: (state, bool) => state.exUser = bool,
     },
     //方法集合
     actions: {
         cartAction: ({ commit }, num) => commit('CARTMUTA', num),
-        // phoneAction: ({ commit }, num) => commit('PHONEMUTA', num),
-        userAction: ({ commit }, num) => commit('USER', num),
+        userAction: ({ commit }, user) => commit('USER', user),
+        exAction: ({ commit }, ex) => commit('EXUSERMUTA', ex),
     },
     //显示集合
     getters: {
         getCartnum: state => state.cartnum,
-        // getPhoneNum: state => state.phoneNum,
         getUserName: state => state.username,
+        getExUser: state => state.exUser,
     },
 })

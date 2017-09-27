@@ -3,7 +3,7 @@
         <div class="mainNavigation">
             <ul>
                 <li class="mainA">
-                    <a href="/" :class="{nota:$route.path!='/'}">全部产品</a>
+                    <a href="/#/" :class="{nota:$route.path!='/'}">全部产品</a>
                     <div class="allNavigation" v-show="show">
                         <div class="finance">
                             <i class="navigationLogo">

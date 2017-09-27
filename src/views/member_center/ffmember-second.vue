@@ -44,7 +44,7 @@
                     <span>{{cnt}}</span>
                 </p>
                 <p>购买时间：
-                    <span>{{time}}</span>
+                    <span>{{ctime}}</span>
                 </p>
             </div>
             <div class="to3">

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import axios from 'axios'
 
 import Contents from '../views/llContent.vue'
 import ConsoleAdvertisement from '../views/index_cnt/llconsoleAdvertisement.vue'
@@ -29,7 +30,7 @@ import Uerset from '../views/member_center/ffmember-third.vue'
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -81,6 +82,9 @@ export default new Router({
         }, {//会员中心
           path: 'MemberCen',
           component: MemberCen,
+          meta: {
+            requireAuth: true,  // 需要登录
+          },
           children: [
             {//订单列表
               path: 'Order',
@@ -116,3 +120,19 @@ export default new Router({
     },
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(r => r.meta.requireAuth)) {
+    axios.post('/xinda-api/sso/login-info').then((userMsg) => {
+      if (userMsg.data.status == 1) {
+        next();
+      } else {
+        next({ path: '/Logon', query: { redirect: to.fullPath } });
+      }
+    });
+  } else {
+    next();
+  }
+})
+
+export default router;

@@ -77,10 +77,10 @@
                     <span class="dizhi">{{item.regionName}}</span>
                     <span class="money">￥&nbsp;{{fmtPrice(item.price)}}</span>
                     <div class="order_div">
-                        <a href="javascript:;" class="order" @click="buyNow(item)">立即购买</a>
+                        <a href="javascript:;" class="order" @click="buy(item)">立即购买</a>
                     </div>
                     <div class="joincart_div">
-                        <a href="javascript:;" class="joincart" @click="addCart(item,i)">加入购物车</a>
+                        <a href="javascript:;" class="joincart" @click="addCart(item)">加入购物车</a>
                     </div>
                 </div>
                 <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
@@ -212,14 +212,30 @@ export default {
                 }
             })
         },
-        open(title, content, msg, url) {
+        open(title, content, msg, path, query) {
             this.$alert(content, title, {
                 confirmButtonText: '确定',
                 lockScroll: false,
                 callback: () => {
-                    this.$message({ type: "info", message: msg, duration: 1000 });
-                    setTimeout(() => this.$router.push(url), 1000);
+                    if (query) {
+                        this.$message({ type: "info", message: msg, duration: 1000 });
+                        setTimeout(() => this.$router.push({ path, query }), 1000);
+                    } else {
+                        this.$message({ type: "info", message: msg, duration: 1000 });
+                        setTimeout(() => this.$router.push(path), 1000);
+                    }
                 }
+            });
+        },
+        buy(item) {
+            this.ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
+                if (userMsg.data.status == 0) {
+                    this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
+                } else {
+                    this.buyNow(item);
+                }
+            }).catch((error) => {
+                console.log('error', error);
             });
         },
         buyNow(item) {
@@ -231,13 +247,10 @@ export default {
                     this.ajax.post(
                         '/xinda-api/cart/submit'
                     ).then(res => {
-                        if (res.data.status == -1) {
-                            // TODO
-                            sessionStorage.setItem('pathToLogin', this.$route.path);
-                            this.open('提示', res.data.msg, "跳转至登录界面", '/Logon');
-                        } else if (res.data.status == 1) {
-                            //TODO
+                        if (res.data.status == 1) {
                             this.$router.push({ path: '/pay', query: { bno: res.data.data } })
+                        } else {
+                            this.$message.warning(res.data.msg);
                         }
                     }).catch(res => {
                         console.log('Axios: ', res);
@@ -249,7 +262,7 @@ export default {
                 console.log('Axios: ', res);
             });
         },
-        addCart(item, i) {
+        addCart(item) {
             this.ajax.post(
                 '/xinda-api/cart/add',
                 { id: item.id, num: 1 },

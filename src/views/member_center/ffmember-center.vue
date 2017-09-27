@@ -9,9 +9,15 @@
                 <p class="phone-number">{{username}}</p>
             </div>
             <div class="action">
-                <div :class="{act:$route.path=='/MemberCen'}"><a href="/#/MemberCen" class="myOrder">我的订单</a></div>
-                <div :class="{act:$route.path=='/MemberCen/Evaluate'}"><a href="/#/MemberCen/Evaluate" class="userComment">用户评价</a></div>
-                <div :class="{act:$route.path=='/MemberCen/Uerset'}"><a href="/#/MemberCen/Uerset" class="accountSetup" >账户设置</a></div>
+                <div :class="{act:$route.path=='/MemberCen'}">
+                    <a href="/#/MemberCen" class="myOrder">我的订单</a>
+                </div>
+                <div :class="{act:$route.path=='/MemberCen/Evaluate'}">
+                    <a href="/#/MemberCen/Evaluate" class="userComment">用户评价</a>
+                </div>
+                <div :class="{act:$route.path=='/MemberCen/Uerset'}">
+                    <a href="/#/MemberCen/Uerset" class="accountSetup">账户设置</a>
+                </div>
             </div>
         </div>
         <router-view></router-view>
@@ -19,25 +25,37 @@
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 export default {
     created() {
+        // console.log(this.getExUser);
         //判断是否登陆
-        this.ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
-            if (userMsg.data.status == 0) {
-                this.$message(userMsg.data.msg)
-                this.$router.push('/Logon');
-            } else {
-                this.username = userMsg.data.data.name;
-            }
-        }).catch((error) => {
-            console.log('error', error);
-        });
+        // this.ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
+        //     if (userMsg.data.status == 0) {
+        //         this.$message(userMsg.data.msg)
+        //         this.$router.push('/Logon');
+        //     } else {
+        //         this.username = userMsg.data.data.name;
+        //     }
+        // }).catch((error) => {
+        //     console.log('error', error);
+        // });
     },
     data() {
         return {
             username: '',
-            ia:-1,
+            ia: -1,
+        }
+    },
+    computed: {
+        ...mapGetters(['getExUser']),
+    },
+    watch: {
+        getExUser(val) {
+            if (val == 0) {
+                this.$router.push('/#/');
+                // console.log(11111111);
+            }
         }
     }
 }
@@ -104,7 +122,7 @@ export default {
     }
 }
 
-.act{
+.act {
     background: #d7d7d7;
 }
 </style>

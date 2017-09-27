@@ -51,7 +51,7 @@
                         <div>
                             <div class="price">
                                 <P>￥{{productlist.price/100}}</P>
-                                <button @click="buyNow(productlist)">立即购买</button>
+                                <button @click="buy(productlist)">立即购买</button>
                                 <button @click="addCart(productlist)">加入购物车</button>
                             </div>
 
@@ -209,14 +209,30 @@ export default {
             this.getPrviders();
             window.scrollTo(0, 380);
         },
-        open(title, content, msg, url) {
+        open(title, content, msg, path, query) {
             this.$alert(content, title, {
                 confirmButtonText: '确定',
                 lockScroll: false,
                 callback: () => {
-                    this.$message({ type: "info", message: msg, duration: 1000 });
-                    setTimeout(() => this.$router.push(url), 1000);
+                    if (query) {
+                        this.$message({ type: "info", message: msg, duration: 1000 });
+                        setTimeout(() => this.$router.push({ path, query }), 1000);
+                    } else {
+                        this.$message({ type: "info", message: msg, duration: 1000 });
+                        setTimeout(() => this.$router.push(path), 1000);
+                    }
                 }
+            });
+        },
+        buy(item) {
+            this.ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
+                if (userMsg.data.status == 0) {
+                    this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
+                } else {
+                    this.buyNow(item);
+                }
+            }).catch((error) => {
+                console.log('error', error);
             });
         },
         buyNow(item) {
@@ -228,14 +244,10 @@ export default {
                     this.ajax.post(
                         '/xinda-api/cart/submit'
                     ).then(res => {
-                        if (res.data.status == -1) {
-                            // TODO
-                            this.cartAction(0);
-                            sessionStorage.setItem('pathToLogin', this.$route.path);
-                            this.open('提示', res.data.msg, "跳转至登录界面", '/Logon');
-                        } else if (res.data.status == 1) {
-                            //TODO
+                        if (res.data.status == 1) {
                             this.$router.push({ path: '/pay', query: { bno: res.data.data } })
+                        } else {
+                            this.$message.warning(res.data.msg);
                         }
                     }).catch(res => {
                         console.log('Axios: ', res);

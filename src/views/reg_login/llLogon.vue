@@ -84,7 +84,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['userAction', 'cartAction']),
+        ...mapActions(['userAction', 'cartAction','exAction']),
         F5: function() {//刷新验证码
             this.src = '/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
         },
@@ -108,26 +108,17 @@ export default {
                     password: MD5(this.password),
                     imgCode: this.imgtest,
                 }
-                // console.log(logPar);
                 if (this.password && this.imgtest) {
-                    this.ajax.post('/xinda-api/sso/login', logPar, {}).then((reData) => {
-                        console.log(reData);
+                    this.ajax.post('/xinda-api/sso/login', logPar).then((reData) => {
                         if (reData.data.status == 1) {
                             this.successMsg = reData.data.msg;
                             this.successRe = true;
-
                             setTimeout(() => {
                                 this.userAction(this.phone);
-                                // sessionStorage.setItem('user',this.phone);
-
-                                //如果是点击“立即购买”跳转过来的，登录成功后跳转到购物车
-                                var p = sessionStorage.getItem('pathToLogin');
-                                if (p == '/slist' || p == '/shdetail' || p == '/search') {
-                                    sessionStorage.removeItem('pathToLogin');
-                                    this.cartAction(1);
-                                    this.$router.push('/shcart');
+                                this.exAction(1);
+                                if (this.$route.query.redirect) {
+                                    this.$router.push(this.$route.query.redirect);
                                 } else {
-                                    // 登录成功，返回首页
                                     this.$router.push('/');
                                 }
                             }, 1500);

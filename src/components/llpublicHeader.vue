@@ -4,8 +4,8 @@
 
         </div>
         <div class="headerframe">
-            <div class="header unLog" v-if="!getUserName">
-                <!-- <div class="header unLog" v-if="!user">                 -->
+            <!-- <div class="header unLog" v-if="!getUserName"> -->
+            <div class="header unLog" v-if="!getExUser">
                 <div class="headerleft">
                     <div class="wel">欢迎来到信达！</div>
                     <a href="/#/Logon" class="login">登录</a>
@@ -25,13 +25,11 @@
                     <a href="#/shoplist">服务商入口</a>
                 </div>
             </div>
-            <div class="header enLog" v-if="getUserName">
-                <!-- <div class="header enLog" v-if="user"> -->
+            <!-- <div class="header unLog" v-if="getUserName"> -->
+            <div class="header enLog" v-if="getExUser">
                 <div class="headerleft">
                     <a href="#/MemberCen">
-                        <!-- 这里是已经登录的用户手机号 -->
                         {{getUserName}}
-                        <!-- {{user}} -->
                     </a>
                     <p>欢迎来到信达!</p>
                     <a href="javascript:void(0);" @click="exit">
@@ -68,6 +66,7 @@ export default {
         this.ajax.post('/xinda-api/sso/login-info').then((user) => {
             if (user.data.data) {
                 this.userAction(user.data.data.name);
+                this.exAction(1);
             }
         }).catch((error) => {
             console.log(error);
@@ -86,22 +85,18 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['userAction', 'cartAction']),
+        ...mapActions(['userAction', 'cartAction', 'exAction']),
         exit: function() {
             this.ajax.post('/xinda-api/sso/logout').then((out) => {
-                // sessionStorage.removeItem('user');
-                window.location.reload();
+                // window.location.reload();
+                this.exAction(0);
             }).catch((error) => {
                 console.log(error);
             })
         },
-        ...mapActions(['userAction']),
     },
     computed: {
-        ...mapGetters(['getUserName', 'getCartnum']),
-        // user() {
-        //     return sessionStorage.getItem('user');
-        // }
+        ...mapGetters(['getUserName', 'getCartnum', 'getExUser']),
     }
 }
 </script>

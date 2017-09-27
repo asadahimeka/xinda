@@ -171,7 +171,6 @@ export default {
                 '/xinda-api/business-order/detail',
                 { businessNo: this.$route.query.bno },
             ).then(res => {
-                console.log(res);
                 if (res.data.status == 1) {
                     if (res.data.data.businessOrder.status == 1) {
                         this.order = res.data.data.businessOrder;

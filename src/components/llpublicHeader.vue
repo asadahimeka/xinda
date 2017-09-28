@@ -1,7 +1,6 @@
 <template>
     <div class="publicheader">
         <div class="exitMessage">
-
         </div>
         <div class="headerframe">
             <!-- <div class="header unLog" v-if="!getUserName"> -->
@@ -111,6 +110,14 @@ export default {
                 this.ajax.post('/xinda-api/cart/cart-num').then((res) => {
                     if (res.data.data.cartNum) {
                         this.cartAction(res.data.data.cartNum);
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                });
+                this.ajax.post('/xinda-api/sso/login-info').then((user) => {
+                    if (user.data.data) {
+                        this.userAction(user.data.data.name);
+                        this.exAction(1);
                     }
                 }).catch((error) => {
                     console.log(error);

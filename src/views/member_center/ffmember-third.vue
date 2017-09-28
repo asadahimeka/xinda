@@ -155,7 +155,7 @@ export default {
             };
             // 本地校验完成，上传到服务器进行校验
             var information = {
-                // headImg: this.imageUrl.substring(this.imageUrl.lastIndexOf('/'),this.imageUrl.length),
+                headImg: this.imageUrl.substring(this.imageUrl.lastIndexOf('/'),this.imageUrl.length),
                 name: this.newname,
                 gender: this.sex,
                 email: this.email,
@@ -165,7 +165,7 @@ export default {
                 if (info.data.status == 1) {
                     this.open2('信息更改成功');
                     setTimeout(function() {
-                        // window.location.reload();
+                        window.location.reload();
                     }, 1000);
                 } else {
                     this.open4(info.data.msg);

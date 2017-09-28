@@ -364,7 +364,7 @@ export default {
     margin-left: -493px;
     margin-top: -120.5px;
     border: 1px outset #bcbcbc;
-    z-index: 3;
+    z-index: 10010;
     display: none;
     .title {
         width: 100%;

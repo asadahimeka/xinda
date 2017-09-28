@@ -285,7 +285,6 @@ export default {
     background: #f7f7f7;
     border: 1px solid #ccc;
     height: 40px;
-    width: 1198px;
     text-align: center;
 
     ul,
@@ -312,7 +311,8 @@ export default {
     border: 1px solid #ccc;
     overflow: hidden;
     border-top: none;
-
+    width: 1198px;
+    
     .shopBox {
         float: left;
         margin: 13px;

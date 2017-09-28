@@ -211,7 +211,7 @@ export default {
                     } else {
                         this.fbShow = true;
                         sessionStorage.setItem('payuri', res.data);
-                        window.open('#/paybridge');
+                        window.open('/#/paybridge');
                     }
                 }).catch(res => {
                     console.log('Axios: ', res);

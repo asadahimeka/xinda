@@ -116,7 +116,7 @@ export default {
                             this.successRe = true;
                             setTimeout(() => {
                                 this.exAction(1);
-                                if (this.$route.query.redirect) {
+                                if (this.$route.query.redirect&&this.$route.query.redirect!='/Register') {
                                     this.$router.push(this.$route.query.redirect);
                                 } else {
                                     this.$router.push('/');

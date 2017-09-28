@@ -242,6 +242,12 @@ export default {
     justify-content: center;
     a {
         color: #000;
+        transition: all .3s ease-in-out;
+        &:hover {
+            display: inline-block;
+            color: #2693d4;
+            border-bottom: 4px solid #2693d4;
+        }
     }
     .mainNavigation ul {
         width: 1200px;

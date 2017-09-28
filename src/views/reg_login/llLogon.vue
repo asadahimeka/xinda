@@ -67,6 +67,7 @@ export default {
         })
         onkeydown = (e) => {
             if (e.keyCode == 13) {
+
                 this.logonNow();
             }
         }
@@ -84,7 +85,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['userAction', 'cartAction','exAction']),
+        ...mapActions(['userAction', 'cartAction', 'exAction']),
         F5: function() {//刷新验证码
             this.src = '/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
         },
@@ -116,6 +117,15 @@ export default {
                             setTimeout(() => {
                                 this.userAction(this.phone);
                                 this.exAction(1);
+                                //修改购物车
+                                // this.ajax.post('/xinda-api/cart/cart-num').then((res) => {
+                                //     if (res.data.data.cartNum) {
+                                //         this.cartAction(res.data.data.cartNum);
+                                //     }
+                                // }).catch((error) => {
+                                //     console.log(error);
+                                // });
+
                                 if (this.$route.query.redirect) {
                                     this.$router.push(this.$route.query.redirect);
                                 } else {

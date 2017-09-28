@@ -90,6 +90,10 @@ export default {
             this.ajax.post('/xinda-api/sso/logout').then((out) => {
                 // window.location.reload();
                 this.exAction(0);
+                this.cartAction(0);
+                if (this.$route.path == '/shcart') {
+                    window.location.reload();
+                }
             }).catch((error) => {
                 console.log(error);
             })
@@ -100,6 +104,19 @@ export default {
     },
     computed: {
         ...mapGetters(['getUserName', 'getCartnum', 'getExUser']),
+    },
+    watch: {
+        $route(_this) {
+            if (_this) {
+                this.ajax.post('/xinda-api/cart/cart-num').then((res) => {
+                    if (res.data.data.cartNum) {
+                        this.cartAction(res.data.data.cartNum);
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                });
+            }
+        }
     }
 }
 </script>

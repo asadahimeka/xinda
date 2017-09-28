@@ -20,18 +20,18 @@
                                 </div>
                             </div>
                             <div class="financeDetails">
-                                <p>代理记账 > |
+                                <p class="dai">代理记账 > |
                                     <a href="/#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=1&pid=8a82f52b674543e298d2e5f685946e6e">小规模记账</a> |
                                     <a href="/#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=1&pid=928c89c65b274178a46f002c5bcf9864">一般纳税人记账</a>
                                 </p>
-                                <p>税务代办 > |
+                                <p class="dai">税务代办 > |
                                     <a href="/#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=2&pid=1cf4fc9e80834b2494bef9fc999f845b">国税地税报道</a> |
                                     <a href="/#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=2&pid=7ae864d998bf4b8ab97ea18288dbc369">代开增值税专用发票</a> |
                                     <a href="/#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=2&pid=acde4ec4825f43f39342961a1ff9dd0a">税控代办及票种核定</a> |
                                     <a href="/#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=2&pid=afb4d36c54ff48029d43fc34a19111fb">所得税汇算清缴</a> |
                                     <a href="/#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=2&pid=cfb4c2142ba04954a3e6270024620745">一般纳税人资质申办</a>
                                 </p>
-                                <p>审计报告 > |
+                                <p class="dai">审计报告 > |
                                     <a href="/#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=3&pid=0ed787f42fe94b30b85e6a88f56e4614">验资报告</a> |
                                     <a href="/#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=3&pid=2cc17cc0fb7e4b79b3d961cdcb57c260">财务审计报告</a> |
                                     <a href="/#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=3&pid=9b60bc9ebdf54859966ca1eaa877c4d0">税审报告</a> |
@@ -54,7 +54,7 @@
                             </div>
                             <div class="companyBusinessDetails">
                                 <div class="line1">
-                                    <p>公司注册 > </p>
+                                    <p class="dai">公司注册 > </p>
                                     <p> |
                                         <a href="/#/slist?id=5af629246fa34f6f8d49758c6a7b25f1&code=4&pid=19b94314bc1a4b078d2402f8727c388b">分公司注册</a> |
                                         <a href="/#/slist?id=5af629246fa34f6f8d49758c6a7b25f1&code=4&pid=19f52275bf774d38ae6dc96c81dcf2cd">公司注册地址</a> |
@@ -69,7 +69,7 @@
                                     </p>
                                 </div>
                                 <div class="line2">
-                                    <p>公司变更 > </p>
+                                    <p class="dai">公司变更 > </p>
                                     <p>
                                         |
                                         <a href="/#/slist?id=5af629246fa34f6f8d49758c6a7b25f1&code=5&pid=5ab7d02b940540a79379b8ca6f24af0e">公司股权变更</a> |
@@ -100,9 +100,7 @@
                             </div>
                             <div class="knowledgeDetails">
                                 <div class="line1">
-                                    <p>
-                                        专利申请 >
-                                    </p>
+                                    <p class="dai">专利申请 ></p>
                                     <p>
                                         |
                                         <a href="/#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=10&pid=24d919ba0eb545dd9a3132dfb87cf599">审查意见答复</a> |
@@ -119,7 +117,7 @@
                                     </p>
                                 </div>
                                 <div class="line2">
-                                    <p>商标注册 > </p>
+                                    <p class="dai">商标注册 > </p>
                                     <p>
                                         |
                                         <a href="/#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8&pid=27d7cbf829c94b8394ca32d2fde751e8">LOGO设计+商标注册</a> |
@@ -131,7 +129,7 @@
                                     </p>
                                 </div>
                                 <div class="line3">
-                                    <p>版权保护 > </p>
+                                    <p class="dai">版权保护 > </p>
                                     <p>
                                         |
                                         <a href="/#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=9&pid=1655cf83dc97468c9a0210330a969772">电视剧作品登记</a>
@@ -160,7 +158,7 @@
                             </div>
                             <div class="securityDetails">
                                 <div class="line1">
-                                    <p>企业社保 > </p>
+                                    <p class="dai">企业社保 > </p>
                                     <p>
                                         |
                                         <a href="/#/slist?id=cc7eb9bbd40f4b0e9f31c8cbcb903a59&code=6&pid=0e46c4b27e2a41aab572e11837ea0c9f">社保/公积金账户注销</a>
@@ -173,7 +171,7 @@
                                     </p>
                                 </div>
                                 <div class="line2">
-                                    <p>个人社保 > </p>
+                                    <p class="dai">个人社保 > </p>
                                     <p>
                                         |
                                         <a href="/#/slist?id=cc7eb9bbd40f4b0e9f31c8cbcb903a59&code=7&pid=512733629de842a2a1b1481908d2b647">个人社保代理</a>
@@ -472,4 +470,5 @@ export default {
     color: #2693d4 !important;
     border-bottom: 4px solid #2693d4;
 }
+.dai{color:#ddd;}
 </style>

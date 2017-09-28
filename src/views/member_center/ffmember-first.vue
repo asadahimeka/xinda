@@ -101,7 +101,7 @@ export default {
             soarr: [],
             img: {
                 'a7304eecbd7246b4b424874e0359eab0': 'http://115.182.107.203:8088/xinda/pic/2016/09/28/8c419db3f572418a80ff5a08397fb857',
-                '5faf8ef48e3543a38169f9e43c28be58': 'http://115.182.107.203:8088/xinda/pic/2016/09/23/58152db2c9b940c385e442ffe12cfe20',
+                '9080f0c120a64eb3831d50ba93c33e78': 'http://115.182.107.203:8088/xinda/pic/2016/09/23/58152db2c9b940c385e442ffe12cfe20',
             },
             STATUS: {
                 "1": "未付款",
@@ -321,8 +321,15 @@ button {
         }
         .imgArticle {
             display: inline-block;
+            width: 80px;
+            height: 58px;
             border: 1px solid #ddd;
             margin: 20px;
+            display: flex;
+            align-items: center;
+            img {
+                width: 100%;
+            }
         }
         .site {
             display: block;

@@ -626,6 +626,7 @@ export default {
                 background-color: white;
                 color: #74b2df;
                 border: 1px solid #2693d4;
+                cursor: pointer;
             }
             span {
                 width: 100%;

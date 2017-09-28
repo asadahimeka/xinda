@@ -52,24 +52,24 @@
 
         <div class="tpc money-color">支付方式</div>
         <p class="pay-tit">非网银支付</p>
-        <div class="pay-way" :class="{'pay-way-act':isAct[0]}">
-            <input type="radio" name="pay" @click="payNo='china-pay'" @focus="isAct.splice(0,1,true)" @blur="isAct.splice(0,1,false)">
+        <div class="pay-way" :class="{'pay-way-act':payNo=='china-pay'}" @click="payNo='china-pay'">
+            <input type="radio" name="pay" :checked="payNo=='china-pay'">
             <span class="upay"></span>
         </div>
         <p class="pay-tit">平台支付</p>
-        <div class="pay-way" :class="{'pay-way-act':isAct[1]}">
-            <input type="radio" name="pay" @click="payNo='weixin-pay'" @focus="isAct.splice(1,1,true)" @blur="isAct.splice(1,1,false)">
+        <div class="pay-way" :class="{'pay-way-act':payNo=='weixin-pay'}" @click="payNo='weixin-pay'">
+            <input type="radio" name="pay" :checked="payNo=='weixin-pay'">
             <span class="wxpay">微信支付</span>
         </div>
-        <div class="pay-way" :class="{'pay-way-act':isAct[2]}">
-            <input type="radio" name="pay" @click="payNo='ali-pay'" @focus="isAct.splice(2,1,true)" @blur="isAct.splice(2,1,false)">
+        <div class="pay-way" :class="{'pay-way-act':payNo=='ali-pay'}" @click="payNo='ali-pay'">
+            <input type="radio" name="pay" :checked="payNo=='ali-pay'">
             <span class="alipay">快捷支付</span>
         </div>
         <p class="pay-tit">自助转账
             <span>因限额不能支付时，建议使用自助转账</span>
         </p>
-        <div class="pay-way pay-bank" :class="{'pay-way-act':isAct[3]}">
-            <input type="radio" name="pay" @click="payNo='bank'" @focus="isAct.splice(3,1,true)" @blur="isAct.splice(3,1,false)">
+        <div class="pay-way pay-bank" :class="{'pay-way-act':payNo=='bank'}" @click="payNo='bank'">
+            <input type="radio" name="pay" :checked="payNo=='bank'">
             <span class="bankpay"></span>
             <div class="bankinfo">
                 <p>
@@ -281,7 +281,6 @@ body {
             z-index: 2;
             a {
                 text-decoration: none;
-                cursor: pointer;
             }
             .tit-item1,
             .tit-item2,
@@ -370,6 +369,7 @@ body {
     margin-right: 5px;
     line-height: 50px;
     border: 1px solid @borclr;
+    cursor: pointer;
     input {
         margin-top: 20px;
         margin-left: 5px;

@@ -306,12 +306,13 @@ export default {
         .success,
         .fail {
             position: absolute;
-            width: 300px;
+            width: 283px;
             height: 30px;
-            left: 50%;
-            top: 10px;
+            left: 25.8%;
+            top: 1%;
             margin-left: -150px;
         }
     }
 }
+
 </style>

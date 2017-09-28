@@ -4,16 +4,16 @@
             <p>我的订单</p>
         </div>
         <div class="right2">
-            <span style="margin-left:10px;">订单号：</span><input type="text" v-model="srchNo" placeholder="请输入订单号">
+            <span style="margin-left:10px;">订单号：</span><input type="text" @keyup="handleSrch" v-model="srchNo" placeholder="请输入订单号" @focus="$event.target.select()">
             <button @click="search">搜索</button><br>
             <span>创建时间：</span>
             <div class="block">
-                <el-date-picker v-model="startdate" type="date" placeholder="选择日期" :picker-options="pickerOptions0">
+                <el-date-picker v-model="startdate" type="date" placeholder="选择日期" :picker-options="pickerOptions0" @change="dateChange">
                 </el-date-picker>
             </div>
             至
             <div class="block">
-                <el-date-picker v-model="enddate" type="date" placeholder="选择日期" :picker-options="pickerOptions0">
+                <el-date-picker v-model="enddate" type="date" placeholder="选择日期" :picker-options="pickerOptions0" @change="dateChange">
                 </el-date-picker>
             </div>
         </div>
@@ -56,13 +56,15 @@
                     </div>
                 </div>
                 <div class="form form1" style="text-align:center;" v-if="item.status==1">
-                    <span style="display:inline-block;width:80px;height:35px;margin-top:16%;line-height:35px;border:1px solid #2693d4;border-radius:5px;background:#2693d4;color:#fff;">
-                        <a :href='"#/pay?bno="+item.businessNo' style="color:#fff">付款</a>
-                    </span><br>
-                    <span @click="delOrder(item.id,i)" style="display:inline-block;color:#2693d4;cursor:pointer;margin-top:10px;font-size:15px;">删除订单</span>
+                    <a :href='"#/pay?bno="+item.businessNo' style="color:#fff">
+                        <span style="display:inline-block;width:80px;height:35px;line-height:35px;border:1px solid #2693d4;border-radius:5px;background:#2693d4;color:#fff;">
+                            付款
+                        </span>
+                    </a><br>
+                    <span @click="delOrder(item.id,i)" style="display:inline-block;color:red;cursor:pointer;font-size:15px;">删除订单</span>
                 </div>
                 <div class="form form1" style="text-align:center;" v-if="item.status!=1">
-                    <span @click="delOrder(item.id,i)" style="display:inline-block;color:#2693d4;cursor:pointer;margin-top:30%;font-size:15px;">删除订单</span>
+                    <span @click="delOrder(item.id,i)" style="display:inline-block;color:red;cursor:pointer;font-size:15px;">删除订单</span>
                 </div>
             </div>
         </template>
@@ -133,6 +135,20 @@ export default {
             this.cur = curPage;
             this.pdata.start = (curPage - 1) * this.pdata.limit;
             this.getBOrder();
+        },
+        handleSrch() {
+            if (event.keyCode == 13) {
+                this.search();
+            }
+        },
+        dateChange() {
+            if (!this.startdate && !this.enddate) {
+                this.pdata.businessNo = '';
+                this.pdata.startTime = '';
+                this.pdata.endTime = '';
+                this.end = Date.now();
+                this.getBOrder();
+            }
         },
         search() {
             if (this.srchNo || this.startdate || this.enddate) {
@@ -218,6 +234,16 @@ export default {
             });
         },
 
+    },
+    watch: {
+        srchNo(val) {
+            if (val == '') {
+                this.pdata.businessNo = '';
+                this.pdata.startTime = '';
+                this.pdata.endTime = '';
+                this.getBOrder();
+            }
+        }
     },
 }
 </script>
@@ -361,6 +387,9 @@ button {
 }
 
 .form1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     border: 1px solid #ddd;
     border-top: 0;
 }

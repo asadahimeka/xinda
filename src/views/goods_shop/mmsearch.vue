@@ -171,7 +171,6 @@ export default {
         getProducts() {
             this.ajax.post('xinda-api/product/package/search-grid', this.productData, {}).then((data) => {
                 this.products = data.data.data;
-                console.log('this.products: ', this.products);
                 this.pageSize = data.data.pageSize;
                 // console.log(data);
                 // console.log('产品:', this.products);

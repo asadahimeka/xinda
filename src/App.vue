@@ -31,6 +31,19 @@ export default {
 //ElementUI
 @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 
+.el-message {
+    top: 25%;
+    background: rgba(0,0,0,.7);
+    color: #fff;
+    p{
+        color:#fff;
+        text-align: center;
+    }
+    .el-message__img{
+      opacity: .9;
+    }
+}
+
 * {
   padding: 0;
   margin: 0;

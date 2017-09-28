@@ -4,7 +4,9 @@
         <LineLogo></LineLogo>
         <!-- 主页中所有的导航部分，子导航直接使用position -->
         <Navigation></Navigation>
-        <router-view></router-view>
+        <transition name="el-zoom-in-center">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 

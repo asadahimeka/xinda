@@ -124,6 +124,7 @@ export default {
     float: left;
 }
 .shopHeader {
+    margin-top: 20px;
     margin-bottom: 25px;
     padding-top: 40px;
     padding-left: 60px;

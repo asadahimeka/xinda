@@ -203,7 +203,7 @@
                     <a href="/#/JoinUs" :class="{acta:$route.path=='/JoinUs'}">加盟我们</a>
                 </li>
                 <li>
-                    <a href="/#/shoplist" :class="{acta:$route.path=='/shoplist'}">店铺</a>
+                    <a href="/#/shoplist" :class="{acta:$route.path=='/shoplist'||$route.path=='/shop'}">店铺</a>
                 </li>
             </ul>
         </div>
@@ -230,9 +230,11 @@ export default {
 .mainA {
     .allNavigation {
         z-index: 10002;
+        transition: all .3s ease-in-out;
     }
     &:hover .allNavigation {
         display: block !important;
+        transition: all .3s ease-in-out;        
     }
 }
 
@@ -244,6 +246,12 @@ export default {
     justify-content: center;
     a {
         color: #000;
+        transition: all .3s ease-in-out;
+        &:hover {
+            display: inline-block;
+            color: #2693d4;
+            border-bottom: 4px solid #2693d4;
+        }
     }
     .mainNavigation ul {
         width: 1200px;

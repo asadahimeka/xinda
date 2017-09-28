@@ -381,11 +381,11 @@ export default {
             }
             .errorEl,
             .successEl {
-                width: 300px;
-                height: 30px;
                 position: absolute;
-                left: 50%;
-                top: 150px;
+                width: 283px;
+                height: 30px;
+                left: 25.8%;
+                top: 150%;
                 margin-left: -150px;
                 .el-alert__content {
                     display: table-cell;

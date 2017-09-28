@@ -18,12 +18,12 @@
                     <a :class="{interfaceActive:!TTT}" @click="BBB" href="javascript:;">服务商</a>
                 </div>
                 <div class="inputSearch">
-                    <input type="text" class="search_input" placeholder="搜索您需要的服务或服务商" v-model="searchKey" @input="search" @keydown.down.prevent="selectDown" @keydown.up.prevent="selectUp" @keypress="toSearch($event)">
+                    <input type="text" class="search_input" placeholder="搜索您需要的服务或服务商" v-model="searchKey" @input="search" @focus="search" @blur="skShow=0" @keydown.down.prevent="selectDown" @keydown.up.prevent="selectUp" @keypress="toSearch($event)">
                     <input type="hidden" v-model="srhid">
                     <a :href='"/#/search?sn="+searchKey+"&ispr="+ispr'>
                         <button class="search_button">&#xe600;</button>
                     </a>
-                    <div class="srhtip" v-if="skShow" @mouseleave="skShow=0">
+                    <div class="srhtip" v-if="skShow">
                         <div class="sres" v-for="(item,index) in result" :class="{sel:index==now}" @click="toDtl(item.id)" :key="index">
                             <span :title="item.serviceInfo" v-if="!ispr">{{item.serviceName}}</span>
                             <span class="rg" :title="item.serviceInfo" v-if="!ispr">{{item.serviceInfo}}</span>
@@ -74,6 +74,7 @@ export default {
             ispr: 0,
             skShow: 0,
             srhid: '',
+            motoSk: '',
         }
     },
     methods: {
@@ -111,8 +112,10 @@ export default {
                     !this.ispr
                         ? this.$router.push({ path: '/shdetail', query: { sid: this.srhid } })
                         : this.$router.push({ path: '/shop', query: { id: this.srhid } });
+                    this.srhid = '';
                 } else {
-                    this.$router.push({ path: "search", query: { sn: this.searchKey, ispr: this.ispr } });
+                    e.target.blur();
+                    this.$router.push({ path: "/search", query: { sn: this.searchKey, ispr: this.ispr } });
                 }
             }
         },
@@ -123,9 +126,13 @@ export default {
                 : this.$router.push({ path: '/shop', query: { id } });
 
         },
-        selectDown: function() {
+        selectDown() {
+            this.now == -1 ? this.motoSk = this.searchKey : 0;
             this.now++;
-            if (this.now == this.result.length) this.now = -1;
+            if (this.now == this.result.length) {
+                this.searchKey = this.motoSk;
+                this.now = -1;
+            }
             if (this.now > -1) {
                 this.srhid = this.result[this.now].id;
                 !this.ispr
@@ -133,9 +140,10 @@ export default {
                     : this.searchKey = this.result[this.now].providerName;
             }
         },
-        selectUp: function() {
+        selectUp() {
             this.now--;
-            if (this.now == -2) this.now = this.result.length - 1;
+            this.now == -1 ? this.searchKey = this.motoSk : 0;
+            this.now == -2 ? this.now = this.result.length - 1 : 0;
             if (this.now > -1) {
                 this.srhid = this.result[this.now].id;
                 !this.ispr
@@ -162,29 +170,28 @@ export default {
 
                 //创建新的请求cancelToken,并设置状态请求中
                 var sc = {
-                    source: this.ajax.CancelToken.source(),
+                    source: that.ajax.CancelToken.source(),
                     status: 1 //状态1：请求中，0:取消中
                 };
                 //这个对象加入数组中
                 sources.push(sc);
 
-
-                //开始搜索数据，yourhttp替换成你自己的请求路径
-                this.now = -1;
-                if (!this.ispr) {
-                    this.url = 'xinda-api/product/package/search-grid';
+                //开始搜索数据
+                that.now = -1;
+                if (!that.ispr) {
+                    that.url = 'xinda-api/product/package/search-grid';
                 } else {
-                    this.url = '/xinda-api/provider/search-grid';
+                    that.url = '/xinda-api/provider/search-grid';
                 }
 
-                if (this.searchKey == '') {
-                    this.skShow = 0;
+                if (that.searchKey == '') {
+                    that.skShow = 0;
                 } else {
-                    this.skShow = 1;
-                    this.ajax.post(this.url, {
+                    that.skShow = 1;
+                    that.ajax.post(that.url, {
                         start: 0,
                         limit: 8,
-                        searchName: this.searchKey,
+                        searchName: that.searchKey,
                         sort: ''
                     }, {
                             cancelToken: sc.source.token
@@ -199,12 +206,11 @@ export default {
                             sc.source = null; //置空请求canceltoken
 
                             //下面的逻辑其实测试用
-                            if (this.ajax.isCancel(thrown)) {
+                            if (that.ajax.isCancel(thrown)) {
                                 console.log('Request canceled', thrown.message);
                             } else {
                                 //handle error
                             }
-
                         });
                 }
             },
@@ -419,13 +425,6 @@ export default {
     background: #fff;
 }
 
-.sel {
-    background-color: #ccc;
-    .rg {
-        color: #fafafa;
-    }
-}
-
 .sres {
     width: 479px;
     height: 40px;
@@ -444,6 +443,19 @@ export default {
     .rg {
         font-size: 14px;
         color: #555;
+    }
+    &:hover {
+        background-color: #ccc;
+        .rg {
+            color: #fafafa;
+        }
+    }
+}
+
+.sel {
+    background-color: #ccc;
+    .rg {
+        color: #fafafa;
     }
 }
 </style>

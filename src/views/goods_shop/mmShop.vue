@@ -46,8 +46,8 @@
                     </div>
                 </el-tab-pane>
                 <el-tab-pane label="资质证书" name="third">
+                    <div class="license"><img :src="businessImg(shopinfo.businessCertPath)" alt="this"></div>
                 </el-tab-pane>
-                <div class="license"><img :src="businessImg(shopinfo.businessCertPath)" alt=""></div>
             </el-tabs>
         </div>
     </div>
@@ -116,7 +116,7 @@ export default {
 
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .container {
     width: 1200px;
     margin: 0 auto;
@@ -308,5 +308,8 @@ export default {
         top: 530px;
         left: 220px;
     }
+}
+.el-tabs__content{
+    overflow: visible;
 }
 </style>

@@ -32,16 +32,16 @@ export default {
 @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
 
 .el-message {
-    top: 25%;
-    background: rgba(0,0,0,.7);
+  top: 25%;
+  background: rgba(0, 0, 0, .7);
+  color: #fff;
+  p {
     color: #fff;
-    p{
-        color:#fff;
-        text-align: center;
-    }
-    .el-message__img{
-      opacity: .9;
-    }
+    text-align: center;
+  }
+  .el-message__img {
+    opacity: .9;
+  }
 }
 
 * {
@@ -80,5 +80,11 @@ select {
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media screen and (max-width:768px) {
+  body{
+    font-size: 62.5%;
+  }
 }
 </style>

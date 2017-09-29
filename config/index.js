@@ -30,7 +30,7 @@ module.exports = {
     proxyTable: {
       '/xinda-api/': {
         target: "http://115.182.107.203:8088/xinda/",
-        changeOrigin: true,
+        changeOrigin: true
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

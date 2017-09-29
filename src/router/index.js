@@ -102,19 +102,7 @@ const router = new Router({
           ]
         }
       ]
-    }, 
-    
-
-
-    {
-      path: '/test',
-      component: Test,
-    },
-    
-    
-
-
-    {//登录页面
+    }, {//登录页面
       path: '/Logon',
       component: Logon,
     }, {//注册页面

@@ -63,7 +63,8 @@
                 </div>
                 <el-alert v-if="err" :title="errmsg" type="error" show-icon></el-alert>
                 <el-alert v-if="!refiscal.length" title="数据为空，请稍后再试。" type="info" show-icon></el-alert>
-                <div v-for="(item,i) in refiscal" class="wares_list_m" :key="i" v-loading="loading">
+                <div v-loading="loading">
+                    <div v-for="(item,i) in refiscal" class="wares_list_m" :key="i" >
                     <div class="imgdiv">
                         <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'><img :src="relistimg+item.providerImg" alt=""></a>
                     </div>
@@ -83,6 +84,8 @@
                         <a href="javascript:;" class="joincart" @click="addCart(item)">加入购物车</a>
                     </div>
                 </div>
+                </div>
+                
                 <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
             </div>
         </div>

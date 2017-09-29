@@ -1,9 +1,9 @@
 <template>
     <div class="fibg">
-        <div class="fiscal">
+        <div class="fiscal" v-loading="load1">
             <p class="top">&nbsp;首页&nbsp;/&nbsp;{{chName}}</p>
             <div class="fiscal_menu">
-                <div class="list" v-loading="load1">
+                <div class="list">
                     <div class="list1">
                         <div class="list1l">
                             <b>服务分类</b>
@@ -377,6 +377,7 @@ a {
                         border-radius: 5px;
                         text-align: center;
                         line-height: 0;
+                        transition: .3s ease-in-out;
                         p {
                             margin: 1em;
                         }
@@ -423,6 +424,7 @@ a {
                     text-align: center;
                     line-height: 25px;
                     padding: 5px 10px;
+                    transition: .3s ease-in-out;
                 }
                 .list1r1 {
                     background-color: #169bd5;
@@ -536,7 +538,7 @@ a {
             width: 100%;
             padding: 10px 0;
             border-top: 1px solid #e5e5e5;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
             img {
                 margin-top: 23px;
                 width: 109px;

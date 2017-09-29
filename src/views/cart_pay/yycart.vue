@@ -265,7 +265,7 @@ export default {
             });
         },
         toDetail(path, id) {
-            this.$router.push({ path, query: { sid:id } });
+            this.$router.push({ path, query: { sid: id } });
             this.$router.afterEach((to, from, next) => {
                 window.scrollTo(0, 0);
             });
@@ -414,6 +414,13 @@ body {
             padding: 15px;
             margin: 35px 16px 100px;
             border: 1px solid @borclr;
+            transition: all .4s ease-in-out;
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0px 0px 5px #2594d4;
+            }
+
             p,
             h2 {
                 margin: 5px 0;

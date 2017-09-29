@@ -407,6 +407,7 @@ export default {
                 }
                 .active {
                     color: #2693d4;
+                    transition: .3s ease-in-out;
                 }
             }
         }

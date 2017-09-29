@@ -273,6 +273,7 @@ export default {
             height: 25px;
             border-radius: 5px;
             cursor: pointer;
+            transition: all .3s ease-in-out;
         }
         a:hover,
         .active {
@@ -312,7 +313,7 @@ export default {
     overflow: hidden;
     border-top: none;
     width: 1198px;
-    
+
     .shopBox {
         float: left;
         margin: 13px;
@@ -320,6 +321,11 @@ export default {
         width: 570px;
         height: 250px;
         border: 1px solid #ccc;
+        transition: all .3s ease-in-out;
+
+        &:hover {
+            box-shadow: 0px 0px 5px #2594d4;
+        }
 
         .boxleft {
             float: left;

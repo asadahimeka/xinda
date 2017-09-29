@@ -22,7 +22,7 @@
       <div class="startxmenu">
         <el-alert v-if="err" title="Get data failed." type="error" show-icon></el-alert>
         <a v-for="(item,i) in relist" :href='"#/shdetail?sid="+item.id' :key="i">
-          <div  class="startxx">
+          <div class="startxx">
             <img :src="relistimg+item.providerImg" alt="">
             <b>{{item.serviceName}}</b>
             <p class="intro" :title="item.serviceInfo">{{dealInfo(item.serviceInfo)}}</p>
@@ -90,9 +90,10 @@ export default {
 
 @mcolor: #2693d4;
 
-a{
+a {
   color: #000;
 }
+
 .star {
   margin-top: 53px;
   width: 1200px;
@@ -111,9 +112,9 @@ a{
       border: 1px solid #e8e8e8;
       text-align: center;
       cursor: pointer;
+      transition: .4s ease-in-out;
       &:hover {
         box-shadow: 0px 0px 5px @mcolor;
-        transition: .4s ease-in-out;
       }
       .smlistbg {
         width: 250px;
@@ -177,9 +178,9 @@ a{
       border: 1px solid #e8e8e8;
       text-align: center;
       cursor: pointer;
+      transition: .4s ease-in-out;
       &:hover {
         box-shadow: 0px 0px 5px @mcolor;
-        transition: .4s ease-in-out;
       }
       img {
         height: 41px;

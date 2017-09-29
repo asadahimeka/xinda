@@ -141,7 +141,7 @@ export default {
         line-height: 2;
         text-align: center;
         cursor: pointer;
-
+        transition: all .3s ease-in-out;
         &:hover {
             box-shadow: 0 0 5px #2693d4;
         }

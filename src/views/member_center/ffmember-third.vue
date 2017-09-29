@@ -96,7 +96,7 @@ export default {
             this.imageUrl = URL.createObjectURL(file.raw);
             this.$message.success('Upload avatar succeed.')
         },
-        focus(){
+        focus() {
             event.target.select();
         },
         zhszhxgmm1: function() {
@@ -155,7 +155,7 @@ export default {
             };
             // 本地校验完成，上传到服务器进行校验
             var information = {
-                headImg: this.imageUrl.substring(this.imageUrl.lastIndexOf('/'),this.imageUrl.length),
+                headImg: this.imageUrl.substring(this.imageUrl.lastIndexOf('/'), this.imageUrl.length),
                 name: this.newname,
                 gender: this.sex,
                 email: this.email,
@@ -314,6 +314,7 @@ export default {
         .m {
             color: #2693d4;
             border-bottom: 1px solid #2693d4;
+            transition: all .3s ease-in-out;
         }
         a {
             display: inline-block;
@@ -374,7 +375,7 @@ export default {
     }
 }
 
-input{
+input {
     padding-left: 10px;
     color: #666;
 }

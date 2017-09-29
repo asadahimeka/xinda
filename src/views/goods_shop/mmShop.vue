@@ -46,7 +46,7 @@
                     </div>
                 </el-tab-pane>
                 <el-tab-pane label="资质证书" name="third">
-                    <div class="license"><img :src="businessImg(shopinfo.businessCertPath)" alt="this"></div>
+                    <div class="license"><img :src="businessImg(shopinfo.businessCertPath)" alt="暂无信息"></div>
                 </el-tab-pane>
             </el-tabs>
         </div>

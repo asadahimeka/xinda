@@ -64,28 +64,28 @@
                 <el-alert v-if="err" :title="errmsg" type="error" show-icon></el-alert>
                 <el-alert v-if="!refiscal.length" title="数据为空，请稍后再试。" type="info" show-icon></el-alert>
                 <div v-loading="loading">
-                    <div v-for="(item,i) in refiscal" class="wares_list_m" :key="i" >
-                    <div class="imgdiv">
-                        <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'><img :src="relistimg+item.providerImg" alt=""></a>
-                    </div>
-                    <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'>
-                        <b>{{item.serviceName}}</b>
-                    </a>
-                    <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'>
-                        <p>{{item.serviceInfo}}</p>
-                    </a>
-                    <span class="gongsi">{{item.providerName}}</span>
-                    <span class="dizhi">{{item.regionName}}</span>
-                    <span class="money">￥&nbsp;{{fmtPrice(item.price)}}</span>
-                    <div class="order_div">
-                        <a href="javascript:;" class="order" @click="buy(item)">立即购买</a>
-                    </div>
-                    <div class="joincart_div">
-                        <a href="javascript:;" class="joincart" @click="addCart(item)">加入购物车</a>
+                    <div v-for="(item,i) in refiscal" class="wares_list_m" :key="i">
+                        <div class="imgdiv">
+                            <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'><img :src="relistimg+item.providerImg" alt=""></a>
+                        </div>
+                        <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'>
+                            <b>{{item.serviceName}}</b>
+                        </a>
+                        <a :href='"#/shdetail?sid="+item.id+"&tid="+chId+"&code="+pdata.productTypeCode'>
+                            <p>{{item.serviceInfo}}</p>
+                        </a>
+                        <span class="gongsi">{{item.providerName}}</span>
+                        <span class="dizhi">{{item.regionName}}</span>
+                        <span class="money">￥&nbsp;{{fmtPrice(item.price)}}</span>
+                        <div class="order_div">
+                            <a href="javascript:;" class="order" @click="buy(item)">立即购买</a>
+                        </div>
+                        <div class="joincart_div">
+                            <a href="javascript:;" class="joincart" @click="addCart(item)">加入购物车</a>
+                        </div>
                     </div>
                 </div>
-                </div>
-                
+
                 <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
             </div>
         </div>
@@ -301,7 +301,7 @@ export default {
             }
             this.getChoose();
             this.getPack();
-        } 
+        }
     },
     watch: {
         $route(val) {
@@ -314,7 +314,7 @@ export default {
                 this.load1 = 1;
                 this.getChoose();
                 this.getPack();
-            } 
+            }
         }
     },
 }

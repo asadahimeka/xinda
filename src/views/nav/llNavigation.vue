@@ -221,9 +221,17 @@ export default {
     methods: {
         handleMl() {
             this.$route.path == '/' ? 0 : this.show = 0;
+            setTimeout(function() {
+                var div = document.querySelector('.allNavigation');
+                div.style.overflow = 'hidden';
+            }, 0);
         },
         handleMe() {
             this.$route.path == '/' ? 0 : this.show = 1;
+            setTimeout(function() {
+                var div = document.querySelector('.allNavigation');
+                div.style.overflow = 'visible';
+            }, 500);
         },
     },
     watch: {
@@ -494,9 +502,5 @@ a {
     &:hover {
         color: #00a0ff !important;
     }
-}
-
-.allNavigation {
-    overflow: visible !important;
 }
 </style>

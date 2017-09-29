@@ -224,7 +224,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .mainA {
     .allNavigation {
         z-index: 10002;
@@ -325,10 +325,6 @@ export default {
                         font-size: 14px;
                         a {
                             color: white;
-                            transition: all .3s ease-in-out;
-                            &:hover {
-                                color: #00a0ff;
-                            }
                         }
                     }
                     &:hover {
@@ -483,5 +479,12 @@ export default {
 
 .dai {
     color: #ddd;
+}
+
+a {
+    transition: all .3s ease-in-out;
+    &:hover {
+        color: #00a0ff !important;
+    }
 }
 </style>

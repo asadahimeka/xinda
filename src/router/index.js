@@ -28,8 +28,6 @@ import Order from '../views/member_center/ffmember-first.vue'
 import Evaluate from '../views/member_center/ffmember-second.vue'
 import Uerset from '../views/member_center/ffmember-third.vue'
 
-import Test from '../components/srch-test.vue'
-
 Vue.use(Router);
 
 const router = new Router({

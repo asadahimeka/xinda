@@ -495,4 +495,8 @@ a {
         color: #00a0ff !important;
     }
 }
+
+.allNavigation {
+    overflow: visible !important;
+}
 </style>

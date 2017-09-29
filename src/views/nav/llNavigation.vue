@@ -240,15 +240,6 @@ export default {
     border-bottom: 1px solid #2693d4;
     display: flex;
     justify-content: center;
-    a {
-        color: #000;
-        transition: all .3s ease-in-out;
-        &:hover {
-            display: inline-block;
-            color: #2693d4;
-            border-bottom: 4px solid #2693d4;
-        }
-    }
     .mainNavigation ul {
         width: 1200px;
         height: 100%;
@@ -260,6 +251,15 @@ export default {
             line-height: 3;
             justify-content: center;
             position: relative;
+            >a {
+                color: #000;
+                transition: all .3s ease-in-out;
+                &:hover {
+                    display: inline-block;
+                    color: #2693d4;
+                    border-bottom: 4px solid #2693d4;
+                }
+            }
             .allNavigation {
                 width: 200px;
                 position: absolute;
@@ -325,6 +325,10 @@ export default {
                         font-size: 14px;
                         a {
                             color: white;
+                            transition: all .3s ease-in-out;
+                            &:hover {
+                                color: #00a0ff;
+                            }
                         }
                     }
                     &:hover {

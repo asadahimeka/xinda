@@ -141,7 +141,10 @@ export default {
         selectUp() {
             this.now--;
             this.now == -1 ? this.searchKey = this.motoSk : 0;
-            this.now == -2 ? this.now = this.result.length - 1 : 0;
+            if (this.now == -2) {
+                this.motoSk = this.searchKey;
+                this.now = this.result.length - 1;
+            }
             if (this.now > -1) {
                 this.srhid = this.result[this.now].id;
                 !this.ispr
@@ -175,7 +178,7 @@ export default {
                 //开始搜索数据
                 that.now = -1;
                 if (!that.ispr) {
-                    that.url = 'xinda-api/product/package/search-grid';
+                    that.url = '/xinda-api/product/package/search-grid';
                 } else {
                     that.url = '/xinda-api/provider/search-grid';
                 }
@@ -183,32 +186,32 @@ export default {
                     that.skShow = 0;
                 } else {
                     that.skShow = 1;
-                    that.ajax.post(that.url, {
-                        start: 0,
-                        limit: 8,
-                        searchName: that.searchKey,
-                        sort: ''
-                    }, {
-                            cancelToken: sc.source.token
-                        }).then(function(res) {
-                            //请求成功
-                            sc.source = null; //置空请求canceltoken
-                            //TODO这里处理搜索结果
-                            that.result = res.data.data;
-                        }).catch(function(thrown) {
-                            //请求失败
-                            sc.source = null; //置空请求canceltoken
-                            //下面的逻辑其实测试用
-                            if (that.ajax.isCancel(thrown)) {
-                                console.log('Request canceled', thrown.message);
-                            } else {
-                                //handle error
-                            }
-                        });
+                    that.ajax.post(that.url,
+                        {
+                            start: 0,
+                            limit: 8,
+                            searchName: that.searchKey,
+                            sort: '',
+                        },
+                        { cancelToken: sc.source.token }
+                    ).then(function(res) {
+                        //请求成功
+                        sc.source = null; //置空请求canceltoken
+                        //TODO这里处理搜索结果
+                        that.result = res.data.data;
+                    }).catch(function(thrown) {
+                        //请求失败
+                        sc.source = null; //置空请求canceltoken
+                        //For Test
+                        if (that.ajax.isCancel(thrown)) {
+                            console.log('Request canceled', thrown.message);
+                        } else {
+                            //handle error
+                        }
+                    });
                 }
-            },
-            100 //空闲时间间隔设置500ms
-        )
+            }, 200 //空闲时间间隔设置200ms
+        ),
     },
     watch: {
         searchKey(val) {
@@ -410,7 +413,7 @@ export default {
 .srhtip {
     z-index: 11000;
     position: absolute;
-    top: 40px;
+    top: 41px;
     left: 1px;
     width: 481px;
     border: 1px solid #2693d4;

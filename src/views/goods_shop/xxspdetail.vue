@@ -159,7 +159,7 @@ export default {
             srv: {},
             srvlist: [],
             type: '商品详情',
-            prvdr:'',
+            prvdr: '',
             sid: '',
             src: '/xinda-api/ajaxAuthcode',//图片验证码获取地址
             phone: '',//绑定手机号的Value值
@@ -202,9 +202,9 @@ export default {
             this.getDetail();
         }
     },
-    watch:{
-        $route(val){
-            if(val){
+    watch: {
+        $route(val) {
+            if (val) {
                 this.sid = val.query.sid;
                 this.getChoose();
                 this.getDetail();
@@ -254,7 +254,7 @@ export default {
             return h && h.replace(/src=\"/g, 'src=\"' + this.pichost);
         },
         getDetail() {
-            this.fsLoading = true;            
+            this.fsLoading = true;
             this.ajax.post(
                 '/xinda-api/product/package/detail',
                 { sId: this.sid },
@@ -899,7 +899,8 @@ export default {
     width: 300px;
     margin: 20px auto;
 }
-.page-bar{
+
+.page-bar {
     text-align: center;
 }
 </style>

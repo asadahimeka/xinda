@@ -287,7 +287,7 @@ export default {
                     box-sizing: border-box;
                     display: flex;
                     justify-content: space-between;
-                    transition: all .5s ease-in-out;
+                    transition: all .2s ease-in-out;
                     .navigationLogo {
                         font-family: "iconfont" !important;
                         font-size: 26px;

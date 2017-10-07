@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Top></Top>
+    <Top v-if="isPC()"></Top>
     <router-view></router-view>
-    <Bottom></Bottom>
+    <Bottom v-if="isPC()"></Bottom>
   </div>
 </template>
 
@@ -30,6 +30,8 @@ export default {
 <style lang="less">
 //ElementUI
 @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
+//Mint
+@import url("//unpkg.com/mint-ui/lib/style.css");
 
 .el-message {
   top: 25%;
@@ -65,11 +67,11 @@ select {
 @font-face {
   font-family: 'iconfont';
   /* project id 414122 */
-  src: url('//at.alicdn.com/t/font_414122_5ktithybhjjor.eot');
-  src: url('//at.alicdn.com/t/font_414122_5ktithybhjjor.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_414122_5ktithybhjjor.woff') format('woff'),
-  url('//at.alicdn.com/t/font_414122_5ktithybhjjor.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_414122_5ktithybhjjor.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_414122_8w7oft2e0qjdzpvi.eot');
+  src: url('//at.alicdn.com/t/font_414122_8w7oft2e0qjdzpvi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_414122_8w7oft2e0qjdzpvi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_414122_8w7oft2e0qjdzpvi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_414122_8w7oft2e0qjdzpvi.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -83,8 +85,8 @@ select {
 }
 
 @media screen and (max-width:768px) {
-  body{
-    font-size: 62.5%;
+  html:root {
+    font-size: 625%;
   }
 }
 </style>

@@ -3,16 +3,14 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
 import store from './store'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 import ElementUI from 'element-ui';
 import axios from 'axios';
 import qs from 'qs';
 
-//*** */
-import Mint from 'mint-ui';
-Vue.use(Mint);
-//*** */
+Vue.use(VueAwesomeSwiper);
+Vue.use(ElementUI);
 
 //地区选择插件
 import VDistpicker from 'v-distpicker'
@@ -32,8 +30,7 @@ axios.interceptors.request.use((config) => {
 });
 Vue.prototype.ajax = axios;
 
-Vue.use(VueAwesomeSwiper);
-Vue.use(ElementUI);
+Vue.prototype.isPC = () => /Android|iPhone|iPod|BlackBerry|SymbianOS|webOS/i.test(navigator.userAgent) ? false : true;
 
 Vue.config.productionTip = false;
 
@@ -3285,7 +3282,7 @@ global.cityJson = [
     { "item_code": "659002", "item_name": "阿拉尔市" },
     { "item_code": "659003", "item_name": "图木舒克市" },
     { "item_code": "659004", "item_name": "五家渠市" }
-]
+];
 
 /* eslint-disable no-new */
 new Vue({
@@ -3294,4 +3291,4 @@ new Vue({
     store,
     template: '<App/>',
     components: { App }
-})
+});

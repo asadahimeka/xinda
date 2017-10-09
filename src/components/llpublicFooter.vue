@@ -1,38 +1,86 @@
 <template>
     <div class="footer">
-        <div class="upaboutus">
-            <div class="maintext">
-                <div class="aboutus">
-                    <div class="title">
-                        关于我们
+        <div class="computer" v-if="isPC">
+            <div class="upaboutus">
+                <div class="maintext">
+                    <div class="aboutus">
+                        <div class="title">
+                            关于我们
+                        </div>
+                        <div class="contactus">
+                            联系我们：contact@xinkeher.com <br> 公司地址：北京市朝阳区大望路soho现代城
+                            <br> 官方客服电话：010-83421842
+                        </div>
                     </div>
-                    <div class="contactus">
-                        联系我们：contact@xinkeher.com <br>
-                        公司地址：北京市朝阳区大望路soho现代城<br>
-                        官方客服电话：010-83421842
+                    <div class="qrcode">
+                        <img src="../../static/images/qrcode.png" alt="欢迎关注信达官方微信号">
                     </div>
                 </div>
-                <div class="qrcode">
-                    <img src="../../static/images/qrcode.png" alt="欢迎关注信达官方微信号">
+            </div>
+            <div class="bottomcopyright">
+                <div class="centercopyright">
+                    ©Copyright 2016北京信达科技有限公司 京ICP备 16011621号
                 </div>
             </div>
         </div>
-        <div class="bottomcopyright">
-            <div class="centercopyright">
-                ©Copyright 2016北京信达科技有限公司 京ICP备 16011621号
+        <div class="phone" v-if="!isPC">
+            <div :class="{acta:$route.path=='/'}" @click="back">
+                <div class="iconfont">
+                    &#xe60e;
+                </div>
+                <div class="itext">
+                    主页
+                </div>
+            </div>
+            <div :class="{acta:$route.path=='/shoplist'}" @click="shop">
+                <div class="iconfont">
+                    &#xe605;
+                </div>
+                <div class="itext">
+                    店铺
+                </div>
+            </div>
+            <div :class="{acta:$route.path=='/shcart'}" @click="cart">
+                <div class="iconfont">
+                    &#xe64f;
+                </div>
+                <div class="itext">
+                    购物车
+                </div>
+            </div>
+            <div :class="{acta:$route.path=='/MemberCen'}" @click="mine">
+                <div class="iconfont">
+                    &#xe79c;
+                </div>
+                <div class="itext">
+                    我的
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-
+export default {
+    methods: {
+        back() {
+            this.$router.push('/');
+        },
+        shop() {
+            this.$router.push('/shoplist')
+        },
+        cart() {
+            this.$router.push('/shcart')
+        },
+        mine() {
+            this.$router.push('/MemberCen')
+        }
+    }
+}
 </script>
 
 <style lang="less">
 .footer {
-    width: 100%;
-    height: 246px;
     .upaboutus {
         width: 100%;
         height: 201px;
@@ -50,13 +98,13 @@
                 width: 276px;
                 height: 125px;
                 font-family: '宋体';
-                .title{
+                .title {
                     height: 15px;
                     font-size: 15px;
                     color: black;
                     line-height: 15px;
                 }
-                .contactus{
+                .contactus {
                     line-height: 25px;
                     padding-left: 3px;
                     font-size: 14px;
@@ -71,7 +119,7 @@
         background-color: #cbcccc;
         display: flex;
         justify-content: center;
-        .centercopyright{
+        .centercopyright {
             width: 1200px;
             height: 100%;
             display: flex;
@@ -79,6 +127,44 @@
             align-items: center;
             font-size: 14px;
         }
+    }
+}
+
+.phone {
+    width: 100%;
+    height: .5rem;
+    background-color: #f5f6f8;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    box-shadow: 0 0 15px #000;
+    >div {
+        width: 25%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #000;
+        .iconfont {
+            font-size: .3rem;
+        }
+        .itext {
+            font-size: .1rem;
+        }
+    }
+    .acta {
+        color: #2792d6;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .maintext {
+        width: 100%;
+    }
+    .centercopyright {
+        width: 100%;
     }
 }
 </style>

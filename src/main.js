@@ -32,7 +32,7 @@ axios.interceptors.request.use((config) => {
 });
 Vue.prototype.ajax = axios;
 
-Vue.prototype.isPC = () => /Android|iPhone|iPod|BlackBerry|SymbianOS|webOS/i.test(navigator.userAgent) ? false : true;
+Vue.prototype.isPC = /Android|iPhone|iPod|BlackBerry|SymbianOS|webOS/i.test(navigator.userAgent) ? false : true;
 
 Vue.config.productionTip = false;
 

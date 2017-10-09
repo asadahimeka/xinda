@@ -4,7 +4,7 @@
             <img src="../../static/images/404.gif" alt="404 NOT FOUND">
             <div class="btn">
                 <button>
-                    <a href="/">返回首页</a>
+                    <a href="/#/">返回首页</a>
                 </button>
             </div>
         </div>
@@ -31,6 +31,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1;
 }
 
 .hello {
@@ -54,6 +55,7 @@ export default {
         a {
             text-decoration: none;
             color: #fff;
+            font-size: .22rem;
         }
     }
 }

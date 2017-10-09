@@ -454,4 +454,10 @@ export default {
         color: #fafafa;
     }
 }
+
+@media screen and (max-width: 1200px){
+    ._outer{
+        justify-content: flex-start;
+    }
+}
 </style>

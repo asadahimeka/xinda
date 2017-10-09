@@ -6,11 +6,13 @@ import router from './router'
 import store from './store'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import ElementUI from 'element-ui';
+import MintUI from 'mint-ui'
 import axios from 'axios';
 import qs from 'qs';
 
 Vue.use(VueAwesomeSwiper);
 Vue.use(ElementUI);
+Vue.use(MintUI);
 
 //地区选择插件
 import VDistpicker from 'v-distpicker'

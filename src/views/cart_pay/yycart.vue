@@ -153,7 +153,6 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { Toast, MessageBox, Indicator } from 'mint-ui';
 export default {
     name: 'shcart',
     data() {
@@ -216,7 +215,7 @@ export default {
                     if (res.data.status == 1) {
                         this.rglist.push(res.data.data.regionName);
                     } else {
-                        Toast({ type: 'warning', message: res.data.msg });
+                        this.$toast({ type: 'warning', message: res.data.msg });
                     }
                 }).catch(res => {
                     console.log('Axios: ', res);
@@ -241,7 +240,7 @@ export default {
             });
         },
         getCart() {
-            !this.isPC ? Indicator.open('加载中...') : 0;
+            !this.isPC ? this.$indicator.open('加载中...') : 0;
             this.ajax.post(
                 '/xinda-api/cart/list'
             ).then(res => {
@@ -253,13 +252,13 @@ export default {
                         this.getRegion();
                         setTimeout(() => {
                             this.kshow = 1;
-                            Indicator.close();
+                            this.$indicator.close();
                         }, 300);
                     }
                 } else {
                     this.isPC
                         ? this.$message({ type: 'warning', message: res.data.msg })
-                        : Toast(res.data.msg);
+                        : this.$toast(res.data.msg);
                     this.gfail01 = true;
                 }
             }).catch(res => {
@@ -345,10 +344,10 @@ export default {
         },
         del(item) {
             if (!this.isPC) {
-                MessageBox.confirm('确定删除该产品吗?').then(action => {
+                this.$messagebox.confirm('确定删除该产品吗?').then(action => {
                     this.delItem(item);
                 }).catch(() => {
-                    Toast({ type: 'info', message: '已取消删除' });
+                    this.$toast({ type: 'info', message: '已取消删除' });
                 });
             } else {
                 this.$confirm('确定删除该产品吗?', '信息', {
@@ -375,11 +374,11 @@ export default {
                     this.cartAction(this.cartlist.length);
                     this.isPC
                         ? this.$message({ type: 'success', message: '删除成功!' })
-                        : Toast('删除成功!');
+                        : this.$toast('删除成功!');
                 } else {
                     this.isPC
                         ? this.$message({ type: 'error', message: res.data.msg })
-                        : Toast(res.data.msg);
+                        :this.$toast(res.data.msg);
                 }
             }).catch(res => {
                 console.log('Axios: ', res);

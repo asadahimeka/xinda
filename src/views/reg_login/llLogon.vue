@@ -32,7 +32,7 @@
                     <img :src="src" alt="" @click="F5">
                 </div>
                 <div class="getPSD">
-                    <a href="/ForPSD">忘记密码？</a>
+                    <a href="/#/ForPSD">忘记密码？</a>
                 </div>
                 <button @click="logonNow">立即登录</button>
             </div>
@@ -70,6 +70,7 @@ import MD5 from 'js-md5';
 import { mapActions } from 'vuex';
 export default {
     created() {
+        console.log(this.$route);
         this.ajax.post('/xinda-api/sso/login-info').then((user) => {
             if (user.data.status == 1) {
                 this.$message({ type: 'warning', message: '您已登录！', duration: 1000 });
@@ -80,7 +81,6 @@ export default {
         })
         onkeydown = (e) => {
             if (e.keyCode == 13) {
-
                 this.logonNow();
             }
         }

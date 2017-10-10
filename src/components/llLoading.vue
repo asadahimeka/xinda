@@ -23,7 +23,7 @@ export default {
     height: 100%;
     width: 100%;
     position: fixed;
-    z-index: 2;
+    z-index: 99999;
     margin-top: 0px;
     top: 0px;
 }

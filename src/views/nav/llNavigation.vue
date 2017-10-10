@@ -221,9 +221,17 @@ export default {
     methods: {
         handleMl() {
             this.$route.path == '/' ? 0 : this.show = 0;
+            setTimeout(function() {
+                var div = document.querySelector('.allNavigation');
+                div.style.overflow = 'hidden';
+            }, 0);
         },
         handleMe() {
             this.$route.path == '/' ? 0 : this.show = 1;
+            setTimeout(function() {
+                var div = document.querySelector('.allNavigation');
+                div.style.overflow = 'visible';
+            }, 500);
         },
     },
     watch: {
@@ -279,7 +287,7 @@ export default {
                     box-sizing: border-box;
                     display: flex;
                     justify-content: space-between;
-                    transition: all .5s ease-in-out;
+                    transition: all .2s ease-in-out;
                     .navigationLogo {
                         font-family: "iconfont" !important;
                         font-size: 26px;

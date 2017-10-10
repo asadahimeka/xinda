@@ -11,7 +11,7 @@
         <div class="shopsifting">
             <div>
                 <div class="siftingHeader">服务区域</div>
-                <v-distpicker class="sate" @selected="onSelected" :placeholders="placeholders"></v-distpicker>
+                <v-distpicker class="sate" @province="clearls" @selected="onSelected" :placeholders="placeholders"></v-distpicker>
             </div>
             <div>
                 <div class="siftingHeader">产品类型</div>
@@ -149,14 +149,20 @@ export default {
             this.getShop();
         },
         onSelected(data) {
-            console.log(data);
             if (data) {
                 this.ajdata.regionId = data.area.code;
                 console.log(this.ajdata.regionId);
                 this.loading = true;
                 this.getShop();
-            }else {
-                console.log('VDistpicker Error');
+            } else {
+                console.error('VDistpicker Error.');
+            }
+        },
+        clearls(val) {
+            if (!val.code) {
+                this.ajdata.regionId = '';
+                this.loading = true;
+                this.getShop();
             }
         },
         getShop() {
@@ -204,9 +210,7 @@ export default {
     },
     created() {
         this.getShop();
-
     },
-
 }
 </script>
 
@@ -278,6 +282,7 @@ export default {
         }
         a:hover,
         .active {
+            
             color: #fff;
             background: #2594d4;
         }

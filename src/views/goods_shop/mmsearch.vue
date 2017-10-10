@@ -206,7 +206,7 @@ export default {
             this.cur = curPage;
             this.productData.start = (curPage - 1) * this.productData.limit;
             this.getProducts();
-            window.scrollTo(0, 380);
+            window.scrollTo(0, 170);
         },
         providerPage(curPage) {
             this.cur = curPage;

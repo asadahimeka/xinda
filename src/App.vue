@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <Top></Top>
+    <Loading v-if="load"></Loading>
+    <Top v-if="isPC"></Top>
     <router-view></router-view>
     <Bottom></Bottom>
   </div>
@@ -10,12 +11,25 @@
 import Top from './components/llpublicHeader'
 import Contents from './views/llContent'
 import Bottom from './components/llpublicFooter'
+import Loading from './components/llLoading'
+
 export default {
   name: 'app',
+  created() {
+    window.onload = () => {
+      this.load = false;
+    }
+  },
   components: {
     Top,
     Bottom,
-    Contents
+    Contents,
+    Loading
+  },
+  data() {
+    return {
+      load: true
+    }
   },
   watch: {
     $route(val) {
@@ -30,18 +44,20 @@ export default {
 <style lang="less">
 //ElementUI
 @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
+//Mint
+@import url("//unpkg.com/mint-ui/lib/style.css");
 
 .el-message {
-    top: 25%;
-    background: rgba(0,0,0,.7);
+  top: 25%;
+  background: rgba(0, 0, 0, .7);
+  color: #fff;
+  p {
     color: #fff;
-    p{
-        color:#fff;
-        text-align: center;
-    }
-    .el-message__img{
-      opacity: .9;
-    }
+    text-align: center;
+  }
+  .el-message__img {
+    opacity: .9;
+  }
 }
 
 * {
@@ -65,11 +81,11 @@ select {
 @font-face {
   font-family: 'iconfont';
   /* project id 414122 */
-  src: url('//at.alicdn.com/t/font_414122_5ktithybhjjor.eot');
-  src: url('//at.alicdn.com/t/font_414122_5ktithybhjjor.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_414122_5ktithybhjjor.woff') format('woff'),
-  url('//at.alicdn.com/t/font_414122_5ktithybhjjor.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_414122_5ktithybhjjor.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.eot');
+  src: url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.woff') format('woff'),
+  url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -82,10 +98,9 @@ select {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width:768px) {
   html:root {
     font-size: 625%;
   }
 }
-
 </style>

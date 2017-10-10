@@ -34,7 +34,6 @@ export default {
         this.ajax.post('/xinda-api/member/info').then((userMsg) => {
             if (userMsg.data.status == 1) {
                 this.username = userMsg.data.data.name;
-                console.log(userMsg);
                 // this.headimg = userMsg.data.data.headImg;
             } else {
                 this.$message.warning(userMsg.data.msg);

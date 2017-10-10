@@ -41,7 +41,7 @@
                             <a href="" class="site">{{item1.providerName}}</a>
                             <span :title="item1.serviceInfo" style="display:block;line-height:30px;padding-bottom:20px;">{{item1.serviceName}}</span>
                         </div>
-                        <p style="width:100px;height:100px;;text-align:center;">￥
+                        <p style="width:100px;height:100px;text-align:center;">￥
                             <span>{{fmtPrice(item1.unitPrice)}}</span>
                         </p>
                         <p style="width:80px;height:100px;;text-align:center;">

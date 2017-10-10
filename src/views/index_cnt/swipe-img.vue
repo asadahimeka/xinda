@@ -75,4 +75,26 @@ export default {
     width: 100%;
     height: 401px;
 }
+
+@media screen and (max-width:1200px) {
+    #swiper {
+        width: 100%;
+        height: 401px;
+    }
+    .swiper-container.swiper-container-horizontal img {
+        width: 100%;
+        height: 401px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #swiper {
+        width: 100%;
+        height: 1.5rem;
+    }
+    .swiper-container.swiper-container-horizontal img {
+        width: 100%;
+        height: 100%;
+    }
+}
 </style>

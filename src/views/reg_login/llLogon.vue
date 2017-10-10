@@ -1,6 +1,14 @@
 <template>
     <div class="logonFrame">
-        <div class="logoLine">
+        <div class="logoLineMobile" v-if="!isPC">
+            <div class="iconfont">
+                &#xe61f;
+            </div>
+            <div class="title">
+                登录
+            </div>
+        </div>
+        <div class="logoLine" v-if="isPC">
             <div class="autoLine">
                 <a href="/#">
                     <img src="../../../static/images/QQ图片20170517185752.png" alt="">
@@ -28,10 +36,10 @@
                 </div>
                 <button @click="logonNow">立即登录</button>
             </div>
-            <div class="getset">
+            <div class="getset" v-if="isPC">
                 <!-- 又仅仅是一条分隔线 -->
             </div>
-            <div class="returnRegister">
+            <div class="returnRegister" v-if="isPC">
                 <div class="question">
                     还没有帐号？
                 </div>
@@ -116,7 +124,7 @@ export default {
                             this.successRe = true;
                             setTimeout(() => {
                                 this.exAction(1);
-                                if (this.$route.query.redirect&&this.$route.query.redirect!='/Register') {
+                                if (this.$route.query.redirect && this.$route.query.redirect != '/Register') {
                                     this.$router.push(this.$route.query.redirect);
                                 } else {
                                     this.$router.push('/');
@@ -245,6 +253,7 @@ export default {
                 height: 36px;
                 margin-top: 24px;
                 margin-right: 15px;
+                display: flex;
                 img {
                     width: 100%;
                     height: 100%;
@@ -315,4 +324,49 @@ export default {
     }
 }
 
+@media screen and (max-width:768px) {
+    .logonFrame {
+        width: 100%;
+        background-color: #fff;
+        position: relative;
+        .logoLineMobile {
+            width: 100%;
+            border-bottom: .01rem solid #b1b1b1;
+            height: .5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .iconfont {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: .5rem;
+                height: .5rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .title {
+                font-size: .3rem;
+            }
+        }
+        .mainBody {
+            margin: 0;
+            .inLogon {
+                width: 100%;
+                padding: 0;
+            }
+            .getPSD {
+                align-items: center;
+                a {
+                    height: .2rem;
+                    font-size: .2rem;
+                    text-decoration: none;
+                    color: black;
+                    line-height: .2rem;
+                }
+            }
+        }
+    }
+}
 </style>

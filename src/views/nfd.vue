@@ -1,10 +1,10 @@
 <template>
-    <div class="setbg">
+    <div class="setbg" :style="'width:'+bw+'px;height:'+bh+'px'">
         <div class="hello">
-            <img src="../../static/images/404.gif" alt="">
+            <img src="../../static/images/404.gif" alt="404 NOT FOUND">
             <div class="btn">
                 <button>
-                    <a href="/">返回首页</a>
+                    <a href="/#/">返回首页</a>
                 </button>
             </div>
         </div>
@@ -16,31 +16,14 @@ export default {
     name: 'nfd',
     data() {
         return {
-
-        }
-    },
-    created() {
-        setTimeout(() => {
-            this.mmp();
-        }, 0);
-    },
-    methods: {
-        mmp: function() {
-            var bw = window.screen.availWidth,
-                bh = window.screen.availHeight,
-                box = document.querySelector('.setbg');
-            box.style.width = bw + 'px';
-            box.style.height = bh + 'px';
+            bw: window.innerWidth,
+            bh: window.innerHeight,
         }
     }
 }
 </script>
 
 <style lang="less">
-// .publicheader,
-// .footer {
-//     display: none;
-// }
 .setbg {
     padding-top: 30px;
     padding-bottom: 30px;
@@ -48,6 +31,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1;
 }
 
 .hello {
@@ -71,12 +55,13 @@ export default {
         a {
             text-decoration: none;
             color: #fff;
+            font-size: .15rem;
         }
     }
 }
 
 @media screen and (max-width:768px) {
-    .hello{
+    .hello {
         width: 100%;
         height: auto;
     }

@@ -24,7 +24,7 @@
                         <button class="search_button">&#xe600;</button>
                     </a>
                     <div class="srhtip" v-if="skShow">
-                        <div class="sres" v-for="(item,index) in result" :class="{sel:index==now}" @click="toDtl(item.id)" :key="index">
+                        <div class="sres" v-for="(item,index) in result" :class="{sel:index==now}" @mousedown="toDtl(item.id)" :key="index">
                             <span :title="item.serviceInfo" v-if="!ispr">{{item.serviceName}}</span>
                             <span class="rg" :title="item.serviceInfo" v-if="!ispr">{{item.serviceInfo}}</span>
                             <span :title="item.providerInfo" v-if="ispr">{{item.providerName}}</span>
@@ -114,7 +114,6 @@ export default {
                         : this.$router.push({ path: '/shop', query: { id: this.srhid } });
                     this.srhid = '';
                 } else {
-                    e.target.blur();
                     this.$router.push({ path: "/search", query: { sn: this.searchKey, ispr: this.ispr } });
                 }
             }
@@ -124,7 +123,6 @@ export default {
             !this.ispr
                 ? this.$router.push({ path: '/shdetail', query: { sid: id } })
                 : this.$router.push({ path: '/shop', query: { id } });
-
         },
         selectDown() {
             this.now == -1 ? this.motoSk = this.searchKey : 0;
@@ -143,7 +141,10 @@ export default {
         selectUp() {
             this.now--;
             this.now == -1 ? this.searchKey = this.motoSk : 0;
-            this.now == -2 ? this.now = this.result.length - 1 : 0;
+            if (this.now == -2) {
+                this.motoSk = this.searchKey;
+                this.now = this.result.length - 1;
+            }
             if (this.now > -1) {
                 this.srhid = this.result[this.now].id;
                 !this.ispr
@@ -167,7 +168,6 @@ export default {
                         item.source.cancel('取消上一个')
                     }
                 });
-
                 //创建新的请求cancelToken,并设置状态请求中
                 var sc = {
                     source: that.ajax.CancelToken.source(),
@@ -175,47 +175,43 @@ export default {
                 };
                 //这个对象加入数组中
                 sources.push(sc);
-
                 //开始搜索数据
                 that.now = -1;
                 if (!that.ispr) {
-                    that.url = 'xinda-api/product/package/search-grid';
+                    that.url = '/xinda-api/product/package/search-grid';
                 } else {
                     that.url = '/xinda-api/provider/search-grid';
                 }
-
                 if (that.searchKey == '') {
                     that.skShow = 0;
                 } else {
                     that.skShow = 1;
-                    that.ajax.post(that.url, {
-                        start: 0,
-                        limit: 8,
-                        searchName: that.searchKey,
-                        sort: ''
-                    }, {
-                            cancelToken: sc.source.token
-                        }).then(function(res) {
-                            //请求成功
-                            sc.source = null; //置空请求canceltoken
-
-                            //TODO这里处理搜索结果
-                            that.result = res.data.data;
-                        }).catch(function(thrown) {
-                            //请求失败
-                            sc.source = null; //置空请求canceltoken
-
-                            //下面的逻辑其实测试用
-                            if (that.ajax.isCancel(thrown)) {
-                                console.log('Request canceled', thrown.message);
-                            } else {
-                                //handle error
-                            }
-                        });
+                    that.ajax.post(that.url,
+                        {
+                            start: 0,
+                            limit: 8,
+                            searchName: that.searchKey,
+                            sort: '',
+                        },
+                        { cancelToken: sc.source.token }
+                    ).then(function(res) {
+                        //请求成功
+                        sc.source = null; //置空请求canceltoken
+                        //TODO这里处理搜索结果
+                        that.result = res.data.data;
+                    }).catch(function(thrown) {
+                        //请求失败
+                        sc.source = null; //置空请求canceltoken
+                        //For Test
+                        if (that.ajax.isCancel(thrown)) {
+                            console.log('Request canceled', thrown.message);
+                        } else {
+                            //handle error
+                        }
+                    });
                 }
-            },
-            500 //空闲时间间隔设置500ms
-        )
+            }, 200 //空闲时间间隔设置200ms
+        ),
     },
     watch: {
         searchKey(val) {
@@ -417,7 +413,7 @@ export default {
 .srhtip {
     z-index: 11000;
     position: absolute;
-    top: 40px;
+    top: 41px;
     left: 1px;
     width: 481px;
     border: 1px solid #2693d4;
@@ -456,6 +452,12 @@ export default {
     background-color: #ccc;
     .rg {
         color: #fafafa;
+    }
+}
+
+@media screen and (max-width: 1200px){
+    ._outer{
+        justify-content: flex-start;
     }
 }
 </style>

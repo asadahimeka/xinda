@@ -1,5 +1,6 @@
 <template>
     <div class="getPSDFrame">
+        <div class="mobileBG" v-if="!isphone"></div>
         <div class="LineLogoPositionMobile" v-if="!isPC">
             <div class="iconfont">
                 &#xe61f;
@@ -86,6 +87,13 @@ export default {
             var testphone = /^[1][3,4,5,7,8][0-9]{9}$/;
             if (!testphone.test(this.phone)) {
                 this.etitle = '手机号输入有误！';
+                if (!this.isPC) {
+                    this.$toast({
+                        message: this.etitle,
+                        position: 'bottom',
+                        duration: 5000
+                    });
+                };
                 this.F5();
                 return 0;
             };
@@ -111,6 +119,13 @@ export default {
                     if (fontMessage.data.status == 1) {
                         this.etitle = '';
                         this.stitle = fontMessage.data.msg;
+                        if (!this.isPC) {
+                            this.$toast({
+                                message: this.stitle,
+                                position: 'bottom',
+                                duration: 5000
+                            });
+                        };
                         setTimeout(() => {
                             this.stitle = '';
                         }, 2000);
@@ -129,6 +144,13 @@ export default {
                         }, 1000)
                     } else {
                         this.etitle = fontMessage.data.msg;
+                        if (!this.isPC) {
+                            this.$toast({
+                                message: this.etitle,
+                                position: 'bottom',
+                                duration: 5000
+                            });
+                        };
                         this.F5();
                     }
                 }).catch((error) => {
@@ -256,7 +278,6 @@ export default {
             align-items: flex-start;
             box-sizing: border-box;
             align-content: flex-start;
-
             button {
                 height: 36px;
                 outline: none;

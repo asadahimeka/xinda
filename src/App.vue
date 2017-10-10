@@ -98,9 +98,20 @@ select {
   -moz-osx-font-smoothing: grayscale;
 }
 
+[v-cloak] {
+  display: none;
+}
+
 @media screen and (max-width:768px) {
   html:root {
     font-size: 625%;
+  }
+  .mobileBG{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background-color: #f2f2f2;
+    z-index: -1;
   }
 }
 </style>

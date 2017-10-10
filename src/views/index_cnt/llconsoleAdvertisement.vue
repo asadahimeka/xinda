@@ -248,6 +248,9 @@ export default {
             font-size: .13rem;
             text-decoration: none;
             color: black;
+            display: flex;
+            align-items: flex-end;
+            height: .18rem;
         }
     }
 }

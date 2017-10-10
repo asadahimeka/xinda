@@ -150,7 +150,7 @@ router.beforeEach((to, from, next) => {
     typeof to.meta.pageTitle !== undefined && (document.title = to.meta.pageTitle);
     if (to.matched.some(r => r.meta.requireAuth)) {
         axios.post('/xinda-api/sso/login-info').then((userMsg) => {
-            if (userMsg.data.status == 1 || !this.isPC) {
+            if (userMsg.data.status == 1) {
                 next();
             } else {
                 next({ path: '/Logon', query: { redirect: to.fullPath } });

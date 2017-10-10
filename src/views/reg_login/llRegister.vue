@@ -1,6 +1,13 @@
 <template>
     <div class="Register">
-        <div class="lineLogo">
+        <div class="mobileBG" v-if="!isPC"></div>
+        <div class="lineLogoMobile" v-if="!isPC">
+            <div class="iconfont">
+                &#xe61f;
+            </div>
+            <p>注册</p>
+        </div>
+        <div class="lineLogo" v-if="isPC">
             <div class="LinePosition">
                 <a href="/#" class="Logo">
                     <img src="../../../static/images/QQ图片20170517185752.png" alt="">
@@ -56,10 +63,10 @@
                     <a>《服务协议》</a>
                 </div>
             </div>
-            <div class="setget">
+            <div class="setget" v-if="isPC">
                 <!-- 这是一个用来间隔的div -->
             </div>
-            <div class="registerRight">
+            <div class="registerRight" v-if="isPC">
                 <p>已有帐号？</p>
                 <p>
                     <a href="#/Logon">立即登录>></a>
@@ -121,6 +128,13 @@ export default {
                     if (fontMessage.data.status == 1) {
                         this.successmsg = fontMessage.data.msg;
                         this.successShow = true;
+                        if (!this.isPC) {
+                            this.$toast({
+                                message: this.successmsg,
+                                position: 'bottom',
+                                duration: 5000
+                            });
+                        };
                         setTimeout(() => {
                             this.successShow = false;
                         }, 2000);
@@ -140,6 +154,13 @@ export default {
                     } else {
                         this.errormsg = fontMessage.data.msg;
                         this.errorShow = true;
+                        if (!this.isPC) {
+                            this.$toast({
+                                message: this.errormsg,
+                                position: 'bottom',
+                                duration: 5000
+                            });
+                        };
                         this.F5();
                     }
                 }).catch((error) => {
@@ -168,6 +189,13 @@ export default {
                     if (rTP.data.status == -2) {
                         this.errormsg = rTP.data.msg;
                         this.errorShow = true;
+                        if (!this.isPC) {
+                            this.$toast({
+                                message: this.errormsg,
+                                position: 'bottom',
+                                duration: 5000
+                            });
+                        };
                     }
                 }).catch((error) => {
                     console.log('error', error);
@@ -178,6 +206,13 @@ export default {
             if (!this.phone) {
                 this.errormsg = '请填写手机号码！';
                 this.errorShow = true;
+                if (!this.isPC) {
+                    this.$toast({
+                        message: this.errormsg,
+                        position: 'bottom',
+                        duration: 5000
+                    });
+                };
                 return false;
             } else {
                 // 手机号本地校验正则
@@ -185,6 +220,13 @@ export default {
                 if (!testPhone.test(this.phone)) {
                     this.errormsg = '请输入正确的11位手机号码！';
                     this.errorShow = true;
+                    if (!this.isPC) {
+                        this.$toast({
+                            message: this.errormsg,
+                            position: 'bottom',
+                            duration: 5000
+                        });
+                    };
                     return false;
                 };
                 return true;
@@ -194,6 +236,13 @@ export default {
             if (!this.PSD) {
                 this.errormsg = '请填写密码！';
                 this.errorShow = true;
+                if (!this.isPC) {
+                    this.$toast({
+                        message: this.errormsg,
+                        position: 'bottom',
+                        duration: 5000
+                    });
+                };
                 return false;
             } else {
                 // 密码本地校验正则
@@ -201,6 +250,13 @@ export default {
                 if (!testPassword.test(this.PSD)) {
                     this.errormsg = '密码不符合规范！';
                     this.errorShow = true;
+                    if (!this.isPC) {
+                        this.$toast({
+                            message: this.errormsg,
+                            position: 'bottom',
+                            duration: 5000
+                        });
+                    };
                     return false;
                 };
                 return true;
@@ -210,6 +266,13 @@ export default {
             if (this.districtVal == 'all') {
                 this.errormsg = '请选择正确的地区！';
                 this.errorShow = true;
+                if (!this.isPC) {
+                    this.$toast({
+                        message: this.errormsg,
+                        position: 'bottom',
+                        duration: 5000
+                    });
+                };
                 return false;
             }
             return true;
@@ -218,6 +281,13 @@ export default {
             if (!this.imgCode || !this.messageTest) {
                 this.errormsg = '请填写验证码！';
                 this.errorShow = true;
+                if (!this.isPC) {
+                    this.$toast({
+                        message: this.errormsg,
+                        position: 'bottom',
+                        duration: 5000
+                    });
+                };
                 return false;
             }
             return true;
@@ -238,6 +308,13 @@ export default {
                 } else {
                     this.errormsg = rTP.data.msg;
                     this.errorShow = true;
+                    if (!this.isPC) {
+                        this.$toast({
+                            message: this.errormsg,
+                            position: 'bottom',
+                            duration: 5000
+                        });
+                    };
                     this.F5();
                 }
             }).catch((error) => {
@@ -258,6 +335,13 @@ export default {
                 if (canLog.data.status == 1) {
                     this.successmsg = canLog.data.msg;
                     this.successShow = true;
+                    if (!this.isPC) {
+                        this.$toast({
+                            message: this.successmsg,
+                            position: 'bottom',
+                            duration: 5000
+                        });
+                    };
                     setTimeout(() => {
                         // 页面自动跳转到登录页
                         this.$router.push('/Logon');
@@ -265,6 +349,13 @@ export default {
                 } else {
                     this.errormsg = canLog.data.msg;
                     this.errorShow = true;
+                    if (!this.isPC) {
+                        this.$toast({
+                            message: this.errormsg,
+                            position: 'bottom',
+                            duration: 5000
+                        });
+                    };
                 }
             }).catch((error) => {
                 console.log(error);
@@ -459,6 +550,7 @@ export default {
                 background-color: #000;
                 margin-top: 19px;
                 margin-right: 15px;
+                display: flex;
                 img {
                     width: 100%;
                     height: 100%;
@@ -541,6 +633,45 @@ export default {
             }
             .getRight {
                 margin-top: 15px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .lineLogoMobile {
+        width: 100%;
+        border-bottom: .01rem solid #b1b1b1;
+        height: .5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        position: relative;
+        .iconfont{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: .5rem;
+            height: .5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: .3rem;
+        }
+        p{
+            font-size: .3rem;
+        }
+    }
+    .Register {
+        width: 100%;
+        .mainBody {
+            width: 100%;
+            margin: 0;
+            background-color: #f2f2f2;
+            .registerLeft {
+                width: 100%;
+                padding: 0;
             }
         }
     }

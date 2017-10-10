@@ -16,8 +16,8 @@ export default {
     name: 'nfd',
     data() {
         return {
-            bw: window.screen.availWidth,
-            bh: window.screen.availHeight,
+            bw: window.innerWidth,
+            bh: window.innerHeight,
         }
     }
 }

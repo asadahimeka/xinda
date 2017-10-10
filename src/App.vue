@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Top v-if="isPC()"></Top>
+    <Top v-if="isPC"></Top>
     <router-view></router-view>
-    <Bottom v-if="isPC()"></Bottom>
+    <Bottom v-if="isPC"></Bottom>
   </div>
 </template>
 
@@ -67,11 +67,11 @@ select {
 @font-face {
   font-family: 'iconfont';
   /* project id 414122 */
-  src: url('//at.alicdn.com/t/font_414122_8w7oft2e0qjdzpvi.eot');
-  src: url('//at.alicdn.com/t/font_414122_8w7oft2e0qjdzpvi.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_414122_8w7oft2e0qjdzpvi.woff') format('woff'),
-  url('//at.alicdn.com/t/font_414122_8w7oft2e0qjdzpvi.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_414122_8w7oft2e0qjdzpvi.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.eot');
+  src: url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -84,7 +84,7 @@ select {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:767px) {
   html:root {
     font-size: 625%;
   }

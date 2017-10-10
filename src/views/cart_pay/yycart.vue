@@ -92,40 +92,46 @@
 
         <div class="m-cart" v-if="!isPC">
             <div class="cartnum" v-if="cartlist.length">
-                购物车内共有
+                <i class="el-icon-arrow-left" @click="back"></i>&nbsp;&nbsp; 购物车内共有
                 <span>{{cartlist.length}}</span>&nbsp;件商品
+                <a href="/#"><i class="iconfont">&#xe60e;</i></a>
             </div>
             <div class="cartlist" v-if="cartlist.length">
-                <div class="cartitem" v-for="(item,i) in cartlist" :key="item.serviceId">
+                <div class="cartitem" v-for="(item,index) in cartlist" :key="item.serviceId">
                     <div class="shopname">
                         <a :href='"#/shop?id="+item.providerId'>{{item.providerName}}</a>
                     </div>
-                    <div class="shoplogo ib">
-                        <a :href='"#/shop?id="+item.providerId'>
-                            <img :src="dealSrc(item.providerImg)" alt="shop img not found">
-                        </a>
-                    </div>
-                    <div class="srv ib">
-                        <div class="srvname" :title="item.serviceName" @click="toDetail('/shdetail',item.serviceId)">{{item.serviceName}}</div>
-                        <div class="uprice">
-                            <span>￥&nbsp;{{priceChange(item)}}</span>&nbsp;&nbsp;元
+                    <div class="itemcnt">
+                        <div class="shoplogo">
+                            <a :href='"#/shop?id="+item.providerId'>
+                                <img :src="dealSrc(item.providerImg)" alt="shop img not found">
+                            </a>
                         </div>
-                        <div class="uprice">购买数量：
-                            <div class="ib">
-                                <button class="min" @click="item.buyNum=clkMin(item.buyNum)" :disabled="item.buyNum==1">-</button>
-                                <input type="text" class="shnum" v-model="item.buyNum" @change="item.buyNum=cartChange(item.buyNum)" @focus="focus" v-numberonly>
-                                <button class="pls" @click="item.buyNum=clkPls(item.buyNum)">+</button>
+                        <div class="srv">
+                            <div class="srvname" :title="item.serviceName" @click="toDetail('/shdetail',item.serviceId)">{{item.serviceName}}</div>
+                            <div class="uprice">
+                                <span>￥&nbsp;{{priceChange(item)}}</span>&nbsp;&nbsp;元
+                            </div>
+                            <div class="uprice">购买数量：
+                                <div class="ib">
+                                    <button class="min" @click="item.buyNum=clkMin(item.buyNum)" :disabled="item.buyNum==1">
+                                        <i class="el-icon-minus"></i>
+                                    </button>
+                                    <input type="text" class="shnum" v-model="item.buyNum" @change="item.buyNum=cartChange(item.buyNum)" v-numberonly>
+                                    <button class="pls" @click="item.buyNum=clkPls(item.buyNum)">
+                                        <i class="el-icon-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="uprice">
+                                <i class="iconfont">&#xe603;</i>
+                                {{rglist[index]}}
                             </div>
                         </div>
-                        <div class="uprice">
-                            <i class="iconfont">&#xe603;</i>
-                            {{rglist[i]}}
-                        </div>
+                        <div class="del" @click="del(item)">删除订单</div>
                     </div>
-                    <div class="del ib" @click="del(item)">删除订单</div>
                 </div>
-                <div class="totalct uprice">
-                    共&nbsp;
+                <div class="totalct uprice">共
                     <span>{{cartlist.length}}</span>&nbsp;件商品&nbsp;&nbsp;小计：
                     <span>￥{{calcTotal()}}</span>
                 </div>
@@ -140,11 +146,11 @@
             </div>
         </div>
         <div class="ks" v-if="!isPC&&cartlist.length&&kshow">
-            <div class="count fl">
+            <div class="count">
                 合计：
                 <span>￥{{calcTotal()}}</span>
             </div>
-            <div class="topay fr">
+            <div class="topay">
                 去结算
             </div>
         </div>
@@ -166,7 +172,7 @@ export default {
             srvlist: [],
             rglist: [],
             kshow: 0,
-            sah: window.screen.availHeight * 0.01,
+            sah: window.innerHeight * 0.01,
         }
     },
     created() {
@@ -174,13 +180,11 @@ export default {
         this.getCart();
         this.getRecmd();
     },
-    computed: {
-        isPC() {
-            return /Android|iPhone|iPod|BlackBerry|SymbianOS|webOS/i.test(navigator.userAgent) ? false : true;
-        },
-    },
     methods: {
         ...mapActions(['cartAction']),
+        back() {
+            window.history.back();
+        },
         dealSrc(src) {
             return /^\/[^/]/.test(src) ? this.pichost + src : src;
         },
@@ -189,6 +193,9 @@ export default {
         },
         dealUnit(u) {
             return u ? u.substr(u.indexOf(':') + 1).replace(/[?\s]+/g, '') : '元';
+        },
+        dealRegion(r) {
+            return r.toString().substr(r.indexOf('-') + 1)
         },
         clkMin(num) {
             return num = parseInt(num) < 2 ? 1 : parseInt(num) - 1;
@@ -207,15 +214,16 @@ export default {
             return this.fmtPrice(item.totalPrice);
         },
         getRegion() {
+            this.rglist = [];
             this.cartlist.forEach(function(ele) {
                 this.ajax.post(
                     '/xinda-api/provider/detail',
                     { id: ele.providerId }
                 ).then(res => {
                     if (res.data.status == 1) {
-                        this.rglist.push(res.data.data.regionName);
+                        this.rglist.push(this.dealRegion(res.data.data.regionName));
                     } else {
-                        this.$toast({ type: 'warning', message: res.data.msg });
+                        this.$toast(res.data.msg);
                     }
                 }).catch(res => {
                     console.log('Axios: ', res);
@@ -346,11 +354,9 @@ export default {
             if (!this.isPC) {
                 this.$messagebox.confirm('确定删除该产品吗?').then(action => {
                     this.delItem(item);
-                }).catch(() => {
-                    this.$toast({ type: 'info', message: '已取消删除' });
                 });
             } else {
-                this.$confirm('确定删除该产品吗?', '信息', {
+                this.$confirm('确定删除该产品吗?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning',
@@ -378,7 +384,7 @@ export default {
                 } else {
                     this.isPC
                         ? this.$message({ type: 'error', message: res.data.msg })
-                        :this.$toast(res.data.msg);
+                        : this.$toast(res.data.msg);
                 }
             }).catch(res => {
                 console.log('Axios: ', res);
@@ -661,13 +667,20 @@ a {
 
 .m-cart {
     .cartnum {
-        width: 95%;
+        width: 100%;
         height: .5rem;
-        padding-left: 5%;
         line-height: .5rem;
         color: #666;
         font-size: .16rem;
         background: #f6f6f6;
+        i {
+            margin-left: 5%;
+        }
+        i:last-child{
+            float: right;
+            margin-right: .3rem;
+            font-size: .27rem;
+        }
         span {
             color: red;
         }
@@ -705,9 +718,15 @@ a {
         margin-left: .16rem;
         border-bottom: 1px solid #dbdbdb;
     }
+    .itemcnt {
+        display: flex;
+        >div {
+            margin: 0 .05rem;
+        }
+    }
     .shopname {
         padding: .1rem 0;
-        font-size: .19rem;
+        font-size: .16rem;
         font-weight: 600;
         overflow: hidden;
         white-space: nowrap;
@@ -715,15 +734,14 @@ a {
     }
     .shoplogo {
         vertical-align: top;
-        width: 18%;
-        height: .6rem;
-        margin-left: 0;
+        width: .85rem;
+        height: .85rem;
         border: 1px solid #e3e3e3;
         text-align: center;
         img {
             width: 100%;
             vertical-align: top;
-            margin-top: 10%;
+            margin-top: 20%;
         }
         a {
             display: inline-block;
@@ -733,7 +751,7 @@ a {
     }
     .srvname {
         margin-bottom: .1rem;
-        font-size: .18rem;
+        font-size: .17rem;
         color: #111;
         overflow: hidden;
         white-space: nowrap;
@@ -742,7 +760,7 @@ a {
     .uprice {
         margin-bottom: .1rem;
         line-height: .25rem;
-        font-size: .1rem;
+        font-size: .12rem;
         color: #666;
         span {
             font-size: .18rem;
@@ -752,25 +770,32 @@ a {
     }
     .srv {
         vertical-align: top;
-        width: 38%;
+        width: 50%;
     }
     .del {
         vertical-align: top;
-        width: 24%;
-        font-size: .18rem;
+        width: 25%;
+        padding-right: 5px;
+        font-size: .15rem;
+
         color: red;
+        text-align: right;
         cursor: pointer;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
     .min,
     .pls {
         display: inline-block;
         vertical-align: top;
-        width: .25rem;
-        height: .25rem;
+        width: .3rem;
+        height: .27rem;
         background: #ededed;
         border: 1px solid #d8d8d8;
-        font-size: .15rem;
+        font-size: .2rem;
         font-weight: 600;
+        outline: 0;
         cursor: pointer;
     }
     .min {
@@ -782,26 +807,33 @@ a {
     .shnum {
         vertical-align: top;
         width: .35rem;
-        height: .23rem;
-        border: 1px solid #d8d8d8;
+        height: .25rem;
+        border: 0;
+        border-top: 1px solid #d8d8d8;
+        border-bottom: 1px solid #d8d8d8;
         text-align: center;
+        outline: 0;
     }
     .totalct {
         text-align: right;
-        margin: .1rem .4rem 2rem 0;
+        margin: .1rem .4rem 1rem 0;
         font-size: .16rem;
     }
 }
 
 .ks {
-    position: fixed;
-    bottom: .6rem;
+    z-index: 1;
+    display: flex;
+    position: fixed; // bottom: .6rem;
+    bottom: 0;
     width: 100%;
     height: .6rem;
     font-size: .2rem;
     background: #e5e5e5;
     .count {
+        width: 70%;
         padding: .15rem;
+        color: #111;
         span {
             color: red;
         }

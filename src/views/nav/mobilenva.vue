@@ -1,8 +1,8 @@
 <template>
     <div class="waibu" :style="'height:'+innerHeight+'px'">
         <div class="navleft">
-            <div class="mainnav" v-for="nav1 in firstlist" :key="nav1.id">
-                {{nav1.name}}
+            <div class="mainnav" :class="{sele:nav1[1].id==id}" v-for="nav1 in firstlist" :key="nav1[1].id" @click="changecatalog(nav1[1].id)">
+                {{nav1[1].name}}
             </div>
         </div>
         <div class="navright">
@@ -12,6 +12,9 @@
                 </div>
                 <div class="alllog" v-for="nav3 in nav2.itemList" :key="nav3.id" @click="gonewpage(id,nav2.code,nav3.id)">
                     {{nav3.name}}
+                    <div class="dayuhao">
+                        >
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,6 +24,10 @@
 <script>
 export default {
     created() {
+        this.$indicator.open();
+        if (this.$route.query.nid) {
+            this.id = this.$route.query.nid;
+        }
         this.getcatalog();
     },
     data() {
@@ -36,13 +43,25 @@ export default {
             this.ajax.post('/xinda-api/product/style/list').then((da) => {
                 console.log(da.data.data);
                 this.firstlist = da.data.data;
+                console.log(this.id);
                 this.secondlist = this.firstlist[this.id].itemList;
+                var ob = Object.entries(this.firstlist).sort(function(a, b) {
+                    return a[1].showOrder - b[1].showOrder;
+                });
+                console.log(ob);
+                this.firstlist = ob;
+                this.$indicator.close();
             }).catch((error) => {
                 console.error(error);
             });
         },
-        gonewpage:function(id,code,pid){
-            this.$router.push({path:'/slist',query:{id,code,pid}})
+        gonewpage: function(id, code, pid) {
+            this.$router.push({ path: '/slist', query: { id, code, pid } })
+        },
+        changecatalog: function(newId) {
+            this.$indicator.open('加载中...');
+            this.id = newId;
+            this.getcatalog();
         }
     }
 }
@@ -72,20 +91,39 @@ export default {
         width: 75%;
         font-size: .2rem;
         overflow-y: auto;
-        display: flex;
-        flex-wrap: wrap;
         .title {
             width: 100%;
-            height: .3rem;
-            line-height: .3rem;
+            height: .5rem;
+            line-height: .5rem;
             border-bottom: .01rem solid #ddd;
-        }
-        .alllog{
-            margin-left: .3rem;
+            padding-left: .1rem;
             box-sizing: border-box;
-            line-height: .3rem;
+        }
+        .alllog {
+            margin-left: .4rem;
+            box-sizing: border-box;
+            line-height: .4rem;
+            width: 75%;
             border-bottom: .01rem solid #ddd;
+            display: flex;
+            justify-content: space-between;
         }
     }
+}
+
+.sele {
+    background-color: #f2f2f2 !important;
+}
+.mint-indicator-wrapper {
+    width: 1rem;
+    height: 1rem;
+    z-index: 1;
+    position: absolute;
+}
+
+.mint-spinner-snake{
+    position: absolute;
+    top: 30%;
+    left: 30%;
 }
 </style>

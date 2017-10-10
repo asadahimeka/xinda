@@ -25,8 +25,8 @@
 export default {
     created() {
         this.$indicator.open();
-        if (this.$route.query.nid) {
-            this.id = this.$route.query.nid;
+        if (this.$route.query.id) {
+            this.id = this.$route.query.id;
         }
         this.getcatalog();
     },
@@ -41,14 +41,11 @@ export default {
     methods: {
         getcatalog: function() {
             this.ajax.post('/xinda-api/product/style/list').then((da) => {
-                // console.log(da.data.data);
                 this.firstlist = da.data.data;
-                // console.log(this.id);
                 this.secondlist = this.firstlist[this.id].itemList;
                 var ob = Object.entries(this.firstlist).sort(function(a, b) {
                     return a[1].showOrder - b[1].showOrder;
                 });
-                // console.log(ob);
                 this.firstlist = ob;
                 this.$indicator.close();
             }).catch((error) => {

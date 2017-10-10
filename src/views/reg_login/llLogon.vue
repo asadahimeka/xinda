@@ -1,6 +1,7 @@
 <template>
     <div class="logonFrame">
-        <div class="logoLineMobile" v-if="!isPC">
+        <div class="mobileBG" v-if="!isPC"></div>
+        <div class="logoLineMobile" v-if="!isPC" @click="backHistory">
             <div class="iconfont">
                 &#xe61f;
             </div>
@@ -52,10 +53,16 @@
                     <img src="../../../static/images/getRight.png">
                 </div>
             </div>
-            <el-alert :title="successMsg" type="success" show-icon :closable="false" class="success" v-if="successRe">
-            </el-alert>
-            <el-alert :title="failMsg" type="error" show-icon :closable="false" class="fail" v-if="failRe&&!successRe">
-            </el-alert>
+            <div v-if="isPC">
+                <el-alert :title="successMsg" type="success" show-icon :closable="false" class="success" v-if="successRe">
+                </el-alert>
+                <el-alert :title="failMsg" type="error" show-icon :closable="false" class="fail" v-if="failRe&&!successRe">
+                </el-alert>
+            </div>
+        </div>
+        <div class="noaccunts" v-if="!isPC">
+            <p>还没有信达帐号？</p>
+            <a href="#/Register">立即注册</a>
         </div>
     </div>
 </template>
@@ -107,6 +114,13 @@ export default {
             var testPhone = /^[1][3,4,5,7,8][0-9]{9}$/;
             if (!testPhone.test(this.phone)) {
                 this.failMsg = '手机号输入错误！';
+                if (!this.isPC) {
+                    this.$toast({
+                        message: this.failMsg,
+                        position: 'bottom',
+                        duration: 5000
+                    });
+                };
                 this.failRe = true;
                 this.F5();
                 return false;
@@ -120,6 +134,13 @@ export default {
                     this.ajax.post('/xinda-api/sso/login', logPar).then((reData) => {
                         if (reData.data.status == 1) {
                             this.successMsg = reData.data.msg;
+                            if (!this.isPC) {
+                                this.$toast({
+                                    message: this.successMsg,
+                                    position: 'bottom',
+                                    duration: 5000
+                                });
+                            };
                             this.successRe = true;
                             setTimeout(() => {
                                 this.exAction(1);
@@ -131,6 +152,13 @@ export default {
                             }, 1500);
                         } else {
                             this.failMsg = reData.data.msg;
+                            if (!this.isPC) {
+                                this.$toast({
+                                    message: this.failMsg,
+                                    position: 'bottom',
+                                    duration: 5000
+                                });
+                            };
                             this.failRe = true;
                             this.F5();
                         }
@@ -139,10 +167,20 @@ export default {
                     })
                 } else {
                     this.failMsg = '请输入密码或验证码！';
+                    if (!this.isPC) {
+                        this.$toast({
+                            message: this.failMsg,
+                            position: 'bottom',
+                            duration: 5000
+                        });
+                    };
                     this.failRe = true;
                     this.F5();
                 }
             }
+        },
+        backHistory:function(){
+            history.go(-1);
         }
     },
 
@@ -150,6 +188,30 @@ export default {
 </script>
 
 <style lang="less">
+.noaccunts {
+    position: fixed;
+    width: 100%;
+    height: .3rem;
+    bottom: .5rem;
+    left: 0;
+    background-color: rgb(49, 49, 49);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    p {
+        font-size: .1rem;
+        color: white;
+    }
+    a {
+        font-size: .1rem;
+        text-decoration: none;
+        color: white;
+        border-radius: .03rem;
+        background-color: rgb(78, 181, 186);
+        padding: .01rem .05rem;
+    }
+}
+
 .logonFrame {
     background-color: #f5f5f5;
     display: flex;
@@ -344,13 +406,15 @@ export default {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                font-size: .3rem;
             }
             .title {
-                font-size: .3rem;
+                font-size: .2rem;
             }
         }
         .mainBody {
             margin: 0;
+            background-color: #f2f2f2;
             .inLogon {
                 width: 100%;
                 padding: 0;
@@ -358,8 +422,8 @@ export default {
             .getPSD {
                 align-items: center;
                 a {
-                    height: .2rem;
-                    font-size: .2rem;
+                    height: .15rem;
+                    font-size: .15rem;
                     text-decoration: none;
                     color: black;
                     line-height: .2rem;

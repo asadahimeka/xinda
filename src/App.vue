@@ -39,7 +39,8 @@ export default {
 <style lang="less">
 //ElementUI
 // @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
-@import url("https://cdn.bootcss.com/element-ui/1.4.6/theme-default/index.css"); //Mint
+@import url("https://cdn.bootcss.com/element-ui/1.4.6/theme-default/index.css");
+//Mint
 // @import url("//unpkg.com/mint-ui/lib/style.css");
 @import url("https://cdn.bootcss.com/mint-ui/2.2.9/style.min.css");
 
@@ -109,9 +110,20 @@ select {
   -moz-osx-font-smoothing: grayscale;
 }
 
+[v-cloak] {
+  display: none;
+}
+
 @media screen and (max-width:767px) {
   html:root {
     font-size: 625%;
+  }
+  .mobileBG {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background-color: #f2f2f2;
+    z-index: -1;
   }
 }
 </style>

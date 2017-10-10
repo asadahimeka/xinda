@@ -94,7 +94,9 @@
             <div class="cartnum" v-if="cartlist.length">
                 <i class="el-icon-arrow-left" @click="back"></i>&nbsp;&nbsp; 购物车内共有
                 <span>{{cartlist.length}}</span>&nbsp;件商品
-                <a href="/#"><i class="iconfont">&#xe60e;</i></a>
+                <a href="/#">
+                    <i class="iconfont">&#xe60e;</i>
+                </a>
             </div>
             <div class="cartlist" v-if="cartlist.length">
                 <div class="cartitem" v-for="(item,index) in cartlist" :key="item.serviceId">
@@ -268,10 +270,12 @@ export default {
                         ? this.$message({ type: 'warning', message: res.data.msg })
                         : this.$toast(res.data.msg);
                     this.gfail01 = true;
+                    !this.isPC ? this.$indicator.close() : 0;
                 }
             }).catch(res => {
                 this.loading0 = false;
                 this.gfail01 = true;
+                !this.isPC ? this.$indicator.close() : 0;
                 console.log('Axios: ', res);
             });
         },
@@ -676,7 +680,7 @@ a {
         i {
             margin-left: 5%;
         }
-        i:last-child{
+        i:last-child {
             float: right;
             margin-right: .3rem;
             font-size: .27rem;

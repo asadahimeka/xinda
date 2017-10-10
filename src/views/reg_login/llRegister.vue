@@ -1,7 +1,7 @@
 <template>
     <div class="Register">
         <div class="mobileBG" v-if="!isPC"></div>
-        <div class="lineLogoMobile" v-if="!isPC">
+        <div class="lineLogoMobile" v-if="!isPC" @click="backHistory">
             <div class="iconfont">
                 &#xe61f;
             </div>
@@ -428,7 +428,11 @@ export default {
         //删除区元素
         deleteDistrict: function() {
             this.DistrictAll = [];
-        }
+        },
+        // 返回上一页
+        backHistory: function() {
+            history.go(-1);
+        },
     }
 }
 </script>
@@ -648,7 +652,7 @@ export default {
         align-items: center;
         background-color: #fff;
         position: relative;
-        .iconfont{
+        .iconfont {
             position: absolute;
             top: 0;
             left: 0;
@@ -659,7 +663,7 @@ export default {
             align-items: center;
             font-size: .3rem;
         }
-        p{
+        p {
             font-size: .3rem;
         }
     }

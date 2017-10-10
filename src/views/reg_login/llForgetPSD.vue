@@ -1,7 +1,7 @@
 <template>
     <div class="getPSDFrame">
-        <div class="mobileBG" v-if="!isphone"></div>
-        <div class="LineLogoPositionMobile" v-if="!isPC">
+        <div class="mobileBG" v-if="!isPC"></div>
+        <div class="LineLogoPositionMobile" v-if="!isPC" @click="backHistory">
             <div class="iconfont">
                 &#xe61f;
             </div>
@@ -199,6 +199,9 @@ export default {
             }).catch((error) => {
                 console.log('error', error);
             })
+        },
+        backHistory:function(){
+            history.go(-1);
         }
     }
 }

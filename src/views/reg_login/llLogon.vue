@@ -1,7 +1,7 @@
 <template>
     <div class="logonFrame">
         <div class="mobileBG" v-if="!isPC"></div>
-        <div class="logoLineMobile" v-if="!isPC">
+        <div class="logoLineMobile" v-if="!isPC" @click="backHistory">
             <div class="iconfont">
                 &#xe61f;
             </div>
@@ -178,6 +178,9 @@ export default {
                     this.F5();
                 }
             }
+        },
+        backHistory:function(){
+            history.go(-1);
         }
     },
 
@@ -403,6 +406,7 @@ export default {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                font-size: .3rem;
             }
             .title {
                 font-size: .2rem;

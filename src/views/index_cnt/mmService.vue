@@ -144,6 +144,7 @@ export default {
         transition: all .3s ease-in-out;
         &:hover {
             box-shadow: 0 0 5px #2693d4;
+            border: 1px solid #2693d4;
         }
         &>div {
             margin: 5px 0;

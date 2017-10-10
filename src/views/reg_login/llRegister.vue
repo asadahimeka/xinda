@@ -264,7 +264,7 @@ export default {
                     this.errorShow = true;
                 }
             }).catch((error) => {
-                console.log(error);
+                console.error(error);
             })
         },
         //👇👇👇👇👇👇👇👇👇👇👇👇省市区三级联动 纯手写源生js👇👇👇👇👇👇👇👇👇👇👇👇👇

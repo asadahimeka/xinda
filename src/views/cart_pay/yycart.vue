@@ -152,7 +152,7 @@
                 合计：
                 <span>￥{{calcTotal()}}</span>
             </div>
-            <div class="topay">
+            <div class="topay" @click="submit">
                 去结算
             </div>
         </div>
@@ -180,7 +180,7 @@ export default {
     created() {
         window.scrollTo(0, 0);
         this.getCart();
-        this.getRecmd();
+        this.isPC ? this.getRecmd() : 0;
     },
     methods: {
         ...mapActions(['cartAction']),
@@ -317,18 +317,34 @@ export default {
                     }
                 ).then(res => {
                     if (res.data.status == -1) {
-                        this.$message({ type: 'error', message: res.data.msg, duration: 1000 });
+                        if (this.isPC) {
+                            this.$message({ type: 'error', message: res.data.msg, duration: 1000 });
+                        } else {
+                            this.$toast(res.data.msg);
+                        }
                     } else if (i == this.cartlist.length - 1) {
                         this.ajax.post(
                             '/xinda-api/cart/submit'
                         ).then(res => {
                             if (res.data.status == -1) {
-                                // TODO
-                                this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
+                                if (this.isPC) {
+                                    this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
+                                }
+                                else {
+                                    this.$messagebox.alert('未登录，请先登录').then(action => {
+                                        this.$toast({ message: '跳转至登录界面', duration: 1000 });
+                                        this.$router.push({ path: '/Logon', query: { redirect: this.$route.fullPath } });
+                                    });
+                                }
                             } else if (res.data.status == 1) {
-                                //TODO
                                 this.cartAction(0);
-                                this.$router.push({ path: '/pay', query: { bno: res.data.data } })
+                                if (this.isPC) {
+                                    this.$router.push({ path: '/pay', query: { bno: res.data.data } })
+                                } else {
+                                    //TODO
+                                    this.$toast('目前仅支持微信支付,请在微信浏览器打开');
+                                    this.$router.push('/MemberCen');
+                                }
                             }
                         }).catch(res => {
                             console.log('Axios: ', res);

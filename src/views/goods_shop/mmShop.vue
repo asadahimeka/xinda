@@ -35,7 +35,6 @@
                         <a :href='"#/shdetail?sid="+content.id'>查看详情>>></a>
                     </div>
                     <!-- 分页 -->
-                    <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
                 </el-tab-pane>
                 <el-tab-pane label="客服" name="second">
                     <div class="servicebox">
@@ -49,6 +48,8 @@
                     <div class="license"><img :src="businessImg(shopinfo.businessCertPath)" alt="暂无信息"></div>
                 </el-tab-pane>
             </el-tabs>
+            <v-page v-show="pageshow" :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
+
         </div>
     </div>
 </template>
@@ -56,17 +57,14 @@
 <script>
 export default {
     created() {
-        // console.log(this.$route.query.id)
         var canshu = {
             id: this.$route.query.id,
-
         };
         this.ajax.post('xinda-api/provider/detail', canshu, {}).then((data) => {
             this.shopinfo = data.data.data;
-            console.log('axios data', this.shopinfo);
             this.getServCont();
         }).catch((error) => {
-            console.log('axios error', error);
+            console.error('axios error', error);
         });
 
     },
@@ -79,6 +77,7 @@ export default {
             limit: 6,
             cur: 1,
             contentList: [],
+            pageshow: true,
         };
     },
     methods: {
@@ -89,7 +88,7 @@ export default {
             return businessCertPath.substr(0, 1) == '/' ? 'http://115.182.107.203:8088/xinda/pic' + businessCertPath : businessCertPath;
         },
         handleClick(tab, event) {
-            // console.log(tab, event);
+            this.pageshow = tab.index != 0 ? false : true;
         },
         pageChange(curPage) {
             this.cur = curPage;
@@ -305,11 +304,12 @@ export default {
     } // 分页
     .page-bar {
         position: absolute; // width: fit-content;
-        top: 530px;
+        top: 600px;
         left: 220px;
     }
 }
-.el-tabs__content{
+
+.el-tabs__content {
     overflow: visible;
 }
 </style>

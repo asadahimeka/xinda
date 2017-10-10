@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <Loading v-if="load"></Loading>
     <Top v-if="isPC"></Top>
     <router-view></router-view>
     <Bottom></Bottom>
@@ -11,20 +10,13 @@
 import Top from './components/llpublicHeader'
 import Contents from './views/llContent'
 import Bottom from './components/llpublicFooter'
-import Loading from './components/llLoading'
 
 export default {
   name: 'app',
-  created() {
-    window.onload = () => {
-      this.load = false;
-    }
-  },
   components: {
     Top,
     Bottom,
     Contents,
-    Loading
   },
   data() {
     return {
@@ -37,15 +29,19 @@ export default {
         this.$router.afterEach((to, from, next) => { window.scrollTo(0, 0); });
       }
     }
-  }
+  },
+  mounted() {
+    this.$nextTick(function() { setTimeout(() => document.getElementById("loading").style.display = 'none', 0); });
+  },
 }
 </script>
 
 <style lang="less">
 //ElementUI
-@import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
-//Mint
-@import url("//unpkg.com/mint-ui/lib/style.css");
+// @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
+@import url("https://cdn.bootcss.com/element-ui/1.4.6/theme-default/index.css"); //Mint
+// @import url("//unpkg.com/mint-ui/lib/style.css");
+@import url("https://cdn.bootcss.com/mint-ui/2.2.9/style.min.css");
 
 .el-message {
   top: 25%;
@@ -78,14 +74,29 @@ select {
   outline: none;
 }
 
+.clearfix {
+    *zoom: 1;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    line-height: 0;
+    content: "";
+}
+
+.clearfix:after {
+    clear: both;
+}
+
 @font-face {
   font-family: 'iconfont';
   /* project id 414122 */
-  src: url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.eot');
-  src: url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.woff') format('woff'),
-  url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_414122_8kqvez3ktep14i.eot');
+  src: url('//at.alicdn.com/t/font_414122_8kqvez3ktep14i.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_414122_8kqvez3ktep14i.woff') format('woff'),
+  url('//at.alicdn.com/t/font_414122_8kqvez3ktep14i.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_414122_8kqvez3ktep14i.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -98,7 +109,7 @@ select {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:767px) {
   html:root {
     font-size: 625%;
   }

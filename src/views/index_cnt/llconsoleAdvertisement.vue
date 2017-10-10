@@ -2,9 +2,7 @@
     <div>
         <div class="phead" v-if="!isPC">
             <div class="adrs">
-                <div class="iconfont" v-html="state" @click="chad">
-
-                </div>
+                <div class="iconfont" v-html="state" @click="chad"></div>
                 <div class="address" @click="chad">
                     {{address}}
                 </div>
@@ -13,7 +11,7 @@
                 </div>
             </div>
             <div class="logo">
-                <img src="../../assets/logo.png" alt="信达手机端">
+                <img src="../../assets/logo.png" alt="logo">
                 <div class="title">
                     信达
                 </div>
@@ -78,10 +76,10 @@
                 </div>
             </a>
         </div>
-        <!-- <xIndex></xIndex>
-            <mmProperty></mmProperty>
-            <mmService></mmService>
-            <mmPartners></mmPartners> -->
+        <xIndex></xIndex>
+        <!-- <mmProperty></mmProperty>
+        <mmService></mmService>
+        <mmPartners></mmPartners> -->
     </div>
 </template>
 
@@ -118,7 +116,7 @@ export default {
                 this.citylist = es.data.data;
                 this.sh = true;
             }).catch((error) => {
-                console.log(error);
+                console.error(error);
             });
         },
         chcy(e) {
@@ -147,7 +145,8 @@ export default {
             font-size: .01rem;
         }
         .address {
-            font-size: .2rem;
+            padding-left: .05rem;
+            font-size: .16rem;
         }
         .alad {
             position: absolute;
@@ -189,7 +188,7 @@ export default {
         justify-content: center;
         align-items: center;
         img {
-            height: 100%;
+            height: 90%;
         }
         .title {
             font-size: .24rem;

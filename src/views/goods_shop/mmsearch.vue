@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="isPC">
         <!-- 右侧栏 -->
         <div class="sidebar">
             <div class="icons cup"></div>

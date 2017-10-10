@@ -97,7 +97,7 @@ const router = new Router({
                     path: 'MemberCen',
                     component: MemberCen,
                     meta: {
-                        pageTitle:'信达_会员中心',
+                        pageTitle: '信达_会员中心',
                         requireAuth: true,  // 需要登录
                     },
                     children: [
@@ -147,10 +147,10 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-    typeof to.meta.pageTitle !== undefined && (document.title = to.meta.pageTitle);
+    to.meta.pageTitle ? document.title = to.meta.pageTitle : 0;
     if (to.matched.some(r => r.meta.requireAuth)) {
         axios.post('/xinda-api/sso/login-info').then((userMsg) => {
-            if (userMsg.data.status == 1 || !this.isPC) {
+            if (userMsg.data.status == 1) {
                 next();
             } else {
                 next({ path: '/Logon', query: { redirect: to.fullPath } });

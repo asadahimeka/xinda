@@ -65,14 +65,13 @@ import MD5 from 'js-md5';
 import { mapActions } from 'vuex';
 export default {
     created() {
-        console.log(this.$route);
         this.ajax.post('/xinda-api/sso/login-info').then((user) => {
             if (user.data.status == 1) {
                 this.$message({ type: 'warning', message: '您已登录！', duration: 1000 });
                 this.$router.push('/');
             }
         }).catch((error) => {
-            console.log(error);
+            console.error(error);
         })
         onkeydown = (e) => {
             if (e.keyCode == 13) {
@@ -136,7 +135,7 @@ export default {
                             this.F5();
                         }
                     }).catch((error) => {
-                        console.log(error);
+                        console.error(error);
                     })
                 } else {
                     this.failMsg = '请输入密码或验证码！';

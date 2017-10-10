@@ -69,7 +69,7 @@
                     知识产权
                 </div>
             </a>
-            <a class="chnav" href="/#/MobileNav">
+            <a class="chnav" href="/#/MobileNav?id=2e110f0df53243c197fede52fba8e5d0">
                 <div class="iconfont wb7">
                     &#xe62f;
                 </div>

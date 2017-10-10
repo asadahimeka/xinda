@@ -1,6 +1,14 @@
 <template>
     <div class="getPSDFrame">
-        <div class="LineLogoPosition">
+        <div class="LineLogoPositionMobile" v-if="!isPC">
+            <div class="iconfont">
+                &#xe61f;
+            </div>
+            <div class="title">
+                忘记密码
+            </div>
+        </div>
+        <div class="LineLogoPosition" v-if="isPC">
             <div class="LineLogo">
                 <a href="/" class="logo">
                     <img src="../../../static/images/QQ图片20170517185752.png" alt="">
@@ -36,10 +44,10 @@
                     确认修改
                 </button>
             </div>
-            <div class="setget">
+            <div class="setget" v-if="isPC">
                 <!-- 这是一个分隔线 -->
             </div>
-            <div class="bodyRight">
+            <div class="bodyRight" v-if="isPC">
                 <div class="rememberPSD">
                     想起密码来了？
                 </div>
@@ -288,6 +296,7 @@ export default {
                 background-color: black;
                 margin-top: 19px;
                 margin-right: 15px;
+                display: flex;
                 img {
                     width: 100%;
                     height: 100%;
@@ -335,6 +344,45 @@ export default {
             }
             .getRight {
                 margin-top: 15px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:768px) {
+    .getPSDFrame {
+        width: 100%;
+        background-color: #fff;
+        position: relative;
+        .LineLogoPositionMobile {
+            width: 100%;
+            border-bottom: .01rem solid #b1b1b1;
+            height: .5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .iconfont {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: .5rem;
+                height: .5rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: .3rem;
+            }
+            .title {
+                font-size: .2rem;
+            }
+        }
+        .mainBody {
+            width: 100%;
+            margin: 0;
+            background-color: #f2f2f2;
+            .bodyLeft {
+                width: 100%;
+                padding: 0;
             }
         }
     }

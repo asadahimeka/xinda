@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Loading v-if="load"></Loading>
     <Top v-if="isPC"></Top>
     <router-view></router-view>
     <Bottom></Bottom>
@@ -10,13 +11,25 @@
 import Top from './components/llpublicHeader'
 import Contents from './views/llContent'
 import Bottom from './components/llpublicFooter'
+import Loading from './components/llLoading'
 
 export default {
   name: 'app',
+  created() {
+    window.onload = () => {
+      this.load = false;
+    }
+  },
   components: {
     Top,
     Bottom,
-    Contents
+    Contents,
+    Loading
+  },
+  data() {
+    return {
+      load: true
+    }
   },
   watch: {
     $route(val) {
@@ -66,13 +79,15 @@ select {
 }
 
 @font-face {
-  font-family: 'iconfont';  /* project id 414122 */
-  src: url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.eot');
-  src: url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.woff') format('woff'),
-  url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.svg#iconfont') format('svg');
+  font-family: 'iconfont';
+  /* project id 414122 */
+  src: url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.eot');
+  src: url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.woff') format('woff'),
+  url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_414122_ne2cpk1q25wxw29.svg#iconfont') format('svg');
 }
+
 .iconfont {
   vertical-align: middle;
   font-family: "iconfont" !important;
@@ -83,7 +98,7 @@ select {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media screen and (max-width:767px) {
+@media screen and (max-width:768px) {
   html:root {
     font-size: 625%;
   }

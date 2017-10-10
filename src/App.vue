@@ -43,9 +43,11 @@ export default {
 
 <style lang="less">
 //ElementUI
-@import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
+// @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
+@import url("https://cdn.bootcss.com/element-ui/1.4.6/theme-default/index.css");
 //Mint
-@import url("//unpkg.com/mint-ui/lib/style.css");
+// @import url("//unpkg.com/mint-ui/lib/style.css");
+@import url("https://cdn.bootcss.com/mint-ui/2.2.9/style.min.css");
 
 .el-message {
   top: 25%;
@@ -79,7 +81,8 @@ select {
 }
 
 @font-face {
-  font-family: 'iconfont';  /* project id 414122 */
+  font-family: 'iconfont';
+  /* project id 414122 */
   src: url('//at.alicdn.com/t/font_414122_8kqvez3ktep14i.eot');
   src: url('//at.alicdn.com/t/font_414122_8kqvez3ktep14i.eot?#iefix') format('embedded-opentype'),
   url('//at.alicdn.com/t/font_414122_8kqvez3ktep14i.woff') format('woff'),
@@ -105,7 +108,7 @@ select {
   html:root {
     font-size: 625%;
   }
-  .mobileBG{
+  .mobileBG {
     width: 100%;
     height: 100vh;
     position: fixed;

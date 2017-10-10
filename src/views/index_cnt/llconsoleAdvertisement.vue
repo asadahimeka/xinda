@@ -21,7 +21,7 @@
         </div>
         <swipeimg></swipeimg>
         <div class="nav" v-if="!isPC">
-            <a class="chnav" href="javascript:void(0);">
+            <a class="chnav" href="/#/MobileNav?id=2e110f0df53243c197fede52fba8e5d0">
                 <div class="iconfont wb1">
                     &#xe625;
                 </div>
@@ -29,7 +29,7 @@
                     财税服务
                 </div>
             </a>
-            <a class="chnav" href="javascript:void(0);">
+            <a class="chnav" href="/#/MobileNav?id=5af629246fa34f6f8d49758c6a7b25f1">
                 <div class="iconfont wb2">
                     &#xe647;
                 </div>
@@ -37,7 +37,7 @@
                     开公司
                 </div>
             </a>
-            <a class="chnav" href="javascript:void(0);">
+            <a class="chnav" href="/#/MobileNav?id=5af629246fa34f6f8d49758c6a7b25f1">
                 <div class="iconfont wb3">
                     &#xe607;
                 </div>
@@ -45,7 +45,7 @@
                     公司变更
                 </div>
             </a>
-            <a class="chnav" href="javascript:void(0);">
+            <a class="chnav" href="/#/MobileNav?id=cc7eb9bbd40f4b0e9f31c8cbcb903a59">
                 <div class="iconfont wb4">
                     &#xe6b4;
                 </div>
@@ -53,7 +53,7 @@
                     个人社保
                 </div>
             </a>
-            <a class="chnav" href="javascript:void(0);">
+            <a class="chnav" href="/#/MobileNav?id=cc7eb9bbd40f4b0e9f31c8cbcb903a59">
                 <div class="iconfont wb5">
                     &#xe71d;
                 </div>
@@ -61,7 +61,7 @@
                     公司社保
                 </div>
             </a>
-            <a class="chnav" href="javascript:void(0);">
+            <a class="chnav" href="/#/MobileNav?id=1eff122d06604fc1aadf9e7acefba21a">
                 <div class="iconfont wb6">
                     &#xe67a;
                 </div>

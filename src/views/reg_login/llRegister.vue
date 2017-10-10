@@ -12,10 +12,13 @@
                 <div class="wel">
                     欢迎注册
                 </div>
-                <el-alert class="errorEl" :title="errormsg" type="error" :closable="false" show-icon v-if="errorShow">
-                </el-alert>
-                <el-alert class="successEl" :title="successmsg" type="success" :closable="false" show-icon v-if="successShow">
-                </el-alert>
+                <div v-if="isPC">
+                    <el-alert class="errorEl" :title="errormsg" type="error" :closable="false" show-icon v-if="errorShow">
+                    </el-alert>
+                    <el-alert class="successEl" :title="successmsg" type="success" :closable="false" show-icon v-if="successShow">
+                    </el-alert>
+                </div>
+
             </div>
         </div>
         <div class="mainBody">

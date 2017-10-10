@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="mainBody">
-            <div class="mes">
+            <div class="mes" v-if="isPC">
                 <el-alert :title="stitle" type="success" :closable="false" v-if="stitle">
                 </el-alert>
                 <el-alert :title="etitle" type="error" :closable="false" v-if="etitle">

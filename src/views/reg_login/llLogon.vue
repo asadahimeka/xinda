@@ -52,10 +52,15 @@
                     <img src="../../../static/images/getRight.png">
                 </div>
             </div>
-            <el-alert :title="successMsg" type="success" show-icon :closable="false" class="success" v-if="successRe">
-            </el-alert>
-            <el-alert :title="failMsg" type="error" show-icon :closable="false" class="fail" v-if="failRe&&!successRe">
-            </el-alert>
+            <div v-if="isPC">
+                <el-alert :title="successMsg" type="success" show-icon :closable="false" class="success" v-if="successRe">
+                </el-alert>
+                <el-alert :title="failMsg" type="error" show-icon :closable="false" class="fail" v-if="failRe&&!successRe">
+                </el-alert>
+            </div>
+            <div v-if="!isPC">
+
+            </div>
         </div>
     </div>
 </template>

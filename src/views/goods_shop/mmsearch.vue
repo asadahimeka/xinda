@@ -16,7 +16,7 @@
         <div class="content">
             <!-- 产品列表 -->
             <div v-if="ispr==0">
-                <div class="wrap">
+                <div class="wrap" v-loading="loading">
                     <div class="listheader">
                         <ul v-for="(sort,i) in Sort" :key="i">
                             <li>
@@ -105,6 +105,7 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
     data() {
         return {
+            loading: true,
             sorti: 0,
             Sort: [{
                 sort: '',
@@ -157,9 +158,11 @@ export default {
             this.ispr = this.$route.query.ispr;
             if (this.ispr == 0) {
                 this.productData.searchName = this.$route.query.sn
+                this.loading = true;
                 this.getProducts();
             } else if (this.ispr == 1) {
                 this.providerData.searchName = this.$route.query.sn
+                this.loading = true;
                 this.getProviders();
             }
         },
@@ -172,6 +175,7 @@ export default {
             this.ajax.post('xinda-api/product/package/search-grid', this.productData, {}).then((data) => {
                 this.products = data.data.data;
                 this.pageSize = data.data.pageSize;
+                this.loading = false;
                 // console.log(data);
                 // console.log('产品:', this.products);
             }).catch((error) => {
@@ -183,6 +187,7 @@ export default {
                 // console.log(data);
                 this.providers = data.data.data;
                 this.pageSize = data.data.pageSize;
+                this.loading = false;
                 // console.log('服务商:', this.providers);
             }).catch((error) => {
                 console.log('axios error', error);

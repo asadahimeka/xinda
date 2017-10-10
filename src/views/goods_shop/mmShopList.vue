@@ -152,9 +152,10 @@ export default {
             console.log(data);
             if (data) {
                 this.ajdata.regionId = data.area.code;
+                console.log(this.ajdata.regionId);
                 this.loading = true;
                 this.getShop();
-            } else {
+            }else {
                 console.log('VDistpicker Error');
             }
         },

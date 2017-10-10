@@ -81,4 +81,11 @@ select {
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@media screen and (max-width: 768px){
+  html:root {
+    font-size: 625%;
+  }
+}
+
 </style>

@@ -1,57 +1,59 @@
 <template>
     <div class="publicheader">
-        <div class="exitMessage">
-        </div>
-        <div class="headerframe">
-            <!-- <div class="header unLog" v-if="!getUserName"> -->
-            <div class="header unLog" v-if="!getExUser">
-                <div class="headerleft">
-                    <div class="wel">欢迎来到信达！</div>
-                    <a href="javascript:;" class="login" @click="toLogin">登录</a>
-                    <a href="/#/Register" class="register">快速注册</a>
-                </div>
-                <div class="headerright">
-                    <div class="cart">
-                        <a href="/#/shcart">
-                            <i class="iconcart">&#xe604;</i>
-                        </a>
-                        <a href="/#/shcart">
-                            <!-- 点击下面的a标签进入购物车 -->
-                            <p>&nbsp;购物车
-                                <span>{{getCartnum}}</span>&nbsp;件</p>
-                        </a>
-                    </div>
-                    <a href="#/shoplist">服务商入口</a>
-                </div>
+        <div class="computer">
+            <div class="exitMessage">
             </div>
-            <!-- <div class="header unLog" v-if="getUserName"> -->
-            <div class="header enLog" v-if="getExUser">
-                <div class="headerleft">
-                    <a href="#/MemberCen">
-                        {{getUserName}}
-                    </a>
-                    <p>欢迎来到信达!</p>
-                    <a href="javascript:void(0);" @click="exit">
-                        【退出】
-                    </a>
+            <div class="headerframe">
+                <!-- <div class="header unLog" v-if="!getUserName"> -->
+                <div class="header unLog" v-if="!getExUser">
+                    <div class="headerleft">
+                        <div class="wel">欢迎来到信达！</div>
+                        <a href="javascript:;" class="login" @click="toLogin">登录</a>
+                        <a href="/#/Register" class="register">快速注册</a>
+                    </div>
+                    <div class="headerright">
+                        <div class="cart">
+                            <a href="/#/shcart">
+                                <i class="iconcart">&#xe604;</i>
+                            </a>
+                            <a href="/#/shcart">
+                                <!-- 点击下面的a标签进入购物车 -->
+                                <p>&nbsp;购物车
+                                    <span>{{getCartnum}}</span>&nbsp;件</p>
+                            </a>
+                        </div>
+                        <a href="#/shoplist">服务商入口</a>
+                    </div>
                 </div>
-                <div class="headerright">
-                    <div class="cart">
-                        <a href="/#/shcart">
-                            <i class="iconcart">&#xe604;</i>
+                <!-- <div class="header unLog" v-if="getUserName"> -->
+                <div class="header enLog" v-if="getExUser">
+                    <div class="headerleft">
+                        <a href="#/MemberCen">
+                            {{getUserName}}
                         </a>
-                        <a href="/#/shcart">
-                            <p>&nbsp;购物车
-                                <span>{{getCartnum}}</span>&nbsp;件</p>
+                        <p>欢迎来到信达!</p>
+                        <a href="javascript:void(0);" @click="exit">
+                            【退出】
                         </a>
                     </div>
-                    <div class="myOrder">
-                        <i class="iconOrder">
-                            &#xe698;
-                        </i>
-                        <a href="#/MemberCen">我的订单</a>
+                    <div class="headerright">
+                        <div class="cart">
+                            <a href="/#/shcart">
+                                <i class="iconcart">&#xe604;</i>
+                            </a>
+                            <a href="/#/shcart">
+                                <p>&nbsp;购物车
+                                    <span>{{getCartnum}}</span>&nbsp;件</p>
+                            </a>
+                        </div>
+                        <div class="myOrder">
+                            <i class="iconOrder">
+                                &#xe698;
+                            </i>
+                            <a href="#/MemberCen">我的订单</a>
+                        </div>
+                        <a href="#/shoplist">服务商入口</a>
                     </div>
-                    <a href="#/shoplist">服务商入口</a>
                 </div>
             </div>
         </div>
@@ -150,6 +152,7 @@ a {
         height: 100%;
         display: flex;
         justify-content: space-between;
+        background-color: #f2f2f2;
         .headerleft {
             height: 35px;
             display: flex;
@@ -222,9 +225,18 @@ a {
     }
 }
 
+.phonehead{
+    width: 100%;
+    height: 1rem;
+    display: flex;
 
+}
 
 
 //下面是手机端的页面样式
-@media screen and (max-width:1200px) {}
+@media screen and (max-width:1200px) {
+    .headerframe{
+        width: 1200px;
+    }
+}
 </style>

@@ -8,6 +8,8 @@ import JoinUs from '../views/llJoinUs.vue'
 import Logon from '../views/reg_login/llLogon.vue'
 import Register from '../views/reg_login/llRegister.vue'
 import ForPSD from '../views/reg_login/llForgetPSD.vue'
+import MobileNav from '../views/nav/mobilenva.vue'
+
 
 import Shcart from '../views/cart_pay/yycart.vue'
 import Pay from '../views/cart_pay/yypay.vue'
@@ -27,6 +29,7 @@ import MemberCen from '../views/member_center/ffmember-center.vue'
 import Order from '../views/member_center/ffmember-first.vue'
 import Evaluate from '../views/member_center/ffmember-second.vue'
 import Uerset from '../views/member_center/ffmember-third.vue'
+
 
 Vue.use(Router);
 
@@ -98,6 +101,9 @@ const router = new Router({
               component: Uerset
             }
           ]
+        }, {
+          path: 'MobileNav',
+          component: MobileNav
         }
       ]
     }, {//登录页面

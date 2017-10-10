@@ -2,7 +2,7 @@
   <div id="app">
     <Top v-if="isPC"></Top>
     <router-view></router-view>
-    <Bottom v-if="isPC"></Bottom>
+    <Bottom></Bottom>
   </div>
 </template>
 
@@ -10,6 +10,7 @@
 import Top from './components/llpublicHeader'
 import Contents from './views/llContent'
 import Bottom from './components/llpublicFooter'
+
 export default {
   name: 'app',
   components: {
@@ -65,15 +66,13 @@ select {
 }
 
 @font-face {
-  font-family: 'iconfont';
-  /* project id 414122 */
+  font-family: 'iconfont';  /* project id 414122 */
   src: url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.eot');
   src: url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.eot?#iefix') format('embedded-opentype'),
   url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.woff') format('woff'),
   url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.ttf') format('truetype'),
   url('//at.alicdn.com/t/font_414122_utqlbkwn7d12lnmi.svg#iconfont') format('svg');
 }
-
 .iconfont {
   vertical-align: middle;
   font-family: "iconfont" !important;

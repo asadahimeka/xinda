@@ -1,0 +1,219 @@
+<template>
+<div>
+    <!-- WEB端 -->
+    <div class="shoplist" v-if="!isPC">
+        <div class="Shopboxtitle">
+            <ul >
+                <li v-for="(item,i) in shopSort" :key="i">
+                    <a :class="{active:i==sori}" @click="sorc(i,item.sort)">{{item.name}}</a>
+                </li>
+            </ul>
+        </div>
+        <!-- 内容区 -->
+        <div class="Shopboxbody" v-loading="loading">
+            <template v-for="info in shopinfo">
+                <div class="shopBox" :key="info.id">
+                    <div class="boxleft" @click="enter(info.id)">
+                        <img :src="imgurl(info.providerImg)">
+                    </div>
+                    <div class="boxright">
+                        <div @click="enter(info.id)">{{info.providerName}}</div>
+                        <div>{{info.regionName}}</div>
+                        <div>累计服务客户次数:<span>{{info.orderNum}}</span>&nbsp;好评率:<span>{{rate(info.goodJudge,info.totalJudge)}}</span></div>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+        <!-- 分页 -->
+        <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
+
+    </div>
+   
+</div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            loading: true,
+            shopinfo: [],
+            isActive: false,
+            shopSort: [{
+                sort: 1,
+                name: '默认排序',
+            }, {
+                sort: 3,
+                name: '销量',
+            },
+            ],
+            ajdata: {
+                start: 0,
+                limit: 8,
+                sort: '',
+            },
+            sori: 0,
+            cur: 1,
+            pageSize: 0,
+        }
+    },
+    methods: {
+        pageChange(curPage) {
+            this.cur = curPage;
+            this.ajdata.start = (curPage - 1) * this.ajdata.limit;
+            this.loading = true;
+            this.getShop();
+        },
+        getShop() {
+            this.ajax.post('xinda-api/provider/grid', this.ajdata, {}).then((data) => {
+                this.shopinfo = data.data.data;
+                // console.log(this.shopinfo);
+                this.pageSize = data.data.pageSize;
+                this.loading = false;
+
+            }).catch((error) => {
+                console.log('axios error', error);
+            });
+        },
+        rate(goodJudge, totalJudge) {
+            var rate;
+            totalJudge == 0 ? rate = '暂无评价' : rate = Math.round(goodJudge / totalJudge * 10000) / 100 + "%";
+            return rate;
+
+        },
+        enter(id) {
+            this.$router.push({
+                path: '/shop',
+                query: { id },
+            })
+        },
+        imgurl(providerImg) {
+            var imgurl;
+            imgurl = providerImg.substr(0, 1) == '/' ? 'http://115.182.107.203:8088/xinda/pic' + providerImg : providerImg;
+            return imgurl;
+        },
+        sorc(i, sort) {
+            this.sori = i;
+            this.ajdata.sort = sort;
+            this.getShop();
+        },
+    },
+    created() {
+        this.getShop();
+    },
+}
+</script>
+
+
+<style lang="less" scoped>
+ // 内容区
+.Shopboxtitle {
+    text-align: center;
+    font-size: .18rem;
+
+    ul {
+        margin: .3rem auto;
+        width: 50%;
+    }
+
+    li {
+        float: left;
+        line-height: .4rem;
+        
+        // border-top-left-radius: .1rem;
+        // border-bottom-left-radius: .1rem;
+
+        a {
+            display: inline-block;
+            width: 1rem;
+            // height: 100%;
+            color: #000;
+            border: 1px solid #ccc;
+        }
+        .active {
+            color: #fff;
+            background: #2594d4;
+            // border-top-left-radius: .1rem;
+            // border-bottom-left-radius: .1rem;
+            border: 1px solid #2594d4;
+            cursor: pointer;
+        }
+    }
+}
+
+.Shopboxbody {
+    overflow: hidden;
+    margin: 0 auto;
+    width: 90%;
+
+    .shopBox {
+        padding: .2rem 0;
+        border-bottom: 1px solid #ccc;
+        overflow:hidden;
+        font-size: .14rem;
+
+        .boxleft {
+            float: left;
+            margin-right: .2rem;
+            width: 20%;
+            line-height: .7rem;
+            height: 0.7rem;
+            text-align: center;
+            vertical-align:middle;
+            border: 1px solid #ccc;
+
+            img {
+                max-width: 100%;
+                vertical-align: middle;
+            }
+            
+        }
+        .boxright {
+            position: relative;
+            float: left;
+            text-align: left;
+
+            div {
+                margin-bottom: .05rem;
+            }
+            & > :nth-child(1) {
+                font-size: .16rem;
+                font-weight: 700;
+            }
+            span {
+                color: #F00;
+            }
+        }
+    }
+}
+
+// 提示框
+.none {
+    width: 1200px;
+    height: 200px;
+    padding-top: 100px;
+    text-align: center;
+}
+
+.el-alert {
+    width: 500px;
+    height: 40px;
+    margin: 0 auto;
+    line-height: 40px;
+
+    .el-alert__title {
+        font-size: 16px;
+    }
+}
+
+.el-alert--info {
+    background-color: #2594d4;
+} // 分页
+.page-bar {
+    margin: 10px auto;
+    width: fit-content;
+}
+
+
+</style>

@@ -1,5 +1,7 @@
 <template>
-    <div class="shoplist container">
+<div>
+    <!-- PC端 -->
+    <div class="shoplist container" v-if="isPC">
         <!-- 面包屑导航 -->
         <div class="Breadcrumb">
             <el-breadcrumb separator="/">
@@ -68,6 +70,8 @@
         <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
 
     </div>
+    
+</div>
 </template>
 
 <script>
@@ -151,6 +155,7 @@ export default {
         onSelected(data) {
             if (data) {
                 this.ajdata.regionId = data.area.code;
+                console.log(this.ajdata.regionId);
                 this.loading = true;
                 this.getShop();
             } else {
@@ -279,6 +284,7 @@ export default {
         }
         a:hover,
         .active {
+            
             color: #fff;
             background: #2594d4;
         }

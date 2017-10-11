@@ -32,7 +32,7 @@
                     主页
                 </div>
             </div>
-            <div :class="{acta:$route.path=='/shoplist'}" @click="shop">
+            <div :class="{acta:$route.path=='/shoplistweb'}" @click="shop">
                 <div class="iconfont">
                     &#xe605;
                 </div>
@@ -79,7 +79,7 @@ export default {
             this.$router.push('/');
         },
         shop() {
-            this.$router.push('/shoplist')
+            this.$router.push('/shoplistweb')
         },
         cart() {
             this.$router.push('/shcart')

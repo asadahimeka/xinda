@@ -179,7 +179,7 @@ export default {
                 }
             }
         },
-        backHistory:function(){
+        backHistory: function() {
             history.go(-1);
         }
     },
@@ -188,30 +188,6 @@ export default {
 </script>
 
 <style lang="less">
-.noaccunts {
-    position: fixed;
-    width: 100%;
-    height: .4rem;
-    bottom: .5rem;
-    left: 0;
-    background-color: rgb(49, 49, 49);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    p {
-        font-size: .18rem;
-        color: white;
-    }
-    a {
-        font-size: .18rem;
-        text-decoration: none;
-        color: white;
-        border-radius: .03rem;
-        background-color: rgb(78, 181, 186);
-        padding: .01rem .05rem;
-    }
-}
-
 .logonFrame {
     background-color: #f5f5f5;
     display: flex;
@@ -386,6 +362,29 @@ export default {
 }
 
 @media screen and (max-width:768px) {
+    .noaccunts {
+        position: fixed;
+        width: 100%;
+        height: .4rem;
+        bottom: .5rem;
+        left: 0;
+        background-color: rgb(49, 49, 49);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        p {
+            font-size: .18rem;
+            color: white;
+        }
+        a {
+            font-size: .18rem;
+            text-decoration: none;
+            color: white;
+            border-radius: .03rem;
+            background-color: rgb(78, 181, 186);
+            padding: .01rem .05rem;
+        }
+    }
     .logonFrame {
         width: 100%;
         background-color: #fff;

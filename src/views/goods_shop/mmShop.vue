@@ -61,6 +61,10 @@
 <script>
 export default {
     created() {
+        if (!this.isPC) {
+            this.$router.push({ path: '/shopweb', query: { id: this.$route.query.id } });
+            window.location.reload();
+        }
         var canshu = {
             id: this.$route.query.id,
         };
@@ -121,7 +125,6 @@ export default {
         }
     }
 };
-
 
 </script>
 

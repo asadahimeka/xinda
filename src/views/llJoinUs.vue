@@ -139,6 +139,9 @@ export default {
             isClass4: false,
         }
     },
+    created(){
+        !this.isPC?this.$router.push('/'):0;
+    },
     methods: {
         listone: function(event) {
             this.isClass1 = true;

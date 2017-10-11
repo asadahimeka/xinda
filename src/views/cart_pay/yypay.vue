@@ -29,7 +29,7 @@
 
             <!-- <transition name="slide"> -->
             <el-collapse-transition>
-            <!-- <transition name="el-zoom-in-top"> -->
+                <!-- <transition name="el-zoom-in-top"> -->
                 <div class="odr-list" v-show="!tri">
                     <div v-for="item in orderlist" class="odr-dtl" :key="item.id">
                         <div>服务名称：
@@ -45,7 +45,7 @@
                             <b class="money-color">￥{{fmtPrice(item.totalPrice)}}</b>元</div>
                     </div>
                 </div>
-            <!-- </transition> -->
+                <!-- </transition> -->
             </el-collapse-transition>
             <!-- </transition> -->
         </div>
@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 export default {
     name: 'pay',
     data() {
@@ -232,6 +232,7 @@ export default {
         },
     },
     created() {
+        !this.isPC ? this.$router.push('/') : 0;
         window.scrollTo(0, 0);
         this.cartAction(0);
         this.getOrder();
@@ -247,7 +248,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 @gwidth: 1200px;
 @mcolor: #2693d4;
 @borclr: #b6b6b6;

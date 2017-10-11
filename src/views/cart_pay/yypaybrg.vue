@@ -8,6 +8,7 @@
 export default {
     name: 'paybrg',
     created() {
+        !this.isPC ? this.$router.push('/') : 0;
         document.write(sessionStorage.getItem('payuri'));
     }
 }

@@ -130,7 +130,7 @@
                                 {{rglist[index]}}
                             </div>
                         </div>
-                        <div class="del" @click="del(item)">删除订单</div>
+                        <div class="del" @click="del(item)">删除&nbsp;&nbsp;</div>
                     </div>
                 </div>
                 <div class="totalct uprice">共
@@ -794,7 +794,7 @@ a {
     }
     .del {
         vertical-align: top;
-        width: 25%;
+        width: 15%;
         padding-right: 5px;
         font-size: .15rem;
 

@@ -1,5 +1,4 @@
 <template>
-    
     <!-- WEB端 -->
     <div v-if="!isPC">
 
@@ -13,7 +12,7 @@
             <h6>知识产权</h6>
         </div>
 
-        <div class="Shopboxbody" v-infinite-scroll>
+        <div class="Shopboxbody">
             <template v-for="(content,i) in contentList">
                 <a :href='"#/shdetail?sid="+content.id' :key="content.id">
                     <div class="shopBox" :key="content.id">
@@ -23,7 +22,8 @@
                         <div class="boxright">
                             <h3>{{content.serviceName}}</h3>
                             <p>{{content.serviceInfo}}</p>
-                            <div class="address"><i class="iconfont">&#xe603;</i>{{content.regionName}}</div>
+                            <div class="address">
+                                <i class="iconfont">&#xe603;</i>{{content.regionName}}</div>
                             <div class="price">
                                 <span>￥{{content.price/100}}</span>元</div>
 
@@ -31,17 +31,18 @@
                     </div>
                 </a>
             </template>
+            <p class="all" v-show="all">已加载完所有产品</p>
         </div>
-        <!-- 分页 -->
-        <!-- <v-page v-show="pageshow" :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page> -->
-
     </div>
-
 </template>
 
 <script>
 export default {
     created() {
+        if (this.isPC) {
+            this.$router.push({ path: '/shop', query: { id: this.$route.query.id } });
+            window.location.reload();
+        }
         var canshu = {
             id: this.$route.query.id,
         };
@@ -58,8 +59,10 @@ export default {
             shopinfo: { providerImg: '', businessCertPath: '' },
             activeName: 'first',
             start: 0,
-            limit: 2000,
+            limit: 0,
             contentList: [],
+            all: false,
+            bkshow: false,
         };
     },
     methods: {
@@ -67,35 +70,42 @@ export default {
             return providerImg.substr(0, 1) == '/' ? 'http://115.182.107.203:8088/xinda/pic' + providerImg : providerImg;
         },
         getServCont() {
-            !this.isPC?this.$indicator.open():0;
+            this.limit += 6;
+            this.$indicator.open();
             var canshu1 = {
                 start: this.start,
                 limit: this.limit,
                 providerId: this.$route.query.id,
-                
             };
             this.ajax.post('/xinda-api/product/package/grid', canshu1, {}).then((data) => {
                 this.contentList = data.data.data;
-                // console.log(data.data.data);
-                this.pageSize = data.data.pageSize;
-                this.loading = false;
-                !this.isPC?this.$indicator.close():0;
+                this.$indicator.close();
+                this.all = this.limit > this.contentList.length ? true : false;
             }).catch((error) => {
                 console.log('axios error', error);
             });
-        }
-    }
+        },
+        scrollMethod() {
+            const sumH = document.body.scrollHeight;
+            const viewH = document.documentElement.clientHeight;
+            const scrollH = document.body.scrollTop;
+            if (viewH + scrollH === sumH && this.limit === this.contentList.length) {
+                this.getServCont();
+            }
+        },
+    },
+    mounted() {
+        window.addEventListener('scroll', this.scrollMethod);
+    },
 };
 
 
 </script>
 
 <style lang="less">
-
 // WEB端
 .webshop {
-    margin: 5%;
-    // height: 1.5rem;
+    margin: 5%; // height: 1.5rem;
     text-align: center;
     font-size: .14rem;
     img {
@@ -112,6 +122,7 @@ export default {
         line-height: 2;
     }
 }
+
 .webmoduleTitle {
     height: .38rem;
     border-bottom: 2px solid #2693d4;
@@ -127,7 +138,7 @@ export default {
 
 .Shopboxbody {
     overflow: hidden;
-    margin: 0 auto;
+    margin: 0 auto 1rem;
     width: 90%;
 
     a {
@@ -163,9 +174,9 @@ export default {
             font-size: .12rem;
 
             h3 {
-                overflow:hidden; 
-                text-overflow:ellipsis; 
-                white-space:nowrap; 
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
 
             div {
@@ -175,19 +186,18 @@ export default {
                 font-size: .16rem;
                 font-weight: 700;
             }
-            
+
             p {
                 font-size: .13rem;
-                overflow:hidden; 
-                text-overflow:ellipsis;
-                display:-webkit-box; 
-                -webkit-box-orient:vertical;
-                -webkit-line-clamp:2; 
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
             }
             .address {
                 margin: .12rem;
-                font-size: .1rem;
-                // max-width: 1.3rem;
+                font-size: .1rem; // max-width: 1.3rem;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -198,13 +208,17 @@ export default {
                 bottom: -.05rem;
 
                 span {
-                font-size: .18rem;
-                color: #F00;
+                    font-size: .18rem;
+                    color: #F00;
+                }
             }
-            }
-            
         }
     }
+    .all {
+        margin-top: 0.2rem;
+        font-size: .16rem;
+        color: #999;
+        text-align: center;
+    }
 }
- 
 </style>

@@ -4,10 +4,7 @@
         <LineLogo v-if="isPC"></LineLogo>
         <!-- 主页中所有的导航部分，子导航直接使用position -->
         <Navigation v-if="isPC"></Navigation>
-        <transition name="slide" mode="out-in" v-if="!isPC">
-            <router-view></router-view>
-        </transition>
-        <transition name="el-zoom-in-center" mode="out-in" v-else>
+        <transition name="el-zoom-in-center" mode="out-in">
             <router-view></router-view>
         </transition>
     </div>

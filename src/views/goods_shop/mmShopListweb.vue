@@ -28,7 +28,7 @@
                 </template>
             </div>
             <!-- 分页 -->
-            <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
+            <!-- <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page> -->
 
         </div>
 

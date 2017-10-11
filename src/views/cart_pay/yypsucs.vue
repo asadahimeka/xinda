@@ -24,6 +24,7 @@ export default {
         return { bno: '' }
     },
     created() {
+        !this.isPC ? this.$router.push('/') : 0;
         this.ajax.post(
             '/xinda-api/sso/login-info'
         ).then(res => {

@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <Top v-if="isPC"></Top>
-    <transition name="slide" mode="out-in" v-if="!isPC">
-      <router-view></router-view>
-    </transition>
-    <transition name="el-zoom-in-center" mode="out-in" v-else>
+    <transition name="el-zoom-in-center" mode="out-in">
       <router-view></router-view>
     </transition>
     <Bottom></Bottom>
+    <transition name="el-zoom-in-top">
+      <div class="bktop el-icon-arrow-up" @click="bktop" v-show="bkshow"></div>
+    </transition>
   </div>
 </template>
 
@@ -25,7 +25,8 @@ export default {
   },
   data() {
     return {
-      load: true
+      load: true,
+      bkshow: false,
     }
   },
   watch: {
@@ -35,8 +36,23 @@ export default {
       }
     }
   },
+  methods: {
+    scrollMethod() {
+      const viewH = document.documentElement.clientHeight;
+      const scrollH = document.body.scrollTop;
+      this.bkshow = scrollH > (viewH * 0.3) ? true : false;
+    },
+    bktop() {
+      var currScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      if (currScroll > 0) {
+        requestAnimationFrame(this.bktop);
+        scrollTo(0, currScroll - (currScroll / 10));
+      }
+    },
+  },
   mounted() {
     this.$nextTick(function() { setTimeout(() => document.getElementById("loading").style.display = 'none', 0); });
+    document.onscroll = this.scrollMethod;
   },
 }
 </script>
@@ -141,6 +157,18 @@ select {
 
 .slideDown-leave {
   transform: translate3d(0, 0, 0);
+}
+
+.bktop {
+  position: fixed;
+  bottom: 60px;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: #ccc;
+  font-size: 20px;
+  text-align: center;
+  line-height: 40px;
 }
 
 @font-face {

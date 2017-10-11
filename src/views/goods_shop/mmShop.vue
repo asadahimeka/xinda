@@ -56,7 +56,7 @@
     </div>
    
     <!-- WEB端 -->
-    <div v-if="!isPC" v-loading.fullscreen.lock="Loading" element-loading-text="加载中">
+    <div v-if="!isPC">
 
         <div class="webshop">
             <!-- 店鋪信息 -->
@@ -68,9 +68,9 @@
             <h6>知识产权</h6>
         </div>
 
-        <div class="Shopboxbody" >
+        <div class="Shopboxbody" v-infinite-scroll>
             <template v-for="(content,i) in contentList">
-                <a :href='"#/shdetail?sid="+content.id'>
+                <a :href='"#/shdetail?sid="+content.id' :key="content.id">
                     <div class="shopBox" :key="content.id">
                         <div class="boxleft">
                             <img :src="logoImg(content.providerImg)">
@@ -101,7 +101,7 @@ export default {
         var canshu = {
             id: this.$route.query.id,
         };
-        this.ajax.post('xinda-api/provider/detail', canshu, {}).then((data) => {
+        this.ajax.post('/xinda-api/provider/detail', canshu, {}).then((data) => {
             this.shopinfo = data.data.data;
             this.getServCont();
         }).catch((error) => {
@@ -139,17 +139,19 @@ export default {
             this.getServCont();
         },
         getServCont() {
+            !this.isPC?this.$indicator.open():0;
             var canshu1 = {
                 start: this.start,
                 limit: this.limit,
                 providerId: this.$route.query.id,
                 
             };
-            this.ajax.post('xinda-api/product/package/grid', canshu1, {}).then((data) => {
+            this.ajax.post('/xinda-api/product/package/grid', canshu1, {}).then((data) => {
                 this.contentList = data.data.data;
                 // console.log(data.data.data);
                 this.pageSize = data.data.pageSize;
                 this.loading = false;
+                !this.isPC?this.$indicator.close():0;
             }).catch((error) => {
                 console.log('axios error', error);
             });

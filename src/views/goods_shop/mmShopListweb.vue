@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- WEB端 -->
-        <div class="shoplist" v-if="!isPC" v-loading.fullscreen.lock="Loading" element-loading-text="加载中">
+        <div class="shoplist">
             <div class="Shopboxtitle">
                 <ul>
                     <li :class="{active:i==sori}" v-for="(item,i) in shopSort" :key="i">
@@ -68,7 +68,7 @@ export default {
         },
         getShop() {
             this.$indicator.open();
-            this.ajax.post('xinda-api/provider/grid', this.ajdata, {}).then((data) => {
+            this.ajax.post('/xinda-api/provider/grid', this.ajdata, {}).then((data) => {
                 this.shopinfo = data.data.data;
                 // console.log(this.shopinfo);
                 this.pageSize = data.data.pageSize;

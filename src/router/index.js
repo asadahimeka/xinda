@@ -23,6 +23,7 @@ import Shdetail from '../views/goods_shop/xxspdetail.vue'
 
 import mmShopList from '../views/goods_shop/mmShopList.vue'
 import mmShop from '../views/goods_shop/mmShop.vue'
+import mmShopweb from '../views/goods_shop/mmShopweb.vue'
 import mmsearch from '../views/goods_shop/mmsearch.vue'
 import mmShopListweb from '../views/goods_shop/mmShopListweb.vue'
 
@@ -94,7 +95,12 @@ const router = new Router({
                     name: 'mmShop',
                     component: mmShop,
                     meta: { pageTitle: '信达_店铺详情' }
-                }, {//搜索页面
+                }, {//店铺详情web
+                  path: 'shopweb',
+                  name: 'mmShopweb',
+                  component: mmShopweb,
+                  meta: { pageTitle: '信达_店铺详情' }
+              },{//搜索页面
                     path: 'search',
                     name: 'mmsearch',
                     component: mmsearch,

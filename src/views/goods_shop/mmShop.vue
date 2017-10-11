@@ -1,5 +1,5 @@
 <template>
-<div>
+
     <!-- PC端 -->
     <div class="shop container" v-if="isPC">
         <!-- 店鋪信息 -->
@@ -54,44 +54,7 @@
 
         </div>
     </div>
-   
-    <!-- WEB端 -->
-    <div v-if="!isPC">
 
-        <div class="webshop">
-            <!-- 店鋪信息 -->
-            <div><img :src="logoImg(shopinfo.providerImg)" alt="logo"></div>
-            <h5>{{shopinfo.name}}</h5>
-            <p>{{shopinfo.providerInfo}}</p>
-        </div>
-        <div class="webmoduleTitle">
-            <h6>知识产权</h6>
-        </div>
-
-        <div class="Shopboxbody" v-infinite-scroll>
-            <template v-for="(content,i) in contentList">
-                <a :href='"#/shdetail?sid="+content.id' :key="content.id">
-                    <div class="shopBox" :key="content.id">
-                        <div class="boxleft">
-                            <img :src="logoImg(content.providerImg)">
-                        </div>
-                        <div class="boxright">
-                            <h3>{{content.serviceName}}</h3>
-                            <p>{{content.serviceInfo}}</p>
-                            <div class="address"><i class="iconfont">&#xe603;</i>{{content.regionName}}</div>
-                            <div class="price">
-                                <span>￥{{content.price/100}}</span>元</div>
-
-                        </div>
-                    </div>
-                </a>
-            </template>
-        </div>
-        <!-- 分页 -->
-        <v-page v-show="pageshow" :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
-
-    </div>
-    </div>
 
 </template>
 
@@ -363,119 +326,5 @@ export default {
     overflow: visible;
 }
 
-// WEB端
-.webshop {
-    margin: 5%;
-    // height: 1.5rem;
-    text-align: center;
-    font-size: .14rem;
-    img {
-        padding-top: .3rem;
-        max-width: 100%;
-    }
-    h5 {
-        padding: .1rem;
-        font-size: .2rem;
-    }
-    p {
-        padding: .2rem 0;
-        text-align: left;
-        line-height: 2;
-    }
-}
-.webmoduleTitle {
-    height: .38rem;
-    border-bottom: 2px solid #2693d4;
-    line-height: .38rem;
-    margin: .2rem 0;
-
-    h6 {
-        padding-left: .2rem;
-        font-size: .2rem;
-        font-weight: 400;
-    }
-}
-
-.Shopboxbody {
-    overflow: hidden;
-    margin: 0 auto;
-    width: 90%;
-
-    a {
-        text-decoration: none;
-        color: #000;
-    }
-
-    .shopBox {
-        padding: .2rem 0;
-        border-bottom: 1px solid #ccc;
-        overflow: hidden;
-        font-size: .13rem;
-
-        .boxleft {
-            float: left;
-            margin-right: .12rem;
-            width: .9rem;
-            line-height: .9rem;
-            height: 0.9rem;
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #ccc;
-
-            img {
-                max-width: 100%;
-                vertical-align: middle;
-            }
-        }
-        .boxright {
-            position: relative;
-            text-align: left;
-            line-height: 1.5;
-            font-size: .12rem;
-
-            h3 {
-                overflow:hidden; 
-                text-overflow:ellipsis; 
-                white-space:nowrap; 
-            }
-
-            div {
-                margin-bottom: .06rem;
-            }
-            &> :nth-child(1) {
-                font-size: .16rem;
-                font-weight: 700;
-            }
-            
-            p {
-                font-size: .13rem;
-                overflow:hidden; 
-                text-overflow:ellipsis;
-                display:-webkit-box; 
-                -webkit-box-orient:vertical;
-                -webkit-line-clamp:2; 
-            }
-            .address {
-                margin: .12rem;
-                font-size: .1rem;
-                // max-width: 1.3rem;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-            .price {
-                position: absolute;
-                right: 0;
-                bottom: -.05rem;
-
-                span {
-                font-size: .18rem;
-                color: #F00;
-            }
-            }
-            
-        }
-    }
-}
  
 </style>

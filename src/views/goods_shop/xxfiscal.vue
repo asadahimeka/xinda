@@ -737,11 +737,13 @@ a {
         border-top: 1px solid #e5e5e5;
         img {
             width: 100%;
-            margin-top: 23px;
         }
         .ximgdiv {
-            min-width: 1rem;
-            height: 108px;
+            display: flex;
+            align-items: center;
+            min-width: 15vh;
+            max-width: 15vh;
+            height: 15vh;
             margin-right: .1rem;
             text-align: center;
             border: 1px solid #ccc;
@@ -755,8 +757,13 @@ a {
             text-overflow: ellipsis;
         }
         p {
-            line-height: 2;
-            font-size: .15rem;
+            font-size: .13rem;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
         .xdizhi {
             font-size: .13rem;

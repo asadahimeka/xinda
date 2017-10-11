@@ -149,12 +149,12 @@
             <div class="detail">
                 <div class="detailimg">
                     <img :src="dealSrc(prod.img)" alt="GET IMG FAILED">
-                </div>
-                <div class="detail_div">
                     <div class="ddiv">
                         <b>{{srv.serviceName}}</b>
                         <p class="describe">{{srv.serviceInfo}}</p>
                     </div>
+                </div>
+                <div class="detail_div">
                     <span class="area">区域：{{region}}</span>
                     <p>价&nbsp;&nbsp;&nbsp;格：
                         <span>￥{{fmtPrice(srv.price)}}</span>&nbsp;{{dealUnit(srv.unit)}}</p>
@@ -1079,7 +1079,9 @@ export default {
         position: relative;
         width: 100%;
         .detailimg {
+            position: relative;
             width: 100%;
+            min-height: 200px;
             img {
                 width: 100%;
             }
@@ -1091,7 +1093,7 @@ export default {
             text-overflow: ellipsis;
             background-color: #38332c;
             position: absolute;
-            bottom: 20%;
+            bottom: .04rem;
             opacity: 0.8;
             color: white;
         }

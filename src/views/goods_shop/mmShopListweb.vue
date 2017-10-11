@@ -39,7 +39,6 @@
 export default {
     data() {
         return {
-            loading: true,
             shopinfo: [],
             isActive: false,
             shopSort: [{
@@ -64,15 +63,16 @@ export default {
         pageChange(curPage) {
             this.cur = curPage;
             this.ajdata.start = (curPage - 1) * this.ajdata.limit;
-            this.loading = true;
+            this.$indicator.open();
             this.getShop();
         },
         getShop() {
+            this.$indicator.open();
             this.ajax.post('xinda-api/provider/grid', this.ajdata, {}).then((data) => {
                 this.shopinfo = data.data.data;
                 // console.log(this.shopinfo);
                 this.pageSize = data.data.pageSize;
-                this.loading = false;
+                this.$indicator.close();
 
             }).catch((error) => {
                 console.log('axios error', error);

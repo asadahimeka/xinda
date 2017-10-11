@@ -77,9 +77,9 @@
             </a>
         </div>
         <xIndex></xIndex>
-        <!-- <mmProperty></mmProperty>
-        <mmService></mmService>
-        <mmPartners></mmPartners> -->
+        <mmProperty v-if="isPC"></mmProperty>
+        <mmService v-if="isPC"></mmService>
+        <mmPartners v-if="isPC"></mmPartners>
     </div>
 </template>
 

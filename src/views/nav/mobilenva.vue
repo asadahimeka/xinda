@@ -60,7 +60,7 @@ export default {
             this.$router.push({ path: '/slist', query: { id, code, pid } })
         },
         changecatalog: function(newId) {
-            this.$indicator.open('加载中...');
+            this.$indicator.open();
             this.id = newId;
             this.getcatalog();
         }

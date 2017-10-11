@@ -1,6 +1,6 @@
 <template>
     <div id="member-center">
-        <div class="member-left">
+        <div class="member-left" v-if="isPC">
             <div style="width:242px;height:20px;color:#696969;margin:10px;">首页 / 个人中心</div>
             <div class="member-user">
                 <div class="via">
@@ -23,12 +23,49 @@
                 </div>
             </div>
         </div>
-        <router-view></router-view>
+        <div class="memberCenterMobile" v-if="!isPC">
+            <div class="memberHead">
+                <img src="../../assets/userheader.png" v-if="!headimg" alt="GET IMG FAILED">
+                <img :src="dealSrc(headimg)" v-else alt="GET IMG FAILED">
+            </div>
+            <div class="memberName">
+                {{username}}
+            </div>
+            <a class="myOrder" href="这里是我的订单跳转地址填写处">
+                <div class="iconfont">
+                    &#xe698;
+                </div>
+                <div class="orderT">
+                    我的订单
+                </div>
+                <div class="iconfont">
+                    &#xe61c;
+                </div>
+            </a>
+            <a class="memset" href="/#/MemberCen/Uerset">
+                <div class="iconfont">
+                    &#xe609;
+                </div>
+                <div class="setT">
+                    账户设置
+                </div>
+                <div class="iconfont">
+                    &#xe61c;
+                </div>
+            </a>
+            <button @click="exit">
+                退出登录
+            </button>
+        </div>
+        <transition name="el-zoom-in-center">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex';
+import { Toast } from 'mint-ui';
 export default {
     created() {
         this.ajax.post('/xinda-api/member/info').then((userMsg) => {
@@ -50,8 +87,22 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['userAction', 'cartAction', 'exAction']),
         dealSrc(src) {
             return /^\/[^/]/.test(src) ? "http://115.182.107.203:8088/xinda/pic" + src : src;
+        },
+        exit: function() {
+            this.ajax.post('/xinda-api/sso/logout').then((out) => {
+                this.exAction(0);
+                this.cartAction(0);
+                Toast({
+                    message: out.data.msg,
+                    position: 'bottom',
+                    duration: 5000
+                });
+            }).catch((error) => {
+                console.error(error);
+            })
         },
     },
     computed: {
@@ -128,7 +179,85 @@ export default {
     }
 }
 
+
 .act {
     background: #d7d7d7;
+}
+
+@media screen and (max-width: 768px) {
+    #member-center {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        background-color: #f2f2f2;
+        padding-top: 1rem;
+        box-sizing: border-box;
+        display: flex;
+        .memberCenterMobile {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            .memberHead {
+                display: flex;
+                img {
+                    width: 100%;
+                }
+            }
+            .memberName {
+                font-size: .2rem;
+                margin-top: .1rem;
+            }
+            .myOrder {
+                width: 70%;
+                background-color: rgb(233, 233, 233);
+                font-size: .15rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 .1rem;
+                box-sizing: border-box;
+                line-height: .3rem;
+                margin-top: .3rem;
+                color: black;
+                text-decoration: none;
+                .iconfont {
+                    font-size: .2rem;
+                }
+                .orderT {
+                    margin-right: 50%;
+                }
+            }
+            .memset {
+                width: 70%;
+                background-color: rgb(233, 233, 233);
+                font-size: .15rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 .1rem;
+                box-sizing: border-box;
+                line-height: .3rem;
+                margin-top: .2rem;
+                color: black;
+                text-decoration: none;
+                .iconfont {
+                    font-size: .2rem;
+                }
+                .setT {
+                    margin-right: 50%;
+                }
+            }
+            button {
+                margin-top: .3rem;
+                width: 70%;
+                height: 5vh;
+                background-color: #2693d4;
+                border: none;
+                color: white;
+                outline: none;
+            }
+        }
+    }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="member-right" v-loading="loading">
+    <div class="member-right" v-loading="loading" v-if="isPC">
         <div class="right1">
             <p>我的订单</p>
         </div>

@@ -1,36 +1,38 @@
 <template>
-<div>
-    <!-- WEB端 -->
-    <div class="shoplist" v-if="!isPC">
-        <div class="Shopboxtitle">
-            <ul >
-                <li v-for="(item,i) in shopSort" :key="i">
-                    <a :class="{active:i==sori}" @click="sorc(i,item.sort)">{{item.name}}</a>
-                </li>
-            </ul>
-        </div>
-        <!-- 内容区 -->
-        <div class="Shopboxbody" v-loading="loading">
-            <template v-for="info in shopinfo">
-                <div class="shopBox" :key="info.id">
-                    <div class="boxleft" @click="enter(info.id)">
-                        <img :src="imgurl(info.providerImg)">
+    <div>
+        <!-- WEB端 -->
+        <div class="shoplist" v-if="!isPC">
+            <div class="Shopboxtitle">
+                <ul>
+                    <li :class="{active:i==sori}" v-for="(item,i) in shopSort" :key="i">
+                        <a @click="sorc(i,item.sort)">{{item.name}}</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 内容区 -->
+            <div class="Shopboxbody" v-loading="loading">
+                <template v-for="info in shopinfo">
+                    <div class="shopBox" :key="info.id" @click="enter(info.id)">
+                        <div class="boxleft" >
+                            <img :src="imgurl(info.providerImg)">
+                        </div>
+                        <div class="boxright">
+                            <div>{{info.providerName}}</div>
+                            <div>{{info.regionName}}</div>
+                            <div>累计服务客户次数:
+                                <span>{{info.orderNum}}</span><br>好评率:
+                                <span>{{rate(info.goodJudge,info.totalJudge)}}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="boxright">
-                        <div @click="enter(info.id)">{{info.providerName}}</div>
-                        <div>{{info.regionName}}</div>
-                        <div>累计服务客户次数:<span>{{info.orderNum}}</span>&nbsp;好评率:<span>{{rate(info.goodJudge,info.totalJudge)}}</span></div>
-                    </div>
-                </div>
-            </template>
+                </template>
+            </div>
+            <!-- 分页 -->
+            <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
 
         </div>
-        <!-- 分页 -->
-        <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
 
     </div>
-   
-</div>
 </template>
 
 <script>
@@ -100,6 +102,7 @@ export default {
         },
     },
     created() {
+        this.isPC ? this.$router.push('/shoplist') : 0;
         this.getShop();
     },
 }
@@ -107,38 +110,41 @@ export default {
 
 
 <style lang="less" scoped>
- // 内容区
+// 内容区
 .Shopboxtitle {
     text-align: center;
-    font-size: .18rem;
+    font-size: .16rem;
 
     ul {
         margin: .3rem auto;
-        width: 50%;
+        width: 2rem;
+        
+        &> :nth-child(1) {
+            border-top-left-radius: .1rem;
+            border-bottom-left-radius: .1rem;
+            border-right: none;
+        }
+        &> :nth-child(2) {
+            border-top-right-radius: .1rem;
+            border-bottom-right-radius: .1rem;
+            border-left: none;
+        }
     }
+
 
     li {
         float: left;
         line-height: .4rem;
-        
-        // border-top-left-radius: .1rem;
+        width: .98rem;
+        border: 1px solid #ccc;
+    }
+    
+    
+    .active {
+        color: #fff;
+        background: #2594d4; // border-top-left-radius: .1rem;
         // border-bottom-left-radius: .1rem;
-
-        a {
-            display: inline-block;
-            width: 1rem;
-            // height: 100%;
-            color: #000;
-            border: 1px solid #ccc;
-        }
-        .active {
-            color: #fff;
-            background: #2594d4;
-            // border-top-left-radius: .1rem;
-            // border-bottom-left-radius: .1rem;
-            border: 1px solid #2594d4;
-            cursor: pointer;
-        }
+        border: 1px solid #2594d4;
     }
 }
 
@@ -150,34 +156,32 @@ export default {
     .shopBox {
         padding: .2rem 0;
         border-bottom: 1px solid #ccc;
-        overflow:hidden;
-        font-size: .14rem;
+        overflow: hidden;
+        font-size: .13rem;
 
         .boxleft {
             float: left;
             margin-right: .2rem;
-            width: 20%;
-            line-height: .7rem;
-            height: 0.7rem;
+            width: .9rem;
+            line-height: .9rem;
+            height: 0.9rem;
             text-align: center;
-            vertical-align:middle;
+            vertical-align: middle;
             border: 1px solid #ccc;
 
             img {
                 max-width: 100%;
                 vertical-align: middle;
             }
-            
         }
         .boxright {
-            position: relative;
-            float: left;
             text-align: left;
+            line-height: 1.5;
 
             div {
-                margin-bottom: .05rem;
+                margin-bottom: .06rem;
             }
-            & > :nth-child(1) {
+            &> :nth-child(1) {
                 font-size: .16rem;
                 font-weight: 700;
             }
@@ -214,6 +218,4 @@ export default {
     margin: 10px auto;
     width: fit-content;
 }
-
-
 </style>

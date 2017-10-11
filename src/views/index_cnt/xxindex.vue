@@ -1,6 +1,6 @@
 <template>
     <div class="xxindex">
-        <div class="star" v-if="isPC">
+        <div class="star" v-if="isPC" v-loading="ld">
             <p>明星产品推荐</p>
             <div class="starmenu">
                 <el-alert v-if="err" title="Get data failed." type="error" show-icon></el-alert>
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="startx" v-if="isPC">
+        <div class="startx" v-if="isPC" v-loading="ld">
             <p>初创企业必备</p>
             <div class="startxmenu">
                 <el-alert v-if="err" title="Get data failed." type="error" show-icon></el-alert>
@@ -73,6 +73,7 @@ export default {
                 "../../../static/images/zhuce1.svg",
             ],
             err: 0,
+            ld: true,
         }
     },
     methods: {
@@ -86,15 +87,16 @@ export default {
             return info.length > 33 ? info.substring(0, 32) + '...' : info;
         },
         getRecom() {
-            if (this.isPC) this.loadingIns = this.$loading({ fullscreen: true, lock: true });
+            // !this.isPC ? this.$indicator.open() : 0;   
+            this.ld = true;         
             this.ajax.post('/xinda-api/recommend/list').then((res) => {
                 if (res.data.status == 1) {
                     this.starlist = res.data.data.product;
                     this.relist = res.data.data.hq;
                     if (this.isPC) {
-                        this.loadingIns ? this.loadingIns.close() : 0;
+                        this.ld = false;
                     } else {
-                        this.$indicator.close();
+                        // this.$indicator.close();
                     }
                 } else {
                     this.err = 1;
@@ -106,7 +108,6 @@ export default {
         }
     },
     created() {
-        !this.isPC ? this.$indicator.open() : 0;
         this.getRecom();
     }
 }

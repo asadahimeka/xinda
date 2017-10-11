@@ -679,7 +679,7 @@ a {
         border: 1px solid #2693D4;
         border-radius: .05rem;
     }
-    i{
+    i {
         position: absolute;
         top: 4%;
         left: 4%;
@@ -740,7 +740,7 @@ a {
             margin-top: 23px;
         }
         .ximgdiv {
-            width: 1.09rem;
+            min-width: 1rem;
             height: 108px;
             margin-right: .1rem;
             text-align: center;

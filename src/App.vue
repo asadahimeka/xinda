@@ -55,7 +55,6 @@ export default {
   font-size: '宋体';
 }
 
-
 li {
   list-style-type: none;
 }
@@ -109,7 +108,7 @@ select {
 }
 
 .slide-enter-active {
-  transition: all .4s ease-in-out;
+  transition: all .3s ease-in-out;
   transform: translate3d(0, 0, 0);
 }
 
@@ -118,7 +117,7 @@ select {
 }
 
 .slide-leave-active {
-  transition: all .4s ease-in-out;
+  transition: all .3s ease-in-out;
   transform: translate3d(-100%, 0, 0);
 }
 

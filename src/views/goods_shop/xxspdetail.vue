@@ -1425,12 +1425,14 @@ export default {
         border-right: 0 !important;
     }
     .ni1 {
+        z-index: 2;
         position: absolute;
         top: .15rem;
         left: .2rem;
         font-size: .2rem;
     }
     .ni2 {
+        z-index: 2;
         position: absolute;
         top: .1rem;
         right: .2rem;

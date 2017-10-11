@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- WEB端 -->
-        <div class="shoplist" v-if="!isPC">
+        <div class="shoplist" v-if="!isPC" v-loading.fullscreen.lock="Loading" element-loading-text="加载中">
             <div class="Shopboxtitle">
                 <ul>
                     <li :class="{active:i==sori}" v-for="(item,i) in shopSort" :key="i">
@@ -10,7 +10,7 @@
                 </ul>
             </div>
             <!-- 内容区 -->
-            <div class="Shopboxbody" v-loading="loading">
+            <div class="Shopboxbody">
                 <template v-for="info in shopinfo">
                     <div class="shopBox" :key="info.id" @click="enter(info.id)">
                         <div class="boxleft" >

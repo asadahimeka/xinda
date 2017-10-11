@@ -218,13 +218,14 @@
 
     h6 {
         padding-left: .2rem;
-        font-size: .2rem;
+        font-size: .18rem;
         font-weight: 400;
     }
 }
 
 .webmoduleBodyB {
     margin: 5%;
+    font-size: .14rem;
 
     &>div {
         position: relative;
@@ -240,14 +241,13 @@
     }
     &> :nth-child(3) {
         width: 100%;
-        top: -.2rem;
     }
 
     h6 {
         position: absolute;
         right: .15rem;
-        bottom: .35rem;
-        font-size: .18rem;
+        bottom: .1rem;
+        font-size: .16rem;
         font-weight: 400;
     }
 }

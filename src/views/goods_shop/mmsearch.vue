@@ -172,7 +172,7 @@ export default {
             this.getProducts();
         },
         getProducts() {
-            this.ajax.post('xinda-api/product/package/search-grid', this.productData, {}).then((data) => {
+            this.ajax.post('/xinda-api/product/package/search-grid', this.productData, {}).then((data) => {
                 this.products = data.data.data;
                 this.pageSize = data.data.pageSize;
                 this.loading = false;

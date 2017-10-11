@@ -330,7 +330,7 @@ export default {
                 password: MD5(this.PSD),
                 regionId: this.districtVal,
             };
-            this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/register/register', shuju, {}).then((canLog) => {
+            this.ajax.post('/xinda-api/register/register', shuju, {}).then((canLog) => {
                 console.log(canLog);
                 if (canLog.data.status == 1) {
                     this.successmsg = canLog.data.msg;

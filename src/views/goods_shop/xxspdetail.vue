@@ -417,7 +417,7 @@ export default {
             })
         },
         getShop() {
-            this.ajax.post('xinda-api/provider/grid', {
+            this.ajax.post('/xinda-api/provider/grid', {
                 limit: 1,
                 regionId: this.prvdr.regionId,
             }).then((data) => {

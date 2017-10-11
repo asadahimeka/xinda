@@ -84,7 +84,7 @@ export default {
             if (displayState == '' || displayState == 'none') {
                 chooseCity.style.display = 'block';
             }
-            this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/common/open-region').then((data) => {
+            this.ajax.post('/xinda-api/common/open-region').then((data) => {
                 this.items = data.data.data;
             }).catch(function(error) {
                 console.log('error', error);

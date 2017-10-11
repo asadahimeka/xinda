@@ -12,8 +12,8 @@
                 <p class="phone-number">{{username}}</p>
             </div>
             <div class="action">
-                <div :class="{act:$route.path=='/MemberCen'}">
-                    <a href="/#/MemberCen" class="myOrder">我的订单</a>
+                <div :class="{act:$route.path=='/MemberCen/Order'}">
+                    <a href="/#/MemberCen/Order" class="myOrder">我的订单</a>
                 </div>
                 <div :class="{act:$route.path=='/MemberCen/Evaluate'}">
                     <a href="/#/MemberCen/Evaluate" class="userComment">用户评价</a>
@@ -31,7 +31,7 @@
             <div class="memberName">
                 {{username}}
             </div>
-            <a class="myOrder" href="这里是我的订单跳转地址填写处">
+            <a class="myOrder" href="/#/MemberCen/Order">
                 <div class="iconfont">
                     &#xe698;
                 </div>
@@ -68,6 +68,7 @@ import { mapGetters, mapActions } from 'vuex';
 import { Toast } from 'mint-ui';
 export default {
     created() {
+        this.isPC ? this.$router.push('/MemberCen/Order') : 0;
         this.ajax.post('/xinda-api/member/info').then((userMsg) => {
             if (userMsg.data.status == 1) {
                 this.username = userMsg.data.data.name;
@@ -111,9 +112,9 @@ export default {
     watch: {
         getExUser(val) {
             if (val == 0) {
-                this.$router.push('/#/');
+                this.$router.push('/');
             }
-        }
+        },
     }
 }
 </script>
@@ -261,3 +262,15 @@ export default {
     }
 }
 </style>
+<style lang="less">
+@media screen and (max-width: 767px) {
+    #member-center {
+        width: 100% !important;
+        margin: 0 !important;
+        >div {
+            width: 100%;
+        }
+    }
+}
+</style>
+

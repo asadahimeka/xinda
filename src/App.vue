@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <Top v-if="isPC"></Top>
-    <router-view></router-view>
+    <transition name="slide" mode="out-in" v-if="!isPC">
+      <router-view></router-view>
+    </transition>
+    <transition name="el-zoom-in-center" mode="out-in" v-else>
+      <router-view></router-view>
+    </transition>
     <Bottom></Bottom>
   </div>
 </template>
@@ -44,24 +49,12 @@ export default {
 // @import url("//unpkg.com/mint-ui/lib/style.css");
 @import url("https://cdn.bootcss.com/mint-ui/2.2.9/style.min.css");
 
-.el-message {
-  top: 25%;
-  background: rgba(0, 0, 0, .7);
-  color: #fff;
-  p {
-    color: #fff;
-    text-align: center;
-  }
-  .el-message__img {
-    opacity: .9;
-  }
-}
-
 * {
   padding: 0;
   margin: 0;
   font-size: '宋体';
 }
+
 
 li {
   list-style-type: none;
@@ -76,18 +69,61 @@ select {
 }
 
 .clearfix {
-    *zoom: 1;
+  *zoom: 1;
 }
 
 .clearfix:before,
 .clearfix:after {
-    display: table;
-    line-height: 0;
-    content: "";
+  display: table;
+  line-height: 0;
+  content: "";
 }
 
 .clearfix:after {
-    clear: both;
+  clear: both;
+}
+
+.mint-indicator-wrapper {
+  width: 1rem;
+  height: 1rem;
+  z-index: 1;
+}
+
+.el-message {
+  top: 25%;
+  background: rgba(0, 0, 0, .7);
+  color: #fff;
+  p {
+    color: #fff;
+    text-align: center;
+  }
+  .el-message__img {
+    opacity: .9;
+  }
+}
+
+.mint-spinner-snake {
+  position: absolute;
+  top: 30%;
+  left: 30%;
+}
+
+.slide-enter-active {
+  transition: all .4s ease-in-out;
+  transform: translate3d(0, 0, 0);
+}
+
+.slide-enter {
+  transform: translate3d(-100%, 0, 0);
+}
+
+.slide-leave-active {
+  transition: all .4s ease-in-out;
+  transform: translate3d(-100%, 0, 0);
+}
+
+.slide-leave {
+  transform: translate3d(0, 0, 0);
 }
 
 @font-face {

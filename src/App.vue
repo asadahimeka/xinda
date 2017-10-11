@@ -125,8 +125,27 @@ select {
   transform: translate3d(0, 0, 0);
 }
 
+.slideDown-enter-active {
+  transition: all .3s ease-in-out;
+  transform: translate3d(0, 0, 0);
+}
+
+.slideDown-enter {
+  transform: translate3d(0, -100%, 0);
+}
+
+.slideDown-leave-active {
+  transition: all .3s ease-in-out;
+  transform: translate3d(0, -100%, 0);
+}
+
+.slideDown-leave {
+  transform: translate3d(0, 0, 0);
+}
+
 @font-face {
-  font-family: 'iconfont';  /* project id 414122 */
+  font-family: 'iconfont';
+  /* project id 414122 */
   src: url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.eot');
   src: url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.eot?#iefix') format('embedded-opentype'),
   url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.woff') format('woff'),

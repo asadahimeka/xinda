@@ -598,7 +598,7 @@ a {
             margin-bottom: 15px;
             img {
                 margin-top: 23px;
-                width: 109px;
+                width: 100%;
             }
             .imgdiv {
                 width: 109px;

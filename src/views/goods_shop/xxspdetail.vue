@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="isPC" class="spdetail" v-loading.fullscreen="fsLoading" element-loading-text="加载中">
+        <div v-if="isPC" class="spdetail" v-loading.fullscreen.lock="fsLoading" element-loading-text="加载中">
             <p>首页 /
                 <span>{{type}}</span>
             </p>
@@ -218,12 +218,10 @@
                                 <p>评价：{{j.content}}</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
             <div class="bbbd">
-                <!-- <a href="tel:10086">拨打10086</a> -->
                 <div class="lianxi" @click="lxshow=true">
                     <i class="iconfont">&#xe616</i>联系商家
                 </div>
@@ -403,7 +401,7 @@ export default {
                             : this.$toast(res.data.msg);
                     }
                 }
-            })
+            });
         },
         imgurl(providerImg) {
             if (providerImg) {
@@ -1523,6 +1521,7 @@ export default {
         display: flex;
     }
     input {
+        width: 60%;
         height: .3rem;
     }
     button {

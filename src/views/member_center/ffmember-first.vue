@@ -1,75 +1,113 @@
 <template>
-    <div class="member-right" v-loading="loading">
-        <div class="right1">
-            <p>我的订单</p>
-        </div>
-        <div class="right2">
-            <span style="margin-left:10px;">订单号：</span><input type="text" @keyup="handleSrch" v-model="srchNo" placeholder="请输入订单号" @focus="$event.target.select()">
-            <button @click="search">搜索</button><br>
-            <span>创建时间：</span>
-            <div class="block">
-                <el-date-picker v-model="startdate" type="date" placeholder="选择日期" :picker-options="pickerOptions0" @change="dateChange">
-                </el-date-picker>
+    <div>
+        <div class="member-right" v-loading.fullscreen.lock="loading" element-loading-text="加载中" v-if="isPC">
+            <div class="right1">
+                <p>我的订单</p>
             </div>
-            至
-            <div class="block">
-                <el-date-picker v-model="enddate" type="date" placeholder="选择日期" :picker-options="pickerOptions0" @change="dateChange">
-                </el-date-picker>
+            <div class="right2">
+                <span style="margin-left:10px;">订单号：</span><input type="text" @keyup="handleSrch" v-model="srchNo" placeholder="请输入订单号" @focus="$event.target.select()">
+                <button @click="search">搜索</button><br>
+                <span>创建时间：</span>
+                <div class="block">
+                    <el-date-picker v-model="startdate" type="date" placeholder="选择日期" :picker-options="pickerOptions0" @change="dateChange">
+                    </el-date-picker>
+                </div>
+                至
+                <div class="block">
+                    <el-date-picker v-model="enddate" type="date" placeholder="选择日期" :picker-options="pickerOptions0" @change="dateChange">
+                    </el-date-picker>
+                </div>
             </div>
-        </div>
-        <div class="right3">
-            <span style="width:300px;">商品名称</span>
-            <span style="width:70px;">单价</span>
-            <span style="width:70px;padding-left:12px;">数量</span>
-            <span style="width:90px;padding-left:17px;">总金额</span>
-            <span style="width:90px;padding-left:25px;">订单状态</span>
-            <span>订单操作</span>
-        </div>
-        <el-alert v-if="!bolist.length" title="没有相关订单信息。" type="info" :closable="false" show-icon=""></el-alert>
-        <template v-for="(item,i) in bolist" v-if="end>item.createTime">
-            <div class="right4" :key="i">
-                <p>订单号：
-                    <span>{{item.businessNo}}</span>下单时间：
-                    <span>{{fmtTime(item.createTime)}}</span>
-                </p>
+            <div class="right3">
+                <span style="width:300px;">商品名称</span>
+                <span style="width:70px;">单价</span>
+                <span style="width:70px;padding-left:12px;">数量</span>
+                <span style="width:90px;padding-left:17px;">总金额</span>
+                <span style="width:90px;padding-left:25px;">订单状态</span>
+                <span>订单操作</span>
             </div>
-            <div class="r5div" :key="item.id">
-                <div class="wrap">
-                    <div class="right5" v-for="item1 in soarr[i]" :key="item1.providerId">
-                        <a href="" class="imgArticle"><img :src="img[item1.providerId]" alt=""></a>
-                        <div style="width:250px;height:100px;">
-                            <a href="" class="site">{{item1.providerName}}</a>
-                            <span :title="item1.serviceInfo" style="display:block;line-height:30px;padding-bottom:20px;">{{item1.serviceName}}</span>
+            <el-alert v-if="!bolist.length" title="没有相关订单信息。" type="info" :closable="false" show-icon=""></el-alert>
+            <template v-for="(item,i) in bolist" v-if="end>item.createTime">
+                <div class="right4" :key="i">
+                    <p>订单号：
+                        <span>{{item.businessNo}}</span>下单时间：
+                        <span>{{fmtTime(item.createTime)}}</span>
+                    </p>
+                </div>
+                <div class="r5div" :key="item.id">
+                    <div class="wrap">
+                        <div class="right5" v-for="item1 in soarr[i]" :key="item1.providerId">
+                            <a href="" class="imgArticle"><img :src="img[item1.providerId]" alt=""></a>
+                            <div style="width:250px;height:100px;">
+                                <a href="" class="site">{{item1.providerName}}</a>
+                                <span :title="item1.serviceInfo" style="display:block;line-height:30px;padding-bottom:20px;">{{item1.serviceName}}</span>
+                            </div>
+                            <p style="width:100px;height:100px;text-align:center;">￥
+                                <span>{{fmtPrice(item1.unitPrice)}}</span>
+                            </p>
+                            <p style="width:80px;height:100px;;text-align:center;">
+                                <span>{{item1.buyNum}}</span>
+                            </p>
+                            <p style="width:110px;height:100px;;text-align:center;border-left:1px solid #ddd;color:#2693d4">￥
+                                <span>{{fmtPrice(item1.totalPrice)}}</span>
+                            </p>
+                            <p class="form" style="line-height:100px;">
+                                <span>{{STATUS[item1.status]}}</span>
+                            </p>
                         </div>
-                        <p style="width:100px;height:100px;text-align:center;">￥
-                            <span>{{fmtPrice(item1.unitPrice)}}</span>
-                        </p>
-                        <p style="width:80px;height:100px;;text-align:center;">
-                            <span>{{item1.buyNum}}</span>
-                        </p>
-                        <p style="width:110px;height:100px;;text-align:center;border-left:1px solid #ddd;color:#2693d4">￥
-                            <span>{{fmtPrice(item1.totalPrice)}}</span>
-                        </p>
-                        <p class="form" style="line-height:100px;">
-                            <span>{{STATUS[item1.status]}}</span>
-                        </p>
+                    </div>
+                    <div class="form form1" style="text-align:center;" v-if="item.status==1">
+                        <a :href='"#/pay?bno="+item.businessNo' style="color:#fff">
+                            <span style="display:inline-block;width:80px;height:35px;line-height:35px;border:1px solid #2693d4;border-radius:5px;background:#2693d4;color:#fff;">
+                                付款
+                            </span>
+                        </a><br>
+                        <span @click="delOrder(item.id,i)" style="display:inline-block;color:red;cursor:pointer;font-size:15px;">删除订单</span>
+                    </div>
+                    <div class="form form1" style="text-align:center;" v-if="item.status!=1">
+                        <span @click="delOrder(item.id,i)" style="display:inline-block;color:red;cursor:pointer;font-size:15px;">删除订单</span>
                     </div>
                 </div>
-                <div class="form form1" style="text-align:center;" v-if="item.status==1">
-                    <a :href='"#/pay?bno="+item.businessNo' style="color:#fff">
-                        <span style="display:inline-block;width:80px;height:35px;line-height:35px;border:1px solid #2693d4;border-radius:5px;background:#2693d4;color:#fff;">
-                            付款
-                        </span>
-                    </a><br>
-                    <span @click="delOrder(item.id,i)" style="display:inline-block;color:red;cursor:pointer;font-size:15px;">删除订单</span>
+            </template>
+            <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="true"></v-page>
+        </div>
+
+        <div v-else class="mmyorder">
+            <div class="tn">
+                <i class="el-icon-arrow-left" @click="back"></i>
+                <span>我的订单</span>
+                <a href="/#">
+                    <i class="iconfont">&#xe60e;</i>
+                </a>
+            </div>
+            <div class="ordermenu" v-for="(item,i) in bolist" v-if="end>item.createTime" :key="i">
+                <div class="omtop">
+                    <p class="tnum">订单号:
+                        <span>{{item.businessNo}}</span>
+                    </p>
+                    <p class="twait">{{STATUS[item.status]}}</p>
                 </div>
-                <div class="form form1" style="text-align:center;" v-if="item.status!=1">
-                    <span @click="delOrder(item.id,i)" style="display:inline-block;color:red;cursor:pointer;font-size:15px;">删除订单</span>
+                <div class="ommid" v-for="item1 in soarr[i]" :key="item1.providerId">
+                    <img :src="img[item1.providerId]" alt="img 404" class="mimg">
+                    <div class="mdiv">
+                        <b>{{item1.serviceName}}</b>
+                        <p class="mtime">下单时间：
+                            <span>{{fmtTime(item.createTime)}}</span>
+                        </p>
+                        <p class="mmoney">
+                            <span>￥{{fmtPrice(item1.unitPrice)}}</span>&nbsp;元</p>
+                        <span class="mnum">×{{item1.buyNum}}</span>
+                    </div>
+                </div>
+                <div class="ombot">
+                    <p>合计:
+                        <span>￥{{fmtPrice(item.totalPrice)}}</span>
+                    </p>
+                    <button class="bdel" @click="delOrder(item.id,i)">删除订单</button>
+                    <button class="bpay" v-if="item.status==1" @click="bpay">付款</button>
                 </div>
             </div>
-        </template>
-
-        <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="true"></v-page>
+        </div>
 
     </div>
 </template>
@@ -118,6 +156,9 @@ export default {
         };
     },
     methods: {
+        back() {
+            window.history.back();
+        },
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
@@ -154,7 +195,7 @@ export default {
             if (this.srchNo || this.startdate || this.enddate) {
                 this.pdata.businessNo = this.srchNo;
                 this.pdata.startTime = !this.startdate ? '' : this.fmtTime(new Date(this.startdate)).substr(0, 10);
-                // this.pdata.endTime = this.fmtTime(new Date(this.enddate)).substr(0, 10);;
+                // this.pdata.endTime = this.fmtTime(new Date(this.enddate)).substr(0, 10);
                 this.end = isNaN(Date.parse(this.enddate)) ? Date.now() : Date.parse(this.enddate);
                 this.getBOrder();
             } else {
@@ -163,8 +204,8 @@ export default {
         },
         getBOrder() {
             this.loading = true;
+            !this.isPC ? this.$indicator.open() : 0;
             this.ajax.post('/xinda-api/business-order/grid', this.pdata).then((res) => {
-                // console.log('b', res);
                 if (res.data.data) {
                     this.pageSize = res.data.pageSize;
                     this.bolist = res.data.data.sort((a, b) => b.createTime - a.createTime);
@@ -172,13 +213,18 @@ export default {
                     this.soarr = [];
                     this.getsoarr();
                 } else {
-                    this.$message(res.data.msg);
+                    this.isPC
+                        ? this.$message(res.data.msg)
+                        : this.$toast(res.data.msg);
                 }
             }).catch(error => {
                 if (error.response) {
                     if (error.response.status == 400) {
                         this.loading = false;
-                        this.$message('请输入正确的订单号');
+                        !this.isPC ? this.$indicator.close() : 0;
+                        this.isPC
+                            ? this.$message('请输入正确的订单号')
+                            : this.$toast('请输入正确的订单号');
                     }
                 } else {
                     // Something happened in setting up the request that triggered an Error
@@ -189,50 +235,76 @@ export default {
         getsoarr() {
             var bo = this.bolist;
             var len = bo.length;
-            for (var i = 0; i < len; i++) {
+            for (let i = 0; i < len; i++) {
                 var bno = bo[i].businessNo;
                 this.ajax.post('/xinda-api/service-order/grid', {
                     businessNo: bno,
                     startTime: '',
                     endTime: '',
                     start: 0,
-                }).then((res) => {
-                    // console.log('s', res);
+                }).then((res) => {                    
                     if (res.data.data) {
                         this.soarr.push(res.data.data);
                         this.soarr = this.soarr.sort((a, b) => b[0].createTime - a[0].createTime);
-                        setTimeout(() => this.loading = false, 100);
+                        if (i == len - 1) {
+                            this.loading = false;
+                            !this.isPC ? this.$indicator.close() : 0;
+                        }
                     }
                 })
             }
         },
         delOrder(id, i) {
-            this.$confirm('确定删除该订单吗?', '信息', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning',
-                lockScroll: false,
-            }).then(() => {
-                this.ajax.post(
-                    '/xinda-api/business-order/del',
-                    { id }
-                ).then((res) => {
-                    console.log('del', res);
-                    if (res.data.status == 1) {
-                        this.bolist.splice(i, 1);
-                        this.soarr.splice(i, 1);
-                        // this.getBOrder();
-                        this.$message.success(res.data.msg);
-                    } else {
-                        this.$message.warning(res.data.msg);
-                    }
-                }).catch(error => {
-                    console.error(error);
+            if (!this.isPC) {
+                this.$messagebox.confirm('确定删除该产品吗?').then(action => {
+                    this.ajax.post(
+                        '/xinda-api/business-order/del',
+                        { id }
+                    ).then((res) => {
+                        if (res.data.status == 1) {
+                            this.bolist.splice(i, 1);
+                            this.soarr.splice(i, 1);
+                            // this.getBOrder();
+                            this.$toast(res.data.msg);
+                        } else {
+                            this.$toast(res.data.msg);
+                        }
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                }).catch(() => {
+
+                });;
+            } else {
+                this.$confirm('确定删除该订单吗?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                    lockScroll: false,
+                }).then(() => {
+                    this.ajax.post(
+                        '/xinda-api/business-order/del',
+                        { id }
+                    ).then((res) => {
+                        if (res.data.status == 1) {
+                            this.bolist.splice(i, 1);
+                            this.soarr.splice(i, 1);
+                            // this.getBOrder();
+                            this.$message.success(res.data.msg);
+                        } else {
+                            this.$message.warning(res.data.msg);
+                        }
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                }).catch(() => {
+                    this.$message({ type: 'info', message: '已取消删除' });
                 });
-            }).catch(() => {
-                this.$message({ type: 'info', message: '已取消删除' });
-            });
+            }
         },
+        bpay() {
+            this.$toast('目前仅支持微信支付,请在微信浏览器打开');
+        }
 
     },
     watch: {
@@ -404,6 +476,115 @@ button {
     text-align: center;
     button {
         margin: 0 !important;
+    }
+}
+
+.mmyorder {
+    width: 100%;
+    font-size: .16rem;
+    .tn {
+        display: flex;
+        width: 100%;
+        height: .5rem;
+        line-height: .5rem;
+        color: #666;
+        font-size: .16rem;
+        background: #f6f6f6;
+        i {
+            margin-top: 4.5%;
+            margin-left: 5%;
+        }
+        i:last-child {
+            margin-right: .3rem;
+            font-size: .27rem;
+        }
+        span {
+            display: inline-block;
+            width: 25%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        a {
+            text-decoration: none;
+        }
+    }
+    .ordermenu {
+        &:last-child {
+            margin-bottom: 0.6rem;
+        }
+        .omtop {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4%;
+            margin-bottom: 4%;
+            .tnum {
+                margin-left: 5%;
+            }
+            .twait {
+                min-width: 20%;
+                margin-right: 5%;
+                text-align: right;
+            }
+        }
+        .ommid {
+            width: 100%;
+            display: flex;
+            background-color: #f6f6f6;
+            padding-top: 5%;
+            padding-bottom: 5%;
+            .mimg {
+                display: block;
+                margin-left: 5%;
+                width: 0.83rem;
+                height: 0.83rem;
+                border: 1px solid #666;
+            }
+            .mdiv {
+                margin-left: 3%;
+                .mtime {
+                    margin-top: 3%;
+                }
+                .mmoney {
+                    margin-top: 4%;
+                    span {
+                        color: red;
+                        font-size: .25rem;
+                    }
+                }
+                .mnum {
+                    display: block;
+                    margin-top: -0.32rem;
+                    margin-left: 1.5rem;
+                    font-size: .25rem;
+                }
+            }
+        }
+        .ombot {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 0.1rem;
+            padding-bottom: 0.1rem;
+            border-bottom: 15px solid #ddd;
+            p {
+                span {
+                    color: red;
+                }
+            }
+            .bdel {
+                color: red;
+                background: 0;
+                border: 0;
+                margin-left: 20%;
+            }
+            .bpay {
+                width: 0.55rem;
+                color: white;
+                background-color: #2595d0;
+                border: 0;
+                border-radius: 2px;
+                margin-left: -2%;
+            }
+        }
     }
 }
 </style>

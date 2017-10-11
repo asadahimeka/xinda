@@ -76,7 +76,7 @@
                 </div>
             </a>
         </div>
-        <mmProperty></mmProperty>
+        <mmProperty v-if="!isPC"></mmProperty>
         <xIndex></xIndex>
         <mmProperty v-if="isPC"></mmProperty>
         <mmService v-if="isPC"></mmService>

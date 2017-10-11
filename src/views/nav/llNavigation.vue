@@ -245,7 +245,7 @@ export default {
 <style lang="less" scoped>
 .mainA {
     .allNavigation {
-        z-index: 10002;
+        z-index: 9999;
     }
 }
 

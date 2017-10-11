@@ -86,7 +86,7 @@ export default {
             return info.length > 33 ? info.substring(0, 32) + '...' : info;
         },
         getRecom() {
-            if (this.isPC) this.loadingIns = this.$loading({ fullscreen: true });
+            if (this.isPC) this.loadingIns = this.$loading({ fullscreen: true, lock: true });
             this.ajax.post('/xinda-api/recommend/list').then((res) => {
                 if (res.data.status == 1) {
                     this.starlist = res.data.data.product;

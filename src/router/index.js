@@ -111,7 +111,7 @@ const router = new Router({
                             path: 'Order',
                             component: Order,
                             alias: '/MemberCen',
-                            meta: { pageTitle: '信达_我的订单' }
+                            meta: { pageTitle: '信达_会员中心' }
                         }, {//评价列表
                             path: 'Evaluate',
                             component: Evaluate,

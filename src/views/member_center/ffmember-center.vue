@@ -1,6 +1,6 @@
 <template>
     <div id="member-center">
-        <div class="member-left">
+        <div class="member-left" v-if="isPC">
             <div style="width:242px;height:20px;color:#696969;margin:10px;">首页 / 个人中心</div>
             <div class="member-user">
                 <div class="via">
@@ -132,3 +132,15 @@ export default {
     background: #d7d7d7;
 }
 </style>
+<style lang="less">
+@media screen and (max-width: 767px){
+    #member-center{
+        width: 100% !important;
+        margin: 0 !important;
+        >div{
+            width: 100%;
+        }
+    }
+}
+</style>
+

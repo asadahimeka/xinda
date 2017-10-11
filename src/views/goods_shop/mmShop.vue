@@ -1,5 +1,7 @@
 <template>
-    <div class="shop container">
+<div>
+    <!-- PC端 -->
+    <div class="shop container" v-if="isPC">
         <!-- 店鋪信息 -->
         <div class="shopHeader">
             <div><img :src="logoImg(shopinfo.providerImg)" alt="logo"></div>
@@ -52,6 +54,31 @@
 
         </div>
     </div>
+    <!-- WEB端 -->
+    <div class="webshop" v-if="!isPC">
+        <!-- 店鋪信息 -->
+            <div><img :src="logoImg(shopinfo.providerImg)" alt="logo"></div>
+            <h5>{{shopinfo.name}}</h5>
+            <p>{{shopinfo.providerInfo}}</p>
+    </div>
+    <div class="webmoduleTitle">
+        <h6>知识产权</h6>
+    </div>
+    <div class="webmoduleBodyB clearfix">
+        <!-- 产品列表 -->
+        <div v-for="(content,i) in contentList" class="contentbox" :key="i">
+            <div class="boxleft">
+                <img :src="logoImg(content.providerImg)">
+            </div>
+            <div class="boxright">
+                <h3><a :href='""+content.id'>{{content.serviceName}}</a></h3>
+                <p><a :href='""+content.id'>{{content.serviceInfo}}</a></p>
+                <div class="address">{{content.regionName}}</div>
+                <p class="price">￥ {{content.price/100}}</p>
+            </div>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -115,7 +142,7 @@ export default {
 
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .container {
     width: 1200px;
     margin: 0 auto;
@@ -307,9 +334,117 @@ export default {
         top: 600px;
         left: 220px;
     }
+    .el-tabs__content {
+        overflow: visible ;
+    }
 }
 
 .el-tabs__content {
     overflow: visible;
 }
+
+// WEB端
+.webshop {
+    margin: 5%;
+    // height: 1.5rem;
+    text-align: center;
+    font-size: .14rem;
+    img {
+        padding-top: .3rem;
+        max-width: 100%;
+    }
+    h5 {
+        padding: .1rem;
+        font-size: .2rem;
+    }
+    p {
+        padding: .2rem 0;
+        text-align: left;
+        line-height: 2;
+    }
+}
+.webmoduleTitle {
+    height: .38rem;
+    border-bottom: 2px solid #2693d4;
+    line-height: .38rem;
+    margin: .2rem 0;
+
+    h6 {
+        padding-left: .2rem;
+        font-size: .2rem;
+        font-weight: 400;
+    }
+}
+
+.webmoduleBodyB {
+    margin: 5%;
+    font-size: .14rem;
+
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+
+    h3 {
+        font-size: .16rem;
+    }
+    .contentbox {
+        position: relative;
+        width: 100%;
+        padding: .2rem 0;
+        border-bottom: 1px solid #ccc;
+        overflow: hidden;
+
+        & > div {
+            float: left;
+        }
+    }
+    .boxleft {
+        float: left;
+        margin-right: .1rem;
+        width: 20%;
+        line-height: .7rem;
+        height: 0.7rem;
+        text-align: center;
+        vertical-align:middle;
+        border: 1px solid #ccc;
+
+        img {
+            max-width: 100%;
+            vertical-align: middle;
+        }
+    }
+    .boxright {
+        width: 75%;
+        line-height: 1.5;
+    }
+    img {
+        clear: both;
+    }
+    .price {
+        position: relative;
+        right: .1rem;
+    }
+    .address {
+        padding-top: .05rem;
+        font-size: .12rem;
+    }
+    p {
+        overflow:hidden; 
+        text-overflow:ellipsis;
+        display:-webkit-box; 
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp:2; 
+    }
+}
+
+.clearfix:after {
+    content: ""; //设置内容为空
+    height: 0; //高度为0
+    line-height: 0; //行高为0
+    display: block; //将文本转为块级元素
+    visibility: hidden; //将元素隐藏
+    clear: both //清除浮动
+}
+ 
 </style>

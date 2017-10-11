@@ -24,6 +24,7 @@ import Shdetail from '../views/goods_shop/xxspdetail.vue'
 import mmShopList from '../views/goods_shop/mmShopList.vue'
 import mmShop from '../views/goods_shop/mmShop.vue'
 import mmsearch from '../views/goods_shop/mmsearch.vue'
+import mmShopListweb from '../views/goods_shop/mmShopListweb.vue'
 
 import MemberCen from '../views/member_center/ffmember-center.vue'
 import Order from '../views/member_center/ffmember-first.vue'
@@ -82,6 +83,11 @@ const router = new Router({
                     path: 'shoplist',
                     name: 'mmShopList',
                     component: mmShopList,
+                    meta: { pageTitle: '信达_店铺列表' }
+                }, {//店铺列表web
+                    path: 'shoplistweb',
+                    name: 'mmShopListweb',
+                    component: mmShopListweb,
                     meta: { pageTitle: '信达_店铺列表' }
                 }, {//店铺详情
                     path: 'shop',

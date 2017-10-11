@@ -35,103 +35,6 @@ import Uerset from '../views/member_center/ffmember-third.vue'
 Vue.use(Router);
 
 const router = new Router({
-  routes: [
-    {
-      path: '/',
-      component: Contents,
-      children: [
-        {//首页
-          path: 'ConsoleAdvertisement',
-          component: ConsoleAdvertisement,
-          alias: '/',
-        }, {//加入我们
-          path: 'JoinUs',
-          component: JoinUs
-        }, {//购物车
-          path: 'shcart',
-          name: 'shcart',
-          component: Shcart
-        }, {//支付页面
-          path: 'pay',
-          name: 'pay',
-          component: Pay
-        }, {//支付成功
-          path: 'siharauseikou',
-          name: 'paysuccess',
-          component: PaySuccess
-        }, {//支付失败
-          path: 'siharausippai',
-          name: 'payfail',
-          component: PayFail
-        }, {//商品列表
-          path: 'slist',
-          name: 'srvlist',
-          component: Financial
-        }, {//商品详情
-          path: 'shdetail',
-          name: 'shdetail',
-          component: Shdetail
-        }, {//店铺列表
-          path: 'shoplist',
-          name: 'mmShopList',
-          component: mmShopList,
-        }, 
-        {//店铺列表web
-          path: 'shoplistweb',
-          name: 'mmShopListweb',
-          component: mmShopListweb,
-        }, 
-        {//店铺详情
-          path: 'shop',
-          name: 'mmShop',
-          component: mmShop
-        }, {//搜索页面
-          path: 'search',
-          name: 'mmsearch',
-          component: mmsearch
-        }, {//会员中心
-          path: 'MemberCen',
-          component: MemberCen,
-          meta: {
-            requireAuth: true,  // 需要登录
-          },
-          children: [
-            {//订单列表
-              path: 'Order',
-              component: Order,
-              alias: '/MemberCen'
-            }, {//评价列表
-              path: 'Evaluate',
-              component: Evaluate,
-            }, {//用户设置
-              path: 'Uerset',
-              component: Uerset
-            }
-          ]
-        }, {
-          path: 'MobileNav',
-          component: MobileNav
-        }
-      ]
-    }, {//登录页面
-      path: '/Logon',
-      component: Logon,
-    }, {//注册页面
-      path: '/Register',
-      component: Register
-    }, {//忘记密码
-      path: '/ForPSD',
-      component: ForPSD
-    }, {//支付加载
-      path: '/paybridge',
-      name: 'paybdg',
-      component: PayBridge
-    },
-    {//404
-      path: '*',
-      component: Nfd
-    },
-  ],
     routes: [
         {
             path: '/',
@@ -181,12 +84,12 @@ const router = new Router({
                     name: 'mmShopList',
                     component: mmShopList,
                     meta: { pageTitle: '信达_店铺列表' }
-                },{//店铺列表web
-                  path: 'shoplistweb',
-                  name: 'mmShopListweb',
-                  component: mmShopListweb,
-                  meta: { pageTitle: '信达_店铺列表' }
-              }, {//店铺详情
+                }, {//店铺列表web
+                    path: 'shoplistweb',
+                    name: 'mmShopListweb',
+                    component: mmShopListweb,
+                    meta: { pageTitle: '信达_店铺列表' }
+                }, {//店铺详情
                     path: 'shop',
                     name: 'mmShop',
                     component: mmShop,

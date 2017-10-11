@@ -33,7 +33,7 @@
             </template>
         </div>
         <!-- 分页 -->
-        <v-page v-show="pageshow" :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
+        <!-- <v-page v-show="pageshow" :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page> -->
 
     </div>
 
@@ -57,29 +57,14 @@ export default {
         return {
             shopinfo: { providerImg: '', businessCertPath: '' },
             activeName: 'first',
-            pageSize: 0,
             start: 0,
-            limit: 6,
-            cur: 1,
+            limit: 2000,
             contentList: [],
-            pageshow: true,
         };
     },
     methods: {
         logoImg(providerImg) {
             return providerImg.substr(0, 1) == '/' ? 'http://115.182.107.203:8088/xinda/pic' + providerImg : providerImg;
-        },
-        businessImg(businessCertPath) {
-            return businessCertPath.substr(0, 1) == '/' ? 'http://115.182.107.203:8088/xinda/pic' + businessCertPath : businessCertPath;
-        },
-        handleClick(tab, event) {
-            this.pageshow = tab.index != 0 ? false : true;
-        },
-        pageChange(curPage) {
-            this.cur = curPage;
-            this.start = (curPage - 1) * this.limit;
-            this.loading = true;
-            this.getServCont();
         },
         getServCont() {
             !this.isPC?this.$indicator.open():0;

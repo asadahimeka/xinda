@@ -265,8 +265,7 @@ a {
 }
 
 .starty {
-    font-size: .16rem;
-    margin-top: 53px;
+    font-size: .18rem;
     width: 100%;
     margin-left: auto;
     margin-right: auto;

@@ -1,77 +1,110 @@
 <template>
-    <div class="property container">
-        <div class="moduleTitle">
-            <h3>知识产权</h3>
-        </div>
-        <div class="moduleBodyB">
-            <div>
-                <div>
-                    <h3><a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8">知识产权</a></h3>
-                    <ul>
-                        <li><a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8">|&nbsp;商标注册</a></li>
-                        <li><a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=9">|&nbsp;版权保护</a></li>
-                        <li><a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=10">|&nbsp;专利申请</a></li>
-                    </ul>
-                </div>
-                <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../../static/images/property_03.jpg" alt=""></a>
+    <div>
+        <!-- PC端 -->
+        <div class="property container" v-if="isPC">
+            <div class="moduleTitle">
+                <h3>知识产权</h3>
             </div>
-            <div>
+            <div class="moduleBodyB">
                 <div>
-                    <h3>商标注册</h3>
-                    <p>急速申报，办理简单</p>
-                    <h2>￥1000
-                        <span>/次</span>
+                    <div>
+                        <h3>
+                            <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8">知识产权</a>
+                        </h3>
+                        <ul>
+                            <li>
+                                <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8">|&nbsp;商标注册</a>
+                            </li>
+                            <li>
+                                <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=9">|&nbsp;版权保护</a>
+                            </li>
+                            <li>
+                                <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=10">|&nbsp;专利申请</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../../static/images/property_03.jpg" alt=""></a>
+                </div>
+                <div>
+                    <div>
+                        <h3>商标注册</h3>
+                        <p>急速申报，办理简单</p>
+                        <h2>￥1000
+                            <span>/次</span>
+                        </h2>
+                    </div>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../../static/images/property_05.jpg" alt=""></a>
+                </div>
+                <div>
+                    <div>
+                        <h3>版权专利</h3>
+                        <p>快速提交，全程跟踪</p>
+                        <h2>￥1000
+                            <span>/次</span>
+                        </h2>
+                    </div>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=10"><img src="../../../static/images/property_07.jpg" alt=""></a>
+                </div>
+                <div>
+                    <div>
+                        <h3>著作权</h3>
+                        <p>专业顾问，经验丰富，快速响应，顺利拿证！</p>
+                        <h2>￥1000
+                            <span>/次</span>
+                        </h2>
+                    </div>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=9"><img src="../../../static/images/property_11.jpg" alt=""></a>
+                </div>
+            </div>
+            <div class="propertyFooter">
+                <div>
+                    <img src="../../assets/icon_certification.png" alt="">
+                    <h2>资质认证<br>
+                        <span>服务商100%实名认证</span>
                     </h2>
                 </div>
-                <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../../static/images/property_05.jpg" alt=""></a>
-            </div>
-            <div>
                 <div>
-                    <h3>版权专利</h3>
-                    <p>快速提交，全程跟踪</p>
-                    <h2>￥1000
-                        <span>/次</span>
+                    <img src="../../assets/icon_pay.png" alt="">
+                    <h2>支付安全<br>
+                        <span>明码标价支付</span>
                     </h2>
                 </div>
-                <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=10"><img src="../../../static/images/property_07.jpg" alt=""></a>
-            </div>
-            <div>
                 <div>
-                    <h3>著作权</h3>
-                    <p>专业顾问，经验丰富，快速响应，顺利拿证！</p>
-                    <h2>￥1000
-                        <span>/次</span>
+                    <img src="../../assets/icon_compensation.png" alt="">
+                    <h2>保险赔付<br>
+                        <span>出现问题保险赔付</span>
                     </h2>
                 </div>
-                <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=9"><img src="../../../static/images/property_11.jpg" alt=""></a>
+                <div>
+                    <img src="../../assets/icon_aftersale.png" alt="">
+                    <h2>售后无忧<br>
+                        <span>客服经理全程跟进</span>
+                    </h2>
+                </div>
             </div>
         </div>
-        <div class="propertyFooter">
-            <div>
-                <img src="../../assets/icon_certification.png" alt="">
-                <h2>资质认证<br>
-                    <span>服务商100%实名认证</span>
-                </h2>
+
+        <!-- WEB端 -->
+        <div v-if="!isPC">
+            <div class="webmoduleTitle">
+                <h6>知识产权</h6>
             </div>
-            <div>
-                <img src="../../assets/icon_pay.png" alt="">
-                <h2>支付安全<br>
-                    <span>明码标价支付</span>
-                </h2>
-            </div>
-            <div>
-                <img src="../../assets/icon_compensation.png" alt="">
-                <h2>保险赔付<br>
-                    <span>出现问题保险赔付</span>
-                </h2>
-            </div>
-            <div>
-                <img src="../../assets/icon_aftersale.png" alt="">
-                <h2>售后无忧<br>
-                    <span>客服经理全程跟进</span>
-                </h2>
+            <div class="webmoduleBodyB clearfix">
+                <div>
+                    <h6>商标注册</h6>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../../static/images/property_05.jpg" alt="商标注册"></a>
+                </div>
+                <div>
+                    <h6>版权专利</h6>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=10"><img src="../../../static/images/property_07.jpg" alt="版权专利"></a>
+                </div>
+                <div>
+                    <h6>著作权</h6>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=9"><img src="../../../static/images/property_11.jpg" alt="著作权"></a>
+                </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -174,5 +207,61 @@
             }
         }
     }
+}
+
+// web端
+.webmoduleTitle {
+    height: .38rem;
+    border-bottom: 2px solid #2693d4;
+    line-height: .38rem;
+    margin: .2rem 0;
+
+    h6 {
+        padding-left: .2rem;
+        font-size: .2rem;
+        font-weight: 400;
+    }
+}
+
+.webmoduleBodyB {
+    margin: 5%;
+
+    &>div {
+        position: relative;
+        float: left;
+        width: 48%; // overflow: hidden;
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+    &> :nth-child(2) {
+        margin-left: 4%;
+    }
+    &> :nth-child(3) {
+        width: 100%;
+        top: -.2rem;
+    }
+
+    h6 {
+        position: absolute;
+        right: .15rem;
+        bottom: .35rem;
+        font-size: .18rem;
+        font-weight: 400;
+    }
+}
+
+.clearfix:after {
+    content: ""; //设置内容为空
+    height: 0; //高度为0
+    line-height: 0; //行高为0
+    display: block; //将文本转为块级元素
+    visibility: hidden; //将元素隐藏
+    clear: both //清除浮动
+}
+
+.clearfix {
+    zoom: 1;
 }
 </style>

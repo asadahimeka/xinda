@@ -1,5 +1,7 @@
 <template>
-    <div class="shoplist container">
+<div>
+    <!-- PC端 -->
+    <div class="shoplist container" v-if="isPC">
         <!-- 面包屑导航 -->
         <div class="Breadcrumb">
             <el-breadcrumb separator="/">
@@ -68,6 +70,8 @@
         <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
 
     </div>
+    
+</div>
 </template>
 
 <script>

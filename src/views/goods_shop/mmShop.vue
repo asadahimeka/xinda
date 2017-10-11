@@ -22,7 +22,7 @@
             </div>
         </div>
         <!-- 内容区 -->
-        <div class="shopRight">
+        <div class="shopRight" v-loading="loading">
             <el-tabs v-model="activeName" @tab-click="handleClick">
                 <el-tab-pane class="product" label="服务产品" name="first">
                     <h1>服务内容</h1>
@@ -54,43 +54,45 @@
 
         </div>
     </div>
+   
     <!-- WEB端 -->
-    <div v-if="!isPC">
-    
-    <div class="webshop" >
-        <!-- 店鋪信息 -->
+    <div v-if="!isPC" v-loading.fullscreen.lock="Loading" element-loading-text="加载中">
+
+        <div class="webshop">
+            <!-- 店鋪信息 -->
             <div><img :src="logoImg(shopinfo.providerImg)" alt="logo"></div>
             <h5>{{shopinfo.name}}</h5>
             <p>{{shopinfo.providerInfo}}</p>
-    </div>
-    <div class="webmoduleTitle">
-        <h6>知识产权</h6>
-    </div>
-    
-    <div class="Shopboxbody" v-loading="loading">
-        <template v-for="(content,i) in contentList">
-            <a :href='"#/shdetail?sid="+content.id'>
-                <div class="shopBox" :key="content.id">
-                    <div class="boxleft">
-                        <img :src="logoImg(content.providerImg)">
-                    </div>
-                    <div class="boxright">
-                        <h3>{{content.serviceName}}</h3>
-                        <p>{{content.serviceInfo}}</p>
-                        <div class="address">{{content.regionName}}</div>
-                        <div class="price"><span>￥{{content.price/100}}</span>元</div>
-                        
-                    </div>
-                </div>
-            </a>
-        </template>
-    </div>
-    <!-- 分页 -->
-    <v-page v-show="pageshow" :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
+        </div>
+        <div class="webmoduleTitle">
+            <h6>知识产权</h6>
+        </div>
 
-        
+        <div class="Shopboxbody" >
+            <template v-for="(content,i) in contentList">
+                <a :href='"#/shdetail?sid="+content.id'>
+                    <div class="shopBox" :key="content.id">
+                        <div class="boxleft">
+                            <img :src="logoImg(content.providerImg)">
+                        </div>
+                        <div class="boxright">
+                            <h3>{{content.serviceName}}</h3>
+                            <p>{{content.serviceInfo}}</p>
+                            <div class="address"><i class="iconfont">&#xe603;</i>{{content.regionName}}</div>
+                            <div class="price">
+                                <span>￥{{content.price/100}}</span>元</div>
+
+                        </div>
+                    </div>
+                </a>
+            </template>
+        </div>
+        <!-- 分页 -->
+        <v-page v-show="pageshow" :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
+
     </div>
-</div>
+    </div>
+
 </template>
 
 <script>
@@ -453,12 +455,16 @@ export default {
             }
             .address {
                 margin: .12rem;
-                font-size: .12rem;
+                font-size: .1rem;
+                // max-width: 1.3rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
             .price {
                 position: absolute;
                 right: 0;
-                bottom: -0.1rem;
+                bottom: -.05rem;
 
                 span {
                 font-size: .18rem;

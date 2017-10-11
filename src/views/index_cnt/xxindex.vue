@@ -86,12 +86,16 @@ export default {
             return info.length > 33 ? info.substring(0, 32) + '...' : info;
         },
         getRecom() {
-            let loading = this.$loading({ fullscreen: true });
+            if (this.isPC) this.loadingIns = this.$loading({ fullscreen: true });
             this.ajax.post('/xinda-api/recommend/list').then((res) => {
                 if (res.data.status == 1) {
                     this.starlist = res.data.data.product;
                     this.relist = res.data.data.hq;
-                    !this.isPC ? this.$indicator.close() : loading.close();
+                    if (this.isPC) {
+                        this.loadingIns ? this.loadingIns.close() : 0;
+                    } else {
+                        this.$indicator.close();
+                    }
                 } else {
                     this.err = 1;
                     this.isPC

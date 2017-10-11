@@ -4,7 +4,7 @@
             <ul>
                 <li class="mainA" @mouseleave="handleMl">
                     <a href="/#/" :class="{acta:$route.path=='/'}" @mouseenter="handleMe">全部产品</a>
-                    <el-collapse-transition>
+                    <transition name="el-zoom-in-top">
                         <div class="allNavigation" v-show="show">
                             <div class="finance">
                                 <i class="navigationLogo">
@@ -13,7 +13,7 @@
                                 <div class="textRight">
                                     <div class="titleRight">
                                         财税服务
-                                    </div>                        
+                                    </div>
                                     <div class="textDetail">
                                         <p>代理记账</p>
                                         <p>税务代办</p>
@@ -187,7 +187,7 @@
                                 </div>
                             </div>
                         </div>
-                    </el-collapse-transition>
+                    </transition>
                 </li>
                 <li>
                     <a href="#/slist?id=2e110f0df53243c197fede52fba8e5d0&code=1&pid=8a82f52b674543e298d2e5f685946e6e" :class="{acta:$route.fullPath.indexOf('2e110f0df53243c197fede52fba8e5d0')>-1}">
@@ -221,17 +221,9 @@ export default {
     methods: {
         handleMl() {
             this.$route.path == '/' ? 0 : this.show = 0;
-            setTimeout(function() {
-                var div = document.querySelector('.allNavigation');
-                div.style.overflow = 'hidden';
-            }, 0);
         },
         handleMe() {
             this.$route.path == '/' ? 0 : this.show = 1;
-            setTimeout(function() {
-                var div = document.querySelector('.allNavigation');
-                div.style.overflow = 'visible';
-            }, 500);
         },
     },
     watch: {

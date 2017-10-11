@@ -55,7 +55,9 @@
         </div>
     </div>
     <!-- WEB端 -->
-    <div class="webshop" v-if="!isPC">
+    <div v-if="!isPC">
+    
+    <div class="webshop" >
         <!-- 店鋪信息 -->
             <div><img :src="logoImg(shopinfo.providerImg)" alt="logo"></div>
             <h5>{{shopinfo.name}}</h5>
@@ -64,19 +66,27 @@
     <div class="webmoduleTitle">
         <h6>知识产权</h6>
     </div>
-    <div class="webmoduleBodyB clearfix">
-        <!-- 产品列表 -->
-        <div v-for="(content,i) in contentList" class="contentbox" :key="i">
-            <div class="boxleft">
-                <img :src="logoImg(content.providerImg)">
+    
+    <div class="Shopboxbody" v-loading="loading">
+        <template v-for="(content,i) in contentList">
+            <div class="shopBox" :key="content.id" @click="enter(info.id)">
+                <div class="boxleft">
+                    <img :src="logoImg(content.providerImg)">
+                </div>
+                <div class="boxright">
+                    <h3>{{content.serviceName}}</h3>
+                    <p>{{content.serviceInfo}}</p>
+                    <div class="address">{{content.regionName}}</div>
+                    <div class="price">￥ {{content.price/100}}<span>元</span></div>
+                    
+                </div>
             </div>
-            <div class="boxright">
-                <h3><a :href='""+content.id'>{{content.serviceName}}</a></h3>
-                <p><a :href='""+content.id'>{{content.serviceInfo}}</a></p>
-                <div class="address">{{content.regionName}}</div>
-                <p class="price">￥ {{content.price/100}}</p>
-            </div>
-        </div>
+        </template>
+    </div>
+    <!-- 分页 -->
+    <v-page v-show="pageshow" :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
+
+        
     </div>
 </div>
 </template>
@@ -97,6 +107,7 @@ export default {
     },
     data() {
         return {
+            loading: true,
             shopinfo: { providerImg: '', businessCertPath: '' },
             activeName: 'first',
             pageSize: 0,
@@ -120,6 +131,7 @@ export default {
         pageChange(curPage) {
             this.cur = curPage;
             this.start = (curPage - 1) * this.limit;
+            this.loading = true;
             this.getServCont();
         },
         getServCont() {
@@ -127,11 +139,13 @@ export default {
                 start: this.start,
                 limit: this.limit,
                 providerId: this.$route.query.id,
+                
             };
             this.ajax.post('xinda-api/product/package/grid', canshu1, {}).then((data) => {
                 this.contentList = data.data.data;
                 // console.log(data.data.data);
                 this.pageSize = data.data.pageSize;
+                this.loading = false;
             }).catch((error) => {
                 console.log('axios error', error);
             });
@@ -376,75 +390,48 @@ export default {
     }
 }
 
-.webmoduleBodyB {
-    margin: 5%;
-    font-size: .14rem;
+.Shopboxbody {
+    overflow: hidden;
+    margin: 0 auto;
+    width: 90%;
 
-    a {
-        color: #000;
-        text-decoration: none;
-    }
-
-    h3 {
-        font-size: .16rem;
-    }
-    .contentbox {
-        position: relative;
-        width: 100%;
+    .shopBox {
         padding: .2rem 0;
         border-bottom: 1px solid #ccc;
         overflow: hidden;
+        font-size: .13rem;
 
-        & > div {
+        .boxleft {
             float: left;
-        }
-    }
-    .boxleft {
-        float: left;
-        margin-right: .1rem;
-        width: 20%;
-        line-height: .7rem;
-        height: 0.7rem;
-        text-align: center;
-        vertical-align:middle;
-        border: 1px solid #ccc;
-
-        img {
-            max-width: 100%;
+            margin-right: .2rem;
+            width: .9rem;
+            line-height: .9rem;
+            height: 0.9rem;
+            text-align: center;
             vertical-align: middle;
+            border: 1px solid #ccc;
+
+            img {
+                max-width: 100%;
+                vertical-align: middle;
+            }
+        }
+        .boxright {
+            text-align: left;
+            line-height: 1.5;
+
+            div {
+                margin-bottom: .06rem;
+            }
+            &> :nth-child(1) {
+                font-size: .16rem;
+                font-weight: 700;
+            }
+            span {
+                color: #F00;
+            }
         }
     }
-    .boxright {
-        width: 75%;
-        line-height: 1.5;
-    }
-    img {
-        clear: both;
-    }
-    .price {
-        position: relative;
-        right: .1rem;
-    }
-    .address {
-        padding-top: .05rem;
-        font-size: .12rem;
-    }
-    p {
-        overflow:hidden; 
-        text-overflow:ellipsis;
-        display:-webkit-box; 
-        -webkit-box-orient:vertical;
-        -webkit-line-clamp:2; 
-    }
-}
-
-.clearfix:after {
-    content: ""; //设置内容为空
-    height: 0; //高度为0
-    line-height: 0; //行高为0
-    display: block; //将文本转为块级元素
-    visibility: hidden; //将元素隐藏
-    clear: both //清除浮动
 }
  
 </style>

@@ -211,6 +211,7 @@ export default {
         },
     },
     created() {
+        !this.isPC ? this.$router.push('/shoplistweb') : 0;
         this.getShop();
     },
 }

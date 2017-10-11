@@ -13,7 +13,7 @@
                                 <div class="textRight">
                                     <div class="titleRight">
                                         财税服务
-                                    </div>
+                                    </div>                        
                                     <div class="textDetail">
                                         <p>代理记账</p>
                                         <p>税务代办</p>
@@ -245,7 +245,7 @@ export default {
 <style lang="less" scoped>
 .mainA {
     .allNavigation {
-        z-index: 9999;
+        z-index: 10002;
     }
 }
 

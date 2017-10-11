@@ -86,7 +86,7 @@ export default {
         },
         enter(id) {
             this.$router.push({
-                path: '/shop',
+                path: '/shopweb',
                 query: { id },
             })
         },
@@ -102,7 +102,7 @@ export default {
         },
     },
     created() {
-        this.isPC ? this.$router.push('/shoplist') : 0;
+        this.isPC ? this.$router.push('/shoplistweb') : 0;
         this.getShop();
     },
 }

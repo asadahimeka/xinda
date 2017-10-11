@@ -84,12 +84,12 @@ const router = new Router({
                     name: 'mmShopList',
                     component: mmShopList,
                     meta: { pageTitle: '信达_店铺列表' }
-                },{//店铺列表web
-                  path: 'shoplistweb',
-                  name: 'mmShopListweb',
-                  component: mmShopListweb,
-                  meta: { pageTitle: '信达_店铺列表' }
-              }, {//店铺详情
+                }, {//店铺列表web
+                    path: 'shoplistweb',
+                    name: 'mmShopListweb',
+                    component: mmShopListweb,
+                    meta: { pageTitle: '信达_店铺列表' }
+                }, {//店铺详情
                     path: 'shop',
                     name: 'mmShop',
                     component: mmShop,

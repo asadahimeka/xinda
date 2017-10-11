@@ -1,10 +1,10 @@
 <template>
     <div class="sett">
-        <div class="sett1">
+        <div class="sett1" v-if="isPC">
             <a href="javascript:;" class="settin1 m" @click="zhszhxgmm1">账户设置</a>
             <a href="javascript:;" class="settin2" @click="zhszhxgmm2">修改密码</a>
         </div>
-        <div class="setti">
+        <div class="setti" v-if="isPC">
             <!--账户设置部分-->
             <div class="sett2">
                 <span>修改头像：</span>
@@ -41,7 +41,7 @@
             <el-button :plain="true" @click="update">保存</el-button>
         </div>
         <!--账户设置部分-->
-        <div class="password">
+        <div class="password" v-if="isPC">
             <!--修改密码部分-->
             <div>
                 <span>旧密码：</span><input class="input" type="password" v-model="oldPSD"></div>
@@ -52,6 +52,72 @@
             <button @click="setNewPassword">保存</button>
         </div>
         <!--修改密码部分-->
+        <div class="mobileALL" v-if="!isPC">
+            <div class="top">
+                <div class="iconfont" @click="backHistory">
+                    &#xe61f;
+                </div>
+                <div class="title">
+                    账户设置
+                </div>
+            </div>
+            <div class="totalset">
+                <div class="firstTT">
+                    <p>账户设置</p>
+                    <div class="titleLINE"></div>
+                </div>
+                <div class="sett2">
+                    <span>修改头像：</span>
+                    <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </div>
+                <div class="sett3">
+                    <span>姓名：</span><input class="input" type="text" name="" placeholder="请输入姓名" v-model="newname" @focus="focus"></div>
+                <div class="sett4">
+                    <span>性别：</span>
+                    <input type="radio" name="sex" @click="sex=1" :checked="sex==1">&nbsp;男
+                    <input type="radio" style="margin-left:20px" name="sex" @click="sex=0" :checked="sex==0">&nbsp;女
+                </div>
+                <div class="sett3">
+                    <span>邮箱：</span><input class="input" type="text" placeholder="请输入邮箱地址" v-model="email" @focus="focus">
+                </div>
+                <div class="sett5">
+                    <span>所在地区：</span>
+                    <select name="" id="province" @change="ChaProvinceEl" v-model="provinceVal">
+                        <option value="all" selected>省</option>
+                        <option v-for="(province,i) in ProvinceAll" :value="province.item_code" :key="i">{{province.item_name}}</option>
+                    </select>
+                    <select name="" id="city" @change="ChaCityEl" v-model="cityVal">
+                        <option value="all" selected>市</option>
+                        <option v-for="(city,i) in CityAll" :value="city.item_code" :key="i">{{city.item_name}}</option>
+                    </select>
+                    <select name="" id="district" v-model="districtVal">
+                        <option value="all" selected>区</option>
+                        <option v-for="(district,i) in DistrictAll" :value="district.item_code" :key="i">{{district.item_name}}</option>
+                    </select>
+                </div>
+                <el-button :plain="true" @click="update">保存</el-button>
+            </div>
+            <div class="psdset">
+                <div class="firstTT">
+                    <p>密码修改</p>
+                    <div class="titleLINE"></div>
+                </div>
+                <div class="line">
+                    <span>旧密码：</span><input class="input" type="password" v-model="oldPSD">
+                </div>
+                <div class="line">
+                    <span>新密码：</span><input class="input" type="password" v-model="firstPSD">
+                </div>
+                <div class="line">
+                    <span>再次输入新密码：</span><input class="input" type="password" v-model="lastPSD">
+                </div>
+                <button @click="setNewPassword">保存</button>
+            </div>
+        </div>
+        <!-- 手机端一体化 -->
     </div>
 </template>
 
@@ -92,6 +158,9 @@ export default {
         };
     },
     methods: {
+        backHistory: function() {
+            history.go(-1);
+        },
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
             this.$message.success('Upload avatar succeed.')
@@ -406,5 +475,113 @@ input {
     height: 100px;
     border-radius: 100%;
     display: block;
+}
+
+@media screen and (max-width:768px) {
+    .sett {
+        width: 100%;
+        height: 90vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #f2f2f2;
+        overflow-y: auto;
+        .sett3 {
+            margin-top: .15rem;
+        }
+        .firstTT {
+            margin-top: .2rem;
+        }
+        .titleLINE {
+            margin-top: .1rem;
+            width: 95%;
+            height: .01rem;
+            background-color: #2693d4;
+            position: relative;
+            &:before {
+                content: '';
+                width: 0;
+                height: 0;
+                border-left: .03rem solid transparent;
+                border-right: .03rem solid transparent;
+                border-bottom: .06rem solid #2693d4;
+                position: absolute;
+                top: -.05rem;
+                left: .3rem;
+            }
+        }
+        button {
+            width: 1rem;
+            margin: .3rem;
+            height: .3rem;
+            font-size: .15rem;
+            background-color: #2693d4;
+            padding: 0;
+        }
+        .top {
+            width: 100%;
+            border-bottom: .01rem solid #b1b1b1;
+            height: .5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            .iconfont {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: .5rem;
+                height: .5rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: .3rem;
+            }
+            .title {
+                font-size: .2rem;
+            }
+        }
+        .totalset {
+            width: 100%;
+            background-color: #fff;
+            margin-top: .2rem;
+            font-size: .15rem;
+            border-bottom: .01rem solid #b1b1b1;
+            border-top: .01rem solid #b1b1b1;
+            padding-left: .2rem;
+            box-sizing: border-box;
+            input {
+                width: 60%;
+                margin-left: .35rem;
+            }
+            input[type="radio"] {
+                width: .1rem;
+            }
+            select {
+                width: 20%;
+            }
+        }
+        .psdset {
+            width: 100%;
+            background-color: #fff;
+            margin-top: .2rem;
+            font-size: .15rem;
+            border-bottom: .01rem solid #b1b1b1;
+            border-top: .01rem solid #b1b1b1;
+            padding-left: .2rem;
+            box-sizing: border-box;
+            div.line {
+                width: 90%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: .6rem;
+                margin-top: .01rem;
+            }
+            input {
+                width: 55%; 
+            }
+        }
+    }
 }
 </style>

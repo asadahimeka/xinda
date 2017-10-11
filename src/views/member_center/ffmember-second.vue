@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="isPC">
         <div class='appraisal'>
             <div class=" appraisal1">
                 <p>我的评价</p>

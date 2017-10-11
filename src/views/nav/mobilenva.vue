@@ -25,8 +25,8 @@
 export default {
     created() {
         this.$indicator.open();
-        if (this.$route.query.nid) {
-            this.id = this.$route.query.nid;
+        if (this.$route.query.id) {
+            this.id = this.$route.query.id;
         }
         this.getcatalog();
     },
@@ -41,14 +41,11 @@ export default {
     methods: {
         getcatalog: function() {
             this.ajax.post('/xinda-api/product/style/list').then((da) => {
-                console.log(da.data.data);
                 this.firstlist = da.data.data;
-                console.log(this.id);
                 this.secondlist = this.firstlist[this.id].itemList;
                 var ob = Object.entries(this.firstlist).sort(function(a, b) {
                     return a[1].showOrder - b[1].showOrder;
                 });
-                console.log(ob);
                 this.firstlist = ob;
                 this.$indicator.close();
             }).catch((error) => {
@@ -59,7 +56,7 @@ export default {
             this.$router.push({ path: '/slist', query: { id, code, pid } })
         },
         changecatalog: function(newId) {
-            this.$indicator.open('加载中...');
+            this.$indicator.open();
             this.id = newId;
             this.getcatalog();
         }
@@ -73,6 +70,7 @@ export default {
     padding-bottom: .5rem;
     box-sizing: border-box;
     background-color: #f2f2f2;
+    border-radius: 5px;
     display: flex;
     .navleft {
         background-color: #f2f2f2;
@@ -80,7 +78,7 @@ export default {
         .mainnav {
             width: 100%;
             height: .5rem;
-            font-size: .2rem;
+            font-size: .16rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -89,7 +87,8 @@ export default {
     }
     .navright {
         width: 75%;
-        font-size: .2rem;
+        margin-bottom: 0.2rem;
+        font-size: .16rem;
         overflow-y: auto;
         .title {
             width: 100%;

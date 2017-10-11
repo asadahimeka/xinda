@@ -47,6 +47,7 @@
                 <div class="itext">
                     购物车
                 </div>
+                <mt-badge size="small" color="#2693d4" v-if="getCartnum">{{getCartnum}}</mt-badge>
             </div>
             <div :class="{acta:$route.path=='/MemberCen'}" @click="mine">
                 <div class="iconfont">
@@ -61,8 +62,19 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 export default {
+    created() {
+        this.ajax.post('/xinda-api/cart/cart-num').then((res) => {
+            if (res.data.data.cartNum) {
+                this.cartAction(res.data.data.cartNum);
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    },
     methods: {
+        ...mapActions(['cartAction']),
         back() {
             this.$router.push('/');
         },
@@ -74,6 +86,22 @@ export default {
         },
         mine() {
             this.$router.push('/MemberCen')
+        }
+    },
+    computed: {
+        ...mapGetters(['getCartnum']),
+    },
+    watch: {
+        $route(_this) {
+            if (_this) {
+                this.ajax.post('/xinda-api/cart/cart-num').then((res) => {
+                    if (res.data.data.cartNum) {
+                        this.cartAction(res.data.data.cartNum);
+                    }
+                }).catch((error) => {
+                    console.error(error);
+                });
+            }
         }
     }
 }
@@ -140,6 +168,7 @@ export default {
     display: flex;
     box-shadow: 0 0 15px #000;
     >div {
+        position: relative;
         width: 25%;
         height: 100%;
         display: flex;
@@ -157,6 +186,12 @@ export default {
     .acta {
         color: #2792d6;
     }
+}
+
+.mint-badge {
+    position: absolute;
+    top: 0px;
+    right: 21px;
 }
 
 @media screen and (max-width:768px) {

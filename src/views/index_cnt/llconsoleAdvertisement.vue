@@ -2,9 +2,7 @@
     <div>
         <div class="phead" v-if="!isPC">
             <div class="adrs">
-                <div class="iconfont" v-html="state" @click="chad">
-
-                </div>
+                <div class="iconfont" v-html="state" @click="chad"></div>
                 <div class="address" @click="chad">
                     {{address}}
                 </div>
@@ -13,7 +11,7 @@
                 </div>
             </div>
             <div class="logo">
-                <img src="../../assets/logo.png" alt="信达手机端">
+                <img src="../../assets/logo.png" alt="logo">
                 <div class="title">
                     信达
                 </div>
@@ -21,7 +19,7 @@
         </div>
         <swipeimg></swipeimg>
         <div class="nav" v-if="!isPC">
-            <a class="chnav" href="javascript:void(0);">
+            <a class="chnav" href="/#/MobileNav?id=2e110f0df53243c197fede52fba8e5d0">
                 <div class="iconfont wb1">
                     &#xe625;
                 </div>
@@ -29,7 +27,7 @@
                     财税服务
                 </div>
             </a>
-            <a class="chnav" href="javascript:void(0);">
+            <a class="chnav" href="/#/MobileNav?id=5af629246fa34f6f8d49758c6a7b25f1">
                 <div class="iconfont wb2">
                     &#xe647;
                 </div>
@@ -37,7 +35,7 @@
                     开公司
                 </div>
             </a>
-            <a class="chnav" href="javascript:void(0);">
+            <a class="chnav" href="/#/MobileNav?id=5af629246fa34f6f8d49758c6a7b25f1">
                 <div class="iconfont wb3">
                     &#xe607;
                 </div>
@@ -45,7 +43,7 @@
                     公司变更
                 </div>
             </a>
-            <a class="chnav" href="javascript:void(0);">
+            <a class="chnav" href="/#/MobileNav?id=cc7eb9bbd40f4b0e9f31c8cbcb903a59">
                 <div class="iconfont wb4">
                     &#xe6b4;
                 </div>
@@ -53,7 +51,7 @@
                     个人社保
                 </div>
             </a>
-            <a class="chnav" href="javascript:void(0);">
+            <a class="chnav" href="/#/MobileNav?id=cc7eb9bbd40f4b0e9f31c8cbcb903a59">
                 <div class="iconfont wb5">
                     &#xe71d;
                 </div>
@@ -61,7 +59,7 @@
                     公司社保
                 </div>
             </a>
-            <a class="chnav" href="javascript:void(0);">
+            <a class="chnav" href="/#/MobileNav?id=1eff122d06604fc1aadf9e7acefba21a">
                 <div class="iconfont wb6">
                     &#xe67a;
                 </div>
@@ -78,10 +76,10 @@
                 </div>
             </a>
         </div>
-        <!-- <xIndex></xIndex> -->
-            <mmProperty></mmProperty>
-            <!-- <mmService></mmService> -->
-            <!-- <mmPartners></mmPartners> -->
+        <xIndex></xIndex>
+        <mmProperty v-if="isPC"></mmProperty>
+        <mmService v-if="isPC"></mmService>
+        <mmPartners v-if="isPC"></mmPartners>
     </div>
 </template>
 
@@ -118,7 +116,7 @@ export default {
                 this.citylist = es.data.data;
                 this.sh = true;
             }).catch((error) => {
-                console.log(error);
+                console.error(error);
             });
         },
         chcy(e) {
@@ -147,7 +145,8 @@ export default {
             font-size: .01rem;
         }
         .address {
-            font-size: .2rem;
+            padding-left: .05rem;
+            font-size: .16rem;
         }
         .alad {
             position: absolute;
@@ -189,7 +188,7 @@ export default {
         justify-content: center;
         align-items: center;
         img {
-            height: 100%;
+            height: 90%;
         }
         .title {
             font-size: .24rem;
@@ -248,6 +247,9 @@ export default {
             font-size: .13rem;
             text-decoration: none;
             color: black;
+            display: flex;
+            align-items: flex-end;
+            height: .18rem;
         }
     }
 }

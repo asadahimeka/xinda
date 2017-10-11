@@ -116,7 +116,7 @@ export default {
         -webkit-transform: scale(0);
     }
 }
-p{
+#loading p{
     margin: 2rem auto;
     line-height: 1rem; 
     font-size: .2rem;

@@ -201,7 +201,7 @@ export default {
                     if (res.data.data) {
                         this.soarr.push(res.data.data);
                         this.soarr = this.soarr.sort((a, b) => b[0].createTime - a[0].createTime);
-                        this.loading = false;
+                        setTimeout(() => this.loading = false, 100);
                     }
                 })
             }
@@ -227,7 +227,7 @@ export default {
                         this.$message.warning(res.data.msg);
                     }
                 }).catch(error => {
-                    console.log(error);
+                    console.error(error);
                 });
             }).catch(() => {
                 this.$message({ type: 'info', message: '已取消删除' });

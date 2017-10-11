@@ -4,7 +4,6 @@
             <div class="exitMessage">
             </div>
             <div class="headerframe">
-                <!-- <div class="header unLog" v-if="!getUserName"> -->
                 <div class="header unLog" v-if="!getExUser">
                     <div class="headerleft">
                         <div class="wel">欢迎来到信达！</div>
@@ -25,7 +24,6 @@
                         <a href="#/shoplist">服务商入口</a>
                     </div>
                 </div>
-                <!-- <div class="header unLog" v-if="getUserName"> -->
                 <div class="header enLog" v-if="getExUser">
                     <div class="headerleft">
                         <a href="#/MemberCen">
@@ -70,14 +68,14 @@ export default {
                 this.exAction(1);
             }
         }).catch((error) => {
-            console.log(error);
+            console.error(error);
         });
         this.ajax.post('/xinda-api/cart/cart-num').then((res) => {
             if (res.data.data.cartNum) {
                 this.cartAction(res.data.data.cartNum);
             }
         }).catch((error) => {
-            console.log(error);
+            console.error(error);
         });
     },
     data() {
@@ -89,14 +87,13 @@ export default {
         ...mapActions(['userAction', 'cartAction', 'exAction']),
         exit: function() {
             this.ajax.post('/xinda-api/sso/logout').then((out) => {
-                // window.location.reload();
                 this.exAction(0);
                 this.cartAction(0);
                 if (this.$route.path == '/shcart') {
                     window.location.reload();
                 }
             }).catch((error) => {
-                console.log(error);
+                console.error(error);
             })
         },
         toLogin() {
@@ -114,7 +111,7 @@ export default {
                         this.cartAction(res.data.data.cartNum);
                     }
                 }).catch((error) => {
-                    console.log(error);
+                    console.error(error);
                 });
                 this.ajax.post('/xinda-api/sso/login-info').then((user) => {
                     if (user.data.data) {
@@ -122,7 +119,7 @@ export default {
                         this.exAction(1);
                     }
                 }).catch((error) => {
-                    console.log(error);
+                    console.error(error);
                 });
             }
         }

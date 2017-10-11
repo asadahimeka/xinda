@@ -172,9 +172,8 @@ export default {
         getShop() {
             this.ajax.post('xinda-api/provider/grid', this.ajdata, {}).then((data) => {
                 this.shopinfo = data.data.data;
-                // console.log(this.shopinfo);
+                console.log(this.shopinfo);
                 this.pageSize = data.data.pageSize;
-
                 for (var i = 0; i < this.shopinfo.length; i++) {
                     this.shopinfo[i].productTypes = this.shopinfo[i].productTypes.split(',');
                 }
@@ -188,7 +187,6 @@ export default {
             var rate;
             totalJudge == 0 ? rate = '暂无评价' : rate = Math.round(goodJudge / totalJudge * 10000) / 100 + "%";
             return rate;
-
         },
         enter(id) {
             this.$router.push({
@@ -335,6 +333,7 @@ export default {
 
         &:hover {
             box-shadow: 0px 0px 5px #2594d4;
+            border:1px solid #2594d4;
         }
 
         .boxleft {

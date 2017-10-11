@@ -1,8 +1,8 @@
 <template>
     <div class="getPSDFrame">
         <div class="mobileBG" v-if="!isPC"></div>
-        <div class="LineLogoPositionMobile" v-if="!isPC" @click="backHistory">
-            <div class="iconfont">
+        <div class="LineLogoPositionMobile" v-if="!isPC">
+            <div class="iconfont" @click="backHistory">
                 &#xe61f;
             </div>
             <div class="title">
@@ -202,7 +202,7 @@ export default {
         },
         backHistory:function(){
             history.go(-1);
-        }
+        },
     }
 }
 </script>

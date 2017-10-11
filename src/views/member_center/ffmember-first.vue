@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="oorder">
         <div class="member-right" v-loading.fullscreen.lock="loading" element-loading-text="加载中" v-if="isPC">
             <div class="right1">
                 <p>我的订单</p>
@@ -12,67 +12,76 @@
                     <el-date-picker v-model="startdate" type="date" placeholder="选择日期" :picker-options="pickerOptions0" @change="dateChange">
                     </el-date-picker>
                 </div>
-                至
-                <div class="block">
-                    <el-date-picker v-model="enddate" type="date" placeholder="选择日期" :picker-options="pickerOptions0" @change="dateChange">
-                    </el-date-picker>
+                <div class="right2">
+                    <span style="margin-left:10px;">订单号：</span><input type="text" @keyup="handleSrch" v-model="srchNo" placeholder="请输入订单号" @focus="$event.target.select()">
+                    <button @click="search">搜索</button><br>
+                    <span>创建时间：</span>
+                    <div class="block">
+                        <el-date-picker v-model="startdate" type="date" placeholder="选择日期" :picker-options="pickerOptions0" @change="dateChange">
+                        </el-date-picker>
+                    </div>
+                    至
+                    <div class="block">
+                        <el-date-picker v-model="enddate" type="date" placeholder="选择日期" :picker-options="pickerOptions0" @change="dateChange">
+                        </el-date-picker>
+                    </div>
                 </div>
-            </div>
-            <div class="right3">
-                <span style="width:300px;">商品名称</span>
-                <span style="width:70px;">单价</span>
-                <span style="width:70px;padding-left:12px;">数量</span>
-                <span style="width:90px;padding-left:17px;">总金额</span>
-                <span style="width:90px;padding-left:25px;">订单状态</span>
-                <span>订单操作</span>
-            </div>
-            <el-alert v-if="!bolist.length" title="没有相关订单信息。" type="info" :closable="false" show-icon=""></el-alert>
-            <template v-for="(item,i) in bolist" v-if="end>item.createTime">
-                <div class="right4" :key="i">
-                    <p>订单号：
-                        <span>{{item.businessNo}}</span>下单时间：
-                        <span>{{fmtTime(item.createTime)}}</span>
-                    </p>
+                <div class="right3">
+                    <span style="width:300px;">商品名称</span>
+                    <span style="width:70px;">单价</span>
+                    <span style="width:70px;padding-left:12px;">数量</span>
+                    <span style="width:90px;padding-left:17px;">总金额</span>
+                    <span style="width:90px;padding-left:25px;">订单状态</span>
+                    <span>订单操作</span>
                 </div>
-                <div class="r5div" :key="item.id">
-                    <div class="wrap">
-                        <div class="right5" v-for="item1 in soarr[i]" :key="item1.providerId">
-                            <a href="" class="imgArticle"><img :src="img[item1.providerId]" alt=""></a>
-                            <div style="width:250px;height:100px;">
-                                <a href="" class="site">{{item1.providerName}}</a>
-                                <span :title="item1.serviceInfo" style="display:block;line-height:30px;padding-bottom:20px;">{{item1.serviceName}}</span>
+                <el-alert v-if="!bolist.length" title="没有相关订单信息。" type="info" :closable="false" show-icon=""></el-alert>
+                <template v-for="(item,i) in bolist" v-if="end>item.createTime">
+                    <div class="right4" :key="i">
+                        <p>订单号：
+                            <span>{{item.businessNo}}</span>下单时间：
+                            <span>{{fmtTime(item.createTime)}}</span>
+                        </p>
+                    </div>
+                    <div class="r5div" :key="item.id">
+                        <div class="wrap">
+                            <div class="right5" v-for="item1 in soarr[i]" :key="item1.providerId">
+                                <a href="" class="imgArticle"><img :src="img[item1.providerId]" alt=""></a>
+                                <div style="width:250px;height:100px;">
+                                    <a href="" class="site">{{item1.providerName}}</a>
+                                    <span :title="item1.serviceInfo" style="display:block;line-height:30px;padding-bottom:20px;">{{item1.serviceName}}</span>
+                                </div>
+                                <p style="width:100px;height:100px;text-align:center;">￥
+                                    <span>{{fmtPrice(item1.unitPrice)}}</span>
+                                </p>
+                                <p style="width:80px;height:100px;;text-align:center;">
+                                    <span>{{item1.buyNum}}</span>
+                                </p>
+                                <p style="width:110px;height:100px;;text-align:center;border-left:1px solid #ddd;color:#2693d4">￥
+                                    <span>{{fmtPrice(item1.totalPrice)}}</span>
+                                </p>
+                                <p class="form" style="line-height:100px;">
+                                    <span>{{STATUS[item1.status]}}</span>
+                                </p>
                             </div>
-                            <p style="width:100px;height:100px;text-align:center;">￥
-                                <span>{{fmtPrice(item1.unitPrice)}}</span>
-                            </p>
-                            <p style="width:80px;height:100px;;text-align:center;">
-                                <span>{{item1.buyNum}}</span>
-                            </p>
-                            <p style="width:110px;height:100px;;text-align:center;border-left:1px solid #ddd;color:#2693d4">￥
-                                <span>{{fmtPrice(item1.totalPrice)}}</span>
-                            </p>
-                            <p class="form" style="line-height:100px;">
-                                <span>{{STATUS[item1.status]}}</span>
-                            </p>
+                        </div>
+                        <div class="form form1" style="text-align:center;" v-if="item.status==1">
+                            <a :href='"#/pay?bno="+item.businessNo' style="color:#fff">
+                                <span style="display:inline-block;width:80px;height:35px;line-height:35px;border:1px solid #2693d4;border-radius:5px;background:#2693d4;color:#fff;">
+                                    付款
+                                </span>
+                            </a><br>
+                            <span @click="delOrder(item.id,i)" style="display:inline-block;color:red;cursor:pointer;font-size:15px;">删除订单</span>
+                        </div>
+                        <div class="form form1" style="text-align:center;" v-if="item.status!=1">
+                            <span @click="delOrder(item.id,i)" style="display:inline-block;color:red;cursor:pointer;font-size:15px;">删除订单</span>
                         </div>
                     </div>
-                    <div class="form form1" style="text-align:center;" v-if="item.status==1">
-                        <a :href='"#/pay?bno="+item.businessNo' style="color:#fff">
-                            <span style="display:inline-block;width:80px;height:35px;line-height:35px;border:1px solid #2693d4;border-radius:5px;background:#2693d4;color:#fff;">
-                                付款
-                            </span>
-                        </a><br>
-                        <span @click="delOrder(item.id,i)" style="display:inline-block;color:red;cursor:pointer;font-size:15px;">删除订单</span>
-                    </div>
-                    <div class="form form1" style="text-align:center;" v-if="item.status!=1">
-                        <span @click="delOrder(item.id,i)" style="display:inline-block;color:red;cursor:pointer;font-size:15px;">删除订单</span>
-                    </div>
-                </div>
-            </template>
-            <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="true"></v-page>
+                </template>
+                <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="true"></v-page>
+            </div>
         </div>
 
-        <div v-else class="mmyorder">
+        <div v-if="!isPC" class="mmyorder">
             <div class="tn">
                 <i class="el-icon-arrow-left" @click="back"></i>
                 <span>我的订单</span>
@@ -108,7 +117,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -242,7 +250,7 @@ export default {
                     startTime: '',
                     endTime: '',
                     start: 0,
-                }).then((res) => {                    
+                }).then((res) => {
                     if (res.data.data) {
                         this.soarr.push(res.data.data);
                         this.soarr = this.soarr.sort((a, b) => b[0].createTime - a[0].createTime);
@@ -585,6 +593,18 @@ button {
                 margin-left: -2%;
             }
         }
+    }
+}
+
+@media screen and (max-width:768px) {
+    .oorder {
+        width: 100%;
+        height: 90vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #f2f2f2;
+        overflow-y: auto;
     }
 }
 </style>

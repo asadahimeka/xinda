@@ -872,7 +872,7 @@ a {
     display: inline-block;
 }
 </style>
-<style>
+<style scoped>
 .mint-indicator-wrapper {
     background: 0;
     z-index: 1;

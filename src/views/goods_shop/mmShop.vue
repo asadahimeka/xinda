@@ -69,18 +69,20 @@
     
     <div class="Shopboxbody" v-loading="loading">
         <template v-for="(content,i) in contentList">
-            <div class="shopBox" :key="content.id" @click="enter(info.id)">
-                <div class="boxleft">
-                    <img :src="logoImg(content.providerImg)">
+            <a :href='"#/shdetail?sid="+content.id'>
+                <div class="shopBox" :key="content.id">
+                    <div class="boxleft">
+                        <img :src="logoImg(content.providerImg)">
+                    </div>
+                    <div class="boxright">
+                        <h3>{{content.serviceName}}</h3>
+                        <p>{{content.serviceInfo}}</p>
+                        <div class="address">{{content.regionName}}</div>
+                        <div class="price"><span>￥{{content.price/100}}</span>元</div>
+                        
+                    </div>
                 </div>
-                <div class="boxright">
-                    <h3>{{content.serviceName}}</h3>
-                    <p>{{content.serviceInfo}}</p>
-                    <div class="address">{{content.regionName}}</div>
-                    <div class="price">￥ {{content.price/100}}<span>元</span></div>
-                    
-                </div>
-            </div>
+            </a>
         </template>
     </div>
     <!-- 分页 -->
@@ -395,6 +397,11 @@ export default {
     margin: 0 auto;
     width: 90%;
 
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+
     .shopBox {
         padding: .2rem 0;
         border-bottom: 1px solid #ccc;
@@ -403,7 +410,7 @@ export default {
 
         .boxleft {
             float: left;
-            margin-right: .2rem;
+            margin-right: .12rem;
             width: .9rem;
             line-height: .9rem;
             height: 0.9rem;
@@ -417,8 +424,16 @@ export default {
             }
         }
         .boxright {
+            position: relative;
             text-align: left;
             line-height: 1.5;
+            font-size: .12rem;
+
+            h3 {
+                overflow:hidden; 
+                text-overflow:ellipsis; 
+                white-space:nowrap; 
+            }
 
             div {
                 margin-bottom: .06rem;
@@ -427,9 +442,30 @@ export default {
                 font-size: .16rem;
                 font-weight: 700;
             }
-            span {
+            
+            p {
+                font-size: .13rem;
+                overflow:hidden; 
+                text-overflow:ellipsis;
+                display:-webkit-box; 
+                -webkit-box-orient:vertical;
+                -webkit-line-clamp:2; 
+            }
+            .address {
+                margin: .12rem;
+                font-size: .12rem;
+            }
+            .price {
+                position: absolute;
+                right: 0;
+                bottom: -0.1rem;
+
+                span {
+                font-size: .18rem;
                 color: #F00;
             }
+            }
+            
         }
     }
 }

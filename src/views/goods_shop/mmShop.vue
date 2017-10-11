@@ -66,20 +66,6 @@
     <div class="webmoduleTitle">
         <h6>知识产权</h6>
     </div>
-    <!-- <div class="webmoduleBodyB clearfix">
-
-        <div v-for="(content,i) in contentList" class="contentbox" :key="i">
-            <div class="boxleft">
-                <img :src="logoImg(content.providerImg)">
-            </div>
-            <div class="boxright">
-                <h3><a :href='""+content.id'>{{content.serviceName}}</a></h3>
-                <p><a :href='""+content.id'>{{content.serviceInfo}}</a></p>
-                <div class="address">{{content.regionName}}</div>
-                <p class="price">￥ {{content.price/100}}<span>元</span></p>
-            </div>
-        </div>
-    </div> -->
     
     <div class="Shopboxbody" v-loading="loading">
         <template v-for="(content,i) in contentList">
@@ -145,6 +131,7 @@ export default {
         pageChange(curPage) {
             this.cur = curPage;
             this.start = (curPage - 1) * this.limit;
+            this.loading = true;
             this.getServCont();
         },
         getServCont() {
@@ -152,11 +139,13 @@ export default {
                 start: this.start,
                 limit: this.limit,
                 providerId: this.$route.query.id,
+                
             };
             this.ajax.post('xinda-api/product/package/grid', canshu1, {}).then((data) => {
                 this.contentList = data.data.data;
                 // console.log(data.data.data);
                 this.pageSize = data.data.pageSize;
+                this.loading = false;
             }).catch((error) => {
                 console.log('axios error', error);
             });

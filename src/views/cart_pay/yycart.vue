@@ -874,13 +874,15 @@ a {
 </style>
 <style>
 .mint-indicator-wrapper {
-    background: 0;
+    width: 1rem;
+    height: 1rem;
     z-index: 1;
 }
 
-.mint-indicator-mask {
-    background: #000;
-    opacity: .4;
+.mint-spinner-snake {
+    position: absolute;
+    top: 30%;
+    left: 30%;
 }
 </style>
 

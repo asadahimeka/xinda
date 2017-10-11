@@ -24,11 +24,15 @@
 <script>
 export default {
     created() {
-        this.$indicator.open();
-        if (this.$route.query.id) {
-            this.id = this.$route.query.id;
+        if (this.isPC) {
+            this.$router.push('/');
+        } else {
+            this.$indicator.open();
+            if (this.$route.query.id) {
+                this.id = this.$route.query.id;
+            }
+            this.getcatalog();
         }
-        this.getcatalog();
     },
     data() {
         return {
@@ -113,6 +117,7 @@ export default {
 .sele {
     background-color: #f2f2f2 !important;
 }
+
 .mint-indicator-wrapper {
     width: 1rem;
     height: 1rem;
@@ -120,7 +125,7 @@ export default {
     position: absolute;
 }
 
-.mint-spinner-snake{
+.mint-spinner-snake {
     position: absolute;
     top: 30%;
     left: 30%;

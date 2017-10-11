@@ -86,18 +86,23 @@ export default {
             return info.length > 33 ? info.substring(0, 32) + '...' : info;
         },
         getRecom() {
+            let loading = this.$loading({ fullscreen: true });
             this.ajax.post('/xinda-api/recommend/list').then((res) => {
                 if (res.data.status == 1) {
                     this.starlist = res.data.data.product;
                     this.relist = res.data.data.hq;
+                    !this.isPC ? this.$indicator.close() : loading.close();
                 } else {
                     this.err = 1;
-                    this.$message({ type: 'warning', message: res.data.msg });
+                    this.isPC
+                        ? this.$message({ type: 'warning', message: res.data.msg })
+                        : this.$toast(res.data.msg);
                 }
             })
         }
     },
     created() {
+        !this.isPC ? this.$indicator.open() : 0;
         this.getRecom();
     }
 }
@@ -249,9 +254,11 @@ a {
         }
     }
 }
-a{
+
+a {
     text-decoration: none;
 }
+
 .starty {
     font-size: .16rem;
     margin-top: 53px;
@@ -351,5 +358,4 @@ a{
     width: 300px;
     margin: 50px auto;
 }
-
 </style>

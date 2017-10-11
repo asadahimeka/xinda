@@ -191,7 +191,7 @@ export default {
 .noaccunts {
     position: fixed;
     width: 100%;
-    height: .3rem;
+    height: .4rem;
     bottom: .5rem;
     left: 0;
     background-color: rgb(49, 49, 49);
@@ -199,11 +199,11 @@ export default {
     justify-content: space-around;
     align-items: center;
     p {
-        font-size: .1rem;
+        font-size: .18rem;
         color: white;
     }
     a {
-        font-size: .1rem;
+        font-size: .18rem;
         text-decoration: none;
         color: white;
         border-radius: .03rem;

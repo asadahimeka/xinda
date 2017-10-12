@@ -8,14 +8,14 @@
                     <div class="headerleft">
                         <div class="wel">欢迎来到信达！</div>
                         <a href="javascript:;" class="login" @click="toLogin">登录</a>
-                        <a href="/#/Register" class="register">快速注册</a>
+                        <a href="#/Register" class="register">快速注册</a>
                     </div>
                     <div class="headerright">
                         <div class="cart">
-                            <a href="/#/shcart">
+                            <a href="#/shcart">
                                 <i class="iconcart">&#xe604;</i>
                             </a>
-                            <a href="/#/shcart">
+                            <a href="#/shcart">
                                 <!-- 点击下面的a标签进入购物车 -->
                                 <p>&nbsp;购物车
                                     <span>{{getCartnum}}</span>&nbsp;件</p>
@@ -36,10 +36,10 @@
                     </div>
                     <div class="headerright">
                         <div class="cart">
-                            <a href="/#/shcart">
+                            <a href="#/shcart">
                                 <i class="iconcart">&#xe604;</i>
                             </a>
-                            <a href="/#/shcart">
+                            <a href="#/shcart">
                                 <p>&nbsp;购物车
                                     <span>{{getCartnum}}</span>&nbsp;件</p>
                             </a>

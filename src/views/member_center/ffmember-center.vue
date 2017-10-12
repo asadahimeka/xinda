@@ -13,13 +13,13 @@
             </div>
             <div class="action">
                 <div :class="{act:$route.path=='/MemberCen/Order'}">
-                    <a href="/#/MemberCen/Order" class="myOrder">我的订单</a>
+                    <a href="#/MemberCen/Order" class="myOrder">我的订单</a>
                 </div>
                 <div :class="{act:$route.path=='/MemberCen/Evaluate'}">
-                    <a href="/#/MemberCen/Evaluate" class="userComment">用户评价</a>
+                    <a href="#/MemberCen/Evaluate" class="userComment">用户评价</a>
                 </div>
                 <div :class="{act:$route.path=='/MemberCen/Uerset'}">
-                    <a href="/#/MemberCen/Uerset" class="accountSetup">账户设置</a>
+                    <a href="#/MemberCen/Uerset" class="accountSetup">账户设置</a>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <div class="memberName">
                 {{username}}
             </div>
-            <a class="myOrder" href="/#/MemberCen/Order">
+            <a class="myOrder" href="#/MemberCen/Order">
                 <div class="iconfont">
                     &#xe698;
                 </div>
@@ -42,7 +42,7 @@
                     &#xe61c;
                 </div>
             </a>
-            <a class="memset" href="/#/MemberCen/Uerset">
+            <a class="memset" href="#/MemberCen/Uerset">
                 <div class="iconfont">
                     &#xe609;
                 </div>
@@ -168,13 +168,13 @@ export default {
                 font-size: 18px;
             }
             .myOrder {
-                background: url("../../../static/images/dingdan.png") no-repeat 50px 13px;
+                background: url("../../assets/images/dingdan.png") no-repeat 50px 13px;
             }
             .userComment {
-                background: url("../../../static/images/useevaluationr.png") no-repeat 50px 15px;
+                background: url("../../assets/images/useevaluationr.png") no-repeat 50px 15px;
             }
             .accountSetup {
-                background: url("../../../static/images/set.png") no-repeat 47px 12.5px;
+                background: url("../../assets/images/set.png") no-repeat 47px 12.5px;
             }
         }
     }

@@ -1,9 +1,9 @@
 <template>
     <div class="_outer">
         <div class="_inner">
-            <a class="logo_backhome" href="/#/">
+            <a class="logo_backhome" href="#/">
                 <div class="logo">
-                    <img src="../../../static/images/QQ图片20170517185752.png" alt="">
+                    <img src="../../assets/images/QQ图片20170517185752.png" alt="">
                 </div>
                 <div class="companyName">信达</div>
             </a>
@@ -20,7 +20,7 @@
                 <div class="inputSearch">
                     <input type="text" class="search_input" placeholder="搜索您需要的服务或服务商" v-model="searchKey" @input="search" @focus="search" @blur="skShow=0" @keydown.down.prevent="selectDown" @keydown.up.prevent="selectUp" @keypress="toSearch($event)">
                     <input type="hidden" v-model="srhid">
-                    <a :href='"/#/search?sn="+searchKey+"&ispr="+ispr'>
+                    <a :href='"#/search?sn="+searchKey+"&ispr="+ispr'>
                         <button class="search_button">&#xe600;</button>
                     </a>
                     <div class="srhtip" v-if="skShow">
@@ -34,8 +34,8 @@
                 </div>
                 <div class="pushService">
                     <p>热门服务：</p>
-                    <a href="/#/slist?id=cc7eb9bbd40f4b0e9f31c8cbcb903a59&code=6&pid=5e0220d58f30436e92a8d0052b4b8203">社保开户</a>
-                    <a href="/#/slist?id=5af629246fa34f6f8d49758c6a7b25f1&code=4&pid=19b94314bc1a4b078d2402f8727c388b">公司注册</a>
+                    <a href="#/slist?id=cc7eb9bbd40f4b0e9f31c8cbcb903a59&code=6&pid=5e0220d58f30436e92a8d0052b4b8203">社保开户</a>
+                    <a href="#/slist?id=5af629246fa34f6f8d49758c6a7b25f1&code=4&pid=19b94314bc1a4b078d2402f8727c388b">公司注册</a>
                 </div>
             </div>
             <div class="callUs">

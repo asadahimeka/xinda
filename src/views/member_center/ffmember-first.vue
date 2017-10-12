@@ -76,7 +76,7 @@
             <div class="tn">
                 <i class="el-icon-arrow-left" @click="back"></i>
                 <span>我的订单</span>
-                <a href="/#">
+                <a href="#/">
                     <i class="iconfont">&#xe60e;</i>
                 </a>
             </div>

@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <div class="qrcode">
-                        <img src="../../static/images/qrcode.png" alt="欢迎关注信达官方微信号">
+                        <img src="../assets/images/qrcode.png" alt="欢迎关注信达官方微信号">
                     </div>
                 </div>
             </div>

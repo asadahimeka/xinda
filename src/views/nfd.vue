@@ -1,10 +1,10 @@
 <template>
     <div class="setbg" :style="'width:'+bw+'px;height:'+bh+'px'">
         <div class="hello">
-            <img src="../../static/images/404.gif" alt="404 NOT FOUND">
+            <img src="../assets/images/404.gif" alt="404 NOT FOUND">
             <div class="btn">
                 <button>
-                    <a href="/#/">返回首页</a>
+                    <a href="#/">返回首页</a>
                 </button>
             </div>
         </div>

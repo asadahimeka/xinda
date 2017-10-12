@@ -90,7 +90,7 @@
                     <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
                 </div>
             </div>
-            <div class="advimg"><img src="../../../static/images/u684.png" alt="" class="right_img"></div>
+            <div class="advimg"><img src="../../assets/images/u684.png" alt="" class="right_img"></div>
         </div>
         <div class="xfibg clearfix" v-else>
             <div class="fiscal">

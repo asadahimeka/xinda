@@ -1,7 +1,7 @@
 <template>
     <div class="joinUsFrame">
         <div class="joinUsLogo">
-            <img src="../../static/images/joinus1.png" alt="">
+            <img src="../../static/images/joinus1.jpg" alt="">
             <div class="Draw">
                 加盟我们<br> 只做有价值的平台
             </div>

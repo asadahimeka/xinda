@@ -90,7 +90,7 @@ export default {
             const viewH = document.documentElement.clientHeight;
             const scrollH = document.body.scrollTop;
             if (viewH + scrollH === sumH && this.limit === this.contentList.length) {
-                // if (this.$route.path.indexOf('shopweb'))
+                if (this.$route.path.indexOf('shopweb'))
                     this.getServCont();
             }
         },

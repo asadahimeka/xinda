@@ -1,5 +1,5 @@
 <template>
-    <div class="container" v-if="isPC">
+    <div class="container" v-if="$isPC">
         <!-- 右侧栏 -->
         <div class="sidebar">
             <div class="icons cup"></div>
@@ -139,7 +139,6 @@ export default {
         }
     },
     created() {
-        // console.log(this.$route.query);
         this.getSearchRes();
     },
     computed: {
@@ -172,25 +171,21 @@ export default {
             this.getProducts();
         },
         getProducts() {
-            this.ajax.post('/xinda-api/product/package/search-grid', this.productData, {}).then((data) => {
+            this.$ajax.post('/xinda-api/product/package/search-grid', this.productData, {}).then((data) => {
                 this.products = data.data.data;
                 this.pageSize = data.data.pageSize;
                 this.loading = false;
-                // console.log(data);
-                // console.log('产品:', this.products);
             }).catch((error) => {
-                console.log('axios error', error);
+                console.error('axios error', error);
             });
         },
         getProviders() {
-            this.ajax.post('/xinda-api/provider/search-grid', this.providerData, {}).then((data) => {
-                // console.log(data);
+            this.$ajax.post('/xinda-api/provider/search-grid', this.providerData, {}).then((data) => {
                 this.providers = data.data.data;
                 this.pageSize = data.data.pageSize;
                 this.loading = false;
-                // console.log('服务商:', this.providers);
             }).catch((error) => {
-                console.log('axios error', error);
+                console.error('axios error', error);
             });
         },
         logoImg(providerImg) {
@@ -230,7 +225,7 @@ export default {
             });
         },
         buy(item) {
-            this.ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
+            this.$ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
                 if (userMsg.data.status == 0) {
                     this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
                 } else {
@@ -241,12 +236,12 @@ export default {
             });
         },
         buyNow(item) {
-            this.ajax.post(
+            this.$ajax.post(
                 '/xinda-api/cart/add',
                 { id: item.id, num: 1 },
             ).then(res => {
                 if (res.data.status == 1) {
-                    this.ajax.post(
+                    this.$ajax.post(
                         '/xinda-api/cart/submit'
                     ).then(res => {
                         if (res.data.status == 1) {
@@ -255,23 +250,23 @@ export default {
                             this.$message.warning(res.data.msg);
                         }
                     }).catch(res => {
-                        console.log('Axios: ', res);
+                        console.error('Axios: ', res);
                     });
                 } else {
                     this.$message({ type: 'warning', message: res.data.msg, duration: 1000 });
                 }
             }).catch(res => {
-                console.log('Axios: ', res);
+                console.error('Axios: ', res);
             });
         },
         addCart(item) {
-            this.ajax.post(
+            this.$ajax.post(
                 '/xinda-api/cart/add',
                 { id: item.id, num: 1 },
             ).then(res => {
                 if (res.data.status == 1) {
                     this.$message({ type: 'success', message: res.data.msg, duration: 1000 });
-                    this.ajax.post('/xinda-api/cart/cart-num').then(res => {
+                    this.$ajax.post('/xinda-api/cart/cart-num').then(res => {
                         if (res.data.status == 1) {
                             this.cartAction(res.data.data.cartNum);
                         } else {
@@ -282,7 +277,7 @@ export default {
                     this.$message({ type: 'warning', message: res.data.msg, duration: 1000 });
                 }
             }).catch(res => {
-                console.log('Axios: ', res);
+                console.error('Axios: ', res);
             });
         },
 

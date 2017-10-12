@@ -1,81 +1,86 @@
 <template>
-<div>
-    <!-- PC端 -->
-    <div class="shoplist container" v-if="isPC">
-        <!-- 面包屑导航 -->
-        <div class="Breadcrumb">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                <el-breadcrumb-item>公司工商</el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
-        <!-- 条件筛选 -->
-        <div class="shopsifting">
-            <div>
-                <div class="siftingHeader">服务区域</div>
-                <v-distpicker class="sate" @province="clearls" @selected="onSelected" :placeholders="placeholders"></v-distpicker>
+    <div>
+        <!-- PC端 -->
+        <div class="shoplist container" v-if="$isPC">
+            <!-- 面包屑导航 -->
+            <div class="Breadcrumb">
+                <el-breadcrumb separator="/">
+                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                    <el-breadcrumb-item>公司工商</el-breadcrumb-item>
+                </el-breadcrumb>
             </div>
-            <div>
-                <div class="siftingHeader">产品类型</div>
-                <ul class="produclist font14" v-for="(item,i) in prodType" :key="i">
+            <!-- 条件筛选 -->
+            <div class="shopsifting">
+                <div>
+                    <div class="siftingHeader">服务区域</div>
+                    <v-distpicker class="sate" @province="clearls" @selected="onSelected" :placeholders="placeholders"></v-distpicker>
+                </div>
+                <div>
+                    <div class="siftingHeader">产品类型</div>
+                    <ul class="produclist font14" v-for="(item,i) in prodType" :key="i">
+                        <li>
+                            <a :class="{active:i==proi}" @click="proc(i,item.code)">{{item.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="Shopboxtitle font14">
+                <ul v-for="(item,i) in shopSort" :key="i">
                     <li>
-                        <a :class="{active:i==proi}" @click="proc(i,item.code)">{{item.name}}</a>
+                        <a :class="{active:i==sori}" @click="sorc(i,item.sort)">{{item.name}}&nbsp;
+                            <i class="iconfont">&#xe731;</i>
+                        </a>
                     </li>
                 </ul>
             </div>
-        </div>
-        <div class="Shopboxtitle font14">
-            <ul v-for="(item,i) in shopSort" :key="i">
-                <li>
-                    <a :class="{active:i==sori}" @click="sorc(i,item.sort)">{{item.name}}&nbsp;
-                        <i class="iconfont">&#xe731;</i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!-- 内容区 -->
-        <div class="Shopboxbody font14" v-loading="loading">
-            <div class="none" v-if="!shopinfo.length">
-                <el-alert title="所选地区暂未开通服务" type="info" :closable="false" show-icon></el-alert>
-            </div>
-
-            <template v-for="info in shopinfo">
-                <div class="shopBox" :key="info.id">
-                    <div class="boxleft">
-                        <div><img :src="imgurl(info.providerImg)"></div>
-                        <div><img src="../../assets/icon_gold.png">&nbsp;&nbsp;金牌服务商</div>
-                    </div>
-                    <div class="boxright">
-                        <div>{{info.providerName}}</div>
-                        <div>信誉&nbsp;&nbsp;
-                            <i class="iconfont redicon">&#xe60d;</i>
-                            <i class="iconfont redicon">&#xe60d;</i>
-                            <i class="iconfont redicon">&#xe60d;</i>
-                            <i class="iconfont redicon">&#xe60d;</i>
-                            <i class="iconfont blackicon">&#xe60d;</i>
-                        </div>
-                        <div>{{info.regionName}}</div>
-                        <div>累计服务客户次数:{{info.orderNum}}
-                            <span class="line">|</span>好评率:{{rate(info.goodJudge,info.totalJudge)}}</div>
-                        <ul v-for="(product,i) in info.productTypes" :key="i">
-                            <li>{{product}}</li>
-                        </ul>
-                        <a @click="enter(info.id)">进入店铺</a>
-                    </div>
+            <!-- 内容区 -->
+            <div class="Shopboxbody font14" v-loading="loading">
+                <div class="none" v-if="!shopinfo.length">
+                    <el-alert title="所选地区暂未开通服务" type="info" :closable="false" show-icon></el-alert>
                 </div>
-            </template>
+
+                <template v-for="info in shopinfo">
+                    <div class="shopBox" :key="info.id">
+                        <div class="boxleft">
+                            <div><img :src="imgurl(info.providerImg)"></div>
+                            <div><img src="../../assets/icon_gold.png">&nbsp;&nbsp;金牌服务商</div>
+                        </div>
+                        <div class="boxright">
+                            <div>{{info.providerName}}</div>
+                            <div>信誉&nbsp;&nbsp;
+                                <i class="iconfont redicon">&#xe60d;</i>
+                                <i class="iconfont redicon">&#xe60d;</i>
+                                <i class="iconfont redicon">&#xe60d;</i>
+                                <i class="iconfont redicon">&#xe60d;</i>
+                                <i class="iconfont blackicon">&#xe60d;</i>
+                            </div>
+                            <div>{{info.regionName}}</div>
+                            <div>累计服务客户次数:{{info.orderNum}}
+                                <span class="line">|</span>好评率:{{rate(info.goodJudge,info.totalJudge)}}</div>
+                            <ul v-for="(product,i) in info.productTypes" :key="i">
+                                <li>{{product}}</li>
+                            </ul>
+                            <a @click="enter(info.id)">进入店铺</a>
+                        </div>
+                    </div>
+                </template>
+
+            </div>
+            <!-- 分页 -->
+            <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
 
         </div>
-        <!-- 分页 -->
-        <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="false"></v-page>
 
     </div>
-    
-</div>
 </template>
 
 <script>
+//地区选择插件
+import VDistpicker from 'v-distpicker'
 export default {
+    components: {
+        'v-distpicker': VDistpicker
+    },
     data() {
         return {
             loading: true,
@@ -170,7 +175,7 @@ export default {
             }
         },
         getShop() {
-            this.ajax.post('/xinda-api/provider/grid', this.ajdata, {}).then((data) => {
+            this.$ajax.post('/xinda-api/provider/grid', this.ajdata, {}).then((data) => {
                 this.shopinfo = data.data.data;
                 this.pageSize = data.data.pageSize;
                 for (var i = 0; i < this.shopinfo.length; i++) {
@@ -179,7 +184,7 @@ export default {
                 this.loading = false;
 
             }).catch((error) => {
-                console.log('axios error', error);
+                console.error('axios error', error);
             });
         },
         rate(goodJudge, totalJudge) {
@@ -210,7 +215,7 @@ export default {
         },
     },
     created() {
-        !this.isPC ? this.$router.push('/shoplistweb') : 0;
+        !this.$isPC ? this.$router.push('/shoplistweb') : 0;
         this.getShop();
     },
 }
@@ -284,7 +289,7 @@ export default {
         }
         a:hover,
         .active {
-            
+
             color: #fff;
             background: #2594d4;
         }
@@ -333,7 +338,7 @@ export default {
 
         &:hover {
             box-shadow: 0px 0px 5px #2594d4;
-            border:1px solid #2594d4;
+            border: 1px solid #2594d4;
         }
 
         .boxleft {

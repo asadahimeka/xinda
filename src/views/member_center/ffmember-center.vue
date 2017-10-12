@@ -1,6 +1,6 @@
 <template>
     <div id="member-center">
-        <div class="member-left" v-if="isPC">
+        <div class="member-left" v-if="$isPC">
             <div style="width:242px;height:20px;color:#696969;margin:10px;">首页 / 个人中心</div>
             <div class="member-user">
                 <div class="via">
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="memberCenterMobile" v-if="!isPC">
+        <div class="memberCenterMobile" v-if="!$isPC">
             <div class="memberHead">
                 <img src="../../assets/userheader.png" v-if="!headimg" alt="GET IMG FAILED">
                 <img :src="dealSrc(headimg)" v-else alt="GET IMG FAILED">
@@ -57,9 +57,7 @@
                 退出登录
             </button>
         </div>
-        <transition name="el-zoom-in-center">
-            <router-view></router-view>
-        </transition>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -68,8 +66,8 @@ import { mapGetters, mapActions } from 'vuex';
 import { Toast } from 'mint-ui';
 export default {
     created() {
-        this.isPC ? this.$router.push('/MemberCen/Order') : 0;
-        this.ajax.post('/xinda-api/member/info').then((userMsg) => {
+        this.$isPC ? this.$router.push('/MemberCen/Order') : 0;
+        this.$ajax.post('/xinda-api/member/info').then((userMsg) => {
             if (userMsg.data.status == 1) {
                 this.username = userMsg.data.data.name;
                 // this.headimg = userMsg.data.data.headImg;
@@ -93,7 +91,7 @@ export default {
             return /^\/[^/]/.test(src) ? "http://115.182.107.203:8088/xinda/pic" + src : src;
         },
         exit: function() {
-            this.ajax.post('/xinda-api/sso/logout').then((out) => {
+            this.$ajax.post('/xinda-api/sso/logout').then((out) => {
                 this.exAction(0);
                 this.cartAction(0);
                 Toast({

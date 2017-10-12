@@ -68,14 +68,14 @@ export default {
         },
         getShop() {
             this.$indicator.open();
-            this.ajax.post('/xinda-api/provider/grid', this.ajdata, {}).then((data) => {
+            this.$ajax.post('/xinda-api/provider/grid', this.ajdata, {}).then((data) => {
                 this.shopinfo = data.data.data;
                 // console.log(this.shopinfo);
                 this.pageSize = data.data.pageSize;
                 this.$indicator.close();
 
             }).catch((error) => {
-                console.log('axios error', error);
+                console.error('axios error', error);
             });
         },
         rate(goodJudge, totalJudge) {
@@ -102,7 +102,7 @@ export default {
         },
     },
     created() {
-        this.isPC ? this.$router.push('/shoplist') : 0;
+        this.$isPC ? this.$router.push('/shoplist') : 0;
         this.getShop();
     },
 }

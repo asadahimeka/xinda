@@ -4,22 +4,68 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-import ElementUI from 'element-ui';
-import MintUI from 'mint-ui'
 import axios from 'axios';
 import qs from 'qs';
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 
+// import ElementUI from 'element-ui';
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
+import {
+    Input,
+    Button,
+    DatePicker,
+    Breadcrumb,
+    BreadcrumbItem,
+    Tabs,
+    TabPane,
+    Alert,
+    Icon,
+    Upload,
+    Progress,
+    Rate,
+    Steps,
+    Step,
+    Loading,
+    MessageBox,
+    Message,
+    Notification
+} from 'element-ui'
+
+// Vue.use(ElementUI);
+Vue.use(Input)
+Vue.use(Button)
+Vue.use(DatePicker)
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Alert)
+Vue.use(Icon)
+Vue.use(Upload)
+Vue.use(Progress)
+Vue.use(Rate)
+Vue.use(Steps)
+Vue.use(Step)
+Vue.use(Loading.directive)
+Vue.use(CollapseTransition)
+
+// import MintUI from 'mint-ui'
+import {
+    Toast,
+    Indicator,
+    MessageBox as MsgBox,
+    Badge
+} from 'mint-ui'
+
+// Vue.use(MintUI);
+Vue.component(Badge.name, Badge)
+
+//swiper
 Vue.use(VueAwesomeSwiper);
-Vue.use(ElementUI);
-Vue.use(MintUI);
-
-//地区选择插件
-import VDistpicker from 'v-distpicker'
-Vue.component('v-distpicker', VDistpicker);
 
 //分页插件
-import VPage from './components/v-page'
+// import VPage from './components/v-page'
+const VPage = () => import('./components/v-page')
 Vue.component('v-page', VPage);
 
 // axios全局配置
@@ -30,9 +76,57 @@ axios.interceptors.request.use((config) => {
 }, function (error) {
     return Promise.reject(error);
 });
-Vue.prototype.ajax = axios;
 
-Vue.prototype.isPC = /Android|iPhone|iPod|BlackBerry|SymbianOS|webOS/i.test(navigator.userAgent) ? false : true;
+Object.defineProperties(Vue.prototype, {
+    '$ajax': {
+        value: axios,
+        writable: false
+    },
+    '$isPC': {
+        value: /Android|iPhone|iPod|BlackBerry|SymbianOS|webOS/i.test(navigator.userAgent) ? false : true,
+        writable: false
+    },
+    '$loading': {
+        value: Loading.service,
+        writable: false
+    },
+    '$msgbox': {
+        value: MessageBox,
+        writable: false
+    },
+    '$alert': {
+        value: MessageBox.alert,
+        writable: false
+    },
+    '$confirm': {
+        value: MessageBox.confirm,
+        writable: false
+    },
+    '$prompt': {
+        value: MessageBox.prompt,
+        writable: false
+    },
+    '$notify': {
+        value: Notification,
+        writable: false
+    },
+    '$message': {
+        value: Message,
+        writable: false
+    },
+    '$toast': {
+        value: Toast,
+        writable: false
+    },
+    '$indicator': {
+        value: Indicator,
+        writable: false
+    },
+    '$messagebox': {
+        value: MessageBox,
+        writable: false
+    },
+});
 
 Vue.config.productionTip = false;
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="isPC" class="spdetail" v-loading.fullscreen.lock="fsLoading" element-loading-text="加载中">
+        <div v-if="$isPC" class="spdetail" v-loading.fullscreen.lock="fsLoading" element-loading-text="加载中">
             <p>首页 /
                 <span>{{type}}</span>
             </p>
@@ -141,11 +141,12 @@
                 </div>
             </div>
         </div>
-        <div v-if="!isPC" class="xspdetail">
+        <div v-if="!$isPC" class="xspdetail">
             <i class="el-icon-arrow-left ni1" @click="back"></i>
-            <a href="#/">
-                <i class="iconfont ni2">&#xe60e;</i>
+            <a href="#/shcart">
+                <i class="iconfont ni2">&#xe64f;</i>
             </a>
+            <mt-badge size="small" color="#2693d4" v-if="getCartnum">{{getCartnum}}</mt-badge>
             <div class="detail">
                 <div class="detailimg">
                     <img :src="dealSrc(prod.img)" alt="GET IMG FAILED">
@@ -232,7 +233,7 @@
                     <span @click="lxshow=0">×</span>
                     <div>
                         <input type="text" placeholder="请输入图形验证码" v-model="imgCode">
-                        <div class="verCode">                            
+                        <div class="verCode">
                             <img :src="src" alt="" @click="flushCode">
                         </div>
                     </div>
@@ -244,7 +245,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
     name: 'spdetail',
     data() {
@@ -299,7 +300,7 @@ export default {
         } else {
             window.scrollTo(0, 0);
             this.sid = this.$route.query.sid;
-            !this.isPC ? this.$indicator.open() : 0;
+            !this.$isPC ? this.$indicator.open() : 0;
             this.getChoose();
             this.getDetail();
         }
@@ -312,6 +313,9 @@ export default {
                 this.getDetail();
             }
         }
+    },
+    computed: {
+        ...mapGetters(['getCartnum']),
     },
     methods: {
         ...mapActions(['cartAction']),
@@ -360,7 +364,7 @@ export default {
         },
         getDetail() {
             this.fsLoading = true;
-            this.ajax.post(
+            this.$ajax.post(
                 '/xinda-api/product/package/detail',
                 { sId: this.sid },
             ).then(res => {
@@ -373,19 +377,19 @@ export default {
                     this.srvlist = res.data.data.serviceList;
                     // this.getJudge();
                     // this.getJudgeList();
-                    !this.isPC ? this.getShop() : 0;
+                    !this.$isPC ? this.getShop() : 0;
                     this.fsLoading = false;
                 } else {
-                    this.isPC
+                    this.$isPC
                         ? this.$message({ type: 'warning', message: res.data.msg })
                         : this.$toast(res.data.msg);
                 }
             }).catch(res => {
-                console.log('Axios: ', res);
+                console.error('Axios: ', res);
             });
         },
         getChoose() {
-            this.ajax.post('/xinda-api/product/style/list').then((res) => {
+            this.$ajax.post('/xinda-api/product/style/list').then((res) => {
                 if (this.$route.query.tid && this.$route.query.code) {
                     if (res.data.status == 1) {
                         var types = res.data.data[this.$route.query.tid].itemList;
@@ -395,7 +399,7 @@ export default {
                             }
                         }
                     } else {
-                        this.isPC
+                        this.$isPC
                             ? this.$message({ type: 'warning', message: res.data.msg })
                             : this.$toast(res.data.msg);
                     }
@@ -416,7 +420,7 @@ export default {
             })
         },
         getShop() {
-            this.ajax.post('/xinda-api/provider/grid', {
+            this.$ajax.post('/xinda-api/provider/grid', {
                 limit: 1,
                 regionId: this.prvdr.regionId,
             }).then((data) => {
@@ -442,9 +446,9 @@ export default {
             });
         },
         buy() {
-            this.ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
+            this.$ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
                 if (userMsg.data.status == 0) {
-                    if (this.isPC) {
+                    if (this.$isPC) {
                         this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
                     }
                     else {
@@ -461,17 +465,17 @@ export default {
             });
         },
         buyNow() {
-            this.ajax.post(
+            this.$ajax.post(
                 '/xinda-api/cart/add',
                 { id: this.srv.id, num: this.buyNum },
             ).then(res => {
                 if (res.data.status == 1) {
-                    this.ajax.post(
+                    this.$ajax.post(
                         '/xinda-api/cart/submit'
                     ).then(res => {
                         if (res.data.status == 1) {
                             this.cartAction(0);
-                            if (this.isPC) {
+                            if (this.$isPC) {
                                 this.$router.push({ path: '/pay', query: { bno: res.data.data } })
                             } else {
                                 //TODO
@@ -479,47 +483,47 @@ export default {
                                 this.$router.push('/MemberCen');
                             }
                         } else {
-                            this.isPC
+                            this.$isPC
                                 ? this.$message.warning(res.data.msg)
                                 : this.$toast(res.data.msg);
                         }
                     }).catch(res => {
-                        console.log('Axios: ', res);
+                        console.error('Axios: ', res);
                     });
                 } else {
-                    this.isPC
+                    this.$isPC
                         ? this.$message({ type: 'warning', message: res.data.msg, duration: 1000 })
                         : this.$toast(res.data.msg);
                 }
             }).catch(res => {
-                console.log('Axios: ', res);
+                console.error('Axios: ', res);
             });
         },
         addCart() {
-            this.ajax.post(
+            this.$ajax.post(
                 '/xinda-api/cart/add',
                 { id: this.srv.id, num: this.buyNum },
             ).then(res => {
                 if (res.data.status == 1) {
-                    this.isPC
+                    this.$isPC
                         ? this.$message({ type: 'success', message: res.data.msg, duration: 1000 })
                         : this.$toast(res.data.msg);
-                    this.ajax.post('/xinda-api/cart/cart-num').then(res => {
+                    this.$ajax.post('/xinda-api/cart/cart-num').then(res => {
                         if (res.data.status == 1) {
                             this.cartAction(res.data.data.cartNum);
                         } else {
-                            this.isPC
+                            this.$isPC
                                 ? this.$message({ type: 'warning', message: res.data.msg, duration: 1000 })
                                 : this.$toast(res.data.msg);
                         }
                     });
                 } else {
-                    this.isPC
+                    this.$isPC
                         ? this.$message({ type: 'warning', message: res.data.msg, duration: 1000 })
                         : this.$toast(res.data.msg);
                 }
             }).catch(res => {
-                console.log('Axios: ', res);
+                console.error('Axios: ', res);
             });
         },
         flushCode() {//刷新验证码
@@ -529,7 +533,7 @@ export default {
             //点击获取短信验证码
             if (this.testPhone()) {
                 if (this.imgCode) {
-                    this.ajax.post(
+                    this.$ajax.post(
                         '/xinda-api/register/sendsms', {
                             cellphone: this.phone,
                             smsType: 1,
@@ -583,7 +587,7 @@ export default {
             }
         },
         getJudge() {
-            this.ajax.post(
+            this.$ajax.post(
                 'http://115.182.107.203:8088/xinda/xinda-api/product/judge/detail',
                 { serviceId: this.srv.id },
             ).then(res => {
@@ -599,11 +603,11 @@ export default {
                     this.$message(res.data.msg);
                 }
             }).catch(res => {
-                console.log('Axios: ', res);
+                console.error('Axios: ', res);
             });
         },
         getJudgeList() {
-            this.ajax.post(
+            this.$ajax.post(
                 'http://115.182.107.203:8088/xinda/xinda-api/product/judge/grid', {
                     start: 0,
                     limit: 10,
@@ -612,7 +616,7 @@ export default {
                 }).then(res => {
                     this.judgelist = res.data.data;
                 }).catch(res => {
-                    console.log('Axios: ', res);
+                    console.error('Axios: ', res);
                 });
         },
         lianxi() {
@@ -1072,6 +1076,7 @@ export default {
 }
 
 .xspdetail {
+    position: relative;
     font-size: 0.16rem;
     margin: 0 auto;
     .detail {
@@ -1535,12 +1540,18 @@ export default {
         font-size: .16rem;
         color: #fff;
     }
-    span{
+    span {
         position: absolute;
         top: -2px;
         right: 5px;
         font-size: .2rem;
     }
+}
+.mint-badge {
+    z-index: 2;
+    position: absolute;
+    top: .05rem;
+    right: .1rem;
 }
 </style>
 <style lang="less">

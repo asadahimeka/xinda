@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- PC端 -->
-        <div class="property container" v-if="isPC">
+        <div class="property container" v-if="$isPC">
             <div class="moduleTitle">
                 <h3>知识产权</h3>
             </div>
@@ -85,7 +85,7 @@
         </div>
 
         <!-- WEB端 -->
-        <div v-if="!isPC">
+        <div v-if="!$isPC">
             <div class="webmoduleTitle">
                 <h6>知识产权</h6>
             </div>

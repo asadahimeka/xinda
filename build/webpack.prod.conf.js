@@ -8,6 +8,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 var env = config.build.env
 
@@ -16,7 +17,16 @@ var webpackConfig = merge(baseWebpackConfig, {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
       extract: true
-    })
+    }),
+    loaders: [{
+      loader: 'babel',
+      test: /\.js$/,
+      exclude: /node_modules/,
+      query: {
+        plugins: ['transform-runtime', 'lodash'],
+        presets: ['es2015']
+      }
+    }]
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
@@ -92,7 +102,10 @@ var webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    new LodashModuleReplacementPlugin,
+    new webpack.optimize.OccurrenceOrderPlugin,
+    new webpack.optimize.UglifyJsPlugin
   ]
 })
 

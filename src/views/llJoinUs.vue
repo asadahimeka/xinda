@@ -140,7 +140,7 @@ export default {
         }
     },
     created(){
-        !this.isPC?this.$router.push('/'):0;
+        !this.$isPC?this.$router.push('/'):0;
     },
     methods: {
         listone: function(event) {

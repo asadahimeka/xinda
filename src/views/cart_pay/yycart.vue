@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="spcart" v-if="isPC">
+        <div class="spcart" v-if="$isPC">
             <div class="yytop">首页/
                 <span>购物车</span>
             </div>
@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        <div class="m-cart" v-if="!isPC">
+        <div class="m-cart" v-if="!$isPC">
             <div class="bgcol">
                 <!-- 这个是背景颜色铺满效果 -->
             </div>
@@ -150,7 +150,7 @@
                 </button>
             </div>
         </div>
-        <div class="ks" v-if="!isPC&&cartlist.length&&kshow">
+        <div class="ks" v-if="!$isPC&&cartlist.length&&kshow">
             <div class="count">
                 合计：
                 <span>￥{{calcTotal()}}</span>
@@ -183,7 +183,7 @@ export default {
     created() {
         window.scrollTo(0, 0);
         this.getCart();
-        this.isPC ? this.getRecmd() : 0;
+        this.$isPC ? this.getRecmd() : 0;
     },
     methods: {
         ...mapActions(['cartAction']),
@@ -221,7 +221,7 @@ export default {
         getRegion() {
             this.rglist = [];
             this.cartlist.forEach(function(ele) {
-                this.ajax.post(
+                this.$ajax.post(
                     '/xinda-api/provider/detail',
                     { id: ele.providerId }
                 ).then(res => {
@@ -231,12 +231,12 @@ export default {
                         this.$toast(res.data.msg);
                     }
                 }).catch(res => {
-                    console.log('Axios: ', res);
+                    console.error('Axios: ', res);
                 });
             }, this);
         },
         getRecmd() {
-            this.ajax.post(
+            this.$ajax.post(
                 '/xinda-api/recommend/list'
             ).then(res => {
                 if (res.data.status == 1) {
@@ -249,19 +249,19 @@ export default {
             }).catch(res => {
                 this.loading = false;
                 this.gfail = true;
-                console.log('Axios: ', res);
+                console.error('Axios: ', res);
             });
         },
         getCart() {
-            !this.isPC ? this.$indicator.open('加载中...') : 0;
-            this.ajax.post(
+            !this.$isPC ? this.$indicator.open('加载中...') : 0;
+            this.$ajax.post(
                 '/xinda-api/cart/list'
             ).then(res => {
                 if (res.data.status == 1) {
                     this.cartlist = res.data.data;
                     this.loading0 = false;
                     this.cartAction(this.cartlist.length);
-                    if (!this.isPC) {
+                    if (!this.$isPC) {
                         this.getRegion();
                         setTimeout(() => {
                             this.kshow = 1;
@@ -269,17 +269,17 @@ export default {
                         }, 300);
                     }
                 } else {
-                    this.isPC
+                    this.$isPC
                         ? this.$message({ type: 'warning', message: res.data.msg })
                         : this.$toast(res.data.msg);
                     this.gfail01 = true;
-                    !this.isPC ? this.$indicator.close() : 0;
+                    !this.$isPC ? this.$indicator.close() : 0;
                 }
             }).catch(res => {
                 this.loading0 = false;
                 this.gfail01 = true;
-                !this.isPC ? this.$indicator.close() : 0;
-                console.log('Axios: ', res);
+                !this.$isPC ? this.$indicator.close() : 0;
+                console.error('Axios: ', res);
             });
         },
         calcTotal() {
@@ -292,7 +292,7 @@ export default {
         },
         conti() {
             for (let i = 0; i < this.cartlist.length; i++) {
-                this.ajax.post(
+                this.$ajax.post(
                     '/xinda-api/cart/set',
                     {
                         id: this.cartlist[i].serviceId,
@@ -306,13 +306,13 @@ export default {
                         this.$router.push('/');
                     }
                 }).catch(res => {
-                    console.log('Axios: ', res);
+                    console.error('Axios: ', res);
                 });
             }
         },
         submit() {
             for (let i = 0; i < this.cartlist.length; i++) {
-                this.ajax.post(
+                this.$ajax.post(
                     '/xinda-api/cart/set',
                     {
                         id: this.cartlist[i].serviceId,
@@ -320,17 +320,17 @@ export default {
                     }
                 ).then(res => {
                     if (res.data.status == -1) {
-                        if (this.isPC) {
+                        if (this.$isPC) {
                             this.$message({ type: 'error', message: res.data.msg, duration: 1000 });
                         } else {
                             this.$toast(res.data.msg);
                         }
                     } else if (i == this.cartlist.length - 1) {
-                        this.ajax.post(
+                        this.$ajax.post(
                             '/xinda-api/cart/submit'
                         ).then(res => {
                             if (res.data.status == -1) {
-                                if (this.isPC) {
+                                if (this.$isPC) {
                                     this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
                                 }
                                 else {
@@ -341,7 +341,7 @@ export default {
                                 }
                             } else if (res.data.status == 1) {
                                 this.cartAction(0);
-                                if (this.isPC) {
+                                if (this.$isPC) {
                                     this.$router.push({ path: '/pay', query: { bno: res.data.data } })
                                 } else {
                                     //TODO
@@ -350,11 +350,11 @@ export default {
                                 }
                             }
                         }).catch(res => {
-                            console.log('Axios: ', res);
+                            console.error('Axios: ', res);
                         });
                     }
                 }).catch(res => {
-                    console.log('Axios: ', res);
+                    console.error('Axios: ', res);
                 });
             }
         },
@@ -374,9 +374,11 @@ export default {
             });
         },
         del(item) {
-            if (!this.isPC) {
+            if (!this.$isPC) {
                 this.$messagebox.confirm('确定删除该产品吗?').then(action => {
                     this.delItem(item);
+                }).catch(() => {
+                    
                 });
             } else {
                 this.$confirm('确定删除该产品吗?', '提示', {
@@ -392,7 +394,7 @@ export default {
             }
         },
         delItem(item) {
-            this.ajax.post(
+            this.$ajax.post(
                 '/xinda-api/cart/del',
                 { id: item.serviceId }
             ).then(res => {
@@ -401,16 +403,16 @@ export default {
                     this.cartlist.splice(i, 1);
                     //TODO
                     this.cartAction(this.cartlist.length);
-                    this.isPC
+                    this.$isPC
                         ? this.$message({ type: 'success', message: '删除成功!' })
                         : this.$toast('删除成功!');
                 } else {
-                    this.isPC
+                    this.$isPC
                         ? this.$message({ type: 'error', message: res.data.msg })
                         : this.$toast(res.data.msg);
                 }
             }).catch(res => {
-                console.log('Axios: ', res);
+                console.error('Axios: ', res);
             });
         },
         toDetail(path, id) {
@@ -874,7 +876,8 @@ a {
 .ib {
     display: inline-block;
 }
-.bgcol{
+
+.bgcol {
     width: 100vh;
     height: 100vh;
     background-color: #f8f8f8;

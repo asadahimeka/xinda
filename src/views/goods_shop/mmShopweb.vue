@@ -1,6 +1,6 @@
 <template>
     <!-- WEB端 -->
-    <div v-if="!isPC">
+    <div v-if="!$isPC">
 
         <div class="webshop">
             <!-- 店鋪信息 -->
@@ -39,14 +39,14 @@
 <script>
 export default {
     created() {
-        if (this.isPC) {
+        if (this.$isPC) {
             this.$router.push({ path: '/shop', query: { id: this.$route.query.id } });
             window.location.reload();
         }
         var canshu = {
             id: this.$route.query.id,
         };
-        this.ajax.post('/xinda-api/provider/detail', canshu, {}).then((data) => {
+        this.$ajax.post('/xinda-api/provider/detail', canshu, {}).then((data) => {
             this.shopinfo = data.data.data;
             this.getServCont();
         }).catch((error) => {
@@ -77,12 +77,12 @@ export default {
                 limit: this.limit,
                 providerId: this.$route.query.id,
             };
-            this.ajax.post('/xinda-api/product/package/grid', canshu1, {}).then((data) => {
+            this.$ajax.post('/xinda-api/product/package/grid', canshu1, {}).then((data) => {
                 this.contentList = data.data.data;
                 this.$indicator.close();
                 this.all = this.limit > this.contentList.length ? true : false;
             }).catch((error) => {
-                console.log('axios error', error);
+                console.error('axios error', error);
             });
         },
         scrollMethod() {
@@ -90,7 +90,7 @@ export default {
             const viewH = document.documentElement.clientHeight;
             const scrollH = document.body.scrollTop;
             if (viewH + scrollH === sumH && this.limit === this.contentList.length) {
-                if (this.$route.path.indexOf('shopweb'))
+                if (this.$route.path.indexOf('shopweb')>-1)
                     this.getServCont();
             }
         },

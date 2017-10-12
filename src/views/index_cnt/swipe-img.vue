@@ -39,7 +39,6 @@ export default {
                 "static/images/timg (1).jpg",
                 "static/images/timg (2).jpg",
                 "static/images/timg (3).jpg",
-                
             ]
         }
     },

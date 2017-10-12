@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <Top v-if="isPC"></Top>
-    <transition name="el-zoom-in-center" mode="out-in">
-      <router-view></router-view>
-    </transition>
-    <Bottom></Bottom>
+    <Top v-if="$isPC"></Top>
+    <!-- <transition name="el-zoom-in-center" mode="out-in"> -->
+    <router-view></router-view>
+    <!-- </transition> -->
+    <Bottom v-show="btms"></Bottom>
     <transition name="el-zoom-in-top">
       <div class="bktop el-icon-arrow-up" @click="bktop" v-show="bkshow"></div>
     </transition>
@@ -15,7 +15,6 @@
 import Top from './components/llpublicHeader'
 import Contents from './views/llContent'
 import Bottom from './components/llpublicFooter'
-
 export default {
   name: 'app',
   components: {
@@ -27,6 +26,7 @@ export default {
     return {
       load: true,
       bkshow: false,
+      btms: false,
     }
   },
   watch: {
@@ -51,7 +51,11 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(function() { setTimeout(() => document.getElementById("loading").style.display = 'none', 0); });
+    let l = document.getElementById("loading");
+    this.$nextTick(() => setTimeout(() => l.style.display = 'none', 0));
+    setTimeout(() => {
+      this.btms = true;
+    }, 500);
     document.onscroll = this.scrollMethod;
   },
 }
@@ -64,6 +68,31 @@ export default {
 //Mint
 // @import url("//unpkg.com/mint-ui/lib/style.css");
 @import url("https://cdn.bootcss.com/mint-ui/2.2.9/style.min.css");
+
+@font-face {
+  font-family: 'iconfont';
+  /* project id 414122 */
+  src: url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.eot');
+  src: url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.svg#iconfont') format('svg');
+}
+
+.iconfont {
+  vertical-align: middle;
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app .content {
+  min-width: 70vh;
+  min-height: 70vh;
+}
 
 li {
   list-style-type: none;
@@ -165,26 +194,6 @@ select {
   line-height: 40px;
 }
 
-@font-face {
-  font-family: 'iconfont';
-  /* project id 414122 */
-  src: url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.eot');
-  src: url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.woff') format('woff'),
-  url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.svg#iconfont') format('svg');
-}
-
-.iconfont {
-  vertical-align: middle;
-  font-family: "iconfont" !important;
-  font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 [v-cloak] {
   display: none !important;
 }
@@ -199,6 +208,10 @@ select {
     position: fixed;
     background-color: #f2f2f2;
     z-index: -1;
+  }
+  #app .content {
+    min-width: 30vh;
+    min-height: 30vh;
   }
 }
 </style>

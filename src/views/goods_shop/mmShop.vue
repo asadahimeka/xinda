@@ -1,7 +1,7 @@
 <template>
 
     <!-- PC端 -->
-    <div class="shop container" v-if="isPC">
+    <div class="shop container" v-if="$isPC">
         <!-- 店鋪信息 -->
         <div class="shopHeader">
             <div><img :src="logoImg(shopinfo.providerImg)" alt="logo"></div>
@@ -61,14 +61,14 @@
 <script>
 export default {
     created() {
-        if (!this.isPC) {
+        if (!this.$isPC) {
             this.$router.push({ path: '/shopweb', query: { id: this.$route.query.id } });
             window.location.reload();
         }
         var canshu = {
             id: this.$route.query.id,
         };
-        this.ajax.post('/xinda-api/provider/detail', canshu, {}).then((data) => {
+        this.$ajax.post('/xinda-api/provider/detail', canshu, {}).then((data) => {
             this.shopinfo = data.data.data;
             this.getServCont();
         }).catch((error) => {
@@ -106,21 +106,21 @@ export default {
             this.getServCont();
         },
         getServCont() {
-            !this.isPC?this.$indicator.open():0;
+            !this.$isPC?this.$indicator.open():0;
             var canshu1 = {
                 start: this.start,
                 limit: this.limit,
                 providerId: this.$route.query.id,
                 
             };
-            this.ajax.post('/xinda-api/product/package/grid', canshu1, {}).then((data) => {
+            this.$ajax.post('/xinda-api/product/package/grid', canshu1, {}).then((data) => {
                 this.contentList = data.data.data;
                 // console.log(data.data.data);
                 this.pageSize = data.data.pageSize;
                 this.loading = false;
-                !this.isPC?this.$indicator.close():0;
+                !this.$isPC?this.$indicator.close():0;
             }).catch((error) => {
-                console.log('axios error', error);
+                console.error('axios error', error);
             });
         }
     }

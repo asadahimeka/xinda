@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="phead" v-if="!isPC">
+        <div class="phead" v-if="!$isPC">
             <div class="adrs">
                 <div class="iconfont" v-html="state" @click="chad"></div>
                 <div class="address" @click="chad">
@@ -18,7 +18,7 @@
             </div>
         </div>
         <swipeimg></swipeimg>
-        <div class="nav" v-if="!isPC">
+        <div class="nav" v-if="!$isPC">
             <a class="chnav" href="#/MobileNav?id=2e110f0df53243c197fede52fba8e5d0">
                 <div class="iconfont wb1">
                     &#xe625;
@@ -76,11 +76,11 @@
                 </div>
             </a>
         </div>
-        <mmProperty v-if="!isPC"></mmProperty>
+        <mmProperty v-if="!$isPC"></mmProperty>
         <xIndex></xIndex>
-        <mmProperty v-if="isPC"></mmProperty>
-        <mmService v-if="isPC"></mmService>
-        <mmPartners v-if="isPC"></mmPartners>
+        <mmProperty v-if="$isPC"></mmProperty>
+        <mmService v-if="$isPC"></mmService>
+        <mmPartners v-if="$isPC"></mmPartners>
     </div>
 </template>
 
@@ -113,7 +113,7 @@ export default {
     methods: {
         chad() {
             this.state = '&#xe79d;';
-            this.ajax.post('/xinda-api/common/open-region').then((es) => {
+            this.$ajax.post('/xinda-api/common/open-region').then((es) => {
                 this.citylist = es.data.data;
                 this.sh = true;
             }).catch((error) => {

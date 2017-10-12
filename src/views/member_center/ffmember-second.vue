@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isPC">
+    <div v-if="$isPC">
         <div class='appraisal'>
             <div class=" appraisal1">
                 <p>我的评价</p>
@@ -147,7 +147,7 @@ export default {
         },
         getEv() {
             //Error: Request failed with status code 404
-            this.ajax.post(
+            this.$ajax.post(
             '/xinda-api/service/judge/grid', pdata).then(res => {
                 console.log(res);
                 this.evlist = res.data.data;

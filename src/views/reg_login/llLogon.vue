@@ -1,7 +1,7 @@
 <template>
     <div class="logonFrame">
-        <div class="mobileBG" v-if="!isPC"></div>
-        <div class="logoLineMobile" v-if="!isPC" @click="backHistory">
+        <div class="mobileBG" v-if="!$isPC"></div>
+        <div class="logoLineMobile" v-if="!$isPC" @click="backHistory">
             <div class="iconfont">
                 &#xe61f;
             </div>
@@ -9,7 +9,7 @@
                 登录
             </div>
         </div>
-        <div class="logoLine" v-if="isPC">
+        <div class="logoLine" v-if="$isPC">
             <div class="autoLine">
                 <a href="#/">
                     <img src="../../assets/images/QQ图片20170517185752.png" alt="">
@@ -25,7 +25,7 @@
         </div>
         <div class="mainBody">
             <div class="inLogon">
-                <input type="number" placeholder="请输入手机号" v-model="phone" @focus="thisFocus" autofocus>
+                <input type="number" placeholder="请输入手机号" v-model="phone" @focus="thisFocus">
                 <input type="password" placeholder="请输入密码" v-model="password" @focus="thisFocus">
                 <input type="text" placeholder="请输入验证码" v-model="imgtest" @focus="thisFocus">
                 <div class="verCode" style="background-color:black">
@@ -37,10 +37,10 @@
                 </div>
                 <button @click="logonNow">立即登录</button>
             </div>
-            <div class="getset" v-if="isPC">
+            <div class="getset" v-if="$isPC">
                 <!-- 又仅仅是一条分隔线 -->
             </div>
-            <div class="returnRegister" v-if="isPC">
+            <div class="returnRegister" v-if="$isPC">
                 <div class="question">
                     还没有帐号？
                 </div>
@@ -53,14 +53,14 @@
                     <img src="../../assets/images/getRight.png">
                 </div>
             </div>
-            <div v-if="isPC">
+            <div v-if="$isPC">
                 <el-alert :title="successMsg" type="success" show-icon :closable="false" class="success" v-if="successRe">
                 </el-alert>
                 <el-alert :title="failMsg" type="error" show-icon :closable="false" class="fail" v-if="failRe&&!successRe">
                 </el-alert>
             </div>
         </div>
-        <div class="ToRe" v-if="!isPC">
+        <div class="ToRe" v-if="!$isPC">
             <p>还没有信达帐号？</p>
             <a href="#/Register">立即注册</a>
         </div>
@@ -72,7 +72,7 @@ import MD5 from 'js-md5';
 import { mapActions } from 'vuex';
 export default {
     created() {
-        this.ajax.post('/xinda-api/sso/login-info').then((user) => {
+        this.$ajax.post('/xinda-api/sso/login-info').then((user) => {
             if (user.data.status == 1) {
                 this.$message({ type: 'warning', message: '您已登录！', duration: 1000 });
                 this.$router.push('/');
@@ -114,7 +114,7 @@ export default {
             var testPhone = /^[1][3,4,5,7,8][0-9]{9}$/;
             if (!testPhone.test(this.phone)) {
                 this.failMsg = '手机号输入错误！';
-                if (!this.isPC) {
+                if (!this.$isPC) {
                     this.$toast({
                         message: this.failMsg,
                         position: 'bottom',
@@ -131,10 +131,10 @@ export default {
                     imgCode: this.imgtest,
                 }
                 if (this.password && this.imgtest) {
-                    this.ajax.post('/xinda-api/sso/login', logPar).then((reData) => {
+                    this.$ajax.post('/xinda-api/sso/login', logPar).then((reData) => {
                         if (reData.data.status == 1) {
                             this.successMsg = reData.data.msg;
-                            if (!this.isPC) {
+                            if (!this.$isPC) {
                                 this.$toast({
                                     message: this.successMsg,
                                     position: 'bottom',
@@ -152,7 +152,7 @@ export default {
                             }, 1500);
                         } else {
                             this.failMsg = reData.data.msg;
-                            if (!this.isPC) {
+                            if (!this.$isPC) {
                                 this.$toast({
                                     message: this.failMsg,
                                     position: 'bottom',
@@ -167,7 +167,7 @@ export default {
                     })
                 } else {
                     this.failMsg = '请输入密码或验证码！';
-                    if (!this.isPC) {
+                    if (!this.$isPC) {
                         this.$toast({
                             message: this.failMsg,
                             position: 'bottom',

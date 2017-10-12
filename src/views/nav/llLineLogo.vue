@@ -23,14 +23,16 @@
                     <a :href='"#/search?sn="+searchKey+"&ispr="+ispr'>
                         <button class="search_button">&#xe600;</button>
                     </a>
-                    <div class="srhtip" v-if="skShow">
-                        <div class="sres" v-for="(item,index) in result" :class="{sel:index==now}" @mousedown="toDtl(item.id)" :key="index">
-                            <span :title="item.serviceInfo" v-if="!ispr">{{item.serviceName}}</span>
-                            <span class="rg" :title="item.serviceInfo" v-if="!ispr">{{item.serviceInfo}}</span>
-                            <span :title="item.providerInfo" v-if="ispr">{{item.providerName}}</span>
-                            <span class="rg" :title="item.providerInfo" v-if="ispr">{{item.regionName}}</span>
+                    <transition name="el-zoom-in-top">
+                        <div class="srhtip" v-if="skShow">
+                            <div class="sres" v-for="(item,index) in result" :class="{sel:index==now}" @mousedown="toDtl(item.id)" :key="index">
+                                <span :title="item.serviceInfo" v-if="!ispr">{{item.serviceName}}</span>
+                                <span class="rg" :title="item.serviceInfo" v-if="!ispr">{{item.serviceInfo}}</span>
+                                <span :title="item.providerInfo" v-if="ispr">{{item.providerName}}</span>
+                                <span class="rg" :title="item.providerInfo" v-if="ispr">{{item.regionName}}</span>
+                            </div>
                         </div>
-                    </div>
+                    </transition>
                 </div>
                 <div class="pushService">
                     <p>热门服务：</p>
@@ -84,7 +86,7 @@ export default {
             if (displayState == '' || displayState == 'none') {
                 chooseCity.style.display = 'block';
             }
-            this.ajax.post('/xinda-api/common/open-region').then((data) => {
+            this.$ajax.post('/xinda-api/common/open-region').then((data) => {
                 this.items = data.data.data;
             }).catch(function(error) {
                 console.log('error', error);
@@ -170,7 +172,7 @@ export default {
                 });
                 //创建新的请求cancelToken,并设置状态请求中
                 var sc = {
-                    source: that.ajax.CancelToken.source(),
+                    source: that.$ajax.CancelToken.source(),
                     status: 1 //状态1：请求中，0:取消中
                 };
                 //这个对象加入数组中
@@ -186,7 +188,7 @@ export default {
                     that.skShow = 0;
                 } else {
                     that.skShow = 1;
-                    that.ajax.post(that.url,
+                    that.$ajax.post(that.url,
                         {
                             start: 0,
                             limit: 8,
@@ -203,7 +205,7 @@ export default {
                         //请求失败
                         sc.source = null; //置空请求canceltoken
                         //For Test
-                        if (that.ajax.isCancel(thrown)) {
+                        if (that.$ajax.isCancel(thrown)) {
                             console.log('Request canceled', thrown.message);
                         } else {
                             //handle error
@@ -455,8 +457,8 @@ export default {
     }
 }
 
-@media screen and (max-width: 1200px){
-    ._outer{
+@media screen and (max-width: 1200px) {
+    ._outer {
         justify-content: flex-start;
     }
 }

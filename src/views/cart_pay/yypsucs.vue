@@ -24,8 +24,8 @@ export default {
         return { bno: '' }
     },
     created() {
-        !this.isPC ? this.$router.push('/') : 0;
-        this.ajax.post(
+        !this.$isPC ? this.$router.push('/') : 0;
+        this.$ajax.post(
             '/xinda-api/sso/login-info'
         ).then(res => {
             if (res.data.status == 0) {
@@ -36,7 +36,7 @@ export default {
                 this.bno = this.$route.query.bno;
             }
         }).catch(res => {
-            console.log('Axios: ', res);
+            console.error('Axios: ', res);
         });
     }
 }

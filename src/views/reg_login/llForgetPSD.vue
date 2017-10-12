@@ -1,7 +1,7 @@
 <template>
     <div class="getPSDFrame">
-        <div class="mobileBG" v-if="!isPC"></div>
-        <div class="LineLogoPositionMobile" v-if="!isPC">
+        <div class="mobileBG" v-if="!$isPC"></div>
+        <div class="LineLogoPositionMobile" v-if="!$isPC">
             <div class="iconfont" @click="backHistory">
                 &#xe61f;
             </div>
@@ -9,7 +9,7 @@
                 忘记密码
             </div>
         </div>
-        <div class="LineLogoPosition" v-if="isPC">
+        <div class="LineLogoPosition" v-if="$isPC">
             <div class="LineLogo">
                 <a href="/" class="logo">
                     <img src="../../assets/images/QQ图片20170517185752.png" alt="">
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="mainBody">
-            <div class="mes" v-if="isPC">
+            <div class="mes" v-if="$isPC">
                 <el-alert :title="stitle" type="success" :closable="false" v-if="stitle">
                 </el-alert>
                 <el-alert :title="etitle" type="error" :closable="false" v-if="etitle">
@@ -45,10 +45,10 @@
                     确认修改
                 </button>
             </div>
-            <div class="setget" v-if="isPC">
+            <div class="setget" v-if="$isPC">
                 <!-- 这是一个分隔线 -->
             </div>
-            <div class="bodyRight" v-if="isPC">
+            <div class="bodyRight" v-if="$isPC">
                 <div class="rememberPSD">
                     想起密码来了？
                 </div>
@@ -87,7 +87,7 @@ export default {
             var testphone = /^[1][3,4,5,7,8][0-9]{9}$/;
             if (!testphone.test(this.phone)) {
                 this.etitle = '手机号输入有误！';
-                if (!this.isPC) {
+                if (!this.$isPC) {
                     this.$toast({
                         message: this.etitle,
                         position: 'bottom',
@@ -115,11 +115,11 @@ export default {
                     smsType: 2,
                     imgCode: this.imgCode
                 };
-                this.ajax.post('/xinda-api/register/sendsms', message, {}).then((fontMessage) => {
+                this.$ajax.post('/xinda-api/register/sendsms', message, {}).then((fontMessage) => {
                     if (fontMessage.data.status == 1) {
                         this.etitle = '';
                         this.stitle = fontMessage.data.msg;
-                        if (!this.isPC) {
+                        if (!this.$isPC) {
                             this.$toast({
                                 message: this.stitle,
                                 position: 'bottom',
@@ -144,7 +144,7 @@ export default {
                         }, 1000)
                     } else {
                         this.etitle = fontMessage.data.msg;
-                        if (!this.isPC) {
+                        if (!this.$isPC) {
                             this.$toast({
                                 message: this.etitle,
                                 position: 'bottom',
@@ -186,7 +186,7 @@ export default {
                 validCode: this.msgTest,
                 password: md5(this.sPSD),
             };
-            this.ajax.post('/xinda-api/register/findpas', modifyPar, {}).then((res) => {
+            this.$ajax.post('/xinda-api/register/findpas', modifyPar, {}).then((res) => {
                 if (res.data.status == 1) {
                     this.stitle = res.data.msg;
                     //修改成功后返回登录页面,直接调用方法

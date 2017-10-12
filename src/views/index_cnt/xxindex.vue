@@ -1,6 +1,6 @@
 <template>
     <div class="xxindex">
-        <div class="star" v-if="isPC" v-loading="ld">
+        <div class="star" v-if="$isPC" v-loading="ld">
             <p>明星产品推荐</p>
             <div class="starmenu">
                 <el-alert v-if="err" title="Get data failed." type="error" show-icon></el-alert>
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="startx" v-if="isPC" v-loading="ld">
+        <div class="startx" v-if="$isPC" v-loading="ld">
             <p>初创企业必备</p>
             <div class="startxmenu">
                 <el-alert v-if="err" title="Get data failed." type="error" show-icon></el-alert>
@@ -33,7 +33,7 @@
                 </a>
             </div>
         </div>
-        <div class="starty" v-if="!isPC">
+        <div class="starty" v-if="!$isPC">
             <p class="qyp">初创企业</p>
             <div class="startxmenu">
                 <el-alert v-if="err" title="Get data failed." type="error" show-icon></el-alert>
@@ -87,20 +87,20 @@ export default {
             return info.length > 33 ? info.substring(0, 32) + '...' : info;
         },
         getRecom() {
-            // !this.isPC ? this.$indicator.open() : 0;   
+            // !this.$isPC ? this.$indicator.open() : 0;   
             this.ld = true;         
-            this.ajax.post('/xinda-api/recommend/list').then((res) => {
+            this.$ajax.post('/xinda-api/recommend/list').then((res) => {
                 if (res.data.status == 1) {
                     this.starlist = res.data.data.product;
                     this.relist = res.data.data.hq;
-                    if (this.isPC) {
+                    if (this.$isPC) {
                         this.ld = false;
                     } else {
                         // this.$indicator.close();
                     }
                 } else {
                     this.err = 1;
-                    this.isPC
+                    this.$isPC
                         ? this.$message({ type: 'warning', message: res.data.msg })
                         : this.$toast(res.data.msg);
                 }

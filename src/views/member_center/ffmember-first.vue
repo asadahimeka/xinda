@@ -1,6 +1,6 @@
 <template>
     <div class="oorder">
-        <div class="member-right" v-loading.fullscreen.lock="loading" element-loading-text="加载中" v-if="isPC">
+        <div class="member-right" v-loading.fullscreen.lock="loading" element-loading-text="加载中" v-if="$isPC">
             <div class="right1">
                 <p>我的订单</p>
             </div>
@@ -72,40 +72,45 @@
             <v-page :curInx="cur" :pageSize="pageSize" :pageChange="pageChange" :totalShow="true"></v-page>
         </div>
 
-        <div v-if="!isPC" class="mmyorder">
-            <div class="tn">
-                <i class="el-icon-arrow-left" @click="back"></i>
-                <span>我的订单</span>
-                <a href="#/">
-                    <i class="iconfont">&#xe60e;</i>
-                </a>
-            </div>
-            <div class="ordermenu" v-for="(item,i) in bolist" v-if="end>item.createTime" :key="i">
-                <div class="omtop">
-                    <p class="tnum">订单号:
-                        <span>{{item.businessNo}}</span>
-                    </p>
-                    <p class="twait">{{STATUS[item.status]}}</p>
+        <div v-if="!$isPC" class="mmyorder">
+            <transition name="el-zoom-in-top">
+                <div class="tn" v-show="tnshow">
+                    <i class="el-icon-arrow-left" @click="back"></i>
+                    <span>我的订单</span>
+                    <a href="#/">
+                        <i class="iconfont">&#xe60e;</i>
+                    </a>
                 </div>
-                <div class="ommid" v-for="item1 in soarr[i]" :key="item1.providerId">
-                    <img :src="img[item1.providerId]" alt="img 404" class="mimg">
-                    <div class="mdiv">
-                        <b>{{item1.serviceName}}</b>
-                        <p class="mtime">下单时间：
-                            <span>{{fmtTime(item.createTime)}}</span>
+            </transition>
+            <div id="owrap">
+                <div class="ordermenu" v-for="(item,i) in bolist" v-if="end>item.createTime" :key="i">
+                    <div class="omtop">
+                        <p class="tnum">订单号:
+                            <span>{{item.businessNo}}</span>
                         </p>
-                        <p class="mmoney">
-                            <span>￥{{fmtPrice(item1.unitPrice)}}</span>&nbsp;元</p>
-                        <span class="mnum">×{{item1.buyNum}}</span>
+                        <p class="twait">{{STATUS[item.status]}}</p>
+                    </div>
+                    <div class="ommid" v-for="item1 in soarr[i]" :key="item1.providerId">
+                        <img :src="img[item1.providerId]" alt="img 404" class="mimg">
+                        <div class="mdiv">
+                            <b>{{item1.serviceName}}</b>
+                            <p class="mtime">下单时间：
+                                <span>{{fmtTime(item.createTime)}}</span>
+                            </p>
+                            <p class="mmoney">
+                                <span>￥{{fmtPrice(item1.unitPrice)}}</span>&nbsp;元</p>
+                            <span class="mnum">×{{item1.buyNum}}</span>
+                        </div>
+                    </div>
+                    <div class="ombot">
+                        <p>合计:
+                            <span>￥{{fmtPrice(item.totalPrice)}}</span>
+                        </p>
+                        <button class="bdel" @click="delOrder(item.id,i)">删除订单</button>
+                        <button class="bpay" v-if="item.status==1" @click="bpay">付款</button>
                     </div>
                 </div>
-                <div class="ombot">
-                    <p>合计:
-                        <span>￥{{fmtPrice(item.totalPrice)}}</span>
-                    </p>
-                    <button class="bdel" @click="delOrder(item.id,i)">删除订单</button>
-                    <button class="bpay" v-if="item.status==1" @click="bpay">付款</button>
-                </div>
+                <p class="all" v-show="all">已加载完所有产品</p>
             </div>
         </div>
     </div>
@@ -114,6 +119,7 @@
 <script>
 export default {
     created() {
+        !this.$isPC ? this.pdata.limit = 0 : 0;
         this.getBOrder();
     },
     data() {
@@ -134,7 +140,7 @@ export default {
                 startTime: '',
                 endTime: '',
                 start: 0,
-                limit: 8,
+                limit: 6,
             },
             bolist: [],
             soarr: [],
@@ -152,6 +158,9 @@ export default {
                 "7": "异常订单"
             },
             loading: 1,
+            all: false,
+            ticking: false,
+            tnshow: true,
         };
     },
     methods: {
@@ -203,26 +212,31 @@ export default {
             }
         },
         getBOrder() {
-            this.loading = true;
-            !this.isPC ? this.$indicator.open() : 0;
-            this.ajax.post('/xinda-api/business-order/grid', this.pdata).then((res) => {
+            if (!this.$isPC) {
+                this.$indicator.open();
+                this.pdata.limit += 6;
+            } else {
+                this.loading = true;
+            }
+            this.$ajax.post('/xinda-api/business-order/grid', this.pdata).then((res) => {
                 if (res.data.data) {
                     this.pageSize = res.data.pageSize;
                     this.bolist = res.data.data.sort((a, b) => b.createTime - a.createTime);
-                    this.bolist.length ? 0 : this.loading = false;
+                    if (!this.$isPC) {
+                        this.all = this.pdata.limit > this.bolist.length ? true : false;
+                    }
                     this.soarr = [];
                     this.getsoarr();
                 } else {
-                    this.isPC
+                    this.$isPC
                         ? this.$message(res.data.msg)
                         : this.$toast(res.data.msg);
                 }
             }).catch(error => {
                 if (error.response) {
                     if (error.response.status == 400) {
-                        this.loading = false;
-                        !this.isPC ? this.$indicator.close() : 0;
-                        this.isPC
+                        !this.$isPC ? this.$indicator.close() : this.loading = false;
+                        this.$isPC
                             ? this.$message('请输入正确的订单号')
                             : this.$toast('请输入正确的订单号');
                     }
@@ -237,7 +251,7 @@ export default {
             var len = bo.length;
             for (let i = 0; i < len; i++) {
                 var bno = bo[i].businessNo;
-                this.ajax.post('/xinda-api/service-order/grid', {
+                this.$ajax.post('/xinda-api/service-order/grid', {
                     businessNo: bno,
                     startTime: '',
                     endTime: '',
@@ -247,17 +261,16 @@ export default {
                         this.soarr.push(res.data.data);
                         this.soarr = this.soarr.sort((a, b) => b[0].createTime - a[0].createTime);
                         if (i == len - 1) {
-                            this.loading = false;
-                            !this.isPC ? this.$indicator.close() : 0;
+                            !this.$isPC ? this.$indicator.close() : this.loading = false;
                         }
                     }
                 })
             }
         },
         delOrder(id, i) {
-            if (!this.isPC) {
+            if (!this.$isPC) {
                 this.$messagebox.confirm('确定删除该产品吗?').then(action => {
-                    this.ajax.post(
+                    this.$ajax.post(
                         '/xinda-api/business-order/del',
                         { id }
                     ).then((res) => {
@@ -274,7 +287,7 @@ export default {
                     });
                 }).catch(() => {
 
-                });;
+                });
             } else {
                 this.$confirm('确定删除该订单吗?', '提示', {
                     confirmButtonText: '确定',
@@ -282,7 +295,7 @@ export default {
                     type: 'warning',
                     lockScroll: false,
                 }).then(() => {
-                    this.ajax.post(
+                    this.$ajax.post(
                         '/xinda-api/business-order/del',
                         { id }
                     ).then((res) => {
@@ -304,8 +317,53 @@ export default {
         },
         bpay() {
             this.$toast('目前仅支持微信支付,请在微信浏览器打开');
+        },
+        scrollf() {
+            const oH = o.clientHeight;
+            const viewH = o.scrollHeight;
+            const scrollH = o.scrollTop;
+            if (oH + scrollH === viewH && this.pdata.limit === this.bolist.length) {
+                if (this.$route.path.indexOf('Order') > -1)
+                    this.getBOrder();
+            }
+        },
+        wheelf(e) {
+            e = e || window.event;
+            if (e.wheelDelta) {
+                if (e.wheelDelta > 0) {
+                    this.tnshow = true;
+                }
+                if (e.wheelDelta < 0) {
+                    this.tnshow = false;
+                }
+            } else if (e.detail) {
+                if (e.detail > 0) {
+                    this.tnshow = true;
+                }
+                if (e.detail < 0) {
+                    this.tnshow = false;
+                }
+            }
         }
-
+    },
+    mounted() {
+        if (!this.$isPC) {
+            window.o = document.getElementById('owrap');
+            o.addEventListener('scroll', () => {
+                if (!this.ticking) {
+                    requestAnimationFrame(() => {
+                        this.scrollf();
+                        this.ticking = false;
+                    });
+                }
+                this.ticking = true;
+            });
+            if (document.addEventListener) {//firefox  
+                document.addEventListener('DOMMouseScroll', this.wheelf, false);
+            }
+            //ie,chrome
+            window.onmousewheel = document.onmousewheel = this.wheelf;
+        }
     },
     watch: {
         srchNo(val) {
@@ -586,6 +644,18 @@ button {
             }
         }
     }
+}
+
+#owrap {
+    height: 90vh;
+    overflow-y: auto;
+}
+
+.all {
+    margin-top: 0.2rem;
+    font-size: .16rem;
+    color: #999;
+    text-align: center;
 }
 
 @media screen and (max-width:768px) {

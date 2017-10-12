@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        <div class="computer" v-if="isPC">
+        <div class="computer" v-if="$isPC">
             <div class="upaboutus">
                 <div class="maintext">
                     <div class="aboutus">
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="phone" v-if="!isPC">
+        <div class="phone" v-if="!$isPC">
             <div :class="{acta:$route.path=='/'}" @click="back">
                 <div class="iconfont">
                     &#xe60e;
@@ -65,7 +65,7 @@
 import { mapGetters, mapActions } from 'vuex';
 export default {
     created() {
-        this.ajax.post('/xinda-api/cart/cart-num').then((res) => {
+        this.$ajax.post('/xinda-api/cart/cart-num').then((res) => {
             if (res.data.data.cartNum) {
                 this.cartAction(res.data.data.cartNum);
             }
@@ -94,7 +94,7 @@ export default {
     watch: {
         $route(_this) {
             if (_this) {
-                this.ajax.post('/xinda-api/cart/cart-num').then((res) => {
+                this.$ajax.post('/xinda-api/cart/cart-num').then((res) => {
                     if (res.data.data.cartNum) {
                         this.cartAction(res.data.data.cartNum);
                     }

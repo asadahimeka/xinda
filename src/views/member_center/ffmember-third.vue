@@ -1,10 +1,10 @@
 <template>
     <div class="sett">
-        <div class="sett1" v-if="isPC">
+        <div class="sett1" v-if="$isPC">
             <a href="javascript:;" class="settin1 m" @click="zhszhxgmm1">账户设置</a>
             <a href="javascript:;" class="settin2" @click="zhszhxgmm2">修改密码</a>
         </div>
-        <div class="setti" v-if="isPC">
+        <div class="setti" v-if="$isPC">
             <!--账户设置部分-->
             <div class="sett2">
                 <span>修改头像：</span>
@@ -41,7 +41,7 @@
             <el-button :plain="true" @click="update">保存</el-button>
         </div>
         <!--账户设置部分-->
-        <div class="password" v-if="isPC">
+        <div class="password" v-if="$isPC">
             <!--修改密码部分-->
             <div>
                 <span>旧密码：</span><input class="input" type="password" v-model="oldPSD"></div>
@@ -52,7 +52,7 @@
             <button @click="setNewPassword">保存</button>
         </div>
         <!--修改密码部分-->
-        <div class="mobileALL" v-if="!isPC">
+        <div class="mobileALL" v-if="!$isPC">
             <div class="top">
                 <div class="iconfont" @click="backHistory">
                     &#xe61f;
@@ -125,7 +125,7 @@
 import md5 from 'js-md5'
 export default {
     created() {
-        this.ajax.post('/xinda-api/member/info').then((userMsg) => {
+        this.$ajax.post('/xinda-api/member/info').then((userMsg) => {
             if (userMsg.data.status == 1) {
                 // this.imageUrl = userMsg.data.data.headImg;
                 this.newname = userMsg.data.data.name;
@@ -230,7 +230,7 @@ export default {
                 email: this.email,
                 regionId: this.districtVal,
             }
-            this.ajax.post('/xinda-api/member/update-info', information, {}).then((info) => {
+            this.$ajax.post('/xinda-api/member/update-info', information, {}).then((info) => {
                 if (info.data.status == 1) {
                     this.open2('信息更改成功');
                     setTimeout(function() {
@@ -260,7 +260,7 @@ export default {
                     oldPwd: md5(this.oldPSD),
                     newPwd: md5(this.lastPSD),
                 };
-                this.ajax.post('/xinda-api/sso/change-pwd', pw, {}).then((msg) => {
+                this.$ajax.post('/xinda-api/sso/change-pwd', pw, {}).then((msg) => {
                     console.log(msg);
                     if (msg.data.status == 1) {
                         this.open2(msg.data.msg);

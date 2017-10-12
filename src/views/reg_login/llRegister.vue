@@ -1,13 +1,13 @@
 <template>
     <div class="Register">
-        <div class="mobileBG" v-if="!isPC"></div>
-        <div class="lineLogoMobile" v-if="!isPC" @click="backHistory">
+        <div class="mobileBG" v-if="!$isPC"></div>
+        <div class="lineLogoMobile" v-if="!$isPC" @click="backHistory">
             <div class="iconfont">
                 &#xe61f;
             </div>
             <p>注册</p>
         </div>
-        <div class="lineLogo" v-if="isPC">
+        <div class="lineLogo" v-if="$isPC">
             <div class="LinePosition">
                 <a href="#/" class="Logo">
                     <img src="../../assets/images/QQ图片20170517185752.png" alt="">
@@ -19,7 +19,7 @@
                 <div class="wel">
                     欢迎注册
                 </div>
-                <div v-if="isPC">
+                <div v-if="$isPC">
                     <el-alert class="errorEl" :title="errormsg" type="error" :closable="false" show-icon v-if="errorShow">
                     </el-alert>
                     <el-alert class="successEl" :title="successmsg" type="success" :closable="false" show-icon v-if="successShow">
@@ -30,7 +30,7 @@
         </div>
         <div class="mainBody">
             <div class="registerLeft">
-                <input type="number" placeholder="请输入手机号码" v-model="phone" @focus="noError" @blur="phoneBlur" autofocus>
+                <input type="number" placeholder="请输入手机号码" v-model="phone" @focus="noError" @blur="phoneBlur">
                 <input type="text" placeholder="请输入图片验证码" v-model="imgCode" @focus="noErr">
                 <div class="verCode">
                     <!-- 这里是验证码图片 -->
@@ -63,10 +63,10 @@
                     <a>《服务协议》</a>
                 </div>
             </div>
-            <div class="setget" v-if="isPC">
+            <div class="setget" v-if="$isPC">
                 <!-- 这是一个用来间隔的div -->
             </div>
-            <div class="registerRight" v-if="isPC">
+            <div class="registerRight" v-if="$isPC">
                 <p>已有帐号？</p>
                 <p>
                     <a href="#/Logon">立即登录>></a>
@@ -124,11 +124,11 @@ export default {
                     smsType: 1,
                     imgCode: this.imgCode
                 };
-                this.ajax.post('/xinda-api/register/sendsms', message, {}).then((fontMessage) => {
+                this.$ajax.post('/xinda-api/register/sendsms', message, {}).then((fontMessage) => {
                     if (fontMessage.data.status == 1) {
                         this.successmsg = fontMessage.data.msg;
                         this.successShow = true;
-                        if (!this.isPC) {
+                        if (!this.$isPC) {
                             this.$toast({
                                 message: this.successmsg,
                                 position: 'bottom',
@@ -154,7 +154,7 @@ export default {
                     } else {
                         this.errormsg = fontMessage.data.msg;
                         this.errorShow = true;
-                        if (!this.isPC) {
+                        if (!this.$isPC) {
                             this.$toast({
                                 message: this.errormsg,
                                 position: 'bottom',
@@ -180,7 +180,7 @@ export default {
         // 验证手机号是否已被注册
         phoneBlur() {
             if (this.testPhone()) {
-                this.ajax.post('/xinda-api/register/valid-sms', {
+                this.$ajax.post('/xinda-api/register/valid-sms', {
                     cellphone: this.phone,
                     smsType: 1,
                     validCode: this.messageTest,
@@ -189,7 +189,7 @@ export default {
                     if (rTP.data.status == -2) {
                         this.errormsg = rTP.data.msg;
                         this.errorShow = true;
-                        if (!this.isPC) {
+                        if (!this.$isPC) {
                             this.$toast({
                                 message: this.errormsg,
                                 position: 'bottom',
@@ -206,7 +206,7 @@ export default {
             if (!this.phone) {
                 this.errormsg = '请填写手机号码！';
                 this.errorShow = true;
-                if (!this.isPC) {
+                if (!this.$isPC) {
                     this.$toast({
                         message: this.errormsg,
                         position: 'bottom',
@@ -220,7 +220,7 @@ export default {
                 if (!testPhone.test(this.phone)) {
                     this.errormsg = '请输入正确的11位手机号码！';
                     this.errorShow = true;
-                    if (!this.isPC) {
+                    if (!this.$isPC) {
                         this.$toast({
                             message: this.errormsg,
                             position: 'bottom',
@@ -236,7 +236,7 @@ export default {
             if (!this.PSD) {
                 this.errormsg = '请填写密码！';
                 this.errorShow = true;
-                if (!this.isPC) {
+                if (!this.$isPC) {
                     this.$toast({
                         message: this.errormsg,
                         position: 'bottom',
@@ -250,7 +250,7 @@ export default {
                 if (!testPassword.test(this.PSD)) {
                     this.errormsg = '密码不符合规范！';
                     this.errorShow = true;
-                    if (!this.isPC) {
+                    if (!this.$isPC) {
                         this.$toast({
                             message: this.errormsg,
                             position: 'bottom',
@@ -266,7 +266,7 @@ export default {
             if (this.districtVal == 'all') {
                 this.errormsg = '请选择正确的地区！';
                 this.errorShow = true;
-                if (!this.isPC) {
+                if (!this.$isPC) {
                     this.$toast({
                         message: this.errormsg,
                         position: 'bottom',
@@ -281,7 +281,7 @@ export default {
             if (!this.imgCode || !this.messageTest) {
                 this.errormsg = '请填写验证码！';
                 this.errorShow = true;
-                if (!this.isPC) {
+                if (!this.$isPC) {
                     this.$toast({
                         message: this.errormsg,
                         position: 'bottom',
@@ -301,14 +301,14 @@ export default {
                 smsType: 1,
                 validCode: this.messageTest,
             };
-            this.ajax.post('/xinda-api/register/valid-sms', registerTP, {}).then((rTP) => {
+            this.$ajax.post('/xinda-api/register/valid-sms', registerTP, {}).then((rTP) => {
                 console.log('rtp', rTP);
                 if (rTP.data.status == 1) {
                     this.goToRegister();
                 } else {
                     this.errormsg = rTP.data.msg;
                     this.errorShow = true;
-                    if (!this.isPC) {
+                    if (!this.$isPC) {
                         this.$toast({
                             message: this.errormsg,
                             position: 'bottom',
@@ -330,12 +330,12 @@ export default {
                 password: MD5(this.PSD),
                 regionId: this.districtVal,
             };
-            this.ajax.post('/xinda-api/register/register', shuju, {}).then((canLog) => {
+            this.$ajax.post('/xinda-api/register/register', shuju, {}).then((canLog) => {
                 console.log(canLog);
                 if (canLog.data.status == 1) {
                     this.successmsg = canLog.data.msg;
                     this.successShow = true;
-                    if (!this.isPC) {
+                    if (!this.$isPC) {
                         this.$toast({
                             message: this.successmsg,
                             position: 'bottom',
@@ -349,7 +349,7 @@ export default {
                 } else {
                     this.errormsg = canLog.data.msg;
                     this.errorShow = true;
-                    if (!this.isPC) {
+                    if (!this.$isPC) {
                         this.$toast({
                             message: this.errormsg,
                             position: 'bottom',

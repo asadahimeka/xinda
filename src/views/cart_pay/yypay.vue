@@ -167,7 +167,7 @@ export default {
             return year + '-' + mouth + '-' + day + ' ' + hour + ':' + min + ':' + sec;
         },
         getOrder() {
-            this.ajax.post(
+            this.$ajax.post(
                 '/xinda-api/business-order/detail',
                 { businessNo: this.$route.query.bno },
             ).then(res => {
@@ -190,7 +190,7 @@ export default {
             }).catch(res => {
                 this.loading = false;
                 this.gfail = true;
-                console.log('Axios: ', res);
+                console.error('Axios: ', res);
             });
 
         },
@@ -200,7 +200,7 @@ export default {
             } else if (payNo == 'bank') {
                 this.$alert('转账时请你将订单编号备注在付款信息里；转账完成时，请通知客服。', '进行线下转账');
             } else {
-                this.ajax.post(
+                this.$ajax.post(
                     '/xinda-api/pay/' + payNo,
                     { businessNo },
                 ).then(res => {
@@ -214,7 +214,7 @@ export default {
                         window.open('#/paybridge');
                     }
                 }).catch(res => {
-                    console.log('Axios: ', res);
+                    console.error('Axios: ', res);
                 });
             }
         },
@@ -232,7 +232,7 @@ export default {
         },
     },
     created() {
-        !this.isPC ? this.$router.push('/') : 0;
+        !this.$isPC ? this.$router.push('/') : 0;
         window.scrollTo(0, 0);
         this.cartAction(0);
         this.getOrder();

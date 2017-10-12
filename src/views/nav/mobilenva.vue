@@ -24,7 +24,7 @@
 <script>
 export default {
     created() {
-        if (this.isPC) {
+        if (this.$isPC) {
             this.$router.push('/');
         } else {
             this.$indicator.open();
@@ -44,7 +44,7 @@ export default {
     },
     methods: {
         getcatalog: function() {
-            this.ajax.post('/xinda-api/product/style/list').then((da) => {
+            this.$ajax.post('/xinda-api/product/style/list').then((da) => {
                 this.firstlist = da.data.data;
                 this.secondlist = this.firstlist[this.id].itemList;
                 var ob = Object.entries(this.firstlist).sort(function(a, b) {

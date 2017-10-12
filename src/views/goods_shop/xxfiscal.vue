@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="fibg clearfix" v-if="isPC">
+        <div class="fibg clearfix" v-if="$isPC">
             <div class="fiscal" v-loading="load1">
                 <p class="top">&nbsp;首页&nbsp;/&nbsp;{{chName}}</p>
                 <div class="fiscal_menu">
@@ -129,7 +129,7 @@
                 </div>
             </div>
         </div>
-        <p class="btm-p" v-if="!isPC&&!loading&&refiscal.length">已加载完所有数据</p>
+        <p class="btm-p" v-if="!$isPC&&!loading&&refiscal.length">已加载完所有数据</p>
     </div>
 </template>
 
@@ -196,7 +196,7 @@ export default {
             this.getPack();
         },
         click3() {
-            !this.isPC ? this.$indicator.open() : 0;
+            !this.$isPC ? this.$indicator.open() : 0;
             this.on3 = 1;
             this.on4 = 0;
             this.pdata.sort = '';
@@ -204,7 +204,7 @@ export default {
             this.getPack();
         },
         click4() {
-            !this.isPC ? this.$indicator.open() : 0;
+            !this.$isPC ? this.$indicator.open() : 0;
             this.loading = 1;
             if (this.on4 == 1) {
                 if (this.au == 0) {
@@ -233,16 +233,16 @@ export default {
             window.scrollTo(0, 380);
         },
         getPack() {
-            this.ajax.post('/xinda-api/product/package/grid', this.pdata).then((res) => {
+            this.$ajax.post('/xinda-api/product/package/grid', this.pdata).then((res) => {
                 if (res.data.data) {
                     this.pageSize = res.data.pageSize;
                     this.refiscal = res.data.data;
                     this.loading = 0;
-                    !this.isPC ? this.$indicator.close() : 0;
+                    !this.$isPC ? this.$indicator.close() : 0;
                 } else {
                     this.err = 1;
                     this.errmsg = res.data.msg;
-                    if (this.isPC) {
+                    if (this.$isPC) {
                         this.$message({ type: 'warning', message: res.data.msg });
                     } else {
                         this.$toast(res.data.msg);
@@ -251,7 +251,7 @@ export default {
             })
         },
         getChoose() {
-            this.ajax.post('/xinda-api/product/style/list').then((res) => {
+            this.$ajax.post('/xinda-api/product/style/list').then((res) => {
                 if (res.data.status == 1) {
                     this.chName = res.data.data[this.chId].name;
                     var tabs = res.data.data[this.chId].itemList;
@@ -284,7 +284,7 @@ export default {
             });
         },
         buy(item) {
-            this.ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
+            this.$ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
                 if (userMsg.data.status == 0) {
                     this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
                 } else {
@@ -295,12 +295,12 @@ export default {
             });
         },
         buyNow(item) {
-            this.ajax.post(
+            this.$ajax.post(
                 '/xinda-api/cart/add',
                 { id: item.id, num: 1 },
             ).then(res => {
                 if (res.data.status == 1) {
-                    this.ajax.post(
+                    this.$ajax.post(
                         '/xinda-api/cart/submit'
                     ).then(res => {
                         if (res.data.status == 1) {
@@ -309,23 +309,23 @@ export default {
                             this.$message.warning(res.data.msg);
                         }
                     }).catch(res => {
-                        console.log('Axios: ', res);
+                        console.error('Axios: ', res);
                     });
                 } else {
                     this.$message({ type: 'warning', message: res.data.msg, duration: 1000 });
                 }
             }).catch(res => {
-                console.log('Axios: ', res);
+                console.error('Axios: ', res);
             });
         },
         addCart(item) {
-            this.ajax.post(
+            this.$ajax.post(
                 '/xinda-api/cart/add',
                 { id: item.id, num: 1 },
             ).then(res => {
                 if (res.data.status == 1) {
                     this.$message({ type: 'success', message: res.data.msg, duration: 1000 });
-                    this.ajax.post('/xinda-api/cart/cart-num').then(res => {
+                    this.$ajax.post('/xinda-api/cart/cart-num').then(res => {
                         if (res.data.status == 1) {
                             this.cartAction(res.data.data.cartNum);
                         } else {
@@ -336,12 +336,12 @@ export default {
                     this.$message({ type: 'warning', message: res.data.msg, duration: 1000 });
                 }
             }).catch(res => {
-                console.log('Axios: ', res);
+                console.error('Axios: ', res);
             });
         },
     },
     created() {
-        !this.isPC ? this.$indicator.open() : 0;
+        !this.$isPC ? this.$indicator.open() : 0;
         if (this.$route.query.code) {
             this.chId = this.$route.query.id || this.chId;
             this.code = this.$route.query.code || this.code;
@@ -353,7 +353,7 @@ export default {
                 this.pid = this.$route.query.pid || this.pid;
                 this.pdata.productId = this.$route.query.pid || this.pdata.productId;
             }
-            this.isPC ? this.getChoose() : 0;
+            this.$isPC ? this.getChoose() : 0;
             this.getPack();
         }
     },

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-cloak>
+  <div id="app">
     <Top v-if="isPC"></Top>
     <transition name="el-zoom-in-center" mode="out-in">
       <router-view></router-view>
@@ -64,12 +64,6 @@ export default {
 //Mint
 // @import url("//unpkg.com/mint-ui/lib/style.css");
 @import url("https://cdn.bootcss.com/mint-ui/2.2.9/style.min.css");
-
-* {
-  padding: 0;
-  margin: 0;
-  font-size: '宋体';
-}
 
 li {
   list-style-type: none;

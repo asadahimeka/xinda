@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-cloak>
     <Top v-if="isPC"></Top>
     <transition name="el-zoom-in-center" mode="out-in">
       <router-view></router-view>
@@ -32,15 +32,15 @@ export default {
   watch: {
     $route(val) {
       if (val) {
-        this.$router.afterEach((to, from, next) => { window.scrollTo(0, 0); });
+        this.$router.afterEach((to, from, next) => window.scrollTo(0, 0));
       }
     }
   },
   methods: {
     scrollMethod() {
       const viewH = document.documentElement.clientHeight;
-      const scrollH = document.body.scrollTop;
-      this.bkshow = scrollH > (viewH * 0.3) ? true : false;
+      const scrollH = document.documentElement.scrollTop || document.body.scrollTop;
+      this.bkshow = scrollH > (viewH * 0.5) ? true : false;
     },
     bktop() {
       var currScroll = document.documentElement.scrollTop || document.body.scrollTop;
@@ -161,8 +161,8 @@ select {
 
 .bktop {
   position: fixed;
-  bottom: 60px;
-  right: 0;
+  bottom: 10vh;
+  right: 2%;
   width: 40px;
   height: 40px;
   background: #ccc;
@@ -192,7 +192,7 @@ select {
 }
 
 [v-cloak] {
-  display: none;
+  display: none !important;
 }
 
 @media screen and (max-width:767px) {

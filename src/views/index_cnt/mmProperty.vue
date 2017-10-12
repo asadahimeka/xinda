@@ -23,7 +23,7 @@
                             </li>
                         </ul>
                     </div>
-                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../../static/images/property_03.jpg" alt=""></a>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../assets/images/property_03.jpg" alt=""></a>
                 </div>
                 <div>
                     <div>
@@ -33,7 +33,7 @@
                             <span>/次</span>
                         </h2>
                     </div>
-                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../../static/images/property_05.jpg" alt=""></a>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../assets/images/property_05.jpg" alt=""></a>
                 </div>
                 <div>
                     <div>
@@ -43,7 +43,7 @@
                             <span>/次</span>
                         </h2>
                     </div>
-                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=10"><img src="../../../static/images/property_07.jpg" alt=""></a>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=10"><img src="../../assets/images/property_07.jpg" alt=""></a>
                 </div>
                 <div>
                     <div>
@@ -53,7 +53,7 @@
                             <span>/次</span>
                         </h2>
                     </div>
-                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=9"><img src="../../../static/images/property_11.jpg" alt=""></a>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=9"><img src="../../assets/images/property_11.jpg" alt=""></a>
                 </div>
             </div>
             <div class="propertyFooter">
@@ -92,15 +92,15 @@
             <div class="webmoduleBodyB clearfix">
                 <div>
                     <h6>商标注册</h6>
-                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../../static/images/property_05.jpg" alt="商标注册"></a>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=8"><img src="../../assets/images/property_05.jpg" alt="商标注册"></a>
                 </div>
                 <div>
                     <h6>版权专利</h6>
-                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=10"><img src="../../../static/images/property_07.jpg" alt="版权专利"></a>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=10"><img src="../../assets/images/property_07.jpg" alt="版权专利"></a>
                 </div>
                 <div>
                     <h6>著作权</h6>
-                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=9"><img src="../../../static/images/property_11.jpg" alt="著作权"></a>
+                    <a href="#/slist?id=1eff122d06604fc1aadf9e7acefba21a&code=9"><img src="../../assets/images/property_11.jpg" alt="著作权"></a>
                 </div>
             </div>
         </div>

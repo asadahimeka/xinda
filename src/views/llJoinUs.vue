@@ -1,7 +1,7 @@
 <template>
     <div class="joinUsFrame">
         <div class="joinUsLogo">
-            <img src="../../static/images/joinus1.jpg" alt="">
+            <img src="../assets/images/joinus1.jpg" alt="">
             <div class="Draw">
                 加盟我们<br> 只做有价值的平台
             </div>
@@ -17,10 +17,10 @@
                 www.xinda.com
             </div>
             <div class="ChineseIntroduce">
-                信达提供先上精准营销方案、帮助服务商快捷、低成本的获取有效客户，为传统优质服务商插上互联网的翅膀，助力企业腾飞。
+                信达提供线上精准营销方案、帮助服务商快捷、低成本的获取有效客户，为传统优质服务商插上互联网的翅膀，助力企业腾飞。
             </div>
             <div class="tojoininBanner">
-                <img src="../../static/images/serverjoin.png" alt="">
+                <img src="../assets/images/serverjoin.png" alt="">
             </div>
         </div>
         <div class="YouWillReceive">
@@ -247,7 +247,7 @@ export default {
         .chinatitle {
             width: 306px;
             height: 63px;
-            background-image: url(../../static/images/linebg.png);
+            background-image: url(../assets/images/linebg.png);
             font-size: 30px;
             color: #f00;
             line-height: 50px;
@@ -289,7 +289,7 @@ export default {
             .chinatitle {
                 width: 306px;
                 height: 63px;
-                background-image: url(../../static/images/linebg.png);
+                background-image: url(../assets/images/linebg.png);
                 font-size: 30px;
                 display: flex;
                 align-items: flex-end;
@@ -360,7 +360,7 @@ export default {
         .chinatitle {
             width: 323px;
             height: 63px;
-            background-image: url(../../static/images/joinin.png);
+            background-image: url(../assets/images/joinin.png);
             display: flex;
             align-items: flex-end;
             justify-content: center;
@@ -392,7 +392,7 @@ export default {
                 .list {
                     width: 139px;
                     height: 160px;
-                    background-image: url(../../static/images/sixgod.png);
+                    background-image: url(../assets/images/sixgod.png);
                     display: flex;
                     justify-content: center;
                     align-items: center;

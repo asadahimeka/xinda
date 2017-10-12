@@ -41,7 +41,7 @@
                     </span>
                 </div>
             </div>
-            <img src="../../../static/images/u1225.png" alt="" class="hf">
+            <img src="../../assets/images/u1225.png" alt="" class="hf">
             <div class="clickmenu">
                 <div class="clserve" :class="{public:!index}" @click="index=0">
                     服务内容
@@ -143,7 +143,7 @@
         </div>
         <div v-if="!isPC" class="xspdetail">
             <i class="el-icon-arrow-left ni1" @click="back"></i>
-            <a href="/#">
+            <a href="#/">
                 <i class="iconfont ni2">&#xe60e;</i>
             </a>
             <div class="detail">
@@ -161,7 +161,6 @@
                     <span class="mkprice">市场价：
                         <s>￥{{fmtPrice(prod.marketPrice)}}</s>
                     </span>
-
                 </div>
             </div>
             <div class="clearfix xxshop">

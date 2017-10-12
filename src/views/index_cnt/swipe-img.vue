@@ -35,10 +35,11 @@ export default {
             },
             swiperSlides: [1, 2, 3, 4, 5],
             items: [
-                "../../../static/images/timg.jpg",
-                "../../../static/images/timg (1).jpg",
-                "../../../static/images/timg (2).jpg",
-                "../../../static/images/timg (3).jpg",
+                "static/images/timg.jpg",
+                "static/images/timg (1).jpg",
+                "static/images/timg (2).jpg",
+                "static/images/timg (3).jpg",
+                
             ]
         }
     },

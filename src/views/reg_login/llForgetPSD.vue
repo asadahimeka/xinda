@@ -12,7 +12,7 @@
         <div class="LineLogoPosition" v-if="isPC">
             <div class="LineLogo">
                 <a href="/" class="logo">
-                    <img src="../../../static/images/QQ图片20170517185752.png" alt="">
+                    <img src="../../assets/images/QQ图片20170517185752.png" alt="">
                     <p>信达</p>
                 </a>
                 <div class="setget">
@@ -53,10 +53,10 @@
                     想起密码来了？
                 </div>
                 <div class="ToLogo">
-                    <a href="/#/Logon">返回登录>></a>
+                    <a href="#/Logon">返回登录>></a>
                 </div>
                 <div class="getRight">
-                    <img src="../../../static/images/getRight.png" alt="">
+                    <img src="../../assets/images/getRight.png" alt="">
                 </div>
             </div>
         </div>

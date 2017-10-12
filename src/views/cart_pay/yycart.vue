@@ -91,10 +91,13 @@
         </div>
 
         <div class="m-cart" v-if="!isPC">
+            <div class="bgcol">
+                <!-- 这个是背景颜色铺满效果 -->
+            </div>
             <div class="cartnum" v-if="cartlist.length">
                 <i class="el-icon-arrow-left" @click="back"></i>&nbsp;&nbsp; 购物车内共有
                 <span>{{cartlist.length}}</span>&nbsp;件商品
-                <a href="/#">
+                <a href="#/">
                     <i class="iconfont">&#xe60e;</i>
                 </a>
             </div>
@@ -870,6 +873,15 @@ a {
 
 .ib {
     display: inline-block;
+}
+.bgcol{
+    width: 100vh;
+    height: 100vh;
+    background-color: #f8f8f8;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 </style>
 

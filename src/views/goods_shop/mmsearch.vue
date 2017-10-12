@@ -27,7 +27,7 @@
                         </ul>
                     </div>
                     <div class="none" v-if="!products.length">
-                        <img src="../../../static/images/none.png" alt="">
+                        <img src="../../assets/images/none.png" alt="">
                         <p>Sorry！没有符合搜索的内容 o(╥﹏╥)o</p>
                     </div>
                     <div class="productlist" v-for="(productlist,i) in products" :key="i">
@@ -67,7 +67,7 @@
                     <div class="kong">
                     </div>
                     <div class="none" v-if="!providers.length">
-                        <img src="../../../static/images/none.png" alt="">
+                        <img src="../../assets/images/none.png" alt="">
                         <p>Sorry！没有符合搜索的内容 o(╥﹏╥)o</p>
                     </div>
                     <div class="providerlist" v-for="(providerinfo,i) in providers" :key="i">

@@ -5,7 +5,7 @@
             <div class="Shopboxtitle">
                 <ul>
                     <li :class="{active:i==sori}" v-for="(item,i) in shopSort" :key="i">
-                        <a @click="sorc(i,item.sort)">{{item.name}}</a>
+                        <span @click="sorc(i,item.sort)">{{item.name}}</span>
                     </li>
                 </ul>
             </div>

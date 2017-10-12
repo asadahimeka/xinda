@@ -11,8 +11,8 @@
         </div>
         <div class="logoLine" v-if="isPC">
             <div class="autoLine">
-                <a href="/#">
-                    <img src="../../../static/images/QQ图片20170517185752.png" alt="">
+                <a href="#/">
+                    <img src="../../assets/images/QQ图片20170517185752.png" alt="">
                     <p>信达</p>
                 </a>
                 <div class="getset">
@@ -33,7 +33,7 @@
                     <img :src="src" alt="" @click="F5">
                 </div>
                 <div class="getPSD">
-                    <a href="/#/ForPSD">忘记密码？</a>
+                    <a href="#/ForPSD">忘记密码？</a>
                 </div>
                 <button @click="logonNow">立即登录</button>
             </div>
@@ -50,7 +50,7 @@
                     </a>
                 </div>
                 <div class="getRight">
-                    <img src="../../../static/images/getRight.png">
+                    <img src="../../assets/images/getRight.png">
                 </div>
             </div>
             <div v-if="isPC">

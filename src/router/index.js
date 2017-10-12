@@ -2,36 +2,35 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import axios from 'axios'
 
-import Contents from '../views/llContent.vue'
-import ConsoleAdvertisement from '../views/index_cnt/llconsoleAdvertisement.vue'
-import JoinUs from '../views/llJoinUs.vue'
-import Logon from '../views/reg_login/llLogon.vue'
-import Register from '../views/reg_login/llRegister.vue'
-import ForPSD from '../views/reg_login/llForgetPSD.vue'
-import MobileNav from '../views/nav/mobilenva.vue'
+const Contents = resolve => require(['../views/llContent'], resolve)
+const ConsoleAdvertisement = resolve => require(['../views/index_cnt/llconsoleAdvertisement'], resolve)
 
+const JoinUs = resolve => require(['../views/llJoinUs'], resolve)
+const Logon = resolve => require(['../views/reg_login/llLogon'], resolve)
+const Register = resolve => require(['../views/reg_login/llRegister'], resolve)
+const ForPSD = resolve => require(['../views/reg_login/llForgetPSD'], resolve)
+const MobileNav = resolve => require(['../views/nav/mobilenva'], resolve)
 
-import Shcart from '../views/cart_pay/yycart.vue'
-import Pay from '../views/cart_pay/yypay.vue'
-import PaySuccess from '../views/cart_pay/yypsucs.vue'
-import PayFail from '../views/cart_pay/yypfail.vue'
-import PayBridge from '../views/cart_pay/yypaybrg.vue'
-import Nfd from '../views/nfd.vue'
+const Shcart = resolve => require(['../views/cart_pay/yycart'], resolve)
+const Pay = resolve => require(['../views/cart_pay/yypay'], resolve)
+const PaySuccess = resolve => require(['../views/cart_pay/yypsucs'], resolve)
+const PayFail = resolve => require(['../views/cart_pay/yypfail'], resolve)
+const PayBridge = resolve => require(['../views/cart_pay/yypaybrg'], resolve)
+const Nfd = resolve => require(['../views/nfd'], resolve)
 
-import Financial from '../views/goods_shop/xxfiscal.vue'
-import Shdetail from '../views/goods_shop/xxspdetail.vue'
+const Financial = resolve => require(['../views/goods_shop/xxfiscal'], resolve)
+const Shdetail = resolve => require(['../views/goods_shop/xxspdetail'], resolve)
 
-import mmShopList from '../views/goods_shop/mmShopList.vue'
-import mmShop from '../views/goods_shop/mmShop.vue'
-import mmShopweb from '../views/goods_shop/mmShopweb.vue'
-import mmsearch from '../views/goods_shop/mmsearch.vue'
-import mmShopListweb from '../views/goods_shop/mmShopListweb.vue'
+const mmShopList = resolve => require(['../views/goods_shop/mmShopList'], resolve)
+const mmShop = resolve => require(['../views/goods_shop/mmShop'], resolve)
+const mmShopweb = resolve => require(['../views/goods_shop/mmShopweb'], resolve)
+const mmsearch = resolve => require(['../views/goods_shop/mmsearch'], resolve)
+const mmShopListweb = resolve => require(['../views/goods_shop/mmShopListweb'], resolve)
 
-import MemberCen from '../views/member_center/ffmember-center.vue'
-import Order from '../views/member_center/ffmember-first.vue'
-import Evaluate from '../views/member_center/ffmember-second.vue'
-import Uerset from '../views/member_center/ffmember-third.vue'
-
+const MemberCen = resolve => require(['../views/member_center/ffmember-center'], resolve)
+const Order = resolve => require(['../views/member_center/ffmember-first'], resolve)
+const Evaluate = resolve => require(['../views/member_center/ffmember-second'], resolve)
+const Uerset = resolve => require(['../views/member_center/ffmember-third'], resolve)
 
 Vue.use(Router);
 
@@ -96,11 +95,11 @@ const router = new Router({
                     component: mmShop,
                     meta: { pageTitle: '信达_店铺详情' }
                 }, {//店铺详情web
-                  path: 'shopweb',
-                  name: 'mmShopweb',
-                  component: mmShopweb,
-                  meta: { pageTitle: '信达_店铺详情' }
-              },{//搜索页面
+                    path: 'shopweb',
+                    name: 'mmShopweb',
+                    component: mmShopweb,
+                    meta: { pageTitle: '信达_店铺详情' }
+                }, {//搜索页面
                     path: 'search',
                     name: 'mmsearch',
                     component: mmsearch,

@@ -60,7 +60,7 @@
                 </el-alert>
             </div>
         </div>
-        <div class="noaccunts" v-if="!isPC">
+        <div class="ToRe" v-if="!isPC">
             <p>还没有信达帐号？</p>
             <a href="#/Register">立即注册</a>
         </div>
@@ -362,7 +362,7 @@ export default {
 }
 
 @media screen and (max-width:768px) {
-    .noaccunts {
+    .ToRe {
         position: fixed;
         width: 100%;
         height: .4rem;

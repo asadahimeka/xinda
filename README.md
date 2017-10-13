@@ -1,6 +1,7 @@
 # xinda
 
 > A Vue.js project
+Vue/Vue-cli/VueRouter/Vuex/Webpack/Babel/Less/Axios/ElementUI/MintUI
 
 ## Build Setup
 

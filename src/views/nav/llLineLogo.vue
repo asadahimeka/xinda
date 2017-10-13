@@ -62,7 +62,8 @@
 </template>
 
 <script>
-import _ from 'lodash'; //引入lodash
+import debounce from 'lodash/debounce'; //引入lodash
+import remove from 'lodash/remove'; //引入lodash
 let sources = [];//请求canceltoken列表
 export default {
     data() {
@@ -156,11 +157,11 @@ export default {
         },
         //使用_.debounce控制搜索的触发频率
         //准备搜索
-        search: _.debounce(
+        search: debounce(
             function() {
                 let that = this;
                 //删除已经结束的请求
-                _.remove(sources, function(n) {
+                remove(sources, function(n) {
                     return n.source === null;
                 });
                 //取消还未结束的请求

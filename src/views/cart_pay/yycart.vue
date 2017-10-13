@@ -253,7 +253,7 @@ export default {
             });
         },
         getCart() {
-            !this.$isPC ? this.$indicator.open('加载中...') : 0;
+            !this.$isPC ? this.$indicator.open() : 0;
             this.$ajax.post(
                 '/xinda-api/cart/list'
             ).then(res => {

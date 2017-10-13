@@ -415,7 +415,7 @@ export default {
         },
         enter(id) {
             this.$router.push({
-                path: '/shop',
+                path: '/shopweb',
                 query: { id },
             })
         },

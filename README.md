@@ -1,12 +1,20 @@
-# xinda
+# Xinda
 
 > A Vue.js project
 
-> Vue/Vue-cli/VueRouter/Vuex/Webpack/Babel/Less/Axios/ElementUI/MintUI
+> Stack：Vue/Vue-cli/VueRouter/Vuex/Webpack/Babel/Less/Axios/ElementUI/MintUI
 
-## Build Setup
+> Dev：Windows 10.0.15063 / Node 8.2.1 / Chrome 60.0.3112.90
+
+## Build Setup ( Node 6.0+ )
 
 ``` bash
+#Cloned to the local
+git clone https://github.com/173271328/xinda.git
+
+#Enter the folder
+cd xinda
+
 # install dependencies
 npm install
 
@@ -20,4 +28,11 @@ npm run build
 npm run build --report
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+* For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Project Test
+
+[Demo URL](http://115.182.107.206/qd/QD0120161003/09/xinda/) ( See Mobile version by F12 tool Ctrl+Shift+M )
+
+### QR Code For Mobile
+<img src='https://github.com/173271328/xinda/blob/master/static/images/qr.png' width="200" height="200" />

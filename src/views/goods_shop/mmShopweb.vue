@@ -79,7 +79,9 @@ export default {
             };
             this.$ajax.post('/xinda-api/product/package/grid', canshu1, {}).then((data) => {
                 this.contentList = data.data.data;
-                this.$indicator.close();
+                setTimeout(() => {
+                    this.$indicator.close();
+                }, 1000);
                 this.all = this.limit > this.contentList.length ? true : false;
             }).catch((error) => {
                 console.error('axios error', error);
@@ -90,7 +92,7 @@ export default {
             const viewH = document.documentElement.clientHeight;
             const scrollH = document.body.scrollTop;
             if (viewH + scrollH === sumH && this.limit === this.contentList.length) {
-                if (this.$route.path.indexOf('shopweb')>-1)
+                if (this.$route.path.indexOf('shopweb') > -1)
                     this.getServCont();
             }
         },

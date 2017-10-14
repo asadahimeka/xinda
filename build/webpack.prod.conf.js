@@ -40,10 +40,17 @@ var webpackConfig = merge(baseWebpackConfig, {
       'process.env': env
     }),
     new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
+      warnings: false,
+      output: {
+        comments: false,  // remove all comments
       },
-      sourceMap: true
+      compress: {
+        join_vars: true,
+        warnings: false,
+      },
+      toplevel: false,
+      ie8: false,
+      sourceMap: false
     }),
     // extract css into its own file
     new ExtractTextPlugin({
@@ -105,7 +112,6 @@ var webpackConfig = merge(baseWebpackConfig, {
     ]),
     new LodashModuleReplacementPlugin,
     new webpack.optimize.OccurrenceOrderPlugin,
-    new webpack.optimize.UglifyJsPlugin
   ]
 })
 

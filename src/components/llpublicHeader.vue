@@ -107,14 +107,14 @@ export default {
         $route(_this) {
             if (_this) {
                 this.$ajax.post('/xinda-api/cart/cart-num').then((res) => {
-                    if (res.data.data.cartNum) {
+                        if (res.data.data.cartNum) {
                         this.cartAction(res.data.data.cartNum);
                     }
                 }).catch((error) => {
                     console.error(error);
                 });
                 this.$ajax.post('/xinda-api/sso/login-info').then((user) => {
-                    if (user.data.data) {
+                        if (user.data.data) {
                         this.userAction(user.data.data.name);
                         this.exAction(1);
                     }
@@ -222,17 +222,16 @@ a {
     }
 }
 
-.phonehead{
+.phonehead {
     width: 100%;
     height: 1rem;
     display: flex;
-
 }
 
 
 //下面是手机端的页面样式
 @media screen and (max-width:1200px) {
-    .headerframe{
+    .headerframe {
         width: 1200px;
     }
 }

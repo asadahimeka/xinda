@@ -75,12 +75,7 @@
 </template>
 
 <script>
-//地区选择插件
-import VDistpicker from 'v-distpicker'
 export default {
-    components: {
-        'v-distpicker': VDistpicker
-    },
     data() {
         return {
             loading: true,
@@ -160,7 +155,6 @@ export default {
         onSelected(data) {
             if (data) {
                 this.ajdata.regionId = data.area.code;
-                console.log(this.ajdata.regionId);
                 this.loading = true;
                 this.getShop();
             } else {

@@ -5,7 +5,7 @@
                 <span>{{type}}</span>
             </p>
             <div class="detail">
-                <div class="detailimg"><img :src="dealSrc(prod.img)" alt="GET IMG FAILED"></div>
+                <div class="detailimg"><img :src="dealSrc(prod.img)" alt="GET IMG FAILED" @error="$errImg"></div>
                 <div class="detail_div">
                     <b>{{srv.serviceName}}</b>
                     <p class="describe">{{srv.serviceInfo}}</p>
@@ -104,42 +104,44 @@
                         </div>
                         <el-rate :value="parseInt(j.score)" disabled :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
                         </el-rate>
-                        <div>
-                            <img :src="dealSrc(j.memberImg)" alt="">
+                        <div class="userimg">
+                            <img :src="dealSrc(j.memberImg)" alt="" @error="$errImg">
                         </div>
                     </div>
                     <v-page :curInx="1" :pageSize="1" :totalShow="false"></v-page>
                 </div>
             </div>
-            <div class="pay-fb" v-if="fbShow">
-                <div class="fb-tit">免费电话咨询
-                    <span @click="fbShow=0">×</span>
+            <transition name="el-zoom-in-center" mode="out-in">
+                <div class="pay-fb" v-if="fbShow">
+                    <div class="fb-tit">免费电话咨询
+                        <span @click="fbShow=0">×</span>
+                    </div>
+                    <div class="fb-msg" v-if="callShow">
+                        <el-steps :space="140" :active="1">
+                            <el-step title="输入手机号码"></el-step>
+                            <el-step title="您接听来电"></el-step>
+                            <el-step title="被叫方接听"></el-step>
+                            <el-step title="咨询结束"></el-step>
+                        </el-steps>
+                        <input class="pho" type="text" placeholder="请输入手机号" v-model="phone" v-numberonly><br>
+                        <input type="text" placeholder="请输入图形验证码" v-model="imgCode">
+                        <div class="verCode">
+                            <img :src="src" alt="" @click="flushCode">
+                        </div><br>
+                        <input type="text" placeholder="请输入验证码" v-model="messageTest">
+                        <button class="getcode" @click="getMessage">{{getMessageBtn}}</button><br>
+                        <button class="start" @click="consult">
+                            <a>开始免费咨询</a>
+                        </button>
+                        <a>本次电话咨询完全免费，我们将对您的号码严格保密，请放心使用。</a>
+                    </div>
+                    <div class="fb-msg" v-if="!callShow">
+                        <p class="tip">本次电话咨询完全免费，我们将对您的号码严格保密，请放心使用。</p>
+                        <p class="call">正在为您接通电话</p>
+                        <p class="call">请您注意接通来电</p>
+                    </div>
                 </div>
-                <div class="fb-msg" v-if="callShow">
-                    <el-steps :space="140" :active="1">
-                        <el-step title="输入手机号码"></el-step>
-                        <el-step title="您接听来电"></el-step>
-                        <el-step title="被叫方接听"></el-step>
-                        <el-step title="咨询结束"></el-step>
-                    </el-steps>
-                    <input class="pho" type="text" placeholder="请输入手机号" v-model="phone" v-numberonly><br>
-                    <input type="text" placeholder="请输入图形验证码" v-model="imgCode">
-                    <div class="verCode">
-                        <img :src="src" alt="" @click="flushCode">
-                    </div><br>
-                    <input type="text" placeholder="请输入验证码" v-model="messageTest">
-                    <button class="getcode" @click="getMessage">{{getMessageBtn}}</button><br>
-                    <button class="start" @click="consult">
-                        <a>开始免费咨询</a>
-                    </button>
-                    <a>本次电话咨询完全免费，我们将对您的号码严格保密，请放心使用。</a>
-                </div>
-                <div class="fb-msg" v-if="!callShow">
-                    <p class="tip">本次电话咨询完全免费，我们将对您的号码严格保密，请放心使用。</p>
-                    <p class="call">正在为您接通电话</p>
-                    <p class="call">请您注意接通来电</p>
-                </div>
-            </div>
+            </transition>
         </div>
         <div v-if="!$isPC" class="xspdetail">
             <i class="el-icon-arrow-left ni1" @click="back"></i>
@@ -149,7 +151,7 @@
             <mt-badge size="small" color="#2693d4" v-if="getCartnum">{{getCartnum}}</mt-badge>
             <div class="detail">
                 <div class="detailimg">
-                    <img :src="dealSrc(prod.img)" alt="GET IMG FAILED">
+                    <img :src="dealSrc(prod.img)" alt="GET IMG FAILED" @error="$errImg">
                     <div class="ddiv">
                         <b>{{srv.serviceName}}</b>
                         <p class="describe">{{srv.serviceInfo}}</p>
@@ -209,8 +211,8 @@
                     <el-alert v-if="!judgelist.length" title="数据为空，请稍后再试。" type="info" show-icon></el-alert>
                     <div class="cont" v-for="j in judgelist" :key="j.id">
                         <div class="jdg">
-                            <div>
-                                <img :src="dealSrc(j.memberImg)" alt="">
+                            <div class="avatar">
+                                <img :src="dealSrc(j.memberImg)" alt="" @error="$errImg">
                             </div>
                             <div>满意度
                                 <el-rate :value="parseInt(j.score)" disabled :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
@@ -1053,6 +1055,16 @@ export default {
                 color: #666;
             }
         }
+        .userimg {
+            width: 100px;
+            margin-left: 130px;
+            text-align: center;
+            img {
+                width: 100px;
+                height: 100px;
+                border-radius: 100%
+            }
+        }
     }
 }
 
@@ -1099,6 +1111,16 @@ export default {
             position: absolute;
             bottom: .04rem;
             opacity: 0.8;
+            b {
+                margin-left: 0.05rem;
+            }
+            .describe {
+                font-size: 14px;
+                margin-left: 0.05rem;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
             color: white;
         }
         .detail_div {
@@ -1352,7 +1374,7 @@ export default {
         border-top: 0;
     }
     .appraise {
-        margin-bottom: 70px;
+        margin-bottom: 100px;
         border: 5px solid #ccc;
         border-top: 0;
         .appraise_div {
@@ -1407,7 +1429,12 @@ export default {
         border-bottom: 1px solid #ddd;
         >div:first-child {
             width: 30%;
-            height: auto !important;
+            height: 1rem;
+            margin-top: .1rem;
+            text-align: center;
+            img {
+                width: 90%;
+            }
         }
         >div:last-child {
             width: 66%;
@@ -1547,6 +1574,7 @@ export default {
         font-size: .2rem;
     }
 }
+
 .mint-badge {
     z-index: 2;
     position: absolute;

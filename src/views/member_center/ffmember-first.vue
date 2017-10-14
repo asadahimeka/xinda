@@ -110,7 +110,7 @@
                         <button class="bpay" v-if="item.status==1" @click="bpay">付款</button>
                     </div>
                 </div>
-                <p class="all" v-show="all">已加载完所有产品</p>
+                <p class="all" v-show="all">已加载完所有订单</p>
             </div>
         </div>
     </div>
@@ -219,7 +219,7 @@ export default {
                 this.loading = true;
             }
             this.$ajax.post('/xinda-api/business-order/grid', this.pdata).then((res) => {
-                if (res.data.data) {
+                if (res.data.data.length) {
                     this.pageSize = res.data.pageSize;
                     this.bolist = res.data.data.sort((a, b) => b.createTime - a.createTime);
                     if (!this.$isPC) {
@@ -228,9 +228,7 @@ export default {
                     this.soarr = [];
                     this.getsoarr();
                 } else {
-                    this.$isPC
-                        ? this.$message(res.data.msg)
-                        : this.$toast(res.data.msg);
+                    this.loading = false;
                 }
             }).catch(error => {
                 if (error.response) {
@@ -358,11 +356,11 @@ export default {
                 }
                 this.ticking = true;
             });
-            if (document.addEventListener) {//firefox  
-                document.addEventListener('DOMMouseScroll', this.wheelf, false);
-            }
-            //ie,chrome
-            window.onmousewheel = document.onmousewheel = this.wheelf;
+            // if (document.addEventListener) {//firefox  
+            //     document.addEventListener('DOMMouseScroll', this.wheelf, false);
+            // }
+            // //ie,chrome
+            // window.onmousewheel = document.onmousewheel = this.wheelf;
         }
     },
     watch: {

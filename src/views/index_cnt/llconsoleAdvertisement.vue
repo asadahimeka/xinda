@@ -3,7 +3,7 @@
         <div class="phead" v-if="!$isPC">
             <div class="adrs">
                 <div class="iconfont" v-html="state" @click="chad"></div>
-                <div class="address" @click="chad">
+                <div class="xaddress" @click="chad">
                     {{address}}
                 </div>
                 <div class="alad" v-if="sh">
@@ -145,7 +145,7 @@ export default {
         .iconfont {
             font-size: .01rem;
         }
-        .address {
+        .xaddress {
             padding-left: .05rem;
             font-size: .16rem;
         }

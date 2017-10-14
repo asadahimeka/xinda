@@ -24,7 +24,6 @@ export default {
   },
   data() {
     return {
-      load: true,
       bkshow: false,
       btms: false,
     }
@@ -43,20 +42,26 @@ export default {
       this.bkshow = scrollH > (viewH * 0.5) ? true : false;
     },
     bktop() {
+      this.bkshow = false;
       var currScroll = document.documentElement.scrollTop || document.body.scrollTop;
       if (currScroll > 0) {
         requestAnimationFrame(this.bktop);
-        scrollTo(0, currScroll - (currScroll / 10));
+        scrollTo(0, currScroll - currScroll / 5);
       }
     },
   },
   mounted() {
-    let l = document.getElementById("loading");
-    this.$nextTick(() => setTimeout(() => l.style.display = 'none', 0));
-    setTimeout(() => {
-      this.btms = true;
-    }, 500);
-    document.onscroll = this.scrollMethod;
+    this.$nextTick(() => {
+      let l = document.getElementById("loading");
+      l.style.display = 'none';
+      setTimeout(() => {
+        this.btms = true;
+      }, 500);
+      if (document.addEventListener) {
+        document.addEventListener('scroll', this.scrollMethod);
+      }
+      document.onscroll = this.scrollMethod;
+    });
   },
 }
 </script>

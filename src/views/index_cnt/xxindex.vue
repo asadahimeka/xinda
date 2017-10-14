@@ -353,8 +353,9 @@ a {
         }
     }
     .botp {
-        width: 45%;
+        width: 95%;
         margin: 0.17rem auto 1rem;
+        text-align: center;
     }
 }
 

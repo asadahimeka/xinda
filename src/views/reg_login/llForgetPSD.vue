@@ -56,7 +56,7 @@
                     <a href="#/Logon">返回登录>></a>
                 </div>
                 <div class="getRight">
-                    <img src="../../assets/images/getRight.png" alt="">
+                    <img src="../../assets/getRight.png" alt="">
                 </div>
             </div>
         </div>

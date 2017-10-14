@@ -25,18 +25,7 @@
             </div>
             <div class="sett5">
                 <span>所在地区：</span>
-                <select name="" id="province" @change="ChaProvinceEl" v-model="provinceVal">
-                    <option value="all" selected>省</option>
-                    <option v-for="(province,i) in ProvinceAll" :value="province.item_code" :key="i">{{province.item_name}}</option>
-                </select>
-                <select name="" id="city" @change="ChaCityEl" v-model="cityVal">
-                    <option value="all" selected>市</option>
-                    <option v-for="(city,i) in CityAll" :value="city.item_code" :key="i">{{city.item_name}}</option>
-                </select>
-                <select name="" id="district" v-model="districtVal">
-                    <option value="all" selected>区</option>
-                    <option v-for="(district,i) in DistrictAll" :value="district.item_code" :key="i">{{district.item_name}}</option>
-                </select>
+                <v-distpicker class="" @selected="onSelected"></v-distpicker>
             </div>
             <el-button :plain="true" @click="update">保存</el-button>
         </div>
@@ -85,18 +74,11 @@
                 </div>
                 <div class="sett5">
                     <span>所在地区：</span>
-                    <select name="" id="province" @change="ChaProvinceEl" v-model="provinceVal">
-                        <option value="all" selected>省</option>
-                        <option v-for="(province,i) in ProvinceAll" :value="province.item_code" :key="i">{{province.item_name}}</option>
-                    </select>
-                    <select name="" id="city" @change="ChaCityEl" v-model="cityVal">
-                        <option value="all" selected>市</option>
-                        <option v-for="(city,i) in CityAll" :value="city.item_code" :key="i">{{city.item_name}}</option>
-                    </select>
-                    <select name="" id="district" v-model="districtVal">
-                        <option value="all" selected>区</option>
-                        <option v-for="(district,i) in DistrictAll" :value="district.item_code" :key="i">{{district.item_name}}</option>
-                    </select>
+                    <span v-show="seshow" class="selreg" @click="selectArea">{{selReg}}</span>
+                    <button v-show="btshow" @click="selectArea">點擊選擇地區</button>
+                    <transition name="el-zoom-in-bottom">
+                        <v-distpicker v-show="dpshow" type="mobile" class="" @selected="onSelected"></v-distpicker>
+                    </transition>
                 </div>
                 <el-button :plain="true" @click="update">保存</el-button>
             </div>
@@ -137,7 +119,6 @@ export default {
         }).catch((error) => {
             console.log('error', error);
         });
-        this.getProvinceData();
     },
     data() {
         return {
@@ -147,17 +128,30 @@ export default {
             oldPSD: '',//旧密码的value值
             firstPSD: '',//第一次输入新密码的value值
             lastPSD: '',//再一次输入新密码的value值
-            // 下面是所有省市区三级联动用到的元素
-            ProvinceAll: [],//所有的省元素
-            provinceVal: 'all',//默认选中的省元素
-            CityAll: [],//对应省元素的所有市元素
-            cityVal: 'all',//默认选中的市元素
-            DistrictAll: [],//对应区元素的所有区元素
-            districtVal: 'all',//默认选中的区元素
+            districtVal: 'all',
             imageUrl: '',
-        };
+            btshow: true,
+            dpshow: false,
+            seshow: false,
+            selReg: '',
+        }
     },
     methods: {
+        selectArea() {
+            this.dpshow = true;
+            setTimeout(() => {
+                this.btshow = false;
+            }, 500);
+        },
+        onSelected(data) {
+            if (data) {
+                this.districtVal = data.area.code;
+                this.btshow = false;
+                this.dpshow = false;
+                this.seshow = true;
+                this.selReg = data.province.value + '-' + data.city.value + '-' + data.area.value;
+            }
+        },
         backHistory: function() {
             history.go(-1);
         },
@@ -222,6 +216,7 @@ export default {
                 this.open4('请选择正确的个人地区信息');
                 return false;
             };
+            console.log('this.districtVal: ', this.districtVal);
             // 本地校验完成，上传到服务器进行校验
             var information = {
                 headImg: this.imageUrl.substring(this.imageUrl.lastIndexOf('/'), this.imageUrl.length),
@@ -230,7 +225,7 @@ export default {
                 email: this.email,
                 regionId: this.districtVal,
             }
-            this.$ajax.post('/xinda-api/member/update-info', information, {}).then((info) => {
+            this.$ajax.post('/xinda-api/member/update-info', information, {}).then(info => {
                 if (info.data.status == 1) {
                     this.open2('信息更改成功');
                     setTimeout(function() {
@@ -272,74 +267,6 @@ export default {
                 })
             };
         },
-
-        //获取省市区的select元素
-        // var provinceEl = document.getElementById("province");
-        // var cityEl = document.getElementById("city");
-        // var districtEl = document.getElementById("district");
-        //获取省元素
-        getProvinceData: function() {
-            for (var i = 0; i < cityJson.length; i++) {
-                if (cityJson[i].item_code.substr(2, 2) == "00") {
-                    this.ProvinceAll.push(cityJson[i]);
-                }
-            }
-        },
-        //添加省元素 ---→ 通过v-for遍历数组添加省元素
-
-        //根据省元素 添加/删除 市 元素
-        ChaProvinceEl: function() {
-            this.cityVal = 'all';
-            this.districtVal = 'all';
-            if (this.provinceVal == "all") {
-                this.deleteCity();
-                this.deleteDistrict();
-            } else {
-                this.deleteCity();
-                this.deleteDistrict();
-                var cityData = this.getCityDataByP(this.provinceVal);
-            }
-        },
-        //根据省份获取城市元素
-        getCityDataByP: function(code) {
-            var prev = code.substr(0, 2);
-            for (var i = 0; i < cityJson.length; i++) {
-                var ic = cityJson[i].item_code;
-                if (ic.indexOf(prev) == 0 && ic.substr(4, 2) == "00" && ic.substr(2, 2) != "00") {
-                    this.CityAll.push(cityJson[i]);
-                }
-            }
-            // console.log(this.CityAll)
-        },
-        //根据市元素 添加/删除 区元素
-        ChaCityEl: function() {
-            this.districtVal = 'all';
-            if (this.value == "all") {
-                this.deleteDistrict();
-            } else {
-                this.deleteDistrict();
-                var districtData = this.getdistrictByC(this.cityVal);
-            }
-        },
-        //根据城市获取区元素
-        getdistrictByC: function(sode) {
-            var prev = sode.substr(0, 2);
-            var cit = sode.substr(2, 2);
-            for (var i = 0; i < cityJson.length; i++) {
-                var ic = cityJson[i].item_code;
-                if (ic.indexOf(prev) == 0 && ic.indexOf(cit) == 2 && ic.substr(4, 2) != "00") {
-                    this.DistrictAll.push(cityJson[i]);
-                }
-            }
-        },
-        //删除市元素
-        deleteCity: function() {
-            this.CityAll = [];
-        },
-        //删除区元素
-        deleteDistrict: function() {
-            this.DistrictAll = [];
-        }
     }
 
 }
@@ -413,8 +340,8 @@ export default {
     }
     .sett5 {
         select {
-            width: 80px;
-            height: 30px;
+            width: 100px;
+            font-size: 15px;
             margin-right: 10px;
         }
     }
@@ -560,6 +487,27 @@ input {
             select {
                 width: 20%;
             }
+            .sett5 {
+                display: flex;
+                button {
+                    width: 1.2rem;
+                    margin: 0 0 .2rem .2rem;
+                }
+            }
+            .address {
+                z-index: 10020;
+                position: fixed;
+                left: 0;
+                bottom: 0.5rem;
+                width: 100%;
+                margin-top: -10px;
+                .address-container {
+                    height: 3rem;
+                }
+            }
+            .selreg {
+                margin-left: .1rem;
+            }
         }
         .psdset {
             width: 100%;
@@ -579,7 +527,7 @@ input {
                 margin-top: .01rem;
             }
             input {
-                width: 55%; 
+                width: 55%;
             }
         }
     }

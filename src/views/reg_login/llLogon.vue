@@ -50,7 +50,7 @@
                     </a>
                 </div>
                 <div class="getRight">
-                    <img src="../../assets/images/getRight.png">
+                    <img src="../../assets/getRight.png">
                 </div>
             </div>
             <div v-if="$isPC">
@@ -117,7 +117,7 @@ export default {
                 if (!this.$isPC) {
                     this.$toast({
                         message: this.failMsg,
-                        position: 'bottom',
+                        position: 'top',
                         duration: 5000
                     });
                 };
@@ -137,7 +137,7 @@ export default {
                             if (!this.$isPC) {
                                 this.$toast({
                                     message: this.successMsg,
-                                    position: 'bottom',
+                                    position: 'top',
                                     duration: 5000
                                 });
                             };
@@ -155,7 +155,7 @@ export default {
                             if (!this.$isPC) {
                                 this.$toast({
                                     message: this.failMsg,
-                                    position: 'bottom',
+                                    position: 'top',
                                     duration: 5000
                                 });
                             };
@@ -170,7 +170,7 @@ export default {
                     if (!this.$isPC) {
                         this.$toast({
                             message: this.failMsg,
-                            position: 'bottom',
+                            position: 'top',
                             duration: 5000
                         });
                     };

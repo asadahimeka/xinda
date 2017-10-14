@@ -9,7 +9,7 @@
 ## Build Setup ( Node 6.0+ )
 
 ``` bash
-#Cloned to the local
+#Clone to the local
 git clone https://github.com/173271328/xinda.git
 
 #Enter the folder

@@ -9,7 +9,7 @@
             <p>{{shopinfo.providerInfo}}</p>
         </div>
         <div class="webmoduleTitle">
-            <h6>知识产权</h6>
+            <h6>所有服务</h6>
         </div>
 
         <div class="Shopboxbody">
@@ -22,7 +22,7 @@
                         <div class="boxright">
                             <h3>{{content.serviceName}}</h3>
                             <p>{{content.serviceInfo}}</p>
-                            <div class="address">
+                            <div class="iaddress">
                                 <i class="iconfont">&#xe603;</i>{{content.regionName}}</div>
                             <div class="price">
                                 <span>￥{{content.price/100}}</span>元</div>
@@ -88,9 +88,9 @@ export default {
             });
         },
         scrollMethod() {
-            const sumH = document.body.scrollHeight;
-            const viewH = document.documentElement.clientHeight;
-            const scrollH = document.body.scrollTop;
+            const sumH = document.documentElement.scrollHeight || document.body.scrollHeight;
+            const viewH = document.documentElement.clientHeight || document.body.clientHeight;
+            const scrollH = document.documentElement.scrollTop || document.body.scrollTop;
             if (viewH + scrollH === sumH && this.limit === this.contentList.length) {
                 if (this.$route.path.indexOf('shopweb') > -1)
                     this.getServCont();
@@ -106,7 +106,6 @@ export default {
 </script>
 
 <style lang="less">
-// WEB端
 .webshop {
     margin: 5%; // height: 1.5rem;
     text-align: center;
@@ -198,7 +197,7 @@ export default {
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 2;
             }
-            .address {
+            .iaddress {
                 margin: .12rem;
                 font-size: .1rem; // max-width: 1.3rem;
                 overflow: hidden;

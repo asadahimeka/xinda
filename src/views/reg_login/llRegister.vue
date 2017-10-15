@@ -38,26 +38,27 @@
                 </div>
                 <input type="text" class="VerCode" placeholder="请输入短信验证码" v-model="messageTest" @focus="noErr">
                 <button class="clickGet" @click="getMessage">{{getMessageBtn}}</button>
-                <div class="area">
-                    <button v-show="btshow" @click="selectArea">點擊選擇地區</button>
+                <div class="area" v-if="!$isPC">
+                    <button v-show="btshow" @click="selectArea">点击选择地区</button>
                     <button v-show="seshow" class="selreg" @click="selectArea">{{selReg}}</button>
                     <transition name="el-zoom-in-bottom">
                         <v-distpicker v-show="dpshow" type="mobile" class="" @selected="onSelected"></v-distpicker>
                     </transition>
-                    <!--
-                    <select name="" id="province" @change="ChaProvinceEl" v-model="provinceVal">
-                        <option value="all" selected>省</option>
-                        <option v-for="(province,i) in ProvinceAll" :value="province.item_code" :key="i">{{province.item_name}}</option>
-                    </select>
-                    <select name="" id="city" @change="ChaCityEl" v-model="cityVal">
-                        <option value="all" selected>市</option>
-                        <option v-for="(city,i) in CityAll" :value="city.item_code" :key="i">{{city.item_name}}</option>
-                    </select>
-                    <select name="" id="district" v-model="districtVal">
-                        <option value="all" selected>区</option>
-                        <option v-for="(district,i) in DistrictAll" :value="district.item_code" :key="i">{{district.item_name}}</option>
-                    </select>
-                    -->
+                    <!-- <select name="" id="province" @change="ChaProvinceEl" v-model="provinceVal">
+                            <option value="all" selected>省</option>
+                            <option v-for="(province,i) in ProvinceAll" :value="province.item_code" :key="i">{{province.item_name}}</option>
+                        </select>
+                        <select name="" id="city" @change="ChaCityEl" v-model="cityVal">
+                            <option value="all" selected>市</option>
+                            <option v-for="(city,i) in CityAll" :value="city.item_code" :key="i">{{city.item_name}}</option>
+                        </select>
+                        <select name="" id="district" v-model="districtVal">
+                            <option value="all" selected>区</option>
+                            <option v-for="(district,i) in DistrictAll" :value="district.item_code" :key="i">{{district.item_name}}</option>
+                        </select> -->
+                </div>
+                <div class="area" v-if="$isPC">
+                    <v-distpicker v-if="dpshow" class="" @selected="onSelected"></v-distpicker>
                 </div>
                 <input type="password" placeholder="请设置密码" v-model="PSD" @focus="noErr" @blur="testPassword">
                 <div class="error">
@@ -106,7 +107,7 @@ export default {
     data() {
         return {
             btshow: true,
-            dpshow: false,
+            dpshow: this.$isPC ? true : false,
             selReg: '',
             errormsg: '',//显示错误信息
             successmsg: '',//注册成功显示信息
@@ -131,16 +132,13 @@ export default {
     methods: {
         selectArea() {
             this.dpshow = true;
-            setTimeout(() => {
-                this.btshow = false;
-            }, 500);
         },
         onSelected(data) {
             if (data) {
                 this.selReg = data.province.value + '-' + data.city.value + '-' + data.area.value;
                 this.districtVal = data.area.code;
                 this.btshow = false;
-                this.dpshow = false;
+                this.dpshow = this.$isPC ? true : false;
                 this.seshow = true;
             }
         },
@@ -606,7 +604,7 @@ export default {
                 display: flex;
                 justify-content: space-between;
                 select {
-                    width: 91px;
+                    width: 31.3%;
                     height: 36px;
                     font-size: 15px;
                     padding-left: 10px;

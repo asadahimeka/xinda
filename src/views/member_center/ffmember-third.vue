@@ -75,7 +75,7 @@
                 <div class="sett5">
                     <span>所在地区：</span>
                     <span v-show="seshow" class="selreg" @click="selectArea">{{selReg}}</span>
-                    <button v-show="btshow" @click="selectArea">點擊選擇地區</button>
+                    <button v-show="btshow" @click="selectArea">点击选择地区</button>
                     <transition name="el-zoom-in-bottom">
                         <v-distpicker v-show="dpshow" type="mobile" class="" @selected="onSelected"></v-distpicker>
                     </transition>
@@ -415,6 +415,9 @@ input {
         overflow-y: auto;
         .sett3 {
             margin-top: .15rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
         }
         .firstTT {
             margin-top: .2rem;
@@ -523,7 +526,7 @@ input {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                height: .6rem;
+                height: .7rem;
                 margin-top: .01rem;
             }
             input {

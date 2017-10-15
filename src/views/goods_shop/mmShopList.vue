@@ -222,11 +222,12 @@ export default {
         float: left;
         margin-left: 10px;
         margin-top: 5px;
-        padding: 0;
-        padding-left: 25px;
+        padding: 0 !important;
+        padding-left: 25px !important;
         width: 120px;
-        height: 30px;
-        font-size: 14px;
+        height: 30px !important;
+        font-size: 14px !important;
+        padding-right: 0 !important;
     }
 }
 </style>

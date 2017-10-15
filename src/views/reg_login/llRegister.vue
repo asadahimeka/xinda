@@ -42,20 +42,20 @@
                     <button v-show="btshow" @click="selectArea">点击选择地区</button>
                     <button v-show="seshow" class="selreg" @click="selectArea">{{selReg}}</button>
                     <transition name="el-zoom-in-bottom">
-                        <v-distpicker v-show="dpshow" type="mobile" class="" @selected="onSelected"></v-distpicker>
+                        <v-distpicker v-show="dpshow" type="mobile" class="addr" @selected="onSelected"></v-distpicker>
                     </transition>
                     <!-- <select name="" id="province" @change="ChaProvinceEl" v-model="provinceVal">
-                            <option value="all" selected>省</option>
-                            <option v-for="(province,i) in ProvinceAll" :value="province.item_code" :key="i">{{province.item_name}}</option>
-                        </select>
-                        <select name="" id="city" @change="ChaCityEl" v-model="cityVal">
-                            <option value="all" selected>市</option>
-                            <option v-for="(city,i) in CityAll" :value="city.item_code" :key="i">{{city.item_name}}</option>
-                        </select>
-                        <select name="" id="district" v-model="districtVal">
-                            <option value="all" selected>区</option>
-                            <option v-for="(district,i) in DistrictAll" :value="district.item_code" :key="i">{{district.item_name}}</option>
-                        </select> -->
+                                <option value="all" selected>省</option>
+                                <option v-for="(province,i) in ProvinceAll" :value="province.item_code" :key="i">{{province.item_name}}</option>
+                            </select>
+                            <select name="" id="city" @change="ChaCityEl" v-model="cityVal">
+                                <option value="all" selected>市</option>
+                                <option v-for="(city,i) in CityAll" :value="city.item_code" :key="i">{{city.item_name}}</option>
+                            </select>
+                            <select name="" id="district" v-model="districtVal">
+                                <option value="all" selected>区</option>
+                                <option v-for="(district,i) in DistrictAll" :value="district.item_code" :key="i">{{district.item_name}}</option>
+                            </select> -->
                 </div>
                 <div class="area" v-if="$isPC">
                     <v-distpicker v-if="dpshow" class="" @selected="onSelected"></v-distpicker>
@@ -89,7 +89,11 @@
 
 <script>
 import MD5 from 'js-md5';
+import VDistpicker from 'v-distpicker';
 export default {
+    components: {
+        'v-distpicker': VDistpicker
+    },
     created() {
         // this.$ajax.get('static/city.json').then(res => {
         //     console.log(res);
@@ -607,7 +611,10 @@ export default {
                     width: 31.3%;
                     height: 36px;
                     font-size: 15px;
-                    padding-left: 10px;
+                    margin-right: 2px;
+                    padding: 0;
+                    padding-left: 25px;
+                    border-radius: 5px;
                     box-sizing: border-box;
                 }
             }
@@ -709,7 +716,7 @@ export default {
             }
         }
     }
-    .address {
+    .addr {
         z-index: 10020;
         position: fixed;
         left: 0;

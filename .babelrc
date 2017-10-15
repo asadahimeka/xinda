@@ -14,11 +14,11 @@
     ["component",[
       {
         "libraryName": "element-ui",
-        "styleLibraryName": "theme-default"
+        "style": false
       },
       {
         "libraryName": "mint-ui",
-        "style": true
+        "style": false
       }
     ]]
   ],

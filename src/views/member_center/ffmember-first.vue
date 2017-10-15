@@ -117,11 +117,14 @@
 </template>
 
 <script>
+import { DatePicker } from 'element-ui'
+import { MessageBox } from "mint-ui";
 export default {
     created() {
         !this.$isPC ? this.pdata.limit = 0 : 0;
         this.getBOrder();
     },
+    components: { [DatePicker.name]: DatePicker },
     data() {
         return {
             startdate: '',
@@ -267,7 +270,7 @@ export default {
         },
         delOrder(id, i) {
             if (!this.$isPC) {
-                this.$messagebox.confirm('确定删除该产品吗?').then(action => {
+                MessageBox.confirm('确定删除该产品吗?').then(action => {
                     this.$ajax.post(
                         '/xinda-api/business-order/del',
                         { id }

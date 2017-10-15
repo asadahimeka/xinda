@@ -6,49 +6,20 @@ import router from './router'
 import store from './store'
 import axios from 'axios';
 import qs from 'qs';
-import VueAwesomeSwiper from 'vue-awesome-swiper'
 
-//swiper
-Vue.use(VueAwesomeSwiper);
-
-// import ElementUI from 'element-ui';
-import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
-import { Input, Button, DatePicker, Breadcrumb, BreadcrumbItem, Tabs, TabPane, Alert, Icon, Upload, Progress, Rate, Steps, Step, Loading, MessageBox, Message, Notification } from 'element-ui'
-
-// Vue.use(ElementUI);
-Vue.use(Input)
-Vue.use(Button)
-Vue.use(DatePicker)
-Vue.use(Breadcrumb)
-Vue.use(BreadcrumbItem)
-Vue.use(Tabs)
-Vue.use(TabPane)
-Vue.use(Alert)
-Vue.use(Icon)
-Vue.use(Upload)
-Vue.use(Progress)
-Vue.use(Rate)
-Vue.use(Steps)
-Vue.use(Step)
-Vue.use(Loading.directive)
-Vue.use(CollapseTransition)
-
-// import MintUI from 'mint-ui'
-import Msgbox from "mint-ui/lib/message-box";
+import { Alert, Loading, MessageBox, Message } from 'element-ui'
 import { Toast, Indicator, Badge } from 'mint-ui'
+import VPage from './components/v-page'
 
-// Vue.use(MintUI);
+//ElementUI
+Vue.use(Alert)
+Vue.use(Loading.directive)
+//MintUI
 Vue.component(Badge.name, Badge)
-
-//地區選擇插件
-const VDistpicker = () => import('v-distpicker');
-Vue.component('v-distpicker', VDistpicker);
-
-//分页插件
-const VPage = () => import('./components/v-page');
+//Pagination
 Vue.component('v-page', VPage);
 
-// axios全局配置
+//axios config
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.interceptors.request.use((config) => {
     config.data = qs.stringify(config.data);
@@ -65,11 +36,9 @@ Object.defineProperties(Vue.prototype, {
     '$alert': { value: MessageBox.alert },
     '$confirm': { value: MessageBox.confirm },
     '$prompt': { value: MessageBox.prompt },
-    '$notify': { value: Notification },
     '$message': { value: Message },
     '$toast': { value: Toast },
     '$indicator': { value: Indicator },
-    '$messagebox': { value: Msgbox },
     '$errImg': { value: () => event.target.src = "static/images/error.png" },
 });
 

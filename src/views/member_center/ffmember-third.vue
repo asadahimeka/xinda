@@ -27,7 +27,7 @@
                 <span>所在地区：</span>
                 <v-distpicker class="" @selected="onSelected"></v-distpicker>
             </div>
-            <el-button :plain="true" @click="update">保存</el-button>
+            <button @click="update">保存</button>
         </div>
         <!--账户设置部分-->
         <div class="password" v-if="$isPC">
@@ -80,7 +80,7 @@
                         <v-distpicker v-show="dpshow" type="mobile" class="" @selected="onSelected"></v-distpicker>
                     </transition>
                 </div>
-                <el-button :plain="true" @click="update">保存</el-button>
+                <button :plain="true" @click="update">保存</button>
             </div>
             <div class="psdset">
                 <div class="firstTT">
@@ -105,7 +105,13 @@
 
 <script>
 import md5 from 'js-md5'
+import { Upload } from 'element-ui'
+import VDistpicker from 'v-distpicker';
 export default {
+    components: {
+        [Upload.name]: Upload,
+        'v-distpicker': VDistpicker
+    },
     created() {
         this.$ajax.post('/xinda-api/member/info').then((userMsg) => {
             if (userMsg.data.status == 1) {
@@ -113,6 +119,14 @@ export default {
                 this.newname = userMsg.data.data.name;
                 this.sex = userMsg.data.data.gender;
                 this.email = userMsg.data.data.email;
+                let r = userMsg.data.data.regionId;
+                // this.userRegion.area = parseInt(r+'');
+                // console.log('this.userRegion.area: ', this.userRegion.area);
+                // this.userRegion.city = parseInt(r.substring(0, 4) + '00');
+                // console.log('this.userRegion.city: ', this.userRegion.city);
+                // this.userRegion.province = parseInt(r.substring(0, 2) + '0000');
+                // console.log('this.userRegion.province: ', this.userRegion.province);
+
             } else {
                 this.$message.warning(userMsg.data.msg);
             }
@@ -277,13 +291,6 @@ export default {
     width: 18px;
 }
 
-.el-button.is-plain:focus,
-.el-button.is-plain:hover {
-    background-color: coral;
-    color: #fff;
-    background: coral;
-}
-
 .el-radio__inner {
     width: 18px;
 }
@@ -343,6 +350,9 @@ export default {
             width: 100px;
             font-size: 15px;
             margin-right: 10px;
+            padding: 0;
+            padding-left: 15px;
+            border-radius: 5px;
         }
     }
     button {

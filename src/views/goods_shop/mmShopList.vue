@@ -75,7 +75,14 @@
 </template>
 
 <script>
+import { Breadcrumb, BreadcrumbItem } from 'element-ui'
+import VDistpicker from 'v-distpicker';
 export default {
+    components: {
+        [Breadcrumb.name]: Breadcrumb,
+        [BreadcrumbItem.name]: BreadcrumbItem,
+        'v-distpicker': VDistpicker
+    },
     data() {
         return {
             loading: true,

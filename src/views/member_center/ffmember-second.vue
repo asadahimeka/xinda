@@ -59,7 +59,7 @@
             </div>
             <div style="width:700px;display:flex;">
                 <span style="width:100px;">感受：</span>
-                <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="textarea3"></el-input>
+                <textarea type="text"  cols="100" rows="5" placeholder="请输入内容" v-model="textarea3" style="resize:none"></textarea>
             </div>
             <button>提交</button>
         </div>
@@ -67,7 +67,11 @@
 </template>
 
 <script>
+import { Rate } from 'element-ui'
 export default {
+    components: {
+        [Rate.name]: Rate,
+    },
     data() {
         return {
             value3: null,

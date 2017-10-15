@@ -63,35 +63,24 @@ export default {
       document.onscroll = this.scrollMethod;
     });
   },
+  created() {
+    if (/Mobile/i.test(navigator.userAgent)) {
+      document.querySelector('html').style.fontSize = window.screen.width / 3.75 / 16 * 100 + '%';
+      window.onresize = () => {
+        document.querySelector('html').style.fontSize = window.screen.width / 3.75 / 16 * 100 + '%';
+      }
+    }
+  }
 }
 </script>
 
 <style lang="less">
-//ElementUI
-// @import url("//unpkg.com/element-ui@1.4.4/lib/theme-default/index.css");
-@import url("https://cdn.bootcss.com/element-ui/1.4.6/theme-default/index.css");
-//Mint
-// @import url("//unpkg.com/mint-ui/lib/style.css");
-@import url("https://cdn.bootcss.com/mint-ui/2.2.9/style.min.css");
-
-@font-face {
-  font-family: 'iconfont';
-  /* project id 414122 */
-  src: url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.eot');
-  src: url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.woff') format('woff'),
-  url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_414122_dwhp87s2ckutyb9.svg#iconfont') format('svg');
+html {
+  font-size: 625%;
 }
 
-.iconfont {
-  vertical-align: middle;
-  font-family: "iconfont" !important;
-  font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
-  -moz-osx-font-smoothing: grayscale;
+body {
+  font-size: .16rem;
 }
 
 #app .content {
@@ -204,9 +193,6 @@ select {
 }
 
 @media screen and (max-width:767px) {
-  html:root {
-    font-size: 625%;
-  }
   .mobileBG {
     width: 100%;
     height: 100vh;
@@ -217,6 +203,9 @@ select {
   #app .content {
     min-width: 30vh;
     min-height: 30vh;
+  }
+  .address{
+    
   }
 }
 </style>

@@ -27,9 +27,7 @@
                 </div>
             </div>
 
-            <!-- <transition name="slide"> -->
-            <el-collapse-transition>
-                <!-- <transition name="el-zoom-in-top"> -->
+            <transition name="el-zoom-in-top">
                 <div class="odr-list" v-show="!tri">
                     <div v-for="item in orderlist" class="odr-dtl" :key="item.id">
                         <div>服务名称：
@@ -45,9 +43,7 @@
                             <b class="money-color">￥{{fmtPrice(item.totalPrice)}}</b>元</div>
                     </div>
                 </div>
-                <!-- </transition> -->
-            </el-collapse-transition>
-            <!-- </transition> -->
+            </transition>
         </div>
 
         <div class="tpc money-color">支付方式</div>

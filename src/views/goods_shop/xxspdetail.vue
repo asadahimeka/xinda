@@ -248,8 +248,16 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { Progress, Rate, Steps, Step } from 'element-ui'
+import { MessageBox } from "mint-ui";
 export default {
     name: 'spdetail',
+    components: {
+        [Progress.name]: Progress,
+        [Rate.name]: Rate,
+        [Steps.name]: Steps,
+        [Step.name]: Step,
+    },
     data() {
         return {
             fsLoading: true,
@@ -292,7 +300,7 @@ export default {
             }],
             jix: 0,
             region: '',
-            info: {},
+            info: {},      
         }
     },
     created() {
@@ -454,7 +462,7 @@ export default {
                         this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
                     }
                     else {
-                        this.$messagebox.alert('未登录，请先登录').then(action => {
+                        MessageBox.alert('未登录，请先登录').then(action => {
                             this.$toast({ message: '跳转至登录界面', duration: 1000 });
                             this.$router.push({ path: '/Logon', query: { redirect: this.$route.fullPath } });
                         });

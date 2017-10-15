@@ -164,6 +164,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { MessageBox } from "mint-ui";
 export default {
     name: 'shcart',
     data() {
@@ -334,7 +335,7 @@ export default {
                                     this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
                                 }
                                 else {
-                                    this.$messagebox.alert('未登录，请先登录').then(action => {
+                                    this.MessageBox.alert('未登录，请先登录').then(action => {
                                         this.$toast({ message: '跳转至登录界面', duration: 1000 });
                                         this.$router.push({ path: '/Logon', query: { redirect: this.$route.fullPath } });
                                     });
@@ -375,10 +376,10 @@ export default {
         },
         del(item) {
             if (!this.$isPC) {
-                this.$messagebox.confirm('确定删除该产品吗?').then(action => {
+                MessageBox.confirm('确定删除该产品吗?').then(action => {
                     this.delItem(item);
                 }).catch(() => {
-                    
+
                 });
             } else {
                 this.$confirm('确定删除该产品吗?', '提示', {

@@ -26,7 +26,7 @@ export default {
     created() {
         !this.$isPC ? this.$router.push('/') : 0;
         this.$ajax.post(
-            '/xinda-api/sso/login-info'
+            this.$baseUrl+'/xinda-api/sso/login-info'
         ).then(res => {
             if (res.data.status == 0) {
                 this.$message({ type: "warning", message: '请先登录！', duration: 2000 });

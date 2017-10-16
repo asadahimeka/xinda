@@ -221,7 +221,7 @@ export default {
             } else {
                 this.loading = true;
             }
-            this.$ajax.post('/xinda-api/business-order/grid', this.pdata).then((res) => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/business-order/grid', this.pdata).then((res) => {
                 if (res.data.data.length) {
                     this.pageSize = res.data.pageSize;
                     this.bolist = res.data.data.sort((a, b) => b.createTime - a.createTime);
@@ -252,7 +252,7 @@ export default {
             var len = bo.length;
             for (let i = 0; i < len; i++) {
                 var bno = bo[i].businessNo;
-                this.$ajax.post('/xinda-api/service-order/grid', {
+                this.$ajax.post(this.$baseUrl+'/xinda-api/service-order/grid', {
                     businessNo: bno,
                     startTime: '',
                     endTime: '',
@@ -272,7 +272,7 @@ export default {
             if (!this.$isPC) {
                 MessageBox.confirm('确定删除该产品吗?').then(action => {
                     this.$ajax.post(
-                        '/xinda-api/business-order/del',
+                        this.$baseUrl+'/xinda-api/business-order/del',
                         { id }
                     ).then((res) => {
                         if (res.data.status == 1) {
@@ -297,7 +297,7 @@ export default {
                     lockScroll: false,
                 }).then(() => {
                     this.$ajax.post(
-                        '/xinda-api/business-order/del',
+                        this.$baseUrl+'/xinda-api/business-order/del',
                         { id }
                     ).then((res) => {
                         if (res.data.status == 1) {

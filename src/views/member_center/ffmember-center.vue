@@ -67,7 +67,7 @@ import { Toast } from 'mint-ui';
 export default {
     created() {
         this.$isPC ? this.$router.push('/MemberCen/Order') : 0;
-        this.$ajax.post('/xinda-api/member/info').then((userMsg) => {
+        this.$ajax.post(this.$baseUrl+'/xinda-api/member/info').then((userMsg) => {
             if (userMsg.data.status == 1) {
                 this.username = userMsg.data.data.name;
                 // this.headimg = userMsg.data.data.headImg;
@@ -91,7 +91,7 @@ export default {
             return /^\/[^/]/.test(src) ? "http://115.182.107.203:8088/xinda/pic" + src : src;
         },
         exit: function() {
-            this.$ajax.post('/xinda-api/sso/logout').then((out) => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/sso/logout').then((out) => {
                 this.exAction(0);
                 this.cartAction(0);
                 Toast({

@@ -158,7 +158,7 @@ export default {
                     smsType: 1,
                     imgCode: this.imgCode
                 };
-                this.$ajax.post('/xinda-api/register/sendsms', message, {}).then((fontMessage) => {
+                this.$ajax.post(this.$baseUrl+'/xinda-api/register/sendsms', message, {}).then((fontMessage) => {
                     if (fontMessage.data.status == 1) {
                         this.successmsg = fontMessage.data.msg;
                         this.successShow = true;
@@ -203,7 +203,7 @@ export default {
             }
         },
         F5() {//刷新验证码
-            this.src = '/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
+            this.src = this.$baseUrl+'/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
         },
         noErr() {
             this.errormsg.indexOf('手机') == -1 ? this.noError() : 0;
@@ -214,7 +214,7 @@ export default {
         // 验证手机号是否已被注册
         phoneBlur() {
             if (this.testPhone()) {
-                this.$ajax.post('/xinda-api/register/valid-sms', {
+                this.$ajax.post(this.$baseUrl+'/xinda-api/register/valid-sms', {
                     cellphone: this.phone,
                     smsType: 1,
                     validCode: this.messageTest,
@@ -335,7 +335,7 @@ export default {
                 smsType: 1,
                 validCode: this.messageTest,
             };
-            this.$ajax.post('/xinda-api/register/valid-sms', registerTP, {}).then((rTP) => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/register/valid-sms', registerTP, {}).then((rTP) => {
                 // console.log('rtp', rTP);
                 if (rTP.data.status == 1) {
                     this.goToRegister();
@@ -364,7 +364,7 @@ export default {
                 password: MD5(this.PSD),
                 regionId: this.districtVal,
             };
-            this.$ajax.post('/xinda-api/register/register', shuju, {}).then((canLog) => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/register/register', shuju, {}).then((canLog) => {
                 // console.log(canLog);
                 if (canLog.data.status == 1) {
                     this.successmsg = canLog.data.msg;

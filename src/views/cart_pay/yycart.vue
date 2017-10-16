@@ -223,7 +223,7 @@ export default {
             this.rglist = [];
             this.cartlist.forEach(function(ele) {
                 this.$ajax.post(
-                    '/xinda-api/provider/detail',
+                    this.$baseUrl+'/xinda-api/provider/detail',
                     { id: ele.providerId }
                 ).then(res => {
                     if (res.data.status == 1) {
@@ -238,7 +238,7 @@ export default {
         },
         getRecmd() {
             this.$ajax.post(
-                '/xinda-api/recommend/list'
+                this.$baseUrl+'/xinda-api/recommend/list'
             ).then(res => {
                 if (res.data.status == 1) {
                     this.srvlist = res.data.data.product;
@@ -256,7 +256,7 @@ export default {
         getCart() {
             !this.$isPC ? this.$indicator.open() : 0;
             this.$ajax.post(
-                '/xinda-api/cart/list'
+                this.$baseUrl+'/xinda-api/cart/list'
             ).then(res => {
                 if (res.data.status == 1) {
                     this.cartlist = res.data.data;
@@ -294,7 +294,7 @@ export default {
         conti() {
             for (let i = 0; i < this.cartlist.length; i++) {
                 this.$ajax.post(
-                    '/xinda-api/cart/set',
+                    this.$baseUrl+'/xinda-api/cart/set',
                     {
                         id: this.cartlist[i].serviceId,
                         num: this.cartlist[i].buyNum,
@@ -314,7 +314,7 @@ export default {
         submit() {
             for (let i = 0; i < this.cartlist.length; i++) {
                 this.$ajax.post(
-                    '/xinda-api/cart/set',
+                    this.$baseUrl+'/xinda-api/cart/set',
                     {
                         id: this.cartlist[i].serviceId,
                         num: this.cartlist[i].buyNum,
@@ -328,14 +328,14 @@ export default {
                         }
                     } else if (i == this.cartlist.length - 1) {
                         this.$ajax.post(
-                            '/xinda-api/cart/submit'
+                            this.$baseUrl+'/xinda-api/cart/submit'
                         ).then(res => {
                             if (res.data.status == -1) {
                                 if (this.$isPC) {
                                     this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
                                 }
                                 else {
-                                    this.MessageBox.alert('未登录，请先登录').then(action => {
+                                    MessageBox.alert('未登录，请先登录').then(action => {
                                         this.$toast({ message: '跳转至登录界面', duration: 1000 });
                                         this.$router.push({ path: '/Logon', query: { redirect: this.$route.fullPath } });
                                     });
@@ -396,7 +396,7 @@ export default {
         },
         delItem(item) {
             this.$ajax.post(
-                '/xinda-api/cart/del',
+                this.$baseUrl+'/xinda-api/cart/del',
                 { id: item.serviceId }
             ).then(res => {
                 if (res.data.status == 1) {

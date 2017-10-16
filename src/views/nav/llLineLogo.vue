@@ -87,7 +87,7 @@ export default {
             if (displayState == '' || displayState == 'none') {
                 chooseCity.style.display = 'block';
             }
-            this.$ajax.post('/xinda-api/common/open-region').then((data) => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/common/open-region').then((data) => {
                 this.items = data.data.data;
             }).catch(function(error) {
                 console.log('error', error);
@@ -181,9 +181,9 @@ export default {
                 //开始搜索数据
                 that.now = -1;
                 if (!that.ispr) {
-                    that.url = '/xinda-api/product/package/search-grid';
+                    that.url = this.$baseUrl+'/xinda-api/product/package/search-grid';
                 } else {
-                    that.url = '/xinda-api/provider/search-grid';
+                    that.url = this.$baseUrl+'/xinda-api/provider/search-grid';
                 }
                 if (that.searchKey == '') {
                     that.skShow = 0;

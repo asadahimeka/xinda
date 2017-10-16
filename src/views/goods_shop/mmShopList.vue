@@ -176,7 +176,7 @@ export default {
             }
         },
         getShop() {
-            this.$ajax.post('/xinda-api/provider/grid', this.ajdata, {}).then((data) => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/provider/grid', this.ajdata, {}).then((data) => {
                 this.shopinfo = data.data.data;
                 this.pageSize = data.data.pageSize;
                 for (var i = 0; i < this.shopinfo.length; i++) {

@@ -113,7 +113,7 @@ export default {
     methods: {
         chad() {
             this.state = '&#xe79d;';
-            this.$ajax.post('/xinda-api/common/open-region').then((es) => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/common/open-region').then((es) => {
                 this.citylist = es.data.data;
                 this.sh = true;
             }).catch((error) => {

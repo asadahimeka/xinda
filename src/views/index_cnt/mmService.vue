@@ -55,12 +55,12 @@ export default {
             this.getProduct();
         },
         getProduct() {
-            this.$ajax.post('/xinda-api/recommend/list', {}).then((data) => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/recommend/list', {}).then((data) => {
                 this.productList = data.data.data.product;
             })
         },
         getProvider() {
-            this.$ajax.post('/xinda-api/recommend/list', {}).then((data) => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/recommend/list', {}).then((data) => {
                 this.providerList = data.data.data.provider;
                 for (var i = 0; i < this.providerList.length; i++) {
                     this.providerList[i].products = this.providerList[i].products.split(',');

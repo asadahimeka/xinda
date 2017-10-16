@@ -65,7 +65,7 @@
 import { mapGetters, mapActions } from 'vuex';
 export default {
     created() {
-        this.$ajax.post('/xinda-api/cart/cart-num').then((res) => {
+        this.$ajax.post(this.$baseUrl+'/xinda-api/cart/cart-num').then((res) => {
             if (res.data.data.cartNum) {
                 this.cartAction(res.data.data.cartNum);
             }
@@ -94,7 +94,7 @@ export default {
     watch: {
         $route(_this) {
             if (_this) {
-                this.$ajax.post('/xinda-api/cart/cart-num').then((res) => {
+                this.$ajax.post(this.$baseUrl+'/xinda-api/cart/cart-num').then((res) => {
                     if (res.data.data.cartNum) {
                         this.cartAction(res.data.data.cartNum);
                     }

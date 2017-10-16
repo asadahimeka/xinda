@@ -233,7 +233,7 @@ export default {
             window.scrollTo(0, 380);
         },
         getPack() {
-            this.$ajax.post('/xinda-api/product/package/grid', this.pdata).then((res) => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/product/package/grid', this.pdata).then((res) => {
                 if (res.data.data) {
                     this.pageSize = res.data.pageSize;
                     this.refiscal = res.data.data;
@@ -251,7 +251,7 @@ export default {
             })
         },
         getChoose() {
-            this.$ajax.post('/xinda-api/product/style/list').then((res) => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/product/style/list').then((res) => {
                 if (res.data.status == 1) {
                     this.chName = res.data.data[this.chId].name;
                     var tabs = res.data.data[this.chId].itemList;
@@ -284,7 +284,7 @@ export default {
             });
         },
         buy(item) {
-            this.$ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/sso/login-info').then((userMsg) => {
                 if (userMsg.data.status == 0) {
                     this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
                 } else {
@@ -296,12 +296,12 @@ export default {
         },
         buyNow(item) {
             this.$ajax.post(
-                '/xinda-api/cart/add',
+                this.$baseUrl+'/xinda-api/cart/add',
                 { id: item.id, num: 1 },
             ).then(res => {
                 if (res.data.status == 1) {
                     this.$ajax.post(
-                        '/xinda-api/cart/submit'
+                        this.$baseUrl+'/xinda-api/cart/submit'
                     ).then(res => {
                         if (res.data.status == 1) {
                             this.$router.push({ path: '/pay', query: { bno: res.data.data } })
@@ -320,12 +320,12 @@ export default {
         },
         addCart(item) {
             this.$ajax.post(
-                '/xinda-api/cart/add',
+                this.$baseUrl+'/xinda-api/cart/add',
                 { id: item.id, num: 1 },
             ).then(res => {
                 if (res.data.status == 1) {
                     this.$message({ type: 'success', message: res.data.msg, duration: 1000 });
-                    this.$ajax.post('/xinda-api/cart/cart-num').then(res => {
+                    this.$ajax.post(this.$baseUrl+'/xinda-api/cart/cart-num').then(res => {
                         if (res.data.status == 1) {
                             this.cartAction(res.data.data.cartNum);
                         } else {

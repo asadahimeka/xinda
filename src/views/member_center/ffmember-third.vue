@@ -113,20 +113,12 @@ export default {
         'v-distpicker': VDistpicker
     },
     created() {
-        this.$ajax.post('/xinda-api/member/info').then((userMsg) => {
+        this.$ajax.post(this.$baseUrl+'/xinda-api/member/info').then((userMsg) => {
             if (userMsg.data.status == 1) {
                 // this.imageUrl = userMsg.data.data.headImg;
                 this.newname = userMsg.data.data.name;
                 this.sex = userMsg.data.data.gender;
                 this.email = userMsg.data.data.email;
-                let r = userMsg.data.data.regionId;
-                // this.userRegion.area = parseInt(r+'');
-                // console.log('this.userRegion.area: ', this.userRegion.area);
-                // this.userRegion.city = parseInt(r.substring(0, 4) + '00');
-                // console.log('this.userRegion.city: ', this.userRegion.city);
-                // this.userRegion.province = parseInt(r.substring(0, 2) + '0000');
-                // console.log('this.userRegion.province: ', this.userRegion.province);
-
             } else {
                 this.$message.warning(userMsg.data.msg);
             }
@@ -239,7 +231,7 @@ export default {
                 email: this.email,
                 regionId: this.districtVal,
             }
-            this.$ajax.post('/xinda-api/member/update-info', information, {}).then(info => {
+            this.$ajax.post(this.$baseUrl+'/xinda-api/member/update-info', information, {}).then(info => {
                 if (info.data.status == 1) {
                     this.open2('信息更改成功');
                     setTimeout(function() {
@@ -269,7 +261,7 @@ export default {
                     oldPwd: md5(this.oldPSD),
                     newPwd: md5(this.lastPSD),
                 };
-                this.$ajax.post('/xinda-api/sso/change-pwd', pw, {}).then((msg) => {
+                this.$ajax.post(this.$baseUrl+'/xinda-api/sso/change-pwd', pw, {}).then((msg) => {
                     console.log(msg);
                     if (msg.data.status == 1) {
                         this.open2(msg.data.msg);

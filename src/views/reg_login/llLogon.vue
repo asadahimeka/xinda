@@ -72,7 +72,7 @@ import MD5 from 'js-md5';
 import { mapActions } from 'vuex';
 export default {
     created() {
-        this.$ajax.post(this.$baseUrl+'/xinda-api/sso/login-info').then((user) => {
+        this.$ajax.post('/xinda-api/sso/login-info').then((user) => {
             if (user.data.status == 1) {
                 this.$message({ type: 'warning', message: '您已登录！', duration: 1000 });
                 this.$router.push('/');
@@ -101,7 +101,7 @@ export default {
     methods: {
         ...mapActions(['userAction', 'cartAction', 'exAction']),
         F5: function() {//刷新验证码
-            this.src = this.$baseUrl+'/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
+            this.src = '/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
         },
         thisFocus: function() {
             this.failMsg = '';
@@ -131,7 +131,7 @@ export default {
                     imgCode: this.imgtest,
                 }
                 if (this.password && this.imgtest) {
-                    this.$ajax.post(this.$baseUrl+'/xinda-api/sso/login', logPar).then((reData) => {
+                    this.$ajax.post('/xinda-api/sso/login', logPar).then((reData) => {
                         if (reData.data.status == 1) {
                             this.successMsg = reData.data.msg;
                             if (!this.$isPC) {

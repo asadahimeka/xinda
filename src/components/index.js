@@ -1,3 +1,4 @@
+// const Contents = resolve => require(['../views/llContent.vue'], resolve);//两种方式不要同时使用
 // const Contents = () => import('../views/llContent')
 // const ConsoleAdvertisement = () => import('../views/index_cnt/llconsoleAdvertisement')
 import Contents from '../views/llContent'

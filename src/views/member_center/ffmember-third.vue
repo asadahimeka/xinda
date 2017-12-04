@@ -113,7 +113,7 @@ export default {
         'v-distpicker': VDistpicker
     },
     created() {
-        this.$ajax.post(this.$baseUrl+'/xinda-api/member/info').then((userMsg) => {
+        this.$ajax.post('/xinda-api/member/info').then((userMsg) => {
             if (userMsg.data.status == 1) {
                 // this.imageUrl = userMsg.data.data.headImg;
                 this.newname = userMsg.data.data.name;
@@ -231,7 +231,7 @@ export default {
                 email: this.email,
                 regionId: this.districtVal,
             }
-            this.$ajax.post(this.$baseUrl+'/xinda-api/member/update-info', information, {}).then(info => {
+            this.$ajax.post('/xinda-api/member/update-info', information, {}).then(info => {
                 if (info.data.status == 1) {
                     this.open2('信息更改成功');
                     setTimeout(function() {
@@ -261,7 +261,7 @@ export default {
                     oldPwd: md5(this.oldPSD),
                     newPwd: md5(this.lastPSD),
                 };
-                this.$ajax.post(this.$baseUrl+'/xinda-api/sso/change-pwd', pw, {}).then((msg) => {
+                this.$ajax.post('/xinda-api/sso/change-pwd', pw, {}).then((msg) => {
                     console.log(msg);
                     if (msg.data.status == 1) {
                         this.open2(msg.data.msg);

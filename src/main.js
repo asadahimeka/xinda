@@ -30,7 +30,6 @@ axios.interceptors.request.use((config) => {
 
 Object.defineProperties(Vue.prototype, {
     '$ajax': { value: axios },
-    '$baseUrl': { value: 'http://115.182.107.203:8088/xinda' },
     '$isPC': { value: /Android|iPhone|iPod|BlackBerry|SymbianOS|webOS/i.test(navigator.userAgent) ? false : true },
     '$loading': { value: Loading.service },
     '$msgbox': { value: MessageBox },

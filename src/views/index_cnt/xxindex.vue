@@ -89,7 +89,7 @@ export default {
         getRecom() {
             // !this.$isPC ? this.$indicator.open() : 0;   
             this.ld = true;         
-            this.$ajax.post(this.$baseUrl+'/xinda-api/recommend/list').then((res) => {
+            this.$ajax.post('/xinda-api/recommend/list').then((res) => {
                 if (res.data.status == 1) {
                     this.starlist = res.data.data.product;
                     this.relist = res.data.data.hq;

@@ -131,7 +131,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   to.meta.pageTitle ? document.title = to.meta.pageTitle : 0;
   if (to.matched.some(r => r.meta.requireAuth)) {
-    axios.post(this.$baseUrl+'/xinda-api/sso/login-info').then((userMsg) => {
+    axios.post('/xinda-api/sso/login-info').then((userMsg) => {
       if (userMsg.data.status == 1) {
         next();
       } else {

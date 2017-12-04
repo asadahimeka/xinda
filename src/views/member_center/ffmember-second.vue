@@ -152,7 +152,7 @@ export default {
         getEv() {
             //Error: Request failed with status code 404
             this.$ajax.post(
-            this.$baseUrl+'/xinda-api/service/judge/grid', pdata).then(res => {
+            '/xinda-api/service/judge/grid', pdata).then(res => {
                 console.log(res);
                 this.evlist = res.data.data;
             }).catch(err => {

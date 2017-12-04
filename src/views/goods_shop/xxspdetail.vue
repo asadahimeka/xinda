@@ -375,7 +375,7 @@ export default {
         getDetail() {
             this.fsLoading = true;
             this.$ajax.post(
-                this.$baseUrl+'/xinda-api/product/package/detail',
+                '/xinda-api/product/package/detail',
                 { sId: this.sid },
             ).then(res => {
                 if (res.data.status == 1) {
@@ -399,7 +399,7 @@ export default {
             });
         },
         getChoose() {
-            this.$ajax.post(this.$baseUrl+'/xinda-api/product/style/list').then((res) => {
+            this.$ajax.post('/xinda-api/product/style/list').then((res) => {
                 if (this.$route.query.tid && this.$route.query.code) {
                     if (res.data.status == 1) {
                         var types = res.data.data[this.$route.query.tid].itemList;
@@ -430,7 +430,7 @@ export default {
             })
         },
         getShop() {
-            this.$ajax.post(this.$baseUrl+'/xinda-api/provider/grid', {
+            this.$ajax.post('/xinda-api/provider/grid', {
                 limit: 1,
                 regionId: this.prvdr.regionId,
             }).then((data) => {
@@ -456,7 +456,7 @@ export default {
             });
         },
         buy() {
-            this.$ajax.post(this.$baseUrl+'/xinda-api/sso/login-info').then((userMsg) => {
+            this.$ajax.post('/xinda-api/sso/login-info').then((userMsg) => {
                 if (userMsg.data.status == 0) {
                     if (this.$isPC) {
                         this.open('提示', '未登录，请先登录', '跳转至登录界面', '/Logon', { redirect: this.$route.fullPath });
@@ -476,12 +476,12 @@ export default {
         },
         buyNow() {
             this.$ajax.post(
-                this.$baseUrl+'/xinda-api/cart/add',
+                '/xinda-api/cart/add',
                 { id: this.srv.id, num: this.buyNum },
             ).then(res => {
                 if (res.data.status == 1) {
                     this.$ajax.post(
-                        this.$baseUrl+'/xinda-api/cart/submit'
+                        '/xinda-api/cart/submit'
                     ).then(res => {
                         if (res.data.status == 1) {
                             this.cartAction(0);
@@ -511,14 +511,14 @@ export default {
         },
         addCart() {
             this.$ajax.post(
-                this.$baseUrl+'/xinda-api/cart/add',
+                '/xinda-api/cart/add',
                 { id: this.srv.id, num: this.buyNum },
             ).then(res => {
                 if (res.data.status == 1) {
                     this.$isPC
                         ? this.$message({ type: 'success', message: res.data.msg, duration: 1000 })
                         : this.$toast(res.data.msg);
-                    this.$ajax.post(this.$baseUrl+'/xinda-api/cart/cart-num').then(res => {
+                    this.$ajax.post('/xinda-api/cart/cart-num').then(res => {
                         if (res.data.status == 1) {
                             this.cartAction(res.data.data.cartNum);
                         } else {
@@ -537,14 +537,14 @@ export default {
             });
         },
         flushCode() {//刷新验证码
-            this.src = this.$baseUrl+'/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
+            this.src = '/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
         },
         getMessage(e) {
             //点击获取短信验证码
             if (this.testPhone()) {
                 if (this.imgCode) {
                     this.$ajax.post(
-                        this.$baseUrl+'/xinda-api/register/sendsms', {
+                        '/xinda-api/register/sendsms', {
                             cellphone: this.phone,
                             smsType: 1,
                             imgCode: this.imgCode,

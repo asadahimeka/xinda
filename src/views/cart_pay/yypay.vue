@@ -164,7 +164,7 @@ export default {
         },
         getOrder() {
             this.$ajax.post(
-                this.$baseUrl+'/xinda-api/business-order/detail',
+                '/xinda-api/business-order/detail',
                 { businessNo: this.$route.query.bno },
             ).then(res => {
                 if (res.data.status == 1) {
@@ -197,7 +197,7 @@ export default {
                 this.$alert('转账时请你将订单编号备注在付款信息里；转账完成时，请通知客服。', '进行线下转账');
             } else {
                 this.$ajax.post(
-                    this.$baseUrl+'/xinda-api/pay/' + payNo,
+                    '/xinda-api/pay/' + payNo,
                     { businessNo },
                 ).then(res => {
                     console.log(res);

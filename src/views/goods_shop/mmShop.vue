@@ -70,7 +70,7 @@ export default {
         var canshu = {
             id: this.$route.query.id,
         };
-        this.$ajax.post(this.$baseUrl+'/xinda-api/provider/detail', canshu, {}).then((data) => {
+        this.$ajax.post('/xinda-api/provider/detail', canshu, {}).then((data) => {
             this.shopinfo = data.data.data;
             this.getServCont();
         }).catch((error) => {
@@ -114,7 +114,7 @@ export default {
                 limit: this.limit,
                 providerId: this.$route.query.id,
             };
-            this.$ajax.post(this.$baseUrl+'/xinda-api/product/package/grid', canshu1, {}).then((data) => {
+            this.$ajax.post('/xinda-api/product/package/grid', canshu1, {}).then((data) => {
                 this.contentList = data.data.data;
                 this.pageSize = data.data.pageSize;
                 this.loading = false;

@@ -223,7 +223,7 @@ export default {
             this.rglist = [];
             this.cartlist.forEach(function(ele) {
                 this.$ajax.post(
-                    this.$baseUrl+'/xinda-api/provider/detail',
+                    '/xinda-api/provider/detail',
                     { id: ele.providerId }
                 ).then(res => {
                     if (res.data.status == 1) {
@@ -238,7 +238,7 @@ export default {
         },
         getRecmd() {
             this.$ajax.post(
-                this.$baseUrl+'/xinda-api/recommend/list'
+                '/xinda-api/recommend/list'
             ).then(res => {
                 if (res.data.status == 1) {
                     this.srvlist = res.data.data.product;
@@ -256,7 +256,7 @@ export default {
         getCart() {
             !this.$isPC ? this.$indicator.open() : 0;
             this.$ajax.post(
-                this.$baseUrl+'/xinda-api/cart/list'
+                '/xinda-api/cart/list'
             ).then(res => {
                 if (res.data.status == 1) {
                     this.cartlist = res.data.data;
@@ -294,7 +294,7 @@ export default {
         conti() {
             for (let i = 0; i < this.cartlist.length; i++) {
                 this.$ajax.post(
-                    this.$baseUrl+'/xinda-api/cart/set',
+                    '/xinda-api/cart/set',
                     {
                         id: this.cartlist[i].serviceId,
                         num: this.cartlist[i].buyNum,
@@ -314,7 +314,7 @@ export default {
         submit() {
             for (let i = 0; i < this.cartlist.length; i++) {
                 this.$ajax.post(
-                    this.$baseUrl+'/xinda-api/cart/set',
+                    '/xinda-api/cart/set',
                     {
                         id: this.cartlist[i].serviceId,
                         num: this.cartlist[i].buyNum,
@@ -328,7 +328,7 @@ export default {
                         }
                     } else if (i == this.cartlist.length - 1) {
                         this.$ajax.post(
-                            this.$baseUrl+'/xinda-api/cart/submit'
+                            '/xinda-api/cart/submit'
                         ).then(res => {
                             if (res.data.status == -1) {
                                 if (this.$isPC) {
@@ -396,7 +396,7 @@ export default {
         },
         delItem(item) {
             this.$ajax.post(
-                this.$baseUrl+'/xinda-api/cart/del',
+                '/xinda-api/cart/del',
                 { id: item.serviceId }
             ).then(res => {
                 if (res.data.status == 1) {

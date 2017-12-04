@@ -68,7 +68,7 @@ export default {
         },
         getShop() {
             this.$indicator.open();
-            this.$ajax.post(this.$baseUrl+'/xinda-api/provider/grid', this.ajdata, {}).then((data) => {
+            this.$ajax.post('/xinda-api/provider/grid', this.ajdata, {}).then((data) => {
                 this.shopinfo = data.data.data;
                 // console.log(this.shopinfo);
                 this.pageSize = data.data.pageSize;

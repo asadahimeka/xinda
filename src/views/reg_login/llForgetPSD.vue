@@ -81,7 +81,7 @@ export default {
     },
     methods: {
         F5: function() {//刷新验证码
-            this.src = this.$baseUrl+'/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
+            this.src = '/xinda-api/ajaxAuthcode?' + Math.random().toString().substr(2, 4);
         },
         testPhone: function() {//手机号本地校验
             var testphone = /^[1][3,4,5,7,8][0-9]{9}$/;
@@ -115,7 +115,7 @@ export default {
                     smsType: 2,
                     imgCode: this.imgCode
                 };
-                this.$ajax.post(this.$baseUrl+'/xinda-api/register/sendsms', message, {}).then((fontMessage) => {
+                this.$ajax.post('/xinda-api/register/sendsms', message, {}).then((fontMessage) => {
                     if (fontMessage.data.status == 1) {
                         this.etitle = '';
                         this.stitle = fontMessage.data.msg;
@@ -186,7 +186,7 @@ export default {
                 validCode: this.msgTest,
                 password: md5(this.sPSD),
             };
-            this.$ajax.post(this.$baseUrl+'/xinda-api/register/findpas', modifyPar, {}).then((res) => {
+            this.$ajax.post('/xinda-api/register/findpas', modifyPar, {}).then((res) => {
                 if (res.data.status == 1) {
                     this.stitle = res.data.msg;
                     //修改成功后返回登录页面,直接调用方法

@@ -62,7 +62,7 @@
 import { mapGetters, mapActions } from 'vuex';
 export default {
     created() {
-        this.$ajax.post(this.$baseUrl+'/xinda-api/sso/login-info').then((user) => {
+        this.$ajax.post('/xinda-api/sso/login-info').then((user) => {
             if (user.data.data) {
                 this.userAction(user.data.data.name);
                 this.exAction(1);
@@ -70,7 +70,7 @@ export default {
         }).catch((error) => {
             console.error(error);
         });
-        this.$ajax.post(this.$baseUrl+'/xinda-api/cart/cart-num').then((res) => {
+        this.$ajax.post('/xinda-api/cart/cart-num').then((res) => {
             if (res.data.data.cartNum) {
                 this.cartAction(res.data.data.cartNum);
             }
@@ -86,7 +86,7 @@ export default {
     methods: {
         ...mapActions(['userAction', 'cartAction', 'exAction']),
         exit: function() {
-            this.$ajax.post(this.$baseUrl+'/xinda-api/sso/logout').then((out) => {
+            this.$ajax.post('/xinda-api/sso/logout').then((out) => {
                 this.exAction(0);
                 this.cartAction(0);
                 if (this.$route.path == '/shcart') {
@@ -106,14 +106,14 @@ export default {
     watch: {
         $route(_this) {
             if (_this) {
-                this.$ajax.post(this.$baseUrl+'/xinda-api/cart/cart-num').then((res) => {
+                this.$ajax.post('/xinda-api/cart/cart-num').then((res) => {
                         if (res.data.data.cartNum) {
                         this.cartAction(res.data.data.cartNum);
                     }
                 }).catch((error) => {
                     console.error(error);
                 });
-                this.$ajax.post(this.$baseUrl+'/xinda-api/sso/login-info').then((user) => {
+                this.$ajax.post('/xinda-api/sso/login-info').then((user) => {
                         if (user.data.data) {
                         this.userAction(user.data.data.name);
                         this.exAction(1);

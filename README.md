@@ -29,10 +29,3 @@ npm run build --report
 ```
 
 * For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
-## Project Test
-
-[Demo URL](http://115.182.107.206/qd/QD0120161003/09/xinda/) ( See Mobile version by F12 tool Ctrl+Shift+M )
-
-### QR Code For Mobile
-<img src='https://github.com/173271328/xinda/blob/master/static/images/qr.png' width="200" height="200" />
